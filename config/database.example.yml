@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  database: replace_me_dev_db_name
+  username: replace_me_db_username
+  password: replace_me_db_password
+
+test:
+  <<: *default
+  database: replace_me_dev_db_name
+  username: replace_me_db_username
+  password: replace_me_db_password
+
+production:
+  <<: *default
+  database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASS'] %>

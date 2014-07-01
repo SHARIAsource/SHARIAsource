@@ -1,0 +1,16 @@
+# Bundler config.
+/.bundle
+
+# All logfiles and tempfiles.
+/log/*.log
+/tmp
+
+# Foreman loaded environment variables
+.env
+
+# Database credentials
+config/database.yml
+
+# Secrets
+config/secrets.yml
+
