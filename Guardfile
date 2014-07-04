@@ -23,7 +23,7 @@ guard :rspec, cmd: 'spring rspec' do
   end
   watch(%r{^app/controllers/(.+)_(controller)\.rb$}) do |m|
     [
-      "spec/routing/#{m[1]}_routing_spec.rb",
+      "spec/features/#{m[1]}_spec.rb",
       "spec/#{m[2]}s/#{m[1]}_#{m[2]}_spec.rb",
       "spec/acceptance/#{m[1]}_spec.rb"
     ]

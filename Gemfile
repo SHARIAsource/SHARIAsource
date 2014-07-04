@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.1.2'
 
 gem 'autoprefixer-rails', '~> 2.1.0'
+gem 'devise', '~> 3.2.4'
 gem 'foreman', '~> 0.74.0'
 gem 'jquery-rails', '~> 3.1.1'
 gem 'pg', '~> 0.17.1'
