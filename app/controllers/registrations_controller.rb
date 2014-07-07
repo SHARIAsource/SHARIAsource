@@ -1,4 +1,9 @@
 class RegistrationsController < Devise::RegistrationsController
+  def destroy
+    # Disable account deletion until we decide how to reallocate owned items
+    redirect_to root_path
+  end
+
   private
 
   def sign_up_params
