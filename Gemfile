@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.2'
+ruby '2.0.0'
 
 gem 'autoprefixer-rails', '~> 2.1.0'
 gem 'devise', '~> 3.2.4'
@@ -8,6 +8,7 @@ gem 'jquery-rails', '~> 3.1.1'
 gem 'pg', '~> 0.17.1'
 gem 'rack-timeout', '~> 0.0.4'
 gem 'rails', '4.1.2'
+gem 'simple_form', '~> 3.0.2'
 gem 'slim-rails', '~> 2.1.5'
 gem 'turbolinks', '~> 2.2.2'
 gem 'unicorn', '~> 4.8.0'
@@ -21,6 +22,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'factory_girl_rails', '~> 4.4.1'
   gem 'rb-fsevent' if `uname` =~ /Darwin/
   gem 'rspec-rails', '~> 3.0.1'
   gem 'spring-commands-rspec', '~> 1.0.2'
@@ -29,6 +31,7 @@ end
 group :test do
   gem 'capybara', '~> 2.3.0'
   gem 'guard-rspec', '~> 4.2.10'
+  gem 'shoulda-matchers', '~> 2.6.1'
 end
 
 group :assets do

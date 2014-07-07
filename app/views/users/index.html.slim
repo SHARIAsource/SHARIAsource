@@ -1,0 +1,19 @@
+h2 Manage Users
+
+table
+  thead
+    th Name
+    th Email
+    th Roles
+
+  tbody
+    - @users.each do |user|
+      tr
+        td= "#{user.first_name} #{user.last_name}"
+        td= user.email
+        td
+          = simple_form_for user do |f|
+            = f.input :is_editor, label: 'Editor'
+            = f.input :is_contributor, label: 'Contributor'
+            = f.button :submit, value: 'Save'
+

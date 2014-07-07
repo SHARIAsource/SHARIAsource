@@ -8,6 +8,7 @@ html
 
   body
     .container
+      = render 'shared/admin_nav' if user_signed_in?
       p.flash-notice= notice
       p.flash-alert= alert
       == yield

@@ -1,4 +1,5 @@
 require 'capybara/rspec'
+require 'rspec/rails'
 
 RSpec.configure do |config|
   # The settings below are suggested to provide a good initial experience
@@ -61,5 +62,7 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+  config.use_transactional_fixtures = true
   config.include Capybara::DSL
+  config.include FactoryGirl::Syntax::Methods
 end
