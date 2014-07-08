@@ -12,7 +12,7 @@ table
         td= "#{user.first_name} #{user.last_name}"
         td= user.email
         td
-          = simple_form_for user do |f|
+          = simple_form_for user, url: admin_user_path(user) do |f|
             = f.input :is_editor, label: 'Editor'
             = f.input :is_contributor, label: 'Contributor'
             = f.button :submit, value: 'Save'

@@ -62,6 +62,8 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+  ActiveRecord::Migration.maintain_test_schema!
+
   config.use_transactional_fixtures = true
   config.include Capybara::DSL
   config.include FactoryGirl::Syntax::Methods

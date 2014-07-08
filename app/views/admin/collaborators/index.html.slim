@@ -1,0 +1,13 @@
+h2 Collaborators
+
+table
+  thead
+    th Name
+    th Actions
+  tbody
+    - @collaborators.each do |collaborator|
+      tr
+        td= collaborator.name
+        td= link_to 'Edit', edit_admin_collaborator_path(collaborator)
+      
+p= link_to 'New Collaborator', new_admin_collaborator_path
