@@ -6,8 +6,14 @@ class Admin::UsersController < AdminController
   end
 
   def update
-    User.find(params[:id]).update_attributes(permitted_update_params)
+    User.find(params[:id]).update permitted_params
     flash[:notice] = 'User roles updated successfully'
     redirect_to :back
+  end
+
+  protected
+
+  def permitted_params
+    params.require(:user).permit(:is_editor, :is_contributor)
   end
 end

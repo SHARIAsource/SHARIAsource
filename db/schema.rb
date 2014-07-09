@@ -11,20 +11,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140707235057) do
+ActiveRecord::Schema.define(version: 20140709192758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "collaborators", force: true do |t|
-    t.string "name"
-    t.string "url"
-    t.text   "description"
+    t.string   "name"
+    t.string   "url"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "topics", force: true do |t|
-    t.string "name"
+  add_index "collaborators", ["name"], name: "index_collaborators_on_name", using: :btree
+
+  create_table "document_types", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
+
+  add_index "document_types", ["name"], name: "index_document_types_on_name", using: :btree
+
+  create_table "themes", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "themes", ["name"], name: "index_themes_on_name", using: :btree
+
+  create_table "topics", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "topics", ["name"], name: "index_topics_on_name", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                      default: "",    null: false

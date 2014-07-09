@@ -25,7 +25,7 @@ class Admin::TopicsController < AdminController
   end
 
   def update
-    if @topic.update_attributes permitted_params
+    if @topic.update permitted_params
       flash[:notice] = 'Topic updated successfully'
       redirect_to admin_topics_path
     else

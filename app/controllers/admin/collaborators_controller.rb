@@ -25,7 +25,7 @@ class Admin::CollaboratorsController < AdminController
   end
 
   def update
-    if @collaborator.update_attributes permitted_params
+    if @collaborator.update permitted_params
       flash[:notice] = 'Collaborator updated successfully'
       redirect_to admin_collaborators_path
     else

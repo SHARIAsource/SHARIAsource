@@ -4,10 +4,6 @@ class AdminController < ActionController::Base
 
   protected
 
-  def permitted_update_params
-    params.require(:user).permit(:is_editor, :is_contributor)
-  end
-
   def ensure_admin!
     redirect_to root_path unless current_user.is_admin?
   end
