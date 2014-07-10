@@ -22,5 +22,6 @@ Rails.application.routes.draw do
     resources :document_types, path: '/document-types', only: [
       :index, :new, :edit, :create, :update, :destroy
     ]
+    resources :regions, only: [:index, :new, :edit, :create, :update, :destroy]
   end
 end

@@ -1,0 +1,11 @@
+h2 Geographic Regions
+
+ul.hierarchy
+  - @regions.each do |region|
+    li data={ id: region.id, parent_id: region.parent_id }
+      span.column= region.name
+      span.column
+        = link_to 'Edit', edit_admin_region_path(region)
+        = link_to 'Delete', admin_region_path(region), method: :delete, data: { confirm: 'Are you sure you want to delete this geographic region?' }
+
+p= link_to 'New Geographic Region', new_admin_region_path

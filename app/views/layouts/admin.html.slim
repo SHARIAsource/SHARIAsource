@@ -3,7 +3,7 @@ html
   head
     title SHARIAsource
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = javascript_include_tag 'modernizr', 'data-turbolinks-track' => true
     = csrf_meta_tags
 
   body
@@ -12,3 +12,4 @@ html
       p.flash-notice= notice
       p.flash-alert= alert
       == yield
+    = javascript_include_tag 'admin', 'data-turbolinks-track' => true
