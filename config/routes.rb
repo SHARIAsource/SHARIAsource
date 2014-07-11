@@ -23,5 +23,6 @@ Rails.application.routes.draw do
       :index, :new, :edit, :create, :update, :destroy
     ]
     resources :regions, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :tags, only: [:index, :new, :edit, :create, :update, :destroy]
   end
 end

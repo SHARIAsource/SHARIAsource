@@ -1,0 +1,16 @@
+h2 Tags
+
+table
+  thead
+    th Name
+    th Actions
+  tbody
+    - @tags.each do |tag|
+      tr
+        td= tag.name
+        td
+          ul
+            li= link_to 'Edit', edit_admin_tag_path(tag)
+            li= link_to 'Delete', admin_tag_path(tag), method: :delete, data: { confirm: 'Are you sure you want to delete this tag?' }
+
+p= link_to 'New Tag', new_admin_tag_path
