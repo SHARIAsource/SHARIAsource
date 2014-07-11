@@ -1,3 +1,3 @@
 h2 Edit Document Type
 
-= render partial: 'admin/document_types/form', locals: { form_url: admin_document_type_path(@document_type) }
+= render partial: 'admin/document_types/form', locals: { form_url: admin_document_type_path(@document_type), parent_collection: DocumentType.where.not(id: @document_type.id) }

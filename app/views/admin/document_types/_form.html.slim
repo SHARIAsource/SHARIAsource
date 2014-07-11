@@ -1,4 +1,5 @@
 = simple_form_for @document_type, url: form_url do |f|
   = f.input :name
+  = f.association :parent, collection: parent_collection, include_blank: 'Top Level'
   = f.submit
 

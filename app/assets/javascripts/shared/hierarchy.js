@@ -1,7 +1,8 @@
 (function() {
   function nestHierarchies() {
     $('.hierarchy').each(function xxx() {
-      var $items = $(this).find('li')
+      var $hierarchy = $(this)
+      var $items = $hierarchy.find('li')
       $items.each(function yyy() {
         var $this = $(this)
         var parentId = $this.data('parent-id')
@@ -11,6 +12,7 @@
         }
         $parent.children('ul').append($this)
       })
+      $hierarchy.addClass('complete')
     })
   }
 
