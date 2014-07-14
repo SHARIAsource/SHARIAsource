@@ -1,11 +1,5 @@
 h2 Document Types
 
-ul.hierarchy
-  - @document_types.each do |document_type|
-    li data={ id: document_type.id, parent_id: document_type.parent_id }
-      span.column= document_type.name
-      span.column
-        = link_to 'Edit', edit_admin_document_type_path(document_type)
-        = link_to 'Delete', admin_document_type_path(document_type), method: :delete, data: { confirm: 'Are you sure you want to delete this document type?' }
+ul.hierarchy= hierarchy_list @document_types
 
 p= link_to 'New Document Type', new_admin_document_type_path

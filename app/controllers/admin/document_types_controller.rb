@@ -3,7 +3,7 @@ class Admin::DocumentTypesController < AdminController
   before_filter :fetch_document_type, only: [:edit, :update, :destroy]
 
   def index
-    @document_types = DocumentType.all
+    @document_types = DocumentType.hash_tree
   end
 
   def new

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140712002027) do
+ActiveRecord::Schema.define(version: 20140714185048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,15 @@ ActiveRecord::Schema.define(version: 20140712002027) do
   end
 
   add_index "collaborators", ["name"], name: "index_collaborators_on_name", using: :btree
+
+  create_table "document_type_hierarchies", id: false, force: true do |t|
+    t.integer "ancestor_id",   null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations",   null: false
+  end
+
+  add_index "document_type_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "document_type_anc_des_udx", unique: true, using: :btree
+  add_index "document_type_hierarchies", ["descendant_id"], name: "document_type_desc_idx", using: :btree
 
   create_table "document_types", force: true do |t|
     t.string   "name"

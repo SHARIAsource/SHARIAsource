@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 gem 'autoprefixer-rails', '~> 2.1.0'
+gem 'closure_tree', '~> 4.6.3'
 gem 'devise', '~> 3.2.4'
 gem 'foreman', '~> 0.74.0'
 gem 'jquery-rails', '~> 3.1.1'

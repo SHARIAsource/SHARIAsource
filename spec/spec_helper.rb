@@ -1,5 +1,6 @@
 require 'capybara/rspec'
 require 'rspec/rails'
+require 'closure_tree/test/matcher'
 
 RSpec.configure do |config|
   # The settings below are suggested to provide a good initial experience
@@ -67,4 +68,5 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.include Capybara::DSL
   config.include FactoryGirl::Syntax::Methods
+  config.include ClosureTree::Test::Matcher
 end
