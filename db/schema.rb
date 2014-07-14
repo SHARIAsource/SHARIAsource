@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140711213152) do
+ActiveRecord::Schema.define(version: 20140712002027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,16 @@ ActiveRecord::Schema.define(version: 20140711213152) do
 
   add_index "document_types", ["name"], name: "index_document_types_on_name", using: :btree
   add_index "document_types", ["parent_id"], name: "index_document_types_on_parent_id", using: :btree
+
+  create_table "eras", force: true do |t|
+    t.string   "name"
+    t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "eras", ["name"], name: "index_eras_on_name", using: :btree
+  add_index "eras", ["parent_id"], name: "index_eras_on_parent_id", using: :btree
 
   create_table "regions", force: true do |t|
     t.string   "name"

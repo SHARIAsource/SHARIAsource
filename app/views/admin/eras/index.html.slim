@@ -1,0 +1,11 @@
+h2 Empires & Eras
+
+ul.hierarchy
+  - @eras.each do |era|
+    li data={ id: era.id, parent_id: era.parent_id }
+      span.column= era.name
+      span.column
+        = link_to 'Edit', edit_admin_era_path(era)
+        = link_to 'Delete', admin_era_path(era), method: :delete, data: { confirm: 'Are you sure you want to delete this geographic era?' }
+
+p= link_to 'New Empire & Era', new_admin_era_path
