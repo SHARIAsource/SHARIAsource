@@ -3,7 +3,7 @@ class Admin::RegionsController < AdminController
   before_filter :fetch_region, only: [:edit, :update, :destroy]
 
   def index
-    @regions = Region.all
+    @regions = Region.hash_tree
   end
 
   def new

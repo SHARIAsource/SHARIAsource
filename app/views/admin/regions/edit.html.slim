@@ -1,3 +1,3 @@
 h2 Edit Geographic Region
 
-= render partial: 'admin/regions/form', locals: { form_url: admin_region_path(@region), parent_collection: Region.where.not(id: @region.id) }
+= render partial: 'admin/regions/form', locals: { form_url: admin_region_path(@region), parent_collection: Region.where.not(id: @region.self_and_descendant_ids) }

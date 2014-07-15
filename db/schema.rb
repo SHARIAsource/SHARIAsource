@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140714234934) do
+ActiveRecord::Schema.define(version: 20140715001153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,15 @@ ActiveRecord::Schema.define(version: 20140714234934) do
 
   add_index "eras", ["name"], name: "index_eras_on_name", using: :btree
   add_index "eras", ["parent_id"], name: "index_eras_on_parent_id", using: :btree
+
+  create_table "region_hierarchies", id: false, force: true do |t|
+    t.integer "ancestor_id",   null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations",   null: false
+  end
+
+  add_index "region_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "region_anc_des_udx", unique: true, using: :btree
+  add_index "region_hierarchies", ["descendant_id"], name: "region_desc_idx", using: :btree
 
   create_table "regions", force: true do |t|
     t.string   "name"
