@@ -3,7 +3,7 @@ class Admin::ErasController < AdminController
   before_filter :fetch_era, only: [:edit, :update, :destroy]
 
   def index
-    @eras = Era.all
+    @eras = Era.hash_tree
   end
 
   def new
