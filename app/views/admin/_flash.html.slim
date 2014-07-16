@@ -1,0 +1,12 @@
+- if notice
+  .row
+    .small-12.columns
+      .alert-box data-alert='true'
+        = notice
+        a.close href='#' &times;
+- if alert
+  .row
+    .small-12.columns
+      .alert-box.alert data-alert='true'
+        = alert
+        a.close href='#' &times;

@@ -16,7 +16,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users, only: [:index, :update]
-    resources :collaborators, only: [:index, :new, :edit, :create, :update]
+    resources :collaborators, only: [
+      :index, :new, :edit, :create, :update, :destroy
+    ]
     resources :topics, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :themes, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :document_types, path: '/document-types', only: [

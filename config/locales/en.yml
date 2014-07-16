@@ -20,4 +20,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  edit: 'Edit'
+  delete: 'Delete'
+  helpers:
+    new: "New %{model}"
+    delete_confirm: "Are you sure you want to delete this %{model}?"

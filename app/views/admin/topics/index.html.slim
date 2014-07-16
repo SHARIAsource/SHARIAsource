@@ -1,16 +1,1 @@
-h2 Topics
-
-table
-  thead
-    th Name
-    th Actions
-  tbody
-    - @topics.each do |topic|
-      tr
-        td= topic.name
-        td.actions
-          ul.inline-list
-            li= link_to 'Edit', edit_admin_topic_path(topic), class: 'tiny round pill button'
-            li= link_to 'Delete', admin_topic_path(topic), class: 'tiny round alert pill button', method: :delete, data: { confirm: 'Are you sure you want to delete this topic?' }
-
-p= link_to 'New Topic', new_admin_topic_path, class: 'round button'
+= render partial: 'admin/table', locals: { collection: @topics }

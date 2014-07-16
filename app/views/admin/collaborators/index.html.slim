@@ -1,15 +1,1 @@
-h2 Collaborators
-
-table
-  thead
-    th Name
-    th Actions
-  tbody
-    - @collaborators.each do |collaborator|
-      tr
-        td= collaborator.name
-        td.actions
-          ul.inline-list
-            li= link_to 'Edit', edit_admin_collaborator_path(collaborator), class:'tiny radius pill button'
-      
-p= link_to 'New Collaborator', new_admin_collaborator_path, class: 'round button'
+= render partial: 'admin/table', locals: { collection: @collaborators }

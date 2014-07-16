@@ -1,12 +1,16 @@
 table {
   width:100%;
 
-  .actions .inline-list {
-    margin-bottom:0;
-    margin-left:-5px;
+  .actions {
+    width:20%;
 
-    > li {
-      margin-left:5px;
+    .inline-list {
+      margin-bottom:0;
+      margin-left:-5px;
+
+      > li {
+        margin-left:5px;
+      }
     }
   }
 }

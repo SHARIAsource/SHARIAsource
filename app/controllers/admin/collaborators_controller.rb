@@ -1,6 +1,6 @@
 class Admin::CollaboratorsController < AdminController
   before_filter :ensure_editor!
-  before_filter :fetch_collaborator, only: [:edit, :update]
+  before_filter :fetch_collaborator, only: [:edit, :update, :destroy]
 
   def index
     @collaborators = Collaborator.all
@@ -32,6 +32,15 @@ class Admin::CollaboratorsController < AdminController
       flash[:error] = @collaborator.errors.full_messages.to_sentence
       render :edit
     end
+  end
+
+  def destroy
+    if @collaborator.destroy
+      flash[:notice] = 'Collaborator deleted successfully'
+    else
+      flash[:error] = 'An error occured while trying to delete that collaborator'
+    end
+    redirect_to admin_collaborators_path
   end
 
   protected
