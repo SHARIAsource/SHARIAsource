@@ -8,9 +8,9 @@ table
     - @themes.each do |theme|
       tr
         td= theme.name
-        td
-          ul
-            li= link_to 'Edit', edit_admin_theme_path(theme)
-            li= link_to 'Delete', admin_theme_path(theme), method: :delete, data: { confirm: 'Are you sure you want to delete this theme?' }
+        td.actions
+          ul.inline-list
+            li= link_to 'Edit', edit_admin_theme_path(theme), class: 'tiny radius pill button'
+            li= link_to 'Delete', admin_theme_path(theme), class: 'tiny radius alert pill button', method: :delete, data: { confirm: 'Are you sure you want to delete this theme?' }
 
-p= link_to 'New Theme', new_admin_theme_path
+p= link_to 'New Theme', new_admin_theme_path, class: 'round button'

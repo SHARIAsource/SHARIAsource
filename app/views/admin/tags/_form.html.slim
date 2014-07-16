@@ -1,3 +1,5 @@
-= simple_form_for @tag, url: form_url do |f|
-  = f.input :name
-  = f.submit
+.row
+  .large-6.columns
+    = simple_form_for @tag, url: form_url do |f|
+      = f.input :name
+      = f.submit class: 'round button'

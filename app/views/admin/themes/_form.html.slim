@@ -1,4 +1,5 @@
-= simple_form_for @theme, url: form_url do |f|
-  = f.input :name
-  = f.submit
-
+.row
+  .large-6.columns
+    = simple_form_for @theme, url: form_url do |f|
+      = f.input :name
+      = f.submit class: 'round button'

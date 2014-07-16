@@ -1,5 +1,7 @@
-= simple_form_for @collaborator, url: form_url do |f|
-  = f.input :name
-  = f.input :url
-  = f.input :description
-  = f.submit
+.row
+  .large-6.columns
+    = simple_form_for @collaborator, url: form_url do |f|
+      = f.input :name
+      = f.input :url
+      = f.input :description
+      = f.submit class: 'round button'

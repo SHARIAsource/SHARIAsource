@@ -8,6 +8,8 @@ table
     - @collaborators.each do |collaborator|
       tr
         td= collaborator.name
-        td= link_to 'Edit', edit_admin_collaborator_path(collaborator)
+        td.actions
+          ul.inline-list
+            li= link_to 'Edit', edit_admin_collaborator_path(collaborator), class:'tiny radius pill button'
       
-p= link_to 'New Collaborator', new_admin_collaborator_path
+p= link_to 'New Collaborator', new_admin_collaborator_path, class: 'round button'

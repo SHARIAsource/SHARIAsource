@@ -1,0 +1,12 @@
+table {
+  width:100%;
+
+  .actions .inline-list {
+    margin-bottom:0;
+    margin-left:-5px;
+
+    > li {
+      margin-left:5px;
+    }
+  }
+}

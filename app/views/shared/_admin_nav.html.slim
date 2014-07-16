@@ -1,15 +1,19 @@
-.admin-nav
-  ul
-    - if admin_signed_in?
-      li= link_to 'Users', admin_users_path
-    - if editor_signed_in?
-      li= link_to 'Collaborators', admin_collaborators_path
-      li= link_to 'Document Types', admin_document_types_path
-      li= link_to 'Empires & Eras', admin_eras_path
-      li= link_to 'Geographic Regions', admin_regions_path
-      li= link_to 'Tags', admin_tags_path
-      li= link_to 'Topics', admin_topics_path
-      li= link_to 'Themes', admin_themes_path
-    li= link_to 'My Profile', edit_user_registration_path
-    li= link_to 'Log Out', destroy_user_session_path, method: :delete
+nav.top-bar data-topbar='true'
+  ul.title-area
+    li.name
+  section.top-bar-section
+    ul.left
+      - if admin_signed_in?
+        li= link_to 'Users', admin_users_path
+      - if editor_signed_in?
+        li= link_to 'Collaborators', admin_collaborators_path
+        li= link_to 'Document Types', admin_document_types_path
+        li= link_to 'Empires & Eras', admin_eras_path
+        li= link_to 'Geographic Regions', admin_regions_path
+        li= link_to 'Tags', admin_tags_path
+        li= link_to 'Topics', admin_topics_path
+        li= link_to 'Themes', admin_themes_path
+    ul.right
+      li= link_to 'My Profile', edit_user_registration_path
+      li= link_to 'Log Out', destroy_user_session_path, method: :delete
 

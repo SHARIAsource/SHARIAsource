@@ -8,9 +8,9 @@ table
     - @tags.each do |tag|
       tr
         td= tag.name
-        td
-          ul
-            li= link_to 'Edit', edit_admin_tag_path(tag)
-            li= link_to 'Delete', admin_tag_path(tag), method: :delete, data: { confirm: 'Are you sure you want to delete this tag?' }
+        td.actions
+          ul.inline-list
+            li= link_to 'Edit', edit_admin_tag_path(tag), class: 'tiny radius pill button'
+            li= link_to 'Delete', admin_tag_path(tag), class: 'tiny radius alert pill button', method: :delete, data: { confirm: 'Are you sure you want to delete this tag?' }
 
-p= link_to 'New Tag', new_admin_tag_path
+p= link_to 'New Tag', new_admin_tag_path, class: 'round button'

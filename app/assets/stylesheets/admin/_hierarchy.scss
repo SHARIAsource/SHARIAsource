@@ -1,0 +1,42 @@
+.hierarchy {
+  margin-bottom:1.25em;
+
+  .row:hover {
+    background:rgba(0,0,0,.05);
+  }
+
+  .name, .actions {
+    padding-top:3px;
+    padding-bottom:3px;
+  }
+
+  .actions {
+    text-align:right;
+  }
+
+  .button.pill {
+    margin:0 0 0 5px;
+  }
+
+  .row .row .name {
+    &:before {
+      display:inline-block;
+      width:20px;
+      text-align:center;
+      content:'↳';
+      opacity:.5;
+    }
+  }
+
+  .row .row .row .name {
+    padding-left:20px;
+  }
+
+  .row .row .row .row .name {
+    padding-left:40px;
+  }
+
+  .row .row .row .row .row .name {
+    padding-left:60px;
+  }
+}
