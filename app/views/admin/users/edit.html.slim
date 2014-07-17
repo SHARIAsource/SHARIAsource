@@ -7,4 +7,7 @@ h2 Edit Account
         legend Roles
         = f.input :is_editor, boolean_style: :inline, label: 'Editor'
         = f.input :is_contributor, boolean_style: :inline, label: 'Contributor'
+      = f.association :collaborator, collection: Collaborator.all, include_blank: 'None'
+  .row
+    .large-12.columns
       = f.submit class: 'round button'

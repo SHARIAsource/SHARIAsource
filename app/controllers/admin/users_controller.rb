@@ -18,6 +18,6 @@ class Admin::UsersController < AdminController
   protected
 
   def permitted_params
-    params.require(:user).permit(:is_editor, :is_contributor)
+    params.require(:user).permit(:is_editor, :is_contributor, :collaborator_id)
   end
 end
