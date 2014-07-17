@@ -3,14 +3,14 @@ table {
 
   .actions {
     width:20%;
+  }
 
-    .inline-list {
-      margin-bottom:0;
-      margin-left:-5px;
+  .inline-list {
+    margin-bottom:0;
+    margin-left:-5px;
 
-      > li {
-        margin-left:5px;
-      }
+    > li {
+      margin-left:5px;
     }
   }
 }

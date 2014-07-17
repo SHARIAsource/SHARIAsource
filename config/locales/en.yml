@@ -25,3 +25,9 @@ en:
   helpers:
     new: "New %{model}"
     delete_confirm: "Are you sure you want to delete this %{model}?"
+  activerecord:
+    models:
+      era:
+        one: "Empire & Era"
+        other: "Empires & Eras"
+      region: "Geographic Region"

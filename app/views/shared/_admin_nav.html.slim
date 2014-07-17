@@ -4,7 +4,7 @@ nav.top-bar data-topbar='true'
   section.top-bar-section
     ul.left
       - if admin_signed_in?
-        li= link_to 'Users', admin_users_path
+        li= link_to 'Accounts', admin_users_path
       - if editor_signed_in?
         li= link_to 'Collaborators', admin_collaborators_path
         li= link_to 'Document Types', admin_document_types_path

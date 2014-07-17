@@ -1,0 +1,10 @@
+h2 Edit Account
+
+= simple_form_for @user, url: admin_user_path(@user) do |f|
+  .row
+    .large-6.columns
+      fieldset
+        legend Roles
+        = f.input :is_editor, boolean_style: :inline, label: 'Editor'
+        = f.input :is_contributor, boolean_style: :inline, label: 'Contributor'
+      = f.submit class: 'round button'

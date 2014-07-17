@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resource :search, only: [:show]
 
   namespace :admin do
-    resources :users, only: [:index, :update]
+    resources :users, only: [:index, :edit, :update]
     resources :collaborators, only: [
       :index, :new, :edit, :create, :update, :destroy
     ]

@@ -5,10 +5,14 @@ class Admin::UsersController < AdminController
     @users = User.order(:last_name_without_articles)
   end
 
+  def edit
+    @user = User.find params[:id]
+  end
+
   def update
     User.find(params[:id]).update permitted_params
     flash[:notice] = 'User roles updated successfully'
-    redirect_to :back
+    redirect_to admin_users_path
   end
 
   protected
