@@ -46,4 +46,11 @@ describe User do
       expect(User.all.pluck(:last_name_without_articles)).to eq ['Doe']*4
     end
   end
+
+  describe 'name' do
+    it 'combines first and last name' do
+      user = build :user, first_name: 'John', last_name: 'Doe'
+      expect(user.name).to eq 'John Doe'
+    end
+  end
 end

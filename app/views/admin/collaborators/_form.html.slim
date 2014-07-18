@@ -5,3 +5,7 @@
       = f.input :url
       = f.input :description
       = f.submit class: 'round button'
+  - if local_assigns.fetch :include_users, false
+    .large-6.columns
+      h3 Accounts
+      .hierarchy= render partial: 'admin/hierarchy_list', locals: { hash: @collaborator.users.roots.hash_tree, include_delete: false }

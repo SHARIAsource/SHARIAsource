@@ -10,7 +10,7 @@ table
   tbody
     - @users.each do |user|
       tr
-        td= "#{user.first_name} #{user.last_name}"
+        td= user.name
         td= user.email
         td
           ul.inline-list

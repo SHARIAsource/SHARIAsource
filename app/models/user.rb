@@ -39,6 +39,10 @@ class User < ActiveRecord::Base
 
   belongs_to :collaborator
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   private
     def remove_articles
       self.last_name_without_articles = last_name.sub ARTICLES_REGEX, ''

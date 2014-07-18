@@ -1,9 +1,10 @@
 - hash.map do |item, children|
   .row
     .small-8.columns
-      .name= item[:name]
+      .name= item.name
     .small-4.columns.actions
       = link_to t('edit'), url_for([:admin, item, action: :edit]), class: 'tiny radius pill button'
-      = link_to t('delete'), url_for([:admin, item]), class: 'tiny radius alert pill button', method: :delete, data: { confirm: t('helpers.delete_confirm', model: item.class.model_name.human) }
+      -if local_assigns.fetch :include_delete, true
+        = link_to t('delete'), url_for([:admin, item]), class: 'tiny radius alert pill button', method: :delete, data: { confirm: t('helpers.delete_confirm', model: item.class.model_name.human) }
     - if children.size > 0
       .small-12.columns= render partial: 'admin/hierarchy_list', locals: { hash: children }
