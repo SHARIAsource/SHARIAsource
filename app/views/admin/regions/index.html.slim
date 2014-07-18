@@ -1,5 +1,5 @@
 h2 Geographic Regions
 
-.hierarchy= hierarchy_list @regions
+.hierarchy= render partial: 'admin/hierarchy_list', locals: { hash: @regions }
 
 p= link_to 'New Geographic Region', new_admin_region_path, class: 'round button'

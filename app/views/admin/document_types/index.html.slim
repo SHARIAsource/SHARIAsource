@@ -1,5 +1,5 @@
 h2 Document Types
 
-.hierarchy= hierarchy_list @document_types
+.hierarchy= render partial: 'admin/hierarchy_list', locals: { hash: @document_types }
 
 p= link_to 'New Document Type', new_admin_document_type_path, class: 'round button'
