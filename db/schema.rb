@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140717225727) do
+ActiveRecord::Schema.define(version: 20140718133719) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,15 @@ ActiveRecord::Schema.define(version: 20140717225727) do
 
   add_index "topics", ["name"], name: "index_topics_on_name", using: :btree
 
+  create_table "user_hierarchies", id: false, force: true do |t|
+    t.integer "ancestor_id",   null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations",   null: false
+  end
+
+  add_index "user_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "user_anc_des_udx", unique: true, using: :btree
+  add_index "user_hierarchies", ["descendant_id"], name: "user_desc_idx", using: :btree
+
   create_table "users", force: true do |t|
     t.string   "email",                      default: "",    null: false
     t.string   "encrypted_password",         default: "",    null: false
@@ -127,6 +136,7 @@ ActiveRecord::Schema.define(version: 20140717225727) do
     t.string   "last_name"
     t.string   "last_name_without_articles"
     t.integer  "collaborator_id"
+    t.integer  "parent_id"
   end
 
   add_index "users", ["collaborator_id"], name: "index_users_on_collaborator_id", using: :btree
@@ -135,6 +145,7 @@ ActiveRecord::Schema.define(version: 20140717225727) do
   add_index "users", ["is_contributor"], name: "index_users_on_is_contributor", using: :btree
   add_index "users", ["is_editor"], name: "index_users_on_is_editor", using: :btree
   add_index "users", ["last_name_without_articles"], name: "index_users_on_last_name_without_articles", using: :btree
+  add_index "users", ["parent_id"], name: "index_users_on_parent_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

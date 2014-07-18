@@ -31,12 +31,13 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable
 
+  before_save :remove_articles
+  acts_as_tree name_column: 'last_name', order: 'last_name_without_articles'
+
   validates :first_name, presence: true
   validates :last_name, presence: true
 
   belongs_to :collaborator
-
-  before_save :remove_articles
 
   private
     def remove_articles

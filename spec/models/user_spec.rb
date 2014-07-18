@@ -31,13 +31,19 @@ describe User do
   it { should validate_presence_of :last_name }
   it { should belong_to :collaborator }
 
+  it 'is a closure tree' do
+    expect(User).to be_a_closure_tree
+  end
+
   describe 'last_name_without_articles' do
     before :each do
-      @user = create :user, last_name: 'Al Doe'
+      ['Al Doe', 'Al-Doe', 'El Doe', 'El-Doe'].each do |last_name|
+        create :user, last_name: last_name
+      end
     end
 
     it 'removes articles' do
-      expect(@user.last_name_without_articles).to eq 'Doe'
+      expect(User.all.pluck(:last_name_without_articles)).to eq ['Doe']*4
     end
   end
 end
