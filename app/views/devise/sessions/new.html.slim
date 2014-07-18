@@ -1,0 +1,12 @@
+.row
+  .large-6.large-centered.columns
+    h2 Sign in
+    = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      = f.input :email, autofocus: true
+      = f.input :password
+      = f.input :remember_me, as: :boolean, boolean_style: :inline if devise_mapping.rememberable?
+      .row
+        .large-6.columns
+          = f.button :submit, "Sign in", class: 'round button'
+        .large-6.columns
+          = render "devise/shared/links"

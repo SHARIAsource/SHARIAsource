@@ -1,0 +1,24 @@
+.hint {
+  position:relative;
+  top:-1.25em;
+  font-size:.75em;
+}
+
+.field_with_errors {
+  input, textarea {
+    margin-bottom:0;
+  }
+}
+
+#error_explanation {
+  @include panel($bg: $alert-color, $adjust: true);
+
+  h2, li {
+    color:white;
+  }
+
+  h2 {
+    font-weight:normal;
+    font-size:20px;
+  }
+}
