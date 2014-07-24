@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140718133719) do
+ActiveRecord::Schema.define(version: 20140722005247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bodies", force: true do |t|
+    t.text    "source_text"
+    t.text    "rendered_text"
+    t.integer "static_id"
+  end
+
+  add_index "bodies", ["static_id"], name: "index_bodies_on_static_id", using: :btree
 
   create_table "collaborators", force: true do |t|
     t.string   "name"
@@ -82,6 +90,15 @@ ActiveRecord::Schema.define(version: 20140718133719) do
 
   add_index "regions", ["name"], name: "index_regions_on_name", using: :btree
   add_index "regions", ["parent_id"], name: "index_regions_on_parent_id", using: :btree
+
+  create_table "statics", force: true do |t|
+    t.string   "slug"
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "statics", ["slug"], name: "index_statics_on_slug", using: :btree
 
   create_table "tags", force: true do |t|
     t.string   "name"

@@ -1,0 +1,21 @@
+= simple_form_for @static, url: form_url do |f|
+  .row
+    .large-6.columns
+      = f.label :slug, '* URL'
+      .row.collapse
+        .large-5.columns
+          span.prefix= root_url
+        .large-7.columns
+          = f.input :slug, label: false
+  .row
+    .large-6.columns
+      = f.input :title
+  .row.js-content-editor
+    .large-6.columns
+      = f.simple_fields_for :body do |b|
+        = b.input :source_text, label: 'Content'
+    .large-6.columns
+      .preview
+  .row
+    .large-6.columns
+      = f.submit class: 'round button'

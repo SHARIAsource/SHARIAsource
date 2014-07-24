@@ -27,5 +27,8 @@ Rails.application.routes.draw do
     resources :regions, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :tags, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :eras, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :statics, only: [:index, :new, :edit, :create, :update, :destroy]
   end
+
+  get '*slug', controller: 'statics', action: 'show'
 end
