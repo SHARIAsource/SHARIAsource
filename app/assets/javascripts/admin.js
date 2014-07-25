@@ -13,6 +13,13 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
+//= require zurb5-multiselect
 //= require turbolinks
 
-$(function(){ $(document).foundation(); });
+$(function(){ $(document).foundation() })
+$(document).on('page:change', function() {
+  $('select[multiple]').zmultiselect({
+    filter: true,
+    selectedText: 'Selected %1 of %2'
+  })
+})

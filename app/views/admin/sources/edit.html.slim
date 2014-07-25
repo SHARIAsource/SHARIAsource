@@ -1,0 +1,8 @@
+h2 Edit Source
+
+.row
+  .large-6.columns
+    = simple_form_for @source, url: admin_source_path(@source) do |f|
+      = f.input :title
+      = f.association :themes, collection: Theme.all
+      = f.submit class: 'round button'
