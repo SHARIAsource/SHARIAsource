@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 gem 'autoprefixer-rails', '~> 2.1.0'
+gem 'chosen-rails', '~> 1.1.0'
 gem 'closure_tree', '~> 4.6.3'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'devise', '~> 3.2.4'
