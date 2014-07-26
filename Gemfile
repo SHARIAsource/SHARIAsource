@@ -30,7 +30,7 @@ end
 
 group :development, :test do
   gem 'factory_girl_rails', '~> 4.4.1'
-  gem 'rb-fsevent' if `uname` =~ /Darwin/
+  gem 'rb-fsevent'# if `uname` =~ /Darwin/
   gem 'rspec-rails', '~> 3.0.1'
   gem 'spring-commands-rspec', '~> 1.0.2'
 end
