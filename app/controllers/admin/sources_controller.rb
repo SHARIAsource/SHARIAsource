@@ -48,6 +48,8 @@ class Admin::SourcesController < AdminController
   protected
 
   def permitted_params
-    params.require(:source).permit(:title, :theme_ids => [])
+    params.require(:source).permit(:title, :region_id, :document_type_id,
+                                   theme_ids: [], topic_ids: [], tag_ids: [],
+                                   era_ids: [])
   end
 end

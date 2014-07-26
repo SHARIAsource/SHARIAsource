@@ -1,8 +1,3 @@
 h2 New Source
 
-.row
-  .large-6.columns
-    = simple_form_for @source, url: admin_sources_path do |f|
-      = f.input :title
-      = f.association :themes, collection: Theme.all
-      = f.submit class: 'round button'
+= render partial: 'admin/sources/form', locals: { form_url: admin_sources_path }

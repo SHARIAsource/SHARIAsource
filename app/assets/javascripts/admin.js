@@ -16,7 +16,8 @@
 //= require chosen-jquery
 //= require turbolinks
 
-$(function(){ $(document).foundation() })
-$(document).on('page:change', function() {
+var $document = $(document)
+$document.on('page:change', function() {
+  $document.foundation()
   $('select[multiple]').chosen()
 })

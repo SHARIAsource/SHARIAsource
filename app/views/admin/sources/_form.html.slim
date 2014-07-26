@@ -1,0 +1,22 @@
+= simple_form_for @source, url: form_url do |f|
+  .row
+    .large-12.columns
+      = f.input :title
+  .row
+    .large-6.columns
+      = f.association :themes, collection: Theme.all
+    .large-6.columns
+      = f.association :topics, collection: Topic.all
+  .row
+    .large-6.columns
+      = f.association :tags, collection: Tag.all
+    .large-6.columns
+      = f.association :eras, collection: Era.all
+  .row
+    .large-6.columns
+      = f.association :region, collection: Region.all
+    .large-6.columns
+      = f.association :document_type, collection: DocumentType.all
+  .row
+    .large-6.columns.end
+      = f.submit class: 'round button'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140724183340) do
+ActiveRecord::Schema.define(version: 20140726001909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,15 @@ ActiveRecord::Schema.define(version: 20140724183340) do
   add_index "eras", ["name"], name: "index_eras_on_name", using: :btree
   add_index "eras", ["parent_id"], name: "index_eras_on_parent_id", using: :btree
 
+  create_table "eras_sources", id: false, force: true do |t|
+    t.integer "era_id"
+    t.integer "source_id"
+  end
+
+  add_index "eras_sources", ["era_id", "source_id"], name: "index_eras_sources_on_era_id_and_source_id", unique: true, using: :btree
+  add_index "eras_sources", ["era_id"], name: "index_eras_sources_on_era_id", using: :btree
+  add_index "eras_sources", ["source_id"], name: "index_eras_sources_on_source_id", using: :btree
+
   create_table "region_hierarchies", id: false, force: true do |t|
     t.integer "ancestor_id",   null: false
     t.integer "descendant_id", null: false
@@ -92,8 +101,22 @@ ActiveRecord::Schema.define(version: 20140724183340) do
   add_index "regions", ["parent_id"], name: "index_regions_on_parent_id", using: :btree
 
   create_table "sources", force: true do |t|
-    t.string "title"
+    t.string  "title"
+    t.integer "region_id"
+    t.integer "document_type_id"
   end
+
+  add_index "sources", ["document_type_id"], name: "index_sources_on_document_type_id", using: :btree
+  add_index "sources", ["region_id"], name: "index_sources_on_region_id", using: :btree
+
+  create_table "sources_tags", id: false, force: true do |t|
+    t.integer "source_id"
+    t.integer "tag_id"
+  end
+
+  add_index "sources_tags", ["source_id", "tag_id"], name: "index_sources_tags_on_source_id_and_tag_id", unique: true, using: :btree
+  add_index "sources_tags", ["source_id"], name: "index_sources_tags_on_source_id", using: :btree
+  add_index "sources_tags", ["tag_id"], name: "index_sources_tags_on_tag_id", using: :btree
 
   create_table "sources_themes", force: true do |t|
     t.integer "source_id"
@@ -103,6 +126,15 @@ ActiveRecord::Schema.define(version: 20140724183340) do
   add_index "sources_themes", ["source_id", "theme_id"], name: "index_sources_themes_on_source_id_and_theme_id", unique: true, using: :btree
   add_index "sources_themes", ["source_id"], name: "index_sources_themes_on_source_id", using: :btree
   add_index "sources_themes", ["theme_id"], name: "index_sources_themes_on_theme_id", using: :btree
+
+  create_table "sources_topics", id: false, force: true do |t|
+    t.integer "source_id"
+    t.integer "topic_id"
+  end
+
+  add_index "sources_topics", ["source_id", "topic_id"], name: "index_sources_topics_on_source_id_and_topic_id", unique: true, using: :btree
+  add_index "sources_topics", ["source_id"], name: "index_sources_topics_on_source_id", using: :btree
+  add_index "sources_topics", ["topic_id"], name: "index_sources_topics_on_topic_id", using: :btree
 
   create_table "statics", force: true do |t|
     t.string   "slug"
