@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: sources
+#
+#  id               :integer          not null, primary key
+#  title            :string(255)
+#  region_id        :integer
+#  document_type_id :integer
+#
+
 describe Source do
   it { should validate_presence_of :title }
   it { should have_and_belong_to_many :themes }

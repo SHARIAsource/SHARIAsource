@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: sources
+#
+#  id               :integer          not null, primary key
+#  title            :string(255)
+#  region_id        :integer
+#  document_type_id :integer
+#
+
 class Source < ActiveRecord::Base
   alias_attribute :name, :title
 

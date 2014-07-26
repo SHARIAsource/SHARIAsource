@@ -21,6 +21,8 @@
 #  first_name                 :string(255)
 #  last_name                  :string(255)
 #  last_name_without_articles :string(255)
+#  collaborator_id            :integer
+#  parent_id                  :integer
 #
 
 class User < ActiveRecord::Base
