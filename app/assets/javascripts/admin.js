@@ -15,9 +15,5 @@
 //= require foundation
 //= require chosen-jquery
 //= require turbolinks
-
-var $document = $(document)
-$document.on('page:change', function() {
-  $document.foundation()
-  $('select[multiple]').chosen()
-})
+//= require admin-inits
+//= require tinymce

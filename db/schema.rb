@@ -11,14 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140726001909) do
+ActiveRecord::Schema.define(version: 20140726013957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "bodies", force: true do |t|
-    t.text    "source_text"
-    t.text    "rendered_text"
+    t.text    "text"
     t.integer "static_id"
   end
 
