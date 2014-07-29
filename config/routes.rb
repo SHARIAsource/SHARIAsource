@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
+
   devise_for :users,
     controllers: { registrations: 'registrations' },
     path_names: { sign_in: 'login', sign_up: 'signup', sign_out: 'logout' }
@@ -29,6 +31,10 @@ Rails.application.routes.draw do
     resources :eras, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :statics, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :sources, only: [:index, :new, :edit, :create, :update, :destroy]
+  end
+
+  authenticate :user, lambda {|u| u.is_admin? } do
+    mount Sidekiq::Web => '/sidekiq'
   end
 
   get '*slug', controller: 'statics', action: 'show'

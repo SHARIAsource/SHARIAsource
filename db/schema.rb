@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140726013957) do
+ActiveRecord::Schema.define(version: 20140728203754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20140726013957) do
     t.string  "title"
     t.integer "region_id"
     t.integer "document_type_id"
+    t.string  "pdf"
   end
 
   add_index "sources", ["document_type_id"], name: "index_sources_on_document_type_id", using: :btree

@@ -18,5 +18,11 @@
     .large-6.columns
       = f.association :document_type, collection: DocumentType.all
   .row
+    .large-6.columns
+      = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
+      - if @source.pdf.file
+        p= @source.pdf.file.identifier
+    .large-6.columns
+  .row
     .large-6.columns.end
       = f.submit class: 'round button'

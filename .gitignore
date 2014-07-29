@@ -14,3 +14,5 @@ config/database.yml
 # Secrets
 config/secrets.yml
 
+# Uploaded files
+public/uploads

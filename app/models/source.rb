@@ -9,6 +9,7 @@
 #
 
 class Source < ActiveRecord::Base
+  after_commit :generate_images
   alias_attribute :name, :title
 
   validates :title, presence: true
@@ -19,4 +20,12 @@ class Source < ActiveRecord::Base
   has_and_belongs_to_many :eras
   belongs_to :region
   belongs_to :document_type
+
+  mount_uploader :pdf, PdfUploader
+
+  private
+
+  def generate_images
+    PdfToImagesWorker.perform_async self.id
+  end
 end
