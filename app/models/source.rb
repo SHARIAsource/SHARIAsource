@@ -9,6 +9,7 @@
 #
 
 class Source < ActiveRecord::Base
+  before_save :set_processed
   after_commit :generate_images
   alias_attribute :name, :title
 
@@ -18,6 +19,7 @@ class Source < ActiveRecord::Base
   has_and_belongs_to_many :topics
   has_and_belongs_to_many :tags
   has_and_belongs_to_many :eras
+  has_many :pages
   belongs_to :region
   belongs_to :document_type
 
@@ -26,6 +28,16 @@ class Source < ActiveRecord::Base
   private
 
   def generate_images
-    PdfToImagesWorker.perform_async self.id
+    changes = self.previous_changes
+    if changes.include?(:pdf) && changes[:pdf].first != changes[:pdf].last
+      PdfToImagesWorker.perform_async self.id
+    end
+  end
+
+  def set_processed
+    if self.pdf_changed? && !self.new_record?
+      self.processed = false
+    end
+    return true
   end
 end

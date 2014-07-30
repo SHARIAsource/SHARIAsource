@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140728203754) do
+ActiveRecord::Schema.define(version: 20140730194503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,8 +19,10 @@ ActiveRecord::Schema.define(version: 20140728203754) do
   create_table "bodies", force: true do |t|
     t.text    "text"
     t.integer "static_id"
+    t.integer "page_id"
   end
 
+  add_index "bodies", ["page_id"], name: "index_bodies_on_page_id", using: :btree
   add_index "bodies", ["static_id"], name: "index_bodies_on_static_id", using: :btree
 
   create_table "collaborators", force: true do |t|
@@ -80,6 +82,13 @@ ActiveRecord::Schema.define(version: 20140728203754) do
   add_index "eras_sources", ["era_id"], name: "index_eras_sources_on_era_id", using: :btree
   add_index "eras_sources", ["source_id"], name: "index_eras_sources_on_source_id", using: :btree
 
+  create_table "pages", force: true do |t|
+    t.string  "image"
+    t.integer "source_id"
+  end
+
+  add_index "pages", ["source_id"], name: "index_pages_on_source_id", using: :btree
+
   create_table "region_hierarchies", id: false, force: true do |t|
     t.integer "ancestor_id",   null: false
     t.integer "descendant_id", null: false
@@ -104,6 +113,7 @@ ActiveRecord::Schema.define(version: 20140728203754) do
     t.integer "region_id"
     t.integer "document_type_id"
     t.string  "pdf"
+    t.boolean "processed",        default: false
   end
 
   add_index "sources", ["document_type_id"], name: "index_sources_on_document_type_id", using: :btree
