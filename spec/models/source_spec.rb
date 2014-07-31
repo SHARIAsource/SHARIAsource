@@ -15,7 +15,8 @@ describe Source do
   it { should have_and_belong_to_many :topics }
   it { should have_and_belong_to_many :tags }
   it { should have_and_belong_to_many :eras }
-  it { should have_many :pages }
+  it { should have_many(:pages).dependent :destroy }
   it { should belong_to :region }
   it { should belong_to :document_type }
+  it { should accept_nested_attributes_for :pages }
 end

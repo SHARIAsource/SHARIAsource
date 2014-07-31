@@ -16,6 +16,8 @@ class PdfToImagesWorker
       path = "#{Rails.root}/tmp/pdf-#{source.id}-#{page.number}.png"
       page.save path
       source_page = source.pages.build image: File.open(path)
+      source_page.build_body
+      source_page.body.text = page.text
       source_page.save!
       File.delete path
     end

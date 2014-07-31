@@ -23,6 +23,18 @@
       - if @source.pdf.file
         p= @source.pdf.file.identifier
     .large-6.columns
+  
+
+  - if @source.pages.present?
+    = f.fields_for :pages do |p|
+      .row.page-preview
+        .large-7.columns
+          = p.fields_for :body do |b|
+            = b.input :text, label: "Page #{p.index+1} Text", input_html: { rows: '16', class: 'wysiwyg' }
+        .large-4.large-offset-1.columns
+          img src=p.object.image.url
+
+
   .row
     .large-6.columns.end
       = f.submit class: 'round button'

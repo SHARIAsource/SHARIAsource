@@ -20,3 +20,10 @@
 .mce-btn button:hover {
   background:transparent;
 }
+
+.page-preview {
+  img {
+    display:block;
+    max-width:100%;
+  }
+}
