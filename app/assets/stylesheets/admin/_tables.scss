@@ -13,4 +13,22 @@ table {
       margin-left:5px;
     }
   }
+
+  tr[data-processed="false"] {
+    .actions {
+      &:before {
+        content:'Processing...'
+      }
+
+      ul {
+        display:none;
+      }
+    }
+
+    td {
+      color:#999;
+      background:#eee;
+      cursor:wait;
+    }
+  }
 }

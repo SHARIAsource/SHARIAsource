@@ -1,5 +1,3 @@
-require 'sidekiq'
-
 class PdfToImagesWorker
   include Sidekiq::Worker
 
