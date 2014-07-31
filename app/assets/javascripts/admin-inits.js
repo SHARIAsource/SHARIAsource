@@ -7,6 +7,7 @@ $document.on('page:change', function() {
     toolbar: 'formatselect | bold italic underline strikethrough | bullist numlist blockquote | link unlink | table | undo redo',
     plugins: 'link table',
     menubar: false,
-    statusbar: false
+    statusbar: false,
+    height: 250
   })
 })
