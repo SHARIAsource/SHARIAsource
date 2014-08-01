@@ -6,6 +6,8 @@
 #  title            :string(255)
 #  region_id        :integer
 #  document_type_id :integer
+#  pdf              :string(255)
+#  processed        :boolean          default(TRUE)
 #
 
 class Source < ActiveRecord::Base
