@@ -1,3 +1,5 @@
+= content_for :page_title, 'Edit Collaborator'
+
 h2 Edit Collaborator
 
 = render partial: 'admin/collaborators/form', locals: { form_url: admin_collaborator_path(@collaborator), include_users: true }

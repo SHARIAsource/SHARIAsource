@@ -1,3 +1,5 @@
+= content_for :page_title, 'New Empire/Era'
+
 h2 New Empire & Era
 
 = render partial: 'admin/eras/form', locals: { form_url: admin_eras_path, parent_collection: Era.all }

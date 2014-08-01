@@ -1,3 +1,5 @@
+= content_for :page_title, 'Edit Empire/Era'
+
 h2 Edit Empire & Era
 
 = render partial: 'admin/eras/form', locals: { form_url: admin_era_path(@era), parent_collection: Era.where.not(id: @era.self_and_descendant_ids) }

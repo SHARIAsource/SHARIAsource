@@ -1,3 +1,5 @@
+= content_for :page_title, 'New Geographic Region'
+
 h2 New Geographic Region
 
 = render partial: 'admin/regions/form', locals: { form_url: admin_regions_path, parent_collection: Region.all }

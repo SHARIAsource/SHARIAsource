@@ -4,6 +4,6 @@ module AdminHelper
   end
 
   def admin_title(page_title)
-    [page_title, 'SHARIAsource Admin'].flatten.reject(&:empty?).join '|'
+    [page_title, 'SHARIAsource Admin'].flatten.reject(&:empty?).join ' | '
   end
 end
