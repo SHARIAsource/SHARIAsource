@@ -13,8 +13,8 @@ class PdfToImagesWorker
   def extract_pages(source)
     pages = Grim.reap source.pdf.current_path
     pages.each do |page|
-      path = "#{Rails.root}/tmp/pdf-#{source.id}-#{page.number}.png"
-      page.save path
+      path = "#{Rails.root}/tmp/pdf-#{source.id}-#{page.number}.jpg"
+      page.save path, width: 1024, quality: 70, density: 150
       source_page = source.pages.build image: File.open(path)
       source_page.build_body
       source_page.body.text = page.text
