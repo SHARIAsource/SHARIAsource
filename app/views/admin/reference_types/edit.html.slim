@@ -1,0 +1,5 @@
+= content_for :page_title, 'Edit Reference Type'
+
+h2 Edit Reference Type
+
+= render partial: 'admin/reference_types/form', locals: { form_url: admin_reference_type_path(@reference_type) }

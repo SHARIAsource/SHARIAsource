@@ -26,6 +26,9 @@ Rails.application.routes.draw do
     resources :document_types, path: '/document-types', only: [
       :index, :new, :edit, :create, :update, :destroy
     ]
+    resources :reference_types, path: '/reference-types', only: [
+      :index, :new, :edit, :create, :update, :destroy
+    ]
     resources :regions, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :tags, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :eras, only: [:index, :new, :edit, :create, :update, :destroy]

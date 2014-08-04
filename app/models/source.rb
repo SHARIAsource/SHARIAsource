@@ -21,6 +21,7 @@ class Source < ActiveRecord::Base
   has_and_belongs_to_many :topics
   has_and_belongs_to_many :tags
   has_and_belongs_to_many :eras
+  has_and_belongs_to_many :reference_types
   has_many :pages, dependent: :destroy
   belongs_to :region
   belongs_to :document_type

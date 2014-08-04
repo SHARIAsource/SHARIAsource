@@ -17,6 +17,7 @@ describe Source do
   it { should have_and_belong_to_many :topics }
   it { should have_and_belong_to_many :tags }
   it { should have_and_belong_to_many :eras }
+  it { should have_and_belong_to_many :reference_types }
   it { should have_many(:pages).dependent :destroy }
   it { should belong_to :region }
   it { should belong_to :document_type }

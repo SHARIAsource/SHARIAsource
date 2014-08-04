@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140731184357) do
+ActiveRecord::Schema.define(version: 20140801210136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,23 @@ ActiveRecord::Schema.define(version: 20140731184357) do
   end
 
   add_index "pages", ["source_id"], name: "index_pages_on_source_id", using: :btree
+
+  create_table "reference_types", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reference_types", ["name"], name: "index_reference_types_on_name", using: :btree
+
+  create_table "reference_types_sources", force: true do |t|
+    t.integer "reference_type_id"
+    t.integer "source_id"
+  end
+
+  add_index "reference_types_sources", ["reference_type_id"], name: "index_reference_types_sources_on_reference_type_id", using: :btree
+  add_index "reference_types_sources", ["source_id", "reference_type_id"], name: "ref_type_sources_composite", unique: true, using: :btree
+  add_index "reference_types_sources", ["source_id"], name: "index_reference_types_sources_on_source_id", using: :btree
 
   create_table "region_hierarchies", id: false, force: true do |t|
     t.integer "ancestor_id",   null: false
