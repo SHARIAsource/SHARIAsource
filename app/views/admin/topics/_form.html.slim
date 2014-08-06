@@ -1,5 +1,5 @@
 .row
   .large-6.columns
     = simple_form_for @topic, url: form_url do |f|
-      = f.input :name
+      = f.input :name, autofocus: true
       = f.submit class: 'round button'

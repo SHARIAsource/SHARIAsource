@@ -1,7 +1,7 @@
 = simple_form_for @static, url: form_url do |f|
   .row
     .large-6.columns
-      = f.input :title
+      = f.input :title, autofocus: true
     .large-6.columns
       = f.label :slug, '* URL'
       .row.collapse
