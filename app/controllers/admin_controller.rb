@@ -11,4 +11,8 @@ class AdminController < ActionController::Base
   def ensure_editor!
     redirect_to root_path unless current_user.is_editor?
   end
+
+  def ensure_contributor!
+    redirect_to root_path unless current_user.is_contributor?
+  end
 end

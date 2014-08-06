@@ -40,6 +40,7 @@ class User < ActiveRecord::Base
   validates :last_name, presence: true
 
   belongs_to :collaborator
+  has_many :commentaries, foreign_key: 'contributor_id'
 
   def name
     "#{first_name} #{last_name}"

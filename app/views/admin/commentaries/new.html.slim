@@ -1,0 +1,5 @@
+= content_for :page_title, 'New Commentary'
+
+h2 New Commentary
+
+= render partial: 'admin/commentaries/form', locals: { form_url: admin_commentaries_path }

@@ -50,7 +50,7 @@ class Admin::StaticsController < AdminController
 
   def permitted_params
     params.require(:static).permit(:title, :slug, body_attributes: [
-      :text
+      :id, :text
     ])
   end
 end

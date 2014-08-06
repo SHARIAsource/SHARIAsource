@@ -37,6 +37,9 @@ Rails.application.routes.draw do
     resources :eras, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :statics, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :sources, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :commentaries, only: [
+      :index, :new, :edit, :create, :update, :destroy
+    ]
   end
 
   authenticate :user, lambda {|u| u.is_admin? } do

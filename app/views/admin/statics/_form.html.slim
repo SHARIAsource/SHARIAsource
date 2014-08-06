@@ -9,7 +9,7 @@
           span.prefix= root_url
         .large-7.columns
           = f.input :slug, label: false
-  .row.js-content-editor
+  .row
     .large-12.columns
       = f.simple_fields_for :body do |b|
         = b.input :text, label: 'Content', input_html: { class: 'wysiwyg' }

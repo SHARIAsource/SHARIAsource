@@ -12,4 +12,5 @@
 class Body < ActiveRecord::Base
   belongs_to :static
   belongs_to :page
+  belongs_to :commentary
 end

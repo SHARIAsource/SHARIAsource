@@ -1,5 +1,5 @@
 class Admin::SourcesController < AdminController
-  before_filter :ensure_editor!
+  before_filter :ensure_contributor!
 
   def index
     @sources = Source.all
@@ -40,7 +40,7 @@ class Admin::SourcesController < AdminController
     if @source.destroy
       flash[:notice] = 'Source deleted successfully'
     else
-      flash[:error] = 'An error occurred while trying to delete that topic'
+      flash[:error] = 'An error occurred while trying to delete that source'
     end
     redirect_to admin_sources_path
   end

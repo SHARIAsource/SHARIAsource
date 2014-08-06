@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140806212007) do
+ActiveRecord::Schema.define(version: 20140806214950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,8 +20,10 @@ ActiveRecord::Schema.define(version: 20140806212007) do
     t.text    "text"
     t.integer "static_id"
     t.integer "page_id"
+    t.integer "commentary_id"
   end
 
+  add_index "bodies", ["commentary_id"], name: "index_bodies_on_commentary_id", unique: true, using: :btree
   add_index "bodies", ["page_id"], name: "index_bodies_on_page_id", using: :btree
   add_index "bodies", ["static_id"], name: "index_bodies_on_static_id", using: :btree
 
@@ -34,6 +36,15 @@ ActiveRecord::Schema.define(version: 20140806212007) do
   end
 
   add_index "collaborators", ["name"], name: "index_collaborators_on_name", using: :btree
+
+  create_table "commentaries", force: true do |t|
+    t.string   "title"
+    t.integer  "contributor_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "commentaries", ["created_at"], name: "index_commentaries_on_created_at", using: :btree
 
   create_table "document_type_hierarchies", id: false, force: true do |t|
     t.integer "ancestor_id",   null: false
