@@ -1,0 +1,5 @@
+= content_for :page_title, 'Edit Language'
+
+h2 Edit Language
+
+= render partial: 'admin/languages/form', locals: { form_url: admin_language_path(@language) }

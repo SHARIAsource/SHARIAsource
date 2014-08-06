@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140804233014) do
+ActiveRecord::Schema.define(version: 20140806192310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,14 @@ ActiveRecord::Schema.define(version: 20140804233014) do
   add_index "eras_sources", ["era_id"], name: "index_eras_sources_on_era_id", using: :btree
   add_index "eras_sources", ["source_id"], name: "index_eras_sources_on_source_id", using: :btree
 
+  create_table "languages", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "languages", ["name"], name: "index_languages_on_name", unique: true, using: :btree
+
   create_table "pages", force: true do |t|
     t.string  "image"
     t.integer "source_id"
@@ -144,9 +152,11 @@ ActiveRecord::Schema.define(version: 20140804233014) do
     t.integer "volume_count"
     t.string  "alternate_titles"
     t.string  "alternate_authors"
+    t.integer "language_id"
   end
 
   add_index "sources", ["document_type_id"], name: "index_sources_on_document_type_id", using: :btree
+  add_index "sources", ["language_id"], name: "index_sources_on_language_id", using: :btree
   add_index "sources", ["region_id"], name: "index_sources_on_region_id", using: :btree
 
   create_table "sources_tags", id: false, force: true do |t|

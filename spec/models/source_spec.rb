@@ -36,6 +36,7 @@ describe Source do
   it { should have_many(:pages).dependent :destroy }
   it { should belong_to :region }
   it { should belong_to :document_type }
+  it { should belong_to :language }
 
   it { should accept_nested_attributes_for :pages }
 

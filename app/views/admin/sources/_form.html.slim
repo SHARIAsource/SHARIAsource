@@ -23,7 +23,7 @@
     .large-6.columns
       = f.association :reference_types, collection: ReferenceType.all
     .large-6.columns
-      span Language Goes Here
+      = f.association :language, collection: Language.all
   .row
     .large-6.columns
       = f.input :gregorian_date_string, as: :string, placeholder: 'YYYY-MM-DD', label: 'Gregorian Date', input_html: { value: f.object.gregorian_date }

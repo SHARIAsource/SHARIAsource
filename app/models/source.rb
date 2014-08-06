@@ -29,6 +29,7 @@ class Source < ActiveRecord::Base
   has_many :pages, dependent: :destroy
   belongs_to :region
   belongs_to :document_type
+  belongs_to :language
 
   mount_uploader :pdf, PdfUploader
   accepts_nested_attributes_for :pages
