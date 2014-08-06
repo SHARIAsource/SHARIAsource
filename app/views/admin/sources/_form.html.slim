@@ -1,7 +1,9 @@
 = simple_form_for @source, url: form_url do |f|
   .row
-    .large-12.columns
+    .large-6.columns
       = f.input :title
+    .large-6.columns
+      = f.input :alternate_titles
   .row
     .large-6.columns
       = f.association :themes, collection: Theme.all
@@ -20,6 +22,36 @@
   .row
     .large-6.columns
       = f.association :reference_types, collection: ReferenceType.all
+    .large-6.columns
+      span Language Goes Here
+  .row
+    .large-6.columns
+      = f.input :gregorian_date_string, as: :string, placeholder: 'YYYY-MM-DD', label: 'Gregorian Date', input_html: { value: f.object.gregorian_date }
+    .large-6.columns
+      = f.input :lunar_hijri_date_string, as: :string, placeholder: 'YYYY-MM-DD', label: 'Lunar Hijri Date', input_html: { value: f.object.lunar_hijri_date }
+  .row
+    .large-6.columns
+      = f.input :source_name
+    .large-6.columns
+      = f.input :source_url, label: 'Source URL', placeholder: 'http://example.com'
+  .row
+    .large-6.columns
+      = f.input :author
+    .large-6.columns
+      = f.input :alternate_authors
+  .row
+    .large-6.columns
+      = f.input :translators
+    .large-6.columns
+      = f.input :editors
+  .row
+    .large-6.columns
+      = f.input :publisher
+    .large-6.columns
+      = f.input :publisher_location
+  .row
+    .large-6.columns
+      = f.input :volume_count
     .large-6.columns
   .row
     .large-6.columns
