@@ -51,6 +51,7 @@ class Source < ActiveRecord::Base
   end
 
   def prepend_http_to_source_url
+    return if self.source_url.blank?
     unless self.source_url =~ /^https?:\/\//
       self.source_url = "http://#{self.source_url}"
     end
