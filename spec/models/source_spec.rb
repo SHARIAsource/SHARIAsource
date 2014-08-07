@@ -37,6 +37,7 @@ describe Source do
   it { should belong_to :region }
   it { should belong_to :document_type }
   it { should belong_to :language }
+  it { should belong_to :contributor }
 
   it { should accept_nested_attributes_for :pages }
 

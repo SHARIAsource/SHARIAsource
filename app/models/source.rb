@@ -30,6 +30,7 @@ class Source < ActiveRecord::Base
   belongs_to :region
   belongs_to :document_type
   belongs_to :language
+  belongs_to :contributor, class_name: 'User'
 
   mount_uploader :pdf, PdfUploader
   accepts_nested_attributes_for :pages
@@ -44,7 +45,9 @@ class Source < ActiveRecord::Base
   end
 
   def set_processed
-    if self.pdf_changed? && !self.new_record? || self.new_record? && self.pdf
+    pdf_updated = self.pdf_changed? && !self.new_record?
+    new_with_pdf = self.new_record? && self.pdf.present?
+    if pdf_updated || new_with_pdf
       self.processed = false
     end
     return true

@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
 
   belongs_to :collaborator
   has_many :commentaries, foreign_key: 'contributor_id'
+  has_many :sources, foreign_key: 'contributor_id'
 
   def name
     "#{first_name} #{last_name}"

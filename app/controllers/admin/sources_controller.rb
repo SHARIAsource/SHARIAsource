@@ -1,20 +1,20 @@
 class Admin::SourcesController < AdminController
   before_filter :ensure_contributor!
+  before_filter :fetch_source, only: [:edit, :update, :destroy]
 
   def index
-    @sources = Source.all
+    @sources = @current_user.sources
   end
 
   def new
-    @source = Source.new
+    @source = @current_user.sources.build
   end
 
   def edit
-    @source = Source.find params[:id]
   end
 
   def create
-    @source = Source.new permitted_params
+    @source = @current_user.sources.build permitted_params
     if @source.save
       flash[:notice] = 'Source created successfully'
       redirect_to admin_sources_path
@@ -25,7 +25,6 @@ class Admin::SourcesController < AdminController
   end
 
   def update
-    @source = Source.find params[:id]
     if @source.update permitted_params
       flash[:notice] = 'Source updated successfully'
       redirect_to admin_sources_path
@@ -36,7 +35,6 @@ class Admin::SourcesController < AdminController
   end
 
   def destroy
-    @source = Source.find params[:id]
     if @source.destroy
       flash[:notice] = 'Source deleted successfully'
     else
@@ -57,5 +55,9 @@ class Admin::SourcesController < AdminController
                    :id, body_attributes: [:id, :text, :language]
                  ]]
     params.require(:source).permit(*whitelist)
+  end
+
+  def fetch_source
+    @source = @current_user.sources.where(id: params[:id]).first
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140806214950) do
+ActiveRecord::Schema.define(version: 20140806234316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,8 +163,10 @@ ActiveRecord::Schema.define(version: 20140806214950) do
     t.string  "alternate_titles"
     t.string  "alternate_authors"
     t.integer "language_id"
+    t.integer "contributor_id"
   end
 
+  add_index "sources", ["contributor_id"], name: "index_sources_on_contributor_id", using: :btree
   add_index "sources", ["document_type_id"], name: "index_sources_on_document_type_id", using: :btree
   add_index "sources", ["language_id"], name: "index_sources_on_language_id", using: :btree
   add_index "sources", ["region_id"], name: "index_sources_on_region_id", using: :btree
