@@ -13,4 +13,5 @@
 class Collaborator < ActiveRecord::Base
   validates :name, presence: true
   has_many :users, dependent: :nullify
+  mount_uploader :image, ImageUploader
 end

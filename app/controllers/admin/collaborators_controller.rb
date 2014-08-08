@@ -46,7 +46,7 @@ class Admin::CollaboratorsController < AdminController
   protected
 
   def permitted_params
-    params.require(:collaborator).permit(:name, :url, :description)
+    params.require(:collaborator).permit(:name, :url, :description, :image)
   end
 
   def fetch_collaborator

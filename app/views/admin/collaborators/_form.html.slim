@@ -1,11 +1,21 @@
-.row
-  .large-6.columns
-    = simple_form_for @collaborator, url: form_url do |f|
-      = f.input :name, autofocus: true
-      = f.input :url
-      = f.input :description
-      = f.submit class: 'round button'
-  - if local_assigns.fetch :include_users, false
+= simple_form_for @collaborator, url: form_url do |f|
+  .row
     .large-6.columns
-      h3 Accounts
-      .hierarchy= render partial: 'admin/hierarchy_list', locals: { hash: @collaborator.users.roots.hash_tree, include_delete: false }
+      .row
+        .large-12.columns
+          = f.input :name, autofocus: true
+          = f.input :url
+      .row
+        .large-6.columns
+          = f.input :image, as: :file, input_html: { accept: 'image/png,image/jpg,image/gif' }
+        .large-6.columns
+          - if @collaborator.image.file
+            = image_tag @collaborator.image.url
+      .row
+        .large-12.columns
+          = f.input :description, input_html: { class: 'wysiwyg' }
+          = f.submit class: 'round button'
+    - if local_assigns.fetch :include_users, false
+      .large-6.columns
+        h3 Accounts
+        .hierarchy= render partial: 'admin/hierarchy_list', locals: { hash: @collaborator.users.roots.hash_tree, include_delete: false }
