@@ -11,8 +11,7 @@
           = f.input :slug, label: false
   .row
     .large-12.columns
-      = f.simple_fields_for :body do |b|
-        = b.input :text, label: 'Content', input_html: { class: 'wysiwyg' }
+      = f.input :body, label: 'Content', input_html: { class: 'wysiwyg' }
   .row
     .large-6.columns
       = f.submit class: 'round button'

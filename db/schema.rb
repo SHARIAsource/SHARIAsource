@@ -11,21 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140808170348) do
+ActiveRecord::Schema.define(version: 20140808173938) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "bodies", force: true do |t|
     t.text    "text"
-    t.integer "static_id"
     t.integer "page_id"
     t.integer "commentary_id"
   end
 
   add_index "bodies", ["commentary_id"], name: "index_bodies_on_commentary_id", unique: true, using: :btree
   add_index "bodies", ["page_id"], name: "index_bodies_on_page_id", using: :btree
-  add_index "bodies", ["static_id"], name: "index_bodies_on_static_id", using: :btree
 
   create_table "collaborators", force: true do |t|
     t.string   "name"
@@ -210,6 +208,7 @@ ActiveRecord::Schema.define(version: 20140808170348) do
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "body"
   end
 
   add_index "statics", ["slug"], name: "index_statics_on_slug", using: :btree

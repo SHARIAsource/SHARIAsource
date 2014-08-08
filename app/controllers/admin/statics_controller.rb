@@ -1,5 +1,6 @@
 class Admin::StaticsController < AdminController
   before_filter :ensure_editor!
+  before_filter :fetch_static, only: [:edit, :update, :destroy]
 
   def index
     @statics = Static.all
@@ -7,11 +8,9 @@ class Admin::StaticsController < AdminController
 
   def new
     @static = Static.new
-    @static.build_body
   end
 
   def edit
-    @static = Static.includes(:body).find(params[:id])
   end
 
   def create
@@ -26,7 +25,6 @@ class Admin::StaticsController < AdminController
   end
 
   def update
-    @static = Static.find params[:id]
     if @static.update permitted_params
       flash[:notice] = 'Static page updated successfully'
       redirect_to admin_statics_path
@@ -37,7 +35,6 @@ class Admin::StaticsController < AdminController
   end
 
   def destroy
-    @static = Static.find params[:id]
     if @static.destroy
       flash[:notice] = 'Static page deleted successfully'
     else
@@ -49,8 +46,10 @@ class Admin::StaticsController < AdminController
   protected
 
   def permitted_params
-    params.require(:static).permit(:title, :slug, body_attributes: [
-      :id, :text
-    ])
+    params.require(:static).permit(:title, :slug, :body)
+  end
+
+  def fetch_static
+    @static = Static.find params[:id]
   end
 end
