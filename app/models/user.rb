@@ -43,12 +43,15 @@ class User < ActiveRecord::Base
   has_many :commentaries, foreign_key: 'contributor_id'
   has_many :sources, foreign_key: 'contributor_id'
 
+  mount_uploader :avatar, ImageUploader
+
   def name
     "#{first_name} #{last_name}"
   end
 
   private
-    def remove_articles
-      self.last_name_without_articles = last_name.sub ARTICLES_REGEX, ''
-    end
+
+  def remove_articles
+    self.last_name_without_articles = last_name.sub ARTICLES_REGEX, ''
+  end
 end

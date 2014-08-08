@@ -15,7 +15,16 @@
         .large-6.columns
           = f.input :last_name
 
+      .row
+        .large-6.columns
+          = f.input :avatar, as: :file, input_html: { accept: 'image/png,image/jpg,image/gif' }
+          = f.hidden_field :avatar_cache
+        .large-6.columns
+          - if f.object.avatar?
+            = image_tag f.object.avatar_url
+
+      = f.input :about, input_html: { class: 'wysiwyg' }
       = f.input :password, autocomplete: 'off'
       = f.input :password_confirmation, autocomplete: 'off'
-      = f.input :current_password, autocomplete: 'off'
+      = f.input :current_password, autocomplete: 'off', required: true
       = f.submit 'Update', class: 'round button'

@@ -29,6 +29,8 @@ describe User do
   it { should respond_to :is_admin? }
   it { should respond_to :is_editor? }
   it { should respond_to :is_contributor? }
+  it { should respond_to :about }
+  it { should respond_to :avatar }
   it { should validate_presence_of :first_name }
   it { should validate_presence_of :last_name }
   it { should belong_to :collaborator }
