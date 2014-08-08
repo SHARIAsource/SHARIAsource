@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140806234316) do
+ActiveRecord::Schema.define(version: 20140808170348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,9 +144,17 @@ ActiveRecord::Schema.define(version: 20140806234316) do
   add_index "regions", ["name"], name: "index_regions_on_name", using: :btree
   add_index "regions", ["parent_id"], name: "index_regions_on_parent_id", using: :btree
 
+  create_table "regions_sources", force: true do |t|
+    t.integer "region_id"
+    t.integer "source_id"
+  end
+
+  add_index "regions_sources", ["region_id", "source_id"], name: "index_regions_sources_on_region_id_and_source_id", unique: true, using: :btree
+  add_index "regions_sources", ["region_id"], name: "index_regions_sources_on_region_id", using: :btree
+  add_index "regions_sources", ["source_id"], name: "index_regions_sources_on_source_id", using: :btree
+
   create_table "sources", force: true do |t|
     t.string  "title"
-    t.integer "region_id"
     t.integer "document_type_id"
     t.string  "pdf"
     t.boolean "processed",          default: true
@@ -169,7 +177,6 @@ ActiveRecord::Schema.define(version: 20140806234316) do
   add_index "sources", ["contributor_id"], name: "index_sources_on_contributor_id", using: :btree
   add_index "sources", ["document_type_id"], name: "index_sources_on_document_type_id", using: :btree
   add_index "sources", ["language_id"], name: "index_sources_on_language_id", using: :btree
-  add_index "sources", ["region_id"], name: "index_sources_on_region_id", using: :btree
 
   create_table "sources_tags", id: false, force: true do |t|
     t.integer "source_id"

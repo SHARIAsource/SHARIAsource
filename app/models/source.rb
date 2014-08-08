@@ -26,8 +26,8 @@ class Source < ActiveRecord::Base
   has_and_belongs_to_many :tags
   has_and_belongs_to_many :eras
   has_and_belongs_to_many :reference_types
+  has_and_belongs_to_many :regions
   has_many :pages, dependent: :destroy
-  belongs_to :region
   belongs_to :document_type
   belongs_to :language
   belongs_to :contributor, class_name: 'User'

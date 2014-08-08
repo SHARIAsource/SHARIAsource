@@ -46,11 +46,11 @@ class Admin::SourcesController < AdminController
   protected
 
   def permitted_params
-    whitelist = [:title, :region_id, :document_type_id, :pdf, :language_id,
+    whitelist = [:title, :volume_count, :document_type_id, :pdf, :language_id,
                  :gregorian_date_string, :lunar_hijri_date_string,
                  :source_name,:source_url, :author, :translators, :editors,
-                 :publisher, :publisher_location, :volume_count,
-                 :alternate_titles, :alternate_authors, theme_ids: [],
+                 :publisher, :publisher_location, :alternate_titles,
+                 :alternate_authors, region_ids: [], theme_ids: [],
                  topic_ids: [], tag_ids: [], era_ids: [], pages_attributes: [
                    :id, body_attributes: [:id, :text, :language]
                  ]]

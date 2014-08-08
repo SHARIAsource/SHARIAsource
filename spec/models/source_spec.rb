@@ -27,14 +27,12 @@ describe Source do
   it { should respond_to :alternate_authors }
 
   it { should have_and_belong_to_many :themes }
-
-  it { should have_and_belong_to_many :themes }
   it { should have_and_belong_to_many :topics }
   it { should have_and_belong_to_many :tags }
   it { should have_and_belong_to_many :eras }
   it { should have_and_belong_to_many :reference_types }
+  it { should have_and_belong_to_many :regions }
   it { should have_many(:pages).dependent :destroy }
-  it { should belong_to :region }
   it { should belong_to :document_type }
   it { should belong_to :language }
   it { should belong_to :contributor }

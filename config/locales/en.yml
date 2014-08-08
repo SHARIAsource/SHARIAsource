@@ -32,3 +32,8 @@ en:
         other: "Empires & Eras"
       region: "Geographic Region"
       static: "Static Page"
+  simple_form:
+    labels:
+      source:
+        regions: "Geographic Regions"
+        eras: "Empires & Eras"
