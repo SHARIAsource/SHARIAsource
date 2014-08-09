@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140808193453) do
+ActiveRecord::Schema.define(version: 20140808222708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,8 +103,10 @@ ActiveRecord::Schema.define(version: 20140808193453) do
   create_table "pages", force: true do |t|
     t.string  "image"
     t.integer "source_id"
+    t.integer "number"
   end
 
+  add_index "pages", ["number"], name: "index_pages_on_number", using: :btree
   add_index "pages", ["source_id"], name: "index_pages_on_source_id", using: :btree
 
   create_table "reference_types", force: true do |t|

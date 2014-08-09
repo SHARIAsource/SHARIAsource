@@ -1,4 +1,5 @@
 var $document = $(document)
+
 $document.on('page:change', function() {
   $document.foundation()
   $('select[multiple]').chosen()
