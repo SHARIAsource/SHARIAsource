@@ -23,6 +23,8 @@
 #  last_name_without_articles :string(255)
 #  collaborator_id            :integer
 #  parent_id                  :integer
+#  about                      :text
+#  avatar                     :string(255)
 #
 
 class User < ActiveRecord::Base

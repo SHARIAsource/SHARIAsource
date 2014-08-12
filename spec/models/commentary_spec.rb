@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: commentaries
+#
+#  id             :integer          not null, primary key
+#  title          :string(255)
+#  contributor_id :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
 describe Commentary do
   it { should validate_presence_of :title }
   it { should validate_presence_of :contributor_id }

@@ -5,6 +5,7 @@
 #  id        :integer          not null, primary key
 #  image     :string(255)
 #  source_id :integer
+#  number    :integer
 #
 
 describe Page do

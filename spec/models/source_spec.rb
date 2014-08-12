@@ -2,12 +2,25 @@
 #
 # Table name: sources
 #
-#  id               :integer          not null, primary key
-#  title            :string(255)
-#  region_id        :integer
-#  document_type_id :integer
-#  pdf              :string(255)
-#  processed        :boolean          default(TRUE)
+#  id                 :integer          not null, primary key
+#  title              :string(255)
+#  document_type_id   :integer
+#  pdf                :string(255)
+#  processed          :boolean          default(TRUE)
+#  gregorian_date     :date
+#  lunar_hijri_date   :date
+#  source_name        :string(255)
+#  source_url         :string(255)
+#  author             :string(255)
+#  translators        :string(255)
+#  editors            :string(255)
+#  publisher          :string(255)
+#  publisher_location :string(255)
+#  volume_count       :integer
+#  alternate_titles   :string(255)
+#  alternate_authors  :string(255)
+#  language_id        :integer
+#  contributor_id     :integer
 #
 
 describe Source do

@@ -2,11 +2,10 @@
 #
 # Table name: bodies
 #
-#  id        :integer          not null, primary key
-#  text      :text
-#  static_id :integer
-#  page_id   :integer
-#  language  :string(255)
+#  id            :integer          not null, primary key
+#  text          :text
+#  page_id       :integer
+#  commentary_id :integer
 #
 
 class Body < ActiveRecord::Base

@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: regions
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  parent_id  :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 describe Region do
   it { should validate_presence_of :name }
   it { should validate_uniqueness_of :name }
