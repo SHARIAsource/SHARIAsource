@@ -49,7 +49,8 @@ class Admin::CommentariesController < AdminController
   protected
 
   def permitted_params
-    params.require(:commentary).permit(:title, body_attributes: [:id, :text])
+    params.require(:commentary).permit(:title, source_ids: [],
+                                       body_attributes: [:id, :text])
   end
 
   def fetch_commentary

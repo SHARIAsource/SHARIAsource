@@ -15,5 +15,6 @@ class Commentary < ActiveRecord::Base
   validates :contributor_id, presence: true
   belongs_to :contributor, class_name: 'User'
   has_one :body
+  has_and_belongs_to_many :sources
   accepts_nested_attributes_for :body
 end

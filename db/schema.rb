@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140813191438) do
+ActiveRecord::Schema.define(version: 20140813204744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,15 @@ ActiveRecord::Schema.define(version: 20140813191438) do
   end
 
   add_index "commentaries", ["created_at"], name: "index_commentaries_on_created_at", using: :btree
+
+  create_table "commentaries_sources", id: false, force: true do |t|
+    t.integer "commentary_id"
+    t.integer "source_id"
+  end
+
+  add_index "commentaries_sources", ["commentary_id", "source_id"], name: "index_commentaries_sources_on_commentary_id_and_source_id", unique: true, using: :btree
+  add_index "commentaries_sources", ["commentary_id"], name: "index_commentaries_sources_on_commentary_id", using: :btree
+  add_index "commentaries_sources", ["source_id"], name: "index_commentaries_sources_on_source_id", using: :btree
 
   create_table "document_type_hierarchies", id: false, force: true do |t|
     t.integer "ancestor_id",   null: false

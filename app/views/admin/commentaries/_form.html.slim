@@ -1,7 +1,9 @@
 = simple_form_for @commentary, url: form_url do |f|
   .row
-    .large-6.columns.end
+    .large-6.columns
       = f.input :title, autofocus: true
+    .large-6.columns
+      = f.association :sources, collection: Source.all
   .row
     .large-12.columns
       = f.simple_fields_for :body do |b|

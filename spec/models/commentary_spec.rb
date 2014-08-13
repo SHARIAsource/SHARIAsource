@@ -14,5 +14,6 @@ describe Commentary do
   it { should validate_presence_of :contributor_id }
   it { should belong_to :contributor }
   it { should have_one :body }
+  it { should have_and_belong_to_many :sources }
   it { should accept_nested_attributes_for :body }
 end
