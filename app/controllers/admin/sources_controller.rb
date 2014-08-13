@@ -3,7 +3,7 @@ class Admin::SourcesController < AdminController
   before_filter :fetch_source, only: [:edit, :update, :destroy]
 
   def index
-    @sources = @current_user.sources
+    @sources = Source.where id: @current_user.self_and_descendant_ids
   end
 
   def new
