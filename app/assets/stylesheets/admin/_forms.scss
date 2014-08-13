@@ -32,3 +32,14 @@ form .tabs.vertical {
   overflow:auto;
   max-height:400px;
 }
+
+label {
+  text-transform:capitalize;
+  font-weight:bold;
+
+  &.required:after {
+    content:' (required)';
+    font-weight:normal;
+    font-size:.8em;
+  }
+}

@@ -1,7 +1,15 @@
-.row
-  .large-6.columns
-    = simple_form_for @era, url: form_url do |f|
+= simple_form_for @era, url: form_url do |f|
+  .row
+    .large-6.columns
       = f.input :name, autofocus: true
+    .large-6.columns
       = f.association :parent, collection: parent_collection, include_blank: 'Top Level'
+  .row
+    .large-6.columns
+      = f.input :start_year
+    .large-6.columns
+      = f.input :end_year
+  .row
+    .large-12.columns
       = f.submit class: 'round button'
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140808222708) do
+ActiveRecord::Schema.define(version: 20140813182355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,10 +78,14 @@ ActiveRecord::Schema.define(version: 20140808222708) do
     t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "start_year"
+    t.integer  "end_year"
   end
 
+  add_index "eras", ["end_year"], name: "index_eras_on_end_year", using: :btree
   add_index "eras", ["name"], name: "index_eras_on_name", using: :btree
   add_index "eras", ["parent_id"], name: "index_eras_on_parent_id", using: :btree
+  add_index "eras", ["start_year"], name: "index_eras_on_start_year", using: :btree
 
   create_table "eras_sources", id: false, force: true do |t|
     t.integer "era_id"
