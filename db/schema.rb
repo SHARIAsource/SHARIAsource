@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140813182355) do
+ActiveRecord::Schema.define(version: 20140813191438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -157,6 +157,15 @@ ActiveRecord::Schema.define(version: 20140813182355) do
   add_index "regions_sources", ["region_id", "source_id"], name: "index_regions_sources_on_region_id_and_source_id", unique: true, using: :btree
   add_index "regions_sources", ["region_id"], name: "index_regions_sources_on_region_id", using: :btree
   add_index "regions_sources", ["source_id"], name: "index_regions_sources_on_source_id", using: :btree
+
+  create_table "source_sources", id: false, force: true do |t|
+    t.integer "source_id"
+    t.integer "referenced_id"
+  end
+
+  add_index "source_sources", ["referenced_id"], name: "index_source_sources_on_referenced_id", using: :btree
+  add_index "source_sources", ["source_id", "referenced_id"], name: "index_source_sources_on_source_id_and_referenced_id", unique: true, using: :btree
+  add_index "source_sources", ["source_id"], name: "index_source_sources_on_source_id", using: :btree
 
   create_table "sources", force: true do |t|
     t.string  "title"

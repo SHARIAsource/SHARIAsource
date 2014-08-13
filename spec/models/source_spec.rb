@@ -45,6 +45,7 @@ describe Source do
   it { should have_and_belong_to_many :eras }
   it { should have_and_belong_to_many :reference_types }
   it { should have_and_belong_to_many :regions }
+  it { should have_and_belong_to_many :referenced_sources }
   it { should have_many(:pages).dependent :destroy }
   it { should belong_to :document_type }
   it { should belong_to :language }

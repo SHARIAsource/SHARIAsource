@@ -3,7 +3,9 @@ class Admin::CommentariesController < AdminController
   before_filter :fetch_commentary
 
   def index
-    @commentaries = Commentary.where id: @current_user.self_and_descendant_ids
+    @commentaries = Commentary.where(
+      contributor_id: @current_user.self_and_descendant_ids
+    )
   end
 
   def new

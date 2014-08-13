@@ -51,6 +51,10 @@
       = f.input :publisher_location
   .row
     .large-6.columns
+      = f.association :referenced_sources, collection: Source.where.not(id: @source.id)
+    .large-6.columns
+  .row
+    .large-6.columns
       = f.input :volume_count
     .large-6.columns
   .row

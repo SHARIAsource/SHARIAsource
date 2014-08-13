@@ -3,7 +3,9 @@ class Admin::SourcesController < AdminController
   before_filter :fetch_source, only: [:edit, :update, :destroy]
 
   def index
-    @sources = Source.where id: @current_user.self_and_descendant_ids
+    @sources = Source.where(
+      contributor_id: @current_user.self_and_descendant_ids
+    )
   end
 
   def new
@@ -51,7 +53,8 @@ class Admin::SourcesController < AdminController
                  :source_name,:source_url, :author, :translators, :editors,
                  :publisher, :publisher_location, :alternate_titles,
                  :alternate_authors, region_ids: [], theme_ids: [],
-                 topic_ids: [], tag_ids: [], era_ids: [], pages_attributes: [
+                 topic_ids: [], tag_ids: [], referenced_source_ids: [],
+                 era_ids: [], pages_attributes: [
                    :id, body_attributes: [:id, :text, :language]
                  ]]
     params.require(:source).permit(*whitelist)

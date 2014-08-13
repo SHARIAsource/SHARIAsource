@@ -40,6 +40,9 @@ class Source < ActiveRecord::Base
   has_and_belongs_to_many :eras
   has_and_belongs_to_many :reference_types
   has_and_belongs_to_many :regions
+  has_and_belongs_to_many :referenced_sources, class_name: 'Source',
+    join_table: :source_sources, foreign_key: :source_id,
+    association_foreign_key: :referenced_id
   has_many :pages, dependent: :destroy
   belongs_to :document_type
   belongs_to :language
