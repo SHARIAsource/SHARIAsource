@@ -17,4 +17,5 @@ class Commentary < ActiveRecord::Base
   has_one :body
   has_and_belongs_to_many :sources
   accepts_nested_attributes_for :body
+  default_scope { order('created_at DESC') }
 end

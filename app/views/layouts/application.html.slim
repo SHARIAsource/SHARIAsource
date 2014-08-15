@@ -2,7 +2,7 @@ doctype html
 html
   head
     meta charset='utf-8'
-    title= head_title yield(:page_title)
+    title== head_title yield(:page_title)
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
@@ -10,6 +10,8 @@ html
   body
     .container
       = render 'shared/admin_nav' if user_signed_in?
+      = render partial: 'shared/site_nav'
+      = render partial: 'shared/banner'
       p.flash-notice= notice
       p.flash-alert= alert
       == yield

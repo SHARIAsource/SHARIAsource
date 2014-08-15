@@ -1,1 +1,3 @@
-h1 Homepage
+- home_presenter = HomePresenter.new
+
+= render partial: 'home/recent_commentaries', locals: { commentaries: home_presenter.recent_commentaries }

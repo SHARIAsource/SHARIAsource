@@ -7,14 +7,16 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
+  resource :search, only: [:show]
   resources :sources, only: [:show]
   resources :commentaries, only: [:show]
   resources :authors, only: [:index, :show]
   resources :regions, only: [:index]
   resources :document_types, path: '/document-types', only: [:index]
   resources :collaborators, only: [:index, :show]
+  resources :topics, only: [:index]
+  resources :eras, only: [:index]
   resources :users, only: [:show]
-  resource :search, only: [:show]
 
   namespace :admin do
     resources :users, only: [:index, :edit, :update]

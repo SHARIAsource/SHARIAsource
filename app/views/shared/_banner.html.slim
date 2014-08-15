@@ -1,0 +1,8 @@
+= link_to root_path do
+  h1 SHARIAsource
+  h2 at Harvard Law School
+
+= form_tag search_path, method: :get do
+  = text_field_tag :q
+  = submit_tag 'Search', name: nil
+  = link_to 'Advanced Search', search_path
