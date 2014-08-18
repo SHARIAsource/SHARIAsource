@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140818184258) do
+ActiveRecord::Schema.define(version: 20140818203553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,10 +41,12 @@ ActiveRecord::Schema.define(version: 20140818184258) do
     t.integer  "contributor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "popular_count",  default: 0
+    t.integer  "popular_count",     default: 0
+    t.integer  "featured_position"
   end
 
   add_index "commentaries", ["created_at"], name: "index_commentaries_on_created_at", using: :btree
+  add_index "commentaries", ["featured_position"], name: "index_commentaries_on_featured_position", using: :btree
   add_index "commentaries", ["popular_count"], name: "index_commentaries_on_popular_count", using: :btree
 
   create_table "commentaries_sources", id: false, force: true do |t|

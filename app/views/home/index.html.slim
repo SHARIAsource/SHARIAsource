@@ -1,2 +1,12 @@
 = render partial: 'home/three_item_block', locals: { block_title: 'Recent', collection: @home_presenter.recent_commentaries }
 = render partial: 'home/three_item_block', locals: { block_title: 'Popular', collection: @home_presenter.popular_sources }
+= render partial: 'home/three_item_block', locals: { block_title: 'Featured', collection: @home_presenter.featured_commentaries }
+
+h2 Collaborators
+- @home_presenter.collaborators.take(3).each do |collaborator|
+  = image_tag collaborator.image.url 
+  h3= collaborator.name
+  p== collaborator.description
+  p= "#{collaborator.commentary_count} #{'commentary'.pluralize(collaborator.commentary_count)} posted"
+- if @home_presenter.collaborators.count > 0
+  = link_to 'More', collaborators_path

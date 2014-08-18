@@ -15,4 +15,8 @@ class Collaborator < ActiveRecord::Base
   validates :name, presence: true
   has_many :users, dependent: :nullify
   mount_uploader :image, ImageUploader
+
+  def commentary_count
+    self.users.joins(:commentaries).count
+  end
 end

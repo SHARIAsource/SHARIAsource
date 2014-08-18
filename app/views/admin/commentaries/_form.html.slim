@@ -5,6 +5,9 @@
     .large-6.columns
       = f.association :sources, collection: Source.all
   .row
+    .large-6.columns.end
+      = f.input :featured_position, max: 3
+  .row
     .large-12.columns
       = f.simple_fields_for :body do |b|
         = b.input :text, label: 'Content', input_html: { class: 'wysiwyg' }

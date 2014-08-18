@@ -1,3 +1,21 @@
 = content_for :page_title, 'Commentaries'
 
-= render partial: 'admin/table', locals: { collection: @commentaries }
+h2 Commentaries
+
+table
+  thead
+    th Name
+    th Labels
+    th.actions Actions
+  tbody
+    - @commentaries.each do |commentary|
+      tr
+        td= commentary.title
+        td
+          ul.inline-list
+            - if commentary.featured_position && commentary.featured_position > 0
+              li.label.radius.secondary= "Featured #{commentary.featured_position}"
+        td.actions
+          ul.inline-list
+            li= link_to t('edit'), edit_admin_commentary_path(commentary), class: 'tiny radius pill button'
+            li= link_to t('delete'), admin_commentary_path(commentary), class: 'tiny radius alert pill button', method: :delete, data: { confirm: t('helpers.delete_confirm', model: 'Commentary')}

@@ -49,7 +49,8 @@ class Admin::CommentariesController < AdminController
   protected
 
   def permitted_params
-    params.require(:commentary).permit(:title, source_ids: [],
+    params.require(:commentary).permit(:title, :featured_position,
+                                       source_ids: [],
                                        body_attributes: [:id, :text])
   end
 

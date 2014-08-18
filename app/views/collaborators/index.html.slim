@@ -1,0 +1,6 @@
+h2 Collaborators
+
+- @collaborators.each do |collaborator|
+  = image_tag collaborator.image.url 
+  h3= collaborator.name
+  p== collaborator.description

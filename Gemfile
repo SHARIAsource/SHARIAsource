@@ -43,5 +43,5 @@ end
 group :test do
   gem 'capybara', '~> 2.3.0'
   gem 'guard-rspec', '~> 4.2.10'
-  gem 'shoulda-matchers', '~> 2.6.1'
+  gem 'shoulda-matchers', '~> 2.6.2'
 end
