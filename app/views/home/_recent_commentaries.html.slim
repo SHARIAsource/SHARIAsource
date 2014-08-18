@@ -18,3 +18,5 @@ p= latest_commentary.author
 - commentaries.drop(1).each do |commentary|
   h3= link_to commentary.title, commentary_path(commentary)
   p= commentary.author
+
+= link_to 'More Commentary', '#TODO'
