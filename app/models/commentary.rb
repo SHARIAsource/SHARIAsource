@@ -11,11 +11,15 @@
 
 class Commentary < ActiveRecord::Base
   alias_attribute :name, :title
+  is_impressionable counter_cache: true
+
   validates :title, presence: true
   validates :contributor_id, presence: true
+
   belongs_to :contributor, class_name: 'User'
   has_one :body
   has_and_belongs_to_many :sources
+
   accepts_nested_attributes_for :body
   default_scope { order('created_at DESC') }
 end

@@ -25,15 +25,19 @@
 
 class Source < ActiveRecord::Base
   attr_accessor :gregorian_date_string, :lunar_hijri_date_string
+  alias_attribute :name, :title
+  is_impressionable counter_cache: true
 
+  # Callbacks
   before_save :set_processed
   before_save :prepend_http_to_source_url
   after_commit :generate_images
-  alias_attribute :name, :title
 
+  # Validations
   validates :title, presence: true
   validate :validate_dates
 
+  # Associations
   has_and_belongs_to_many :themes
   has_and_belongs_to_many :topics
   has_and_belongs_to_many :tags

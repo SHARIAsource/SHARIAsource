@@ -1,3 +1,2 @@
-- home_presenter = HomePresenter.new
-
-= render partial: 'home/recent_commentaries', locals: { commentaries: home_presenter.recent_commentaries }
+= render partial: 'home/three_item_block', locals: { block_title: 'Recent', collection: @home_presenter.recent_commentaries }
+= render partial: 'home/three_item_block', locals: { block_title: 'Popular', collection: @home_presenter.popular_sources }
