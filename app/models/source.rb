@@ -26,7 +26,6 @@
 class Source < ActiveRecord::Base
   attr_accessor :gregorian_date_string, :lunar_hijri_date_string
   alias_attribute :name, :title
-  is_impressionable counter_cache: true
 
   # Callbacks
   before_save :set_processed

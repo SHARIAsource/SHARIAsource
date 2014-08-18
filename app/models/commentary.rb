@@ -11,7 +11,6 @@
 
 class Commentary < ActiveRecord::Base
   alias_attribute :name, :title
-  is_impressionable counter_cache: true
 
   validates :title, presence: true
   validates :contributor_id, presence: true

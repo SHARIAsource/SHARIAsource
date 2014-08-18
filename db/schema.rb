@@ -41,11 +41,11 @@ ActiveRecord::Schema.define(version: 20140818184258) do
     t.integer  "contributor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "counter_cache",  default: 0
+    t.integer  "popular_count",  default: 0
   end
 
-  add_index "commentaries", ["counter_cache"], name: "index_commentaries_on_counter_cache", using: :btree
   add_index "commentaries", ["created_at"], name: "index_commentaries_on_created_at", using: :btree
+  add_index "commentaries", ["popular_count"], name: "index_commentaries_on_popular_count", using: :btree
 
   create_table "commentaries_sources", id: false, force: true do |t|
     t.integer "commentary_id"
@@ -106,31 +106,6 @@ ActiveRecord::Schema.define(version: 20140818184258) do
   add_index "eras_sources", ["era_id", "source_id"], name: "index_eras_sources_on_era_id_and_source_id", unique: true, using: :btree
   add_index "eras_sources", ["era_id"], name: "index_eras_sources_on_era_id", using: :btree
   add_index "eras_sources", ["source_id"], name: "index_eras_sources_on_source_id", using: :btree
-
-  create_table "impressions", force: true do |t|
-    t.string   "impressionable_type"
-    t.integer  "impressionable_id"
-    t.integer  "user_id"
-    t.string   "controller_name"
-    t.string   "action_name"
-    t.string   "view_name"
-    t.string   "request_hash"
-    t.string   "ip_address"
-    t.string   "session_hash"
-    t.text     "message"
-    t.text     "referrer"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "impressions", ["controller_name", "action_name", "ip_address"], name: "controlleraction_ip_index", using: :btree
-  add_index "impressions", ["controller_name", "action_name", "request_hash"], name: "controlleraction_request_index", using: :btree
-  add_index "impressions", ["controller_name", "action_name", "session_hash"], name: "controlleraction_session_index", using: :btree
-  add_index "impressions", ["impressionable_type", "impressionable_id", "ip_address"], name: "poly_ip_index", using: :btree
-  add_index "impressions", ["impressionable_type", "impressionable_id", "request_hash"], name: "poly_request_index", using: :btree
-  add_index "impressions", ["impressionable_type", "impressionable_id", "session_hash"], name: "poly_session_index", using: :btree
-  add_index "impressions", ["impressionable_type", "message", "impressionable_id"], name: "impressionable_type_message_index", using: :btree
-  add_index "impressions", ["user_id"], name: "index_impressions_on_user_id", using: :btree
 
   create_table "languages", force: true do |t|
     t.string   "name"
@@ -222,16 +197,16 @@ ActiveRecord::Schema.define(version: 20140818184258) do
     t.string   "alternate_authors"
     t.integer  "language_id"
     t.integer  "contributor_id"
-    t.integer  "counter_cache",      default: 0
+    t.integer  "popular_count",      default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "sources", ["contributor_id"], name: "index_sources_on_contributor_id", using: :btree
-  add_index "sources", ["counter_cache"], name: "index_sources_on_counter_cache", using: :btree
   add_index "sources", ["created_at"], name: "index_sources_on_created_at", using: :btree
   add_index "sources", ["document_type_id"], name: "index_sources_on_document_type_id", using: :btree
   add_index "sources", ["language_id"], name: "index_sources_on_language_id", using: :btree
+  add_index "sources", ["popular_count"], name: "index_sources_on_popular_count", using: :btree
 
   create_table "sources_tags", id: false, force: true do |t|
     t.integer "source_id"
