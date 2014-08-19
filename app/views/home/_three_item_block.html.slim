@@ -19,3 +19,6 @@ p= featured_item.author
 - collection.drop(1).each do |item|
   h3= link_to item.title, url_for([item.object])
   p= item.author
+
+- if local_assigns.fetch(:more_link, false)
+  a href='#TODO' More Commentary
