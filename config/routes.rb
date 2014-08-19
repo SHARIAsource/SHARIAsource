@@ -9,7 +9,6 @@ Rails.application.routes.draw do
 
   resource :search, only: [:show]
   resources :sources, only: [:show]
-  resources :commentaries, only: [:show]
   resources :authors, only: [:index, :show]
   resources :regions, only: [:index]
   resources :document_types, path: '/document-types', only: [:index]
@@ -39,9 +38,6 @@ Rails.application.routes.draw do
     resources :eras, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :statics, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :sources, only: [:index, :new, :edit, :create, :update, :destroy]
-    resources :commentaries, only: [
-      :index, :new, :edit, :create, :update, :destroy
-    ]
   end
 
   authenticate :user, lambda {|u| u.is_admin? } do

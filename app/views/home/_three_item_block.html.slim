@@ -1,24 +1,25 @@
-- featured_item = collection[0]
+- if collection.present?
+  - featured_item = collection[0]
 
-h2= block_title
+  h2= block_title
 
-p
-  strong= featured_item.object.class.model_name.human
-  span= " :: #{featured_item.created_at}"
-h3= link_to featured_item.title, url_for([featured_item.object])
-p= featured_item.author
-- if featured_item.referenced_documents.present?
   p
-    h4= "#{'Document'.pluralize(featured_item.referenced_documents.count)} referenced:"
-    ul
-      - featured_item.referenced_documents.each do |document|
-        li= link_to document.title_with_author, url_for([document.object])
-      - if featured_item.other_documents_count > 0
-        li= featured_item.other_documents
+    strong= featured_item.document_type.name
+    span= " :: #{featured_item.created_at}"
+  h3= link_to featured_item.title, url_for([featured_item.object])
+  p= featured_item.contributor.name
+  - if featured_item.referenced_documents.present?
+    p
+      h4= "#{'Document'.pluralize(featured_item.referenced_documents.count)} referenced:"
+      ul
+        - featured_item.referenced_documents.each do |document|
+          li= link_to document.title_with_author, url_for([document.object])
+        - if featured_item.other_documents_count > 0
+          li= featured_item.other_documents
 
-- collection.drop(1).each do |item|
-  h3= link_to item.title, url_for([item.object])
-  p= item.author
+  - collection.drop(1).each do |item|
+    h3= link_to item.title, url_for([item.object])
+    p= item.contributor.name
 
-- if local_assigns.fetch(:more_link, false)
-  a href='#TODO' More Commentary
+  - if local_assigns.fetch(:more_link, false)
+    a href='#TODO' More Commentary

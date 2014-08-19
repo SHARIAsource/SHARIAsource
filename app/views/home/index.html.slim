@@ -1,6 +1,6 @@
-= render partial: 'home/three_item_block', locals: { block_title: 'Recent', collection: @home_presenter.recent_commentaries, more_link: true }
-= render partial: 'home/three_item_block', locals: { block_title: 'Popular', collection: @home_presenter.popular_sources }
-= render partial: 'home/three_item_block', locals: { block_title: 'Featured', collection: @home_presenter.featured_commentaries }
+= render partial: 'home/three_item_block', locals: { block_title: 'Recent', collection: @home_presenter.recent, more_link: true }
+= render partial: 'home/three_item_block', locals: { block_title: 'Popular', collection: @home_presenter.popular }
+= render partial: 'home/three_item_block', locals: { block_title: 'Featured', collection: @home_presenter.featured }
 
 h2 Collaborators
 - @home_presenter.collaborators.take(3).each do |collaborator|

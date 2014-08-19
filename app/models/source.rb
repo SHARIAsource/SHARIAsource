@@ -34,6 +34,13 @@ class Source < ActiveRecord::Base
 
   # Validations
   validates :title, presence: true
+  validates :contributor_id, presence: true
+  validates :document_type_id, presence: true
+  validates :popular_count, numericality: true
+  validates :featured_position, allow_blank: true, inclusion: {
+    in: 1..3,
+    message: 'Must be between 1 and 3'
+  }
   validate :validate_dates
 
   # Associations
@@ -43,17 +50,22 @@ class Source < ActiveRecord::Base
   has_and_belongs_to_many :eras
   has_and_belongs_to_many :reference_types
   has_and_belongs_to_many :regions
-  has_and_belongs_to_many :commentaries
   has_and_belongs_to_many :referenced_sources, class_name: 'Source',
     join_table: :source_sources, foreign_key: :source_id,
     association_foreign_key: :referenced_id
   has_many :pages, dependent: :destroy
+  has_one :body
   belongs_to :document_type
   belongs_to :language
   belongs_to :contributor, class_name: 'User'
 
   mount_uploader :pdf, PdfUploader
-  accepts_nested_attributes_for :pages
+  accepts_nested_attributes_for :pages, :body
+  default_scope { order('created_At DESC') }
+
+  def self.featured
+    self.where.not(featured_position: nil).order(:featured_position)
+  end
 
   private
 

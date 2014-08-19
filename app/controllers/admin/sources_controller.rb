@@ -10,6 +10,7 @@ class Admin::SourcesController < AdminController
 
   def new
     @source = @current_user.sources.build
+    @source.build_body
   end
 
   def edit
@@ -52,11 +53,11 @@ class Admin::SourcesController < AdminController
                  :gregorian_date_string, :lunar_hijri_date_string,
                  :source_name,:source_url, :author, :translators, :editors,
                  :publisher, :publisher_location, :alternate_titles,
-                 :alternate_authors, region_ids: [], theme_ids: [],
-                 topic_ids: [], tag_ids: [], referenced_source_ids: [],
-                 era_ids: [], pages_attributes: [
-                   :id, body_attributes: [:id, :text, :language]
-                 ]]
+                 :alternate_authors, :featured_position, region_ids: [],
+                 theme_ids: [], topic_ids: [], tag_ids: [],
+                 referenced_source_ids: [], era_ids: [], pages_attributes: [
+                   :id, body_attributes: [:id, :text]
+                 ], body_attributes: [:id, :text]]
     params.require(:source).permit(*whitelist)
   end
 

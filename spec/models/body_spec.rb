@@ -11,5 +11,5 @@
 describe Body do
   it { should respond_to :text }
   it { should belong_to :page }
-  it { should belong_to :commentary }
+  it { should belong_to :source }
 end

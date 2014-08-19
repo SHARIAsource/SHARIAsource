@@ -3,7 +3,7 @@
     .large-6.columns
       = f.input :title, autofocus: true
     .large-6.columns
-      = f.input :alternate_titles
+      = f.association :document_type, collection: DocumentType.all
   .row
     .large-6.columns
       = f.association :themes, collection: Theme.all
@@ -18,65 +18,73 @@
     .large-6.columns
       = f.association :regions, collection: Region.all
     .large-6.columns
-      = f.association :document_type, collection: DocumentType.all
-  .row
-    .large-6.columns
-      = f.association :reference_types, collection: ReferenceType.all
-    .large-6.columns
       = f.association :language, collection: Language.all
-  .row
-    .large-6.columns
-      = f.input :gregorian_date_string, as: :string, placeholder: 'YYYY-MM-DD', label: 'Gregorian Date', input_html: { value: f.object.gregorian_date }
-    .large-6.columns
-      = f.input :lunar_hijri_date_string, as: :string, placeholder: 'YYYY-MM-DD', label: 'Lunar Hijri Date', input_html: { value: f.object.lunar_hijri_date }
-  .row
-    .large-6.columns
-      = f.input :source_name
-    .large-6.columns
-      = f.input :source_url, label: 'Source URL', placeholder: 'http://example.com'
-  .row
-    .large-6.columns
-      = f.input :author
-    .large-6.columns
-      = f.input :alternate_authors
-  .row
-    .large-6.columns
-      = f.input :translators
-    .large-6.columns
-      = f.input :editors
-  .row
-    .large-6.columns
-      = f.input :publisher
-    .large-6.columns
-      = f.input :publisher_location
   .row
     .large-6.columns
       = f.association :referenced_sources, collection: Source.where.not(id: @source.id)
     .large-6.columns
-      = f.input :volume_count
-  .row
-    .large-6.columns
-      = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
-      - if @source.pdf.file
-        p= @source.pdf.file.identifier
-    .large-6.columns
-  
-  - if @source.pages.present?
-    h3 Pages
-    ul.tabs.vertical data-tab="true" data-options='deep_linking:true'
-      - @source.pages.each_with_index do |page, index|
-        li class="tab-title #{'active' if index == 0}"
-          a href="#page#{index+1}"= "Page #{index+1}"
-    .tabs-content.vertical
-      = f.fields_for :pages do |p|
-        div class="content #{'active' if p.index == 0}" id="page#{p.index+1}"
-          .row.page-preview
-            .large-8.columns
-              = p.fields_for :body do |b|
-                = b.input :text, label: "Page #{p.index+1} Text", input_html: { class: 'wysiwyg' }
-            .large-4.columns
-              img src=p.object.image.url
+      = f.input :featured_position, input_html: { max: 3 }
 
+  .js-source-only.panel
+    .row
+      .large-6.columns
+        = f.association :reference_types, collection: ReferenceType.all
+      .large-6.columns
+        = f.input :alternate_titles
+    .row
+      .large-6.columns
+        = f.input :gregorian_date_string, as: :string, placeholder: 'YYYY-MM-DD', label: 'Gregorian Date', input_html: { value: f.object.gregorian_date }
+      .large-6.columns
+        = f.input :lunar_hijri_date_string, as: :string, placeholder: 'YYYY-MM-DD', label: 'Lunar Hijri Date', input_html: { value: f.object.lunar_hijri_date }
+    .row
+      .large-6.columns
+        = f.input :source_name
+      .large-6.columns
+        = f.input :source_url, label: 'Source URL', placeholder: 'http://example.com'
+    .row
+      .large-6.columns
+        = f.input :author
+      .large-6.columns
+        = f.input :alternate_authors
+    .row
+      .large-6.columns
+        = f.input :translators
+      .large-6.columns
+        = f.input :editors
+    .row
+      .large-6.columns
+        = f.input :publisher
+      .large-6.columns
+        = f.input :publisher_location
+    .row
+      .large-6.columns
+        = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
+        - if @source.pdf.file
+          p= @source.pdf.file.identifier
+      .large-6.columns
+          = f.input :volume_count
+    
+    - if @source.pages.present?
+      h3 Pages
+      ul.tabs.vertical data-tab="true" data-options='deep_linking:true'
+        - @source.pages.each_with_index do |page, index|
+          li class="tab-title #{'active' if index == 0}"
+            a href="#page#{index+1}"= "Page #{index+1}"
+      .tabs-content.vertical
+        = f.fields_for :pages do |p|
+          div class="content #{'active' if p.index == 0}" id="page#{p.index+1}"
+            .row.page-preview
+              .large-8.columns
+                = p.fields_for :body do |b|
+                  = b.input :text, label: "Page #{p.index+1} Text", input_html: { class: 'wysiwyg' }
+              .large-4.columns
+                img src=p.object.image.url
+
+  .js-commentary-only.panel
+    .row
+      .large-12.columns
+        = f.fields_for :body do |b|
+          = b.input :text, label: 'Content', input_html: { class: 'wysiwyg' }
 
   .row
     .large-6.columns.end

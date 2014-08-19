@@ -10,5 +10,5 @@
 
 class Body < ActiveRecord::Base
   belongs_to :page
-  belongs_to :commentary
+  belongs_to :source
 end

@@ -15,6 +15,6 @@ class SourcePresenter < BasePresenter
   end
 
   def title_with_author
-    [@object.title, @object.author].reject(&:empty?).join ' by '
+    [@object.title, @object.contributor.name].reject(&:empty?).join ' by '
   end
 end
