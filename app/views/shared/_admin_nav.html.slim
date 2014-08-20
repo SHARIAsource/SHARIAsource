@@ -1,3 +1,5 @@
+- admin_active = yield :admin_active
+
 nav.top-bar data-topbar='true'
   ul.title-area
     li.name
@@ -7,7 +9,7 @@ nav.top-bar data-topbar='true'
   section.top-bar-section
     ul.left
       - if editor_signed_in?
-        li.has-dropdown
+        li class="has-dropdown #{'active' if admin_active == 'Metadata'}"
           = link_to 'Metadata', '#'
           ul.dropdown
             li= link_to 'Document Types', admin_document_types_path
@@ -19,14 +21,19 @@ nav.top-bar data-topbar='true'
             li= link_to 'Topics', admin_topics_path
             li= link_to 'Themes', admin_themes_path
       - if admin_signed_in?
-        li= link_to 'Accounts', admin_users_path
+        li class=('active' if admin_active == 'Accounts')
+          = link_to 'Accounts', admin_users_path
       - if editor_signed_in?
-        li= link_to 'Collaborators', admin_collaborators_path
-        li= link_to 'Static Pages', admin_statics_path
+        li class=('active' if admin_active == 'Collaborators')
+          = link_to 'Collaborators', admin_collaborators_path
+        li class=('active' if admin_active == 'Static Pages')
+          = link_to 'Static Pages', admin_statics_path
       - if contributor_signed_in?
-        li= link_to 'Documents', admin_documents_path
+        li class=('active' if admin_active == 'Documents')
+          = link_to 'Documents', admin_documents_path
     ul.right
-      li= link_to 'My Profile', edit_user_registration_path
+      li class=('active' if admin_active == 'My Profile')
+        = link_to 'My Profile', edit_user_registration_path
       li= link_to 'Log Out', destroy_user_session_path, method: :delete
 aside.left-off-canvas-menu
 ul.off-canvas-list
