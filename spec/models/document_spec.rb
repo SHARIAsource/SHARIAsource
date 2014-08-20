@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: sources
+# Table name: documents
 #
 #  id                 :integer          not null, primary key
 #  title              :string(255)
@@ -21,9 +21,13 @@
 #  alternate_authors  :string(255)
 #  language_id        :integer
 #  contributor_id     :integer
+#  popular_count      :integer          default(0)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  featured_position  :integer
 #
 
-describe Source do
+describe Document do
   it { should validate_presence_of :title }
   it { should validate_presence_of :contributor_id }
   it { should validate_presence_of :document_type_id }
@@ -53,7 +57,7 @@ describe Source do
   it { should have_and_belong_to_many :eras }
   it { should have_and_belong_to_many :reference_types }
   it { should have_and_belong_to_many :regions }
-  it { should have_and_belong_to_many :referenced_sources }
+  it { should have_and_belong_to_many :referenced_documents }
   it { should have_many(:pages).dependent :destroy }
   it { should have_one :body }
   it { should belong_to :document_type }
@@ -63,9 +67,9 @@ describe Source do
   it { should accept_nested_attributes_for :pages }
   it { should accept_nested_attributes_for :body }
 
-  it 'adds http:// to source urls that does not have it' do
-    source = create :source, source_url: 'www.example.org'
-    source.reload
-    expect(source.source_url).to eq 'http://www.example.org'
+  it 'adds http:// to source urls that do not have it' do
+    document = create :document, source_url: 'www.example.org'
+    document.reload
+    expect(document.source_url).to eq 'http://www.example.org'
   end
 end

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resource :search, only: [:show]
-  resources :sources, only: [:show]
+  resources :documents, only: [:show]
   resources :authors, only: [:index, :show]
   resources :regions, only: [:index]
   resources :document_types, path: '/document-types', only: [:index]
@@ -37,7 +37,9 @@ Rails.application.routes.draw do
     resources :tags, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :eras, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :statics, only: [:index, :new, :edit, :create, :update, :destroy]
-    resources :sources, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :documents, only: [
+      :index, :new, :edit, :create, :update, :destroy
+    ]
   end
 
   authenticate :user, lambda {|u| u.is_admin? } do

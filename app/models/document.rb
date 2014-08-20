@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: sources
+# Table name: documents
 #
 #  id                 :integer          not null, primary key
 #  title              :string(255)
@@ -21,9 +21,13 @@
 #  alternate_authors  :string(255)
 #  language_id        :integer
 #  contributor_id     :integer
+#  popular_count      :integer          default(0)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  featured_position  :integer
 #
 
-class Source < ActiveRecord::Base
+class Document < ActiveRecord::Base
   attr_accessor :gregorian_date_string, :lunar_hijri_date_string
   alias_attribute :name, :title
 
@@ -50,8 +54,8 @@ class Source < ActiveRecord::Base
   has_and_belongs_to_many :eras
   has_and_belongs_to_many :reference_types
   has_and_belongs_to_many :regions
-  has_and_belongs_to_many :referenced_sources, class_name: 'Source',
-    join_table: :source_sources, foreign_key: :source_id,
+  has_and_belongs_to_many :referenced_documents, class_name: 'Document',
+    join_table: :document_documents, foreign_key: :document_id,
     association_foreign_key: :referenced_id
   has_many :pages, dependent: :destroy
   has_one :body

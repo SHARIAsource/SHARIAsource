@@ -1,7 +1,7 @@
 FactoryGirl.define do
-  factory :source do
+  factory :document do
     association :contributor, factory: :user
     document_type
-    title 'Test Source'
+    title 'Test Document'
   end
 end

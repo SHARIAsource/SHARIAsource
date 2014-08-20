@@ -2,15 +2,11 @@ class HomePresenter
   attr_reader :recent, :popular, :featured, :collaborators
 
   def initialize
-    @recent = Source.limit(3).map do |c|
-      SourcePresenter.new c
+    @recent = Document.limit(3).map {|d| DocumentPresenter.new d }
+    @popular = Document.order('popular_count DESC').limit(3).map do |d|
+      DocumentPresenter.new d
     end
-    @popular = Source.order('popular_count DESC').limit(3).map do |s|
-      SourcePresenter.new s
-    end
-    @featured = Source.featured.map do |c|
-      SourcePresenter.new c
-    end
+    @featured = Document.featured.map {|d| DocumentPresenter.new d }
     @collaborators = Collaborator.all
   end
 end

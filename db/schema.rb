@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819234824) do
+ActiveRecord::Schema.define(version: 20140820001614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,12 +20,12 @@ ActiveRecord::Schema.define(version: 20140819234824) do
     t.text    "text"
     t.integer "page_id"
     t.integer "commentary_id"
-    t.integer "source_id"
+    t.integer "document_id"
   end
 
   add_index "bodies", ["commentary_id"], name: "index_bodies_on_commentary_id", unique: true, using: :btree
+  add_index "bodies", ["document_id"], name: "index_bodies_on_document_id", using: :btree
   add_index "bodies", ["page_id"], name: "index_bodies_on_page_id", using: :btree
-  add_index "bodies", ["source_id"], name: "index_bodies_on_source_id", using: :btree
 
   create_table "collaborators", force: true do |t|
     t.string   "name"
@@ -37,6 +37,15 @@ ActiveRecord::Schema.define(version: 20140819234824) do
   end
 
   add_index "collaborators", ["name"], name: "index_collaborators_on_name", using: :btree
+
+  create_table "document_documents", id: false, force: true do |t|
+    t.integer "document_id"
+    t.integer "referenced_id"
+  end
+
+  add_index "document_documents", ["document_id", "referenced_id"], name: "index_document_documents_on_document_id_and_referenced_id", unique: true, using: :btree
+  add_index "document_documents", ["document_id"], name: "index_document_documents_on_document_id", using: :btree
+  add_index "document_documents", ["referenced_id"], name: "index_document_documents_on_referenced_id", using: :btree
 
   create_table "document_type_hierarchies", id: false, force: true do |t|
     t.integer "ancestor_id",   null: false
@@ -57,110 +66,7 @@ ActiveRecord::Schema.define(version: 20140819234824) do
   add_index "document_types", ["name"], name: "index_document_types_on_name", using: :btree
   add_index "document_types", ["parent_id"], name: "index_document_types_on_parent_id", using: :btree
 
-  create_table "era_hierarchies", id: false, force: true do |t|
-    t.integer "ancestor_id",   null: false
-    t.integer "descendant_id", null: false
-    t.integer "generations",   null: false
-  end
-
-  add_index "era_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "era_anc_des_udx", unique: true, using: :btree
-  add_index "era_hierarchies", ["descendant_id"], name: "era_desc_idx", using: :btree
-
-  create_table "eras", force: true do |t|
-    t.string   "name"
-    t.integer  "parent_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "start_year"
-    t.integer  "end_year"
-  end
-
-  add_index "eras", ["end_year"], name: "index_eras_on_end_year", using: :btree
-  add_index "eras", ["name"], name: "index_eras_on_name", using: :btree
-  add_index "eras", ["parent_id"], name: "index_eras_on_parent_id", using: :btree
-  add_index "eras", ["start_year"], name: "index_eras_on_start_year", using: :btree
-
-  create_table "eras_sources", id: false, force: true do |t|
-    t.integer "era_id"
-    t.integer "source_id"
-  end
-
-  add_index "eras_sources", ["era_id", "source_id"], name: "index_eras_sources_on_era_id_and_source_id", unique: true, using: :btree
-  add_index "eras_sources", ["era_id"], name: "index_eras_sources_on_era_id", using: :btree
-  add_index "eras_sources", ["source_id"], name: "index_eras_sources_on_source_id", using: :btree
-
-  create_table "languages", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "languages", ["name"], name: "index_languages_on_name", unique: true, using: :btree
-
-  create_table "pages", force: true do |t|
-    t.string  "image"
-    t.integer "source_id"
-    t.integer "number"
-  end
-
-  add_index "pages", ["number"], name: "index_pages_on_number", using: :btree
-  add_index "pages", ["source_id"], name: "index_pages_on_source_id", using: :btree
-
-  create_table "reference_types", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "reference_types", ["name"], name: "index_reference_types_on_name", using: :btree
-
-  create_table "reference_types_sources", force: true do |t|
-    t.integer "reference_type_id"
-    t.integer "source_id"
-  end
-
-  add_index "reference_types_sources", ["reference_type_id"], name: "index_reference_types_sources_on_reference_type_id", using: :btree
-  add_index "reference_types_sources", ["source_id", "reference_type_id"], name: "ref_type_sources_composite", unique: true, using: :btree
-  add_index "reference_types_sources", ["source_id"], name: "index_reference_types_sources_on_source_id", using: :btree
-
-  create_table "region_hierarchies", id: false, force: true do |t|
-    t.integer "ancestor_id",   null: false
-    t.integer "descendant_id", null: false
-    t.integer "generations",   null: false
-  end
-
-  add_index "region_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "region_anc_des_udx", unique: true, using: :btree
-  add_index "region_hierarchies", ["descendant_id"], name: "region_desc_idx", using: :btree
-
-  create_table "regions", force: true do |t|
-    t.string   "name"
-    t.integer  "parent_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "regions", ["name"], name: "index_regions_on_name", using: :btree
-  add_index "regions", ["parent_id"], name: "index_regions_on_parent_id", using: :btree
-
-  create_table "regions_sources", force: true do |t|
-    t.integer "region_id"
-    t.integer "source_id"
-  end
-
-  add_index "regions_sources", ["region_id", "source_id"], name: "index_regions_sources_on_region_id_and_source_id", unique: true, using: :btree
-  add_index "regions_sources", ["region_id"], name: "index_regions_sources_on_region_id", using: :btree
-  add_index "regions_sources", ["source_id"], name: "index_regions_sources_on_source_id", using: :btree
-
-  create_table "source_sources", id: false, force: true do |t|
-    t.integer "source_id"
-    t.integer "referenced_id"
-  end
-
-  add_index "source_sources", ["referenced_id"], name: "index_source_sources_on_referenced_id", using: :btree
-  add_index "source_sources", ["source_id", "referenced_id"], name: "index_source_sources_on_source_id_and_referenced_id", unique: true, using: :btree
-  add_index "source_sources", ["source_id"], name: "index_source_sources_on_source_id", using: :btree
-
-  create_table "sources", force: true do |t|
+  create_table "documents", force: true do |t|
     t.string   "title"
     t.integer  "document_type_id"
     t.string   "pdf"
@@ -185,39 +91,133 @@ ActiveRecord::Schema.define(version: 20140819234824) do
     t.integer  "featured_position"
   end
 
-  add_index "sources", ["contributor_id"], name: "index_sources_on_contributor_id", using: :btree
-  add_index "sources", ["created_at"], name: "index_sources_on_created_at", using: :btree
-  add_index "sources", ["document_type_id"], name: "index_sources_on_document_type_id", using: :btree
-  add_index "sources", ["featured_position"], name: "index_sources_on_featured_position", using: :btree
-  add_index "sources", ["language_id"], name: "index_sources_on_language_id", using: :btree
-  add_index "sources", ["popular_count"], name: "index_sources_on_popular_count", using: :btree
+  add_index "documents", ["contributor_id"], name: "index_documents_on_contributor_id", using: :btree
+  add_index "documents", ["created_at"], name: "index_documents_on_created_at", using: :btree
+  add_index "documents", ["document_type_id"], name: "index_documents_on_document_type_id", using: :btree
+  add_index "documents", ["featured_position"], name: "index_documents_on_featured_position", using: :btree
+  add_index "documents", ["language_id"], name: "index_documents_on_language_id", using: :btree
+  add_index "documents", ["popular_count"], name: "index_documents_on_popular_count", using: :btree
 
-  create_table "sources_tags", id: false, force: true do |t|
-    t.integer "source_id"
+  create_table "documents_eras", id: false, force: true do |t|
+    t.integer "era_id"
+    t.integer "document_id"
+  end
+
+  add_index "documents_eras", ["document_id"], name: "index_documents_eras_on_document_id", using: :btree
+  add_index "documents_eras", ["era_id", "document_id"], name: "index_documents_eras_on_era_id_and_document_id", unique: true, using: :btree
+  add_index "documents_eras", ["era_id"], name: "index_documents_eras_on_era_id", using: :btree
+
+  create_table "documents_reference_types", force: true do |t|
+    t.integer "reference_type_id"
+    t.integer "document_id"
+  end
+
+  add_index "documents_reference_types", ["document_id", "reference_type_id"], name: "ref_type_sources_composite", unique: true, using: :btree
+  add_index "documents_reference_types", ["document_id"], name: "index_documents_reference_types_on_document_id", using: :btree
+  add_index "documents_reference_types", ["reference_type_id"], name: "index_documents_reference_types_on_reference_type_id", using: :btree
+
+  create_table "documents_regions", force: true do |t|
+    t.integer "region_id"
+    t.integer "document_id"
+  end
+
+  add_index "documents_regions", ["document_id"], name: "index_documents_regions_on_document_id", using: :btree
+  add_index "documents_regions", ["region_id", "document_id"], name: "index_documents_regions_on_region_id_and_document_id", unique: true, using: :btree
+  add_index "documents_regions", ["region_id"], name: "index_documents_regions_on_region_id", using: :btree
+
+  create_table "documents_tags", id: false, force: true do |t|
+    t.integer "document_id"
     t.integer "tag_id"
   end
 
-  add_index "sources_tags", ["source_id", "tag_id"], name: "index_sources_tags_on_source_id_and_tag_id", unique: true, using: :btree
-  add_index "sources_tags", ["source_id"], name: "index_sources_tags_on_source_id", using: :btree
-  add_index "sources_tags", ["tag_id"], name: "index_sources_tags_on_tag_id", using: :btree
+  add_index "documents_tags", ["document_id", "tag_id"], name: "index_documents_tags_on_document_id_and_tag_id", unique: true, using: :btree
+  add_index "documents_tags", ["document_id"], name: "index_documents_tags_on_document_id", using: :btree
+  add_index "documents_tags", ["tag_id"], name: "index_documents_tags_on_tag_id", using: :btree
 
-  create_table "sources_themes", force: true do |t|
-    t.integer "source_id"
+  create_table "documents_themes", force: true do |t|
+    t.integer "document_id"
     t.integer "theme_id"
   end
 
-  add_index "sources_themes", ["source_id", "theme_id"], name: "index_sources_themes_on_source_id_and_theme_id", unique: true, using: :btree
-  add_index "sources_themes", ["source_id"], name: "index_sources_themes_on_source_id", using: :btree
-  add_index "sources_themes", ["theme_id"], name: "index_sources_themes_on_theme_id", using: :btree
+  add_index "documents_themes", ["document_id", "theme_id"], name: "index_documents_themes_on_document_id_and_theme_id", unique: true, using: :btree
+  add_index "documents_themes", ["document_id"], name: "index_documents_themes_on_document_id", using: :btree
+  add_index "documents_themes", ["theme_id"], name: "index_documents_themes_on_theme_id", using: :btree
 
-  create_table "sources_topics", id: false, force: true do |t|
-    t.integer "source_id"
+  create_table "documents_topics", id: false, force: true do |t|
+    t.integer "document_id"
     t.integer "topic_id"
   end
 
-  add_index "sources_topics", ["source_id", "topic_id"], name: "index_sources_topics_on_source_id_and_topic_id", unique: true, using: :btree
-  add_index "sources_topics", ["source_id"], name: "index_sources_topics_on_source_id", using: :btree
-  add_index "sources_topics", ["topic_id"], name: "index_sources_topics_on_topic_id", using: :btree
+  add_index "documents_topics", ["document_id", "topic_id"], name: "index_documents_topics_on_document_id_and_topic_id", unique: true, using: :btree
+  add_index "documents_topics", ["document_id"], name: "index_documents_topics_on_document_id", using: :btree
+  add_index "documents_topics", ["topic_id"], name: "index_documents_topics_on_topic_id", using: :btree
+
+  create_table "era_hierarchies", id: false, force: true do |t|
+    t.integer "ancestor_id",   null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations",   null: false
+  end
+
+  add_index "era_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "era_anc_des_udx", unique: true, using: :btree
+  add_index "era_hierarchies", ["descendant_id"], name: "era_desc_idx", using: :btree
+
+  create_table "eras", force: true do |t|
+    t.string   "name"
+    t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "start_year"
+    t.integer  "end_year"
+  end
+
+  add_index "eras", ["end_year"], name: "index_eras_on_end_year", using: :btree
+  add_index "eras", ["name"], name: "index_eras_on_name", using: :btree
+  add_index "eras", ["parent_id"], name: "index_eras_on_parent_id", using: :btree
+  add_index "eras", ["start_year"], name: "index_eras_on_start_year", using: :btree
+
+  create_table "languages", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "languages", ["name"], name: "index_languages_on_name", unique: true, using: :btree
+
+  create_table "pages", force: true do |t|
+    t.string  "image"
+    t.integer "document_id"
+    t.integer "number"
+  end
+
+  add_index "pages", ["document_id"], name: "index_pages_on_document_id", using: :btree
+  add_index "pages", ["number"], name: "index_pages_on_number", using: :btree
+
+  create_table "reference_types", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reference_types", ["name"], name: "index_reference_types_on_name", using: :btree
+
+  create_table "region_hierarchies", id: false, force: true do |t|
+    t.integer "ancestor_id",   null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations",   null: false
+  end
+
+  add_index "region_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "region_anc_des_udx", unique: true, using: :btree
+  add_index "region_hierarchies", ["descendant_id"], name: "region_desc_idx", using: :btree
+
+  create_table "regions", force: true do |t|
+    t.string   "name"
+    t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "regions", ["name"], name: "index_regions_on_name", using: :btree
+  add_index "regions", ["parent_id"], name: "index_regions_on_parent_id", using: :btree
 
   create_table "statics", force: true do |t|
     t.string   "slug"

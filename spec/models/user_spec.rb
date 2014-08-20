@@ -36,7 +36,7 @@ describe User do
   it { should validate_presence_of :first_name }
   it { should validate_presence_of :last_name }
   it { should belong_to :collaborator }
-  it { should have_many :sources }
+  it { should have_many :documents }
 
   it 'is a closure tree' do
     expect(User).to be_a_closure_tree

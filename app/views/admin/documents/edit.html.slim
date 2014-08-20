@@ -1,0 +1,5 @@
+= content_for :page_title, 'Edit Document'
+
+h2 Edit Document
+
+= render partial: 'admin/documents/form', locals: { form_url: admin_document_path(@document) }

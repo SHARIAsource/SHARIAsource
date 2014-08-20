@@ -17,6 +17,8 @@ class Collaborator < ActiveRecord::Base
   mount_uploader :image, ImageUploader
 
   def commentary_count
-    self.users.joins(:commentaries).count
+    self.users.joins(documents: :document_type).where(document_types: {
+      name: 'Commentary'
+    }).count
   end
 end

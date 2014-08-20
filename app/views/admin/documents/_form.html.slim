@@ -1,4 +1,4 @@
-= simple_form_for @source, url: form_url do |f|
+= simple_form_for @document, url: form_url do |f|
   .row
     .large-6.columns
       = f.input :title, autofocus: true
@@ -21,7 +21,7 @@
       = f.association :language, collection: Language.all
   .row
     .large-6.columns
-      = f.association :referenced_sources, collection: Source.where.not(id: @source.id)
+      = f.association :referenced_documents, collection: Document.where.not(id: @document.id)
     .large-6.columns
       = f.input :featured_position, input_html: { max: 3 }
 
@@ -59,15 +59,15 @@
     .row
       .large-6.columns
         = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
-        - if @source.pdf.file
-          p= @source.pdf.file.identifier
+        - if @document.pdf.file
+          p= @document.pdf.file.identifier
       .large-6.columns
           = f.input :volume_count
     
-    - if @source.pages.present?
+    - if @document.pages.present?
       h3 Pages
       ul.tabs.vertical data-tab="true" data-options='deep_linking:true'
-        - @source.pages.each_with_index do |page, index|
+        - @document.pages.each_with_index do |page, index|
           li class="tab-title #{'active' if index == 0}"
             a href="#page#{index+1}"= "Page #{index+1}"
       .tabs-content.vertical

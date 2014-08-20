@@ -1,12 +1,14 @@
-class SourcePresenter < BasePresenter
+class DocumentPresenter < BasePresenter
+  REFERENCE_LIMIT = 3
+
   def referenced_documents
-    @object.referenced_sources.take(NUM_REFERENCES_DISPLAYED).map do |source|
-      SourcePresenter.new source
+    @object.referenced_documents.take(REFERENCE_LIMIT).map do |document|
+      DocumentPresenter.new document
     end
   end
 
   def other_documents_count
-    @object.referenced_sources.count - NUM_REFERENCES_DISPLAYED
+    @object.referenced_documents.count - REFERENCE_LIMIT
   end
 
   def other_documents

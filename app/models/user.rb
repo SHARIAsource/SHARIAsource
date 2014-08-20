@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
   validates :last_name, presence: true
 
   belongs_to :collaborator
-  has_many :sources, foreign_key: 'contributor_id'
+  has_many :documents, foreign_key: 'contributor_id'
 
   mount_uploader :avatar, ImageUploader
 
