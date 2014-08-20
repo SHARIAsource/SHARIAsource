@@ -10,8 +10,9 @@ html
   body
     .container
       = render 'shared/admin_nav' if user_signed_in?
-      = render partial: 'shared/site_nav'
-      = render partial: 'shared/banner'
+      = render 'shared/site_nav'
+      = render 'shared/banner'
       p.flash-notice= notice
       p.flash-alert= alert
       == yield
+      = render 'shared/footer'

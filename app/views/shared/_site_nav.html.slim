@@ -1,22 +1,13 @@
-.container
-  nav.inner
-    ul.inline-list.left
-      li= link_to 'Topics & Themes', topics_path
-      li= link_to 'Geographic Regions', regions_path
-      li= link_to 'Empires & Eras', eras_path
-      li= link_to 'Document Types', document_types_path
-      li= link_to 'Authors & Commentators', authors_path
-      li
-        a href='#' Resources
-      li
-        a href='#' About SHARIAsource
+nav
+  ul
+    li= link_to 'Topics & Themes', topics_path
+    li= link_to 'Geographic Regions', regions_path
+    li= link_to 'Empires & Eras', eras_path
+    li= link_to 'Document Types', document_types_path
+    li= link_to 'Authors & Commentators', authors_path
+    li
+      a href='#' Resources
+    li
+      a href='#' About SHARIAsource
 
-    ul.inline-list.right
-      li
-        a href='#' Twitter
-      li
-        a href='#' Facebook
-      li
-        a href='#' LinkedIn
-      li
-        a href='#' RSS
+  = render 'shared/social_media'
