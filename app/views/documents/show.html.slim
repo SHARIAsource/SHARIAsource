@@ -1,1 +1,94 @@
-h2 Document
+ul
+  li
+    a href='#TODO' Print
+  li
+    a href='#TODO' Email
+  li
+    a href='#TODO' Twitter
+  li
+    a href='#TODO' Facebook
+
+p
+  span= @document.document_types.join(' :: ')
+  span= " :: #{@document.dates}"
+
+h2= @document.title
+
+p= @document.bylines
+
+ul
+  - if @document.reference_types.present?
+    li
+      strong Reference Type:
+      span= @document.reference_types.pluck(:name).join(', ')
+  - if @document.author.present?
+    li
+      strong Author(s):
+      span= @document.author
+  - if @document.alternate_titles.present?
+    li
+      strong Alternate Titles:
+      span= @document.alternate_titles
+  - if @document.editors.present?
+    li
+      strong Editor(s):
+      span= @document.editors
+  - if @document.translators.present?
+    li
+      strong Translator(s):
+      span= @document.translators
+  - if @document.publisher_location.present?
+    li
+      strong City of Publication:
+      span= @document.publisher_location
+  - if @document.publisher.present?
+    li
+      strong Publisher:
+      span= @document.publisher
+  - if @document.years.present?
+    li
+      strong Year:
+      span= @document.years
+  - if @document.volume_count.present?
+    li
+      strong Volumes:
+      span= @document.volume_count
+  - if @document.source_name.present?
+    li
+      strong Source:
+      - if @document.source_url.present?
+        span= link_to @document.source_name, @document.source_url, target: '_blank'
+      - else
+        span= @document.source_name
+
+  ul
+  - if @document.topics.present?
+    li
+      strong Topics:
+      span= @document.topics.pluck(:name).join(', ')
+  - if @document.themes.present?
+    li
+      strong Themes:
+      span= @document.themes.pluck(:name).join(', ')
+  - if @document.regions.present?
+    li
+      strong Geographic Regions:
+      span= @document.regions.pluck(:name).join(', ')
+  - if @document.eras.present?
+    li
+      strong Empires & Eras:
+      span= @document.eras.pluck(:name).join(', ')
+  - if @document.language.present?
+    li
+      strong Language:
+      span= @document.language.name
+  - if @document.tags.present?
+    li
+      strong Additional Tags:
+      span= @document.tags.pluck(:name).join(', ')
+
+  a href='#TODO' Suggest More Tags
+
+  - if @document.referenced_documents.present?
+    h3 Documents referenced:
+    p= @document.referenced_documents.map(&:title_with_author).join(', ')

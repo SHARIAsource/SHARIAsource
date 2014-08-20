@@ -1,0 +1,19 @@
+en_ar:
+  date:
+    month_names:
+      -
+      - Muḥarram
+      - Ṣafar
+      - Rabīʿ I
+      - Rabīʿ II
+      - Jumādā I
+      - Jumādā II
+      - Rajab
+      - Shaʿbān
+      - Ramaḍān
+      - Shawwāl
+      - Dhū al-Qaʿda
+      - Dhū al-Ḥijja
+    formats:
+      dd_month_yyyy: ! '%d %B %Y'
+
