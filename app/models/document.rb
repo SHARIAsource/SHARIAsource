@@ -52,7 +52,6 @@ class Document < ActiveRecord::Base
   has_and_belongs_to_many :topics
   has_and_belongs_to_many :tags
   has_and_belongs_to_many :eras
-  has_and_belongs_to_many :reference_types
   has_and_belongs_to_many :regions
   has_and_belongs_to_many :referenced_documents, class_name: 'Document',
     join_table: :document_documents, foreign_key: :document_id,
@@ -60,6 +59,7 @@ class Document < ActiveRecord::Base
   has_many :pages, dependent: :destroy
   has_one :body
   belongs_to :document_type
+  belongs_to :reference_type
   belongs_to :language
   belongs_to :contributor, class_name: 'User'
 

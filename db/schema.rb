@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140820001614) do
+ActiveRecord::Schema.define(version: 20140827225525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20140820001614) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "featured_position"
+    t.integer  "reference_type_id"
   end
 
   add_index "documents", ["contributor_id"], name: "index_documents_on_contributor_id", using: :btree
@@ -97,6 +98,7 @@ ActiveRecord::Schema.define(version: 20140820001614) do
   add_index "documents", ["featured_position"], name: "index_documents_on_featured_position", using: :btree
   add_index "documents", ["language_id"], name: "index_documents_on_language_id", using: :btree
   add_index "documents", ["popular_count"], name: "index_documents_on_popular_count", using: :btree
+  add_index "documents", ["reference_type_id"], name: "index_documents_on_reference_type_id", using: :btree
 
   create_table "documents_eras", id: false, force: true do |t|
     t.integer "era_id"
@@ -106,15 +108,6 @@ ActiveRecord::Schema.define(version: 20140820001614) do
   add_index "documents_eras", ["document_id"], name: "index_documents_eras_on_document_id", using: :btree
   add_index "documents_eras", ["era_id", "document_id"], name: "index_documents_eras_on_era_id_and_document_id", unique: true, using: :btree
   add_index "documents_eras", ["era_id"], name: "index_documents_eras_on_era_id", using: :btree
-
-  create_table "documents_reference_types", force: true do |t|
-    t.integer "reference_type_id"
-    t.integer "document_id"
-  end
-
-  add_index "documents_reference_types", ["document_id", "reference_type_id"], name: "ref_type_sources_composite", unique: true, using: :btree
-  add_index "documents_reference_types", ["document_id"], name: "index_documents_reference_types_on_document_id", using: :btree
-  add_index "documents_reference_types", ["reference_type_id"], name: "index_documents_reference_types_on_reference_type_id", using: :btree
 
   create_table "documents_regions", force: true do |t|
     t.integer "region_id"

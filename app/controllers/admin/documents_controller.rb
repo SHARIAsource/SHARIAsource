@@ -54,8 +54,8 @@ class Admin::DocumentsController < AdminController
                  :gregorian_date_string, :lunar_hijri_date_string,
                  :source_name,:source_url, :author, :translators, :editors,
                  :publisher, :publisher_location, :alternate_titles,
-                 :alternate_authors, :featured_position, region_ids: [],
-                 theme_ids: [], topic_ids: [], tag_ids: [],
+                 :alternate_authors, :featured_position, :reference_type_id,
+                 region_ids: [], theme_ids: [], topic_ids: [], tag_ids: [],
                  referenced_document_ids: [], era_ids: [], pages_attributes: [
                    :id, body_attributes: [:id, :text]
                  ], body_attributes: [:id, :text]]
