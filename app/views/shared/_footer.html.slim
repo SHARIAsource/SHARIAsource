@@ -2,41 +2,46 @@
   .footer
     .inner
       h2= link_to 'SHARIAsource at Harvard Law School', root_path
-      p Brief description. Lorem Ipsum Dolor.
 
-      p
-        span Islamic Law Studies Program
-        br
-        span Harvard Law School
-        br
-        span 102 Austin Hall
-        br
-        span 1515 Massachusetts Avenue
-        br
-        span Cambridge, MA 02138
-        br
-        span tel. (617) 496-3941
-        br
-        span fax. (617) 496-2707
-        br
-        span email: ilsp@law.harvard.edu
+      .info
+        p Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
 
-      = render 'shared/social_media'
+        p
+          span Islamic Law Studies Program
+          br
+          span Harvard Law School
+          br
+          span 102 Austin Hall
+          br
+          span 1515 Massachusetts Avenue
+          br
+          span Cambridge, MA 02138
+          br
+          span tel. (617) 496-3941
+          br
+          span fax. (617) 496-2707
+          br
+          span email: ilsp@law.harvard.edu
 
-      ul
-        li= link_to 'Topics & Themes', topics_path
-        li= link_to 'Geographic Regions', regions_path
-        li= link_to 'Empires & Eras', eras_path
-        li= link_to 'Document Types', document_types_path
-        li= link_to 'Authors & Commentators', authors_path
-        li
-          a href='#TODO' Resources
-        li
-          a href='#TODO' About SHARIAsource
-        li= link_to 'Advanced Search', search_path
+        = render 'shared/social_media'
 
-      = form_tag '#TODO', method: :post do
-        = label_tag :email, 'Sign up for mailing list'
-        = email_field :email, placeholder: 'email@example.org'
-        = submit_tag 'Sign Up'
-        
+      .footer-nav
+        ul
+          li= link_to 'Topics & Themes', topics_path
+          li= link_to 'Geographic Regions', regions_path
+          li= link_to 'Empires & Eras', eras_path
+          li= link_to 'Document Types', document_types_path
+          li= link_to 'Authors & Commentators', authors_path
+          li
+            a href='#TODO' Resources
+          li
+            a href='#TODO' About SHARIAsource
+          li= link_to 'Advanced Search', search_path
+
+      .mailing-list
+        = form_tag '#TODO', method: :post do
+          = label_tag :email, 'Sign up for mailing list'
+          = email_field :email, placeholder: 'email@example.org'
+          .submit
+            button.ss-button type='submit' Sign Up
+          

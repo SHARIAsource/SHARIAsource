@@ -16,7 +16,7 @@
         .collaborator id="collaborator-#{index}"
           = image_tag collaborator.image.url 
           .content
-            h3= collaborator.name
+            h3= link_to collaborator.name, '#TODO'
             p.contributors
               - collaborator.users.each_with_index do |user, index|
                 - if index > 0
@@ -24,4 +24,4 @@
                 = link_to user.name, '#TODO'
             p.commentary-count= "#{collaborator.commentary_count} #{'commentary'.pluralize(collaborator.commentary_count)} posted"
     - if @home_presenter.collaborators.count > 0
-      p.more-collaborators= link_to 'More', collaborators_path, class: 'ss-button'
+      p.more-collaborators= link_to 'View All', collaborators_path, class: 'ss-button'

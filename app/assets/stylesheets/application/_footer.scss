@@ -1,11 +1,132 @@
 .footer {
+  @include clearfix;
   max-width:1000px;
   margin:0 auto;
   background:url(asset-path('footer-bg.png')) center 0 no-repeat;
   background-size:1000px 352px;
+  padding-top:25px;
+  padding-bottom:15px;
+  color:#fff;
 
   h2 {
     text-indent:-9999px;
     overflow:hidden;
+    width:258px;
+    height:37px;
+    background:url(asset-path('footer-logo.svg')) 0 0 no-repeat;
+    background-size:258px 37px;
+    margin:0 0 0 -10px;
+  }
+
+  .info {
+    float:left;
+    width:380px;
+    padding-right:80px;
+
+    p {
+      margin:18px 0;
+      font-size:12px;
+      line-height:1.3333;
+    }
+
+    a {
+      @include underline-hover($ss-color-secondary);
+    }
+  }
+
+  .social-links {
+    margin-left:-12px;
+
+    li {
+      margin-left:12px;
+    }
+  }
+
+  .footer-nav {
+    float:left;
+    width:280px;
+    padding-right:60px;
+    padding-top:12px;
+
+    ul {
+      list-style:none;
+      margin:0;
+    }
+
+    li {
+      font-size:14px;
+      line-height:1.714286;
+    }
+
+    a {
+      color:#fff;
+      font-weight:bold;
+
+      &:hover, &:focus {
+        color:$ss-color-secondary;
+      }
+    }
+  }
+
+  .mailing-list {
+    float:left;
+    width:300px;
+    padding-top:12px;
+
+    label {
+      color:#fff;
+      font-weight:bold;
+      font-size:14px;
+      margin-bottom:16px;
+    }
+
+    input {
+      margin-bottom:8px;
+      border:1px solid $ss-color-secondary;
+    }
+
+    .ss-button {
+      color:#fff;
+    }
+  }
+
+  .twitter {
+    width:24px;
+    background:url(image-path('footer-twitter.svg')) 0 0 no-repeat;
+    background-size:24px 16px;
+
+    &:hover, &:focus {
+      background-image:url(image-path('twitter-hover.svg'));
+    }
+  }
+
+  .facebook {
+    width:8px;
+    background:url(image-path('footer-facebook.svg')) 0 0 no-repeat;
+    background-size:8px 16px;
+
+    &:hover, &:focus {
+      background-image:url(image-path('facebook-hover.svg'));
+    }
+  }
+
+  .linkedin {
+    width:18px;
+    background:url(image-path('footer-linkedin.svg')) 0 0 no-repeat;
+    background-size:18px 16px;
+
+    &:hover, &:focus {
+      background-image:url(image-path('linkedin-hover.svg'));
+    }
+  }
+
+  .rss {
+    width:16px;
+    background:url(image-path('footer-rss.svg')) 0 0 no-repeat;
+    background-size:16px 16px;
+
+    &:hover, &:focus {
+      background-image:url(image-path('rss-hover.svg'));
+    }
   }
 }

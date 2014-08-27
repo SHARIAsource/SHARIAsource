@@ -30,7 +30,6 @@ group :development do
   gem 'guard-livereload', '~> 2.3.0'
   gem 'quiet_assets', '~> 1.0.3'
   gem 'rack-livereload', '~> 0.3.15'
-  gem 'rails-dev-tweaks', '~> 1.2.0'
   gem 'spring', '~> 1.1.3'
 end
 

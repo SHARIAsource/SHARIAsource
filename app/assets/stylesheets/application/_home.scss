@@ -92,6 +92,7 @@
 
 .home-collaborators {
   padding-top:4px;
+  padding-bottom:56px;
   width:980px;
   margin:0 auto;
 
@@ -122,9 +123,12 @@
   h3 {
     font-size:28px;
     font-weight:bold;
-    color:$ss-color-heading;
     line-height:1.14286;
     margin:4px 0 24px 0;
+
+    a {
+      @include underline-hover($ss-color-heading);
+    }
   }
 
   p {
@@ -142,13 +146,17 @@
     font-style:italic;
     margin-top:4px;
   }
+
+  .more-collaborators {
+    text-align:center;
+    margin:35px 0 0 0;
+
+    .ss-button {
+      padding:0 40px;
+    }
+  }
 }
 
 #collaborator-0 .content {
   margin-left:20px;
 }
-
-.more-collaborators {
-  text-align:center;
-}
-
