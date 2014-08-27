@@ -1,9 +1,16 @@
 .container {
-  background:#fff;
+  background:$ss-color-bodybg;
+}
 
-  .inner {
-    background:#ddd;
-    width:960px;
-    margin:0 auto;
-  }
+.inner-wrapper {
+  min-width:980px;
+  max-width:1040px;
+  margin:0 auto;
+  background:#fff;
+}
+
+.inner {
+  width:980px;
+  padding:0 10px;
+  margin:0 auto;
 }

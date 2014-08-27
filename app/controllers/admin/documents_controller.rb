@@ -23,7 +23,7 @@ class Admin::DocumentsController < AdminController
       flash[:notice] = 'Document created successfully'
       redirect_to admin_documents_path
     else
-      flash[:error] = @doucment.errors.full_messages.to_sentence
+      flash[:error] = @document.errors.full_messages.to_sentence
       render :new
     end
   end
@@ -40,7 +40,7 @@ class Admin::DocumentsController < AdminController
 
   def destroy
     if @document.destroy
-      flash[:notice] = 'Doucment deleted successfully'
+      flash[:notice] = 'Document deleted successfully'
     else
       flash[:error] = 'An error occurred while trying to delete that Document'
     end

@@ -1,0 +1,11 @@
+.footer {
+  max-width:1000px;
+  margin:0 auto;
+  background:url(asset-path('footer-bg.png')) center 0 no-repeat;
+  background-size:1000px 352px;
+
+  h2 {
+    text-indent:-9999px;
+    overflow:hidden;
+  }
+}

@@ -167,6 +167,9 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.1.5)
       sprockets-rails (~> 2.0)
+    rails-dev-tweaks (1.2.0)
+      actionpack (>= 3.1)
+      railties (>= 3.1)
     railties (4.1.5)
       actionpack (= 4.1.5)
       activesupport (= 4.1.5)
@@ -296,6 +299,7 @@ DEPENDENCIES
   rack-livereload (~> 0.3.15)
   rack-timeout (~> 0.0.4)
   rails (= 4.1.5)
+  rails-dev-tweaks (~> 1.2.0)
   rb-fsevent
   rspec-rails (~> 3.0.1)
   sass-rails (~> 4.0.3)

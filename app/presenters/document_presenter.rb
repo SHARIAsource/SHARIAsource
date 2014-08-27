@@ -22,6 +22,14 @@ class DocumentPresenter < BasePresenter
     [hijri, gregorian].reject(&:empty?).join(' / ')
   end
 
+  def edited_by
+    if @object.editors.present?
+      "Edited by #{@object.editors}"
+    else
+      ''
+    end
+  end
+
   def document_types
     @object.document_type.self_and_ancestors.pluck(:name).reverse
   end

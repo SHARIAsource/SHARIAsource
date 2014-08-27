@@ -1,0 +1,19 @@
+@mixin underline-hover($color) {
+  color:$color;
+
+  &:hover, &:focus {
+    text-decoration:underline;
+  }
+}
+
+body {
+  font-family:$ss-font-sans;
+  color:$ss-color-bodytext;
+}
+
+.ss-button {
+  display:inline-block;
+  text-align:center;
+  line-height:32px;
+  height:32px;
+}

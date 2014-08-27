@@ -1,12 +1,27 @@
-= render partial: 'home/three_item_block', locals: { block_title: 'Recent', collection: @home_presenter.recent, more_link: true }
-= render partial: 'home/three_item_block', locals: { block_title: 'Popular', collection: @home_presenter.popular }
-= render partial: 'home/three_item_block', locals: { block_title: 'Featured', collection: @home_presenter.featured }
+.inner-wrapper
+  .inner
+    = render partial: 'home/three_item_block', locals: { block_title: 'Recent', collection: @home_presenter.recent, more_link: true }
+.inner-wrapper
+  .inner
+    = render partial: 'home/three_item_block', locals: { block_title: 'Popular', collection: @home_presenter.popular }
+.inner-wrapper
+  .inner
+    = render partial: 'home/three_item_block', locals: { block_title: 'Featured', collection: @home_presenter.featured }
 
-h2 Collaborators
-- @home_presenter.collaborators.take(3).each do |collaborator|
-  = image_tag collaborator.image.url 
-  h3= collaborator.name
-  p== collaborator.description
-  p= "#{collaborator.commentary_count} #{'commentary'.pluralize(collaborator.commentary_count)} posted"
-- if @home_presenter.collaborators.count > 0
-  = link_to 'More', collaborators_path
+.inner-wrapper
+  .home-collaborators
+    h2.home-block-heading Collaborators
+    .collaborator-list
+      - @home_presenter.collaborators.take(3).each_with_index do |collaborator, index|
+        .collaborator id="collaborator-#{index}"
+          = image_tag collaborator.image.url 
+          .content
+            h3= collaborator.name
+            p.contributors
+              - collaborator.users.each_with_index do |user, index|
+                - if index > 0
+                  = ", "
+                = link_to user.name, '#TODO'
+            p.commentary-count= "#{collaborator.commentary_count} #{'commentary'.pluralize(collaborator.commentary_count)} posted"
+    - if @home_presenter.collaborators.count > 0
+      p.more-collaborators= link_to 'More', collaborators_path, class: 'ss-button'

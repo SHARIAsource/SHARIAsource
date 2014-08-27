@@ -12,7 +12,5 @@ html
       = render 'shared/admin_nav' if user_signed_in?
       = render 'shared/site_nav'
       = render 'shared/banner'
-      p.flash-notice= notice
-      p.flash-alert= alert
       == yield
       = render 'shared/footer'

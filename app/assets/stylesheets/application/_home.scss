@@ -1,0 +1,154 @@
+.home-block {
+  @include clearfix;
+  padding-top:4px;
+  padding-bottom:20px;
+  border-bottom:4px solid $ss-color-bodybg;
+
+  .featured-item {
+    float:left;
+    width:600px;
+
+    .breadcrumb {
+      margin:0;
+      font-size:12px;
+
+      a {
+        font-weight:bold;
+        @include underline-hover($ss-color-bodytext);
+      }
+    }
+
+    h3 {
+      font-size:28px;
+      line-height:1.14286;
+      margin-bottom:16px;
+
+      a {
+        @include underline-hover($ss-color-heading);
+      }
+    }
+
+    .byline {
+      font-size:12px;
+      font-weight:bold;
+      color:$ss-color-heading;
+      margin:0;
+      line-height:1;
+
+      a {
+        @include underline-hover($ss-color-heading);
+      }
+    }
+
+    .references {
+      margin:4px 0 0 0;
+      font-size:12px;
+      font-family:$ss-font-serif;
+      line-height:1.33333;
+
+      .documents {
+        font-style:italic;
+        margin-right:5px;
+      }
+
+      a {
+        @include underline-hover($ss-color-bodytext);
+      }
+    }
+  }
+
+  .aside-items {
+    float:right;
+    width:320px;
+    margin-top:-24px;
+
+    h3 {
+      font-size:16px;
+      font-weight:bold;
+      line-height:1.25;
+      margin:0 0 4px 0;
+
+      a {
+        @include underline-hover($ss-color-heading);
+      }
+    }
+
+    p {
+      font-size:12px;
+      margin:0 0 16px 0;
+    }
+  }
+}
+
+.home-block-heading {
+  font-size:12px;
+  line-height:1.33333;
+  text-transform:uppercase;
+  color:$ss-color-secondary;
+  font-weight:bold;
+  margin:8px 0 16px 0;
+  letter-spacing:1px;
+}
+
+.home-collaborators {
+  padding-top:4px;
+  width:980px;
+  margin:0 auto;
+
+  @media screen and (max-width:1020px) {
+    overflow:hidden;
+  }
+
+  .home-block-heading {
+    margin-bottom:24px;
+  }
+
+  .collaborator-list {
+    @include clearfix;
+    width:1020px;
+    margin-left:-30px;
+  }
+
+  .collaborator {
+    float:left;
+    width:320px;
+    margin-left:20px;
+  }
+
+  .content {
+    width:300px;
+  }
+
+  h3 {
+    font-size:28px;
+    font-weight:bold;
+    color:$ss-color-heading;
+    line-height:1.14286;
+    margin:4px 0 24px 0;
+  }
+
+  p {
+    font-size:12px;
+    line-height:1.3333;
+    margin:0;
+  }
+
+  .contributors a {
+    @include underline-hover($ss-color-bodytext);
+  }
+
+  .commentary-count {
+    font-family:$ss-font-serif;
+    font-style:italic;
+    margin-top:4px;
+  }
+}
+
+#collaborator-0 .content {
+  margin-left:20px;
+}
+
+.more-collaborators {
+  text-align:center;
+}
+

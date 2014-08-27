@@ -1,0 +1,15 @@
+.social-links {
+  list-style:none;
+  margin:0;
+
+  li {
+    float:left;
+  }
+
+  a {
+    display:block;
+    text-indent:-9999px;
+    overflow:hidden;
+    height:16px;
+  }
+}

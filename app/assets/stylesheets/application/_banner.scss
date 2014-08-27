@@ -1,0 +1,86 @@
+.banner {
+  background:$ss-color-primary;
+  border-top:1px solid $ss-color-secondary;
+  border-bottom:1px solid $ss-color-secondary;
+  font-weight:bold;
+
+  .inner-wrapper {
+    height:184px;
+    background:url(image-path('header-bg.png')) 50% 0 no-repeat;
+    background-size:100% 100%;
+  }
+
+  .inner {
+    padding-top:34px;
+  }
+}
+
+.banner-logo {
+  display:block;
+  width:430px;
+  height:58px;
+  margin:0 auto 34px auto;
+  text-indent:-9999px;
+  overflow:hidden;
+  background:url(image-path('header-logo.svg')) 0 0 no-repeat;
+  background-size:430px 58px;
+
+  h1, h2 {
+    margin:0;
+  }
+}
+
+.search-form {
+  text-align:center;
+
+  .search-field {
+    position:relative;
+    display:inline-block;
+  }
+
+  input[type="text"] {
+    display:inline-block;
+    width:300px;
+    text-align:left;
+    border:1px solid $ss-color-secondary;
+    background:$ss-color-bodybg;
+    font-weight:bold;
+    font-size:14px;
+    color:$ss-color-primary;
+    margin:0;
+  }
+
+  input[type="submit"] {
+    position:absolute;
+    right:0;
+    top:0;
+    height:100%;
+    width:40px;
+    border:0;
+    text-indent:-9999px;
+    overflow:hidden;
+    background:url(image-path('search-magglass.svg')) center center no-repeat;
+    background-size:14px 14px;
+
+    &:hover, &:focus {
+      background-image:url(image-path('search-magglass-hover.svg'));
+      cursor:pointer
+    }
+  }
+
+  .advanced-search {
+    position:absolute;
+    display:block;
+    left:100%;
+    top:3px;
+    margin-left:8px;
+    text-align:left;
+    font-size:14px;
+    line-height:1.14286;
+    color:$ss-color-secondary;
+
+    &:hover, &:focus {
+      color:#fff;
+    }
+  }
+}
