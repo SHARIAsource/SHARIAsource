@@ -2,7 +2,7 @@
   @include clearfix;
   max-width:1000px;
   margin:0 auto;
-  background:url(asset-path('footer-bg.png')) center 0 no-repeat;
+  background:url(image-path('footer-bg.png')) center 0 no-repeat;
   background-size:1000px 352px;
   padding-top:25px;
   padding-bottom:15px;
@@ -13,7 +13,7 @@
     overflow:hidden;
     width:258px;
     height:37px;
-    background:url(asset-path('footer-logo.svg')) 0 0 no-repeat;
+    background:url(image-path('footer-logo.svg')) 0 0 no-repeat;
     background-size:258px 37px;
     margin:0 0 0 -10px;
   }
@@ -92,41 +92,41 @@
 
   .twitter {
     width:24px;
-    background:url(asset-url('footer-twitter.svg')) 0 0 no-repeat;
+    background:url(image-path('footer-twitter.svg')) 0 0 no-repeat;
     background-size:24px 16px;
 
     &:hover, &:focus {
-      background-image:url(asset-url('twitter-hover.svg'));
+      background-image:url(image-path('twitter-hover.svg'));
     }
   }
 
   .facebook {
     width:8px;
-    background:url(asset-url('footer-facebook.svg')) 0 0 no-repeat;
+    background:url(image-path('footer-facebook.svg')) 0 0 no-repeat;
     background-size:8px 16px;
 
     &:hover, &:focus {
-      background-image:url(asset-url('facebook-hover.svg'));
+      background-image:url(image-path('facebook-hover.svg'));
     }
   }
 
   .linkedin {
     width:18px;
-    background:url(asset-url('footer-linkedin.svg')) 0 0 no-repeat;
+    background:url(image-path('footer-linkedin.svg')) 0 0 no-repeat;
     background-size:18px 16px;
 
     &:hover, &:focus {
-      background-image:url(asset-url('linkedin-hover.svg'));
+      background-image:url(image-path('linkedin-hover.svg'));
     }
   }
 
   .rss {
     width:16px;
-    background:url(asset-url('footer-rss.svg')) 0 0 no-repeat;
+    background:url(image-path('footer-rss.svg')) 0 0 no-repeat;
     background-size:16px 16px;
 
     &:hover, &:focus {
-      background-image:url(asset-url('rss-hover.svg'));
+      background-image:url(image-path('rss-hover.svg'));
     }
   }
 }

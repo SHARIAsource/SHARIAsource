@@ -36,41 +36,41 @@
 
   .twitter {
     width:24px;
-    background:url(asset-url('header-twitter.svg')) 0 0 no-repeat;
+    background:url(image-path('header-twitter.svg')) 0 0 no-repeat;
     background-size:24px 16px;
 
     &:hover, &:focus {
-      background-image:url(asset-url('twitter-hover.svg'));
+      background-image:url(image-path('twitter-hover.svg'));
     }
   }
 
   .facebook {
     width:8px;
-    background:url(asset-url('header-facebook.svg')) 0 0 no-repeat;
+    background:url(image-path('header-facebook.svg')) 0 0 no-repeat;
     background-size:8px 16px;
 
     &:hover, &:focus {
-      background-image:url(asset-url('facebook-hover.svg'));
+      background-image:url(image-path('facebook-hover.svg'));
     }
   }
 
   .linkedin {
     width:18px;
-    background:url(asset-url('header-linkedin.svg')) 0 0 no-repeat;
+    background:url(image-path('header-linkedin.svg')) 0 0 no-repeat;
     background-size:18px 16px;
 
     &:hover, &:focus {
-      background-image:url(asset-url('linkedin-hover.svg'));
+      background-image:url(image-path('linkedin-hover.svg'));
     }
   }
 
   .rss {
     width:16px;
-    background:url(asset-url('header-rss.svg')) 0 0 no-repeat;
+    background:url(image-path('header-rss.svg')) 0 0 no-repeat;
     background-size:16px 16px;
 
     &:hover, &:focus {
-      background-image:url(asset-url('rss-hover.svg'));
+      background-image:url(image-path('rss-hover.svg'));
     }
   }
 }
