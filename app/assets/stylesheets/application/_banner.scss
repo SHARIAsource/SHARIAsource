@@ -6,7 +6,7 @@
 
   .inner-wrapper {
     height:184px;
-    background:url(image-path('header-bg.png')) 50% 0 no-repeat;
+    background:url(asset-url('header-bg.png')) 50% 0 no-repeat;
     background-size:100% 100%;
   }
 
@@ -22,7 +22,7 @@
   margin:0 auto 34px auto;
   text-indent:-9999px;
   overflow:hidden;
-  background:url(image-path('header-logo.svg')) 0 0 no-repeat;
+  background:url(asset-url('header-logo.svg')) 0 0 no-repeat;
   background-size:430px 58px;
 
   h1, h2 {
@@ -59,11 +59,11 @@
     border:0;
     text-indent:-9999px;
     overflow:hidden;
-    background:url(image-path('search-magglass.svg')) center center no-repeat;
+    background:url(asset-url('search-magglass.svg')) center center no-repeat;
     background-size:14px 14px;
 
     &:hover, &:focus {
-      background-image:url(image-path('search-magglass-hover.svg'));
+      background-image:url(asset-url('search-magglass-hover.svg'));
       cursor:pointer
     }
   }

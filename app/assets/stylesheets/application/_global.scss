@@ -32,7 +32,7 @@ a, button, input {
   letter-spacing:1px;
   border:0;
   padding:0 10px;
-  background:url(asset-path('ss-button-matrix.png')) 0 0 repeat-x;
+  background:url(asset-url('ss-button-matrix.png')) 0 0 repeat-x;
   color:$ss-color-secondary;
   position:relative;
   margin-left:7px;
