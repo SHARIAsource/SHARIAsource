@@ -16,3 +16,6 @@ config/secrets.yml
 
 # Uploaded files
 public/uploads
+
+# Precompile on server
+public/assets
