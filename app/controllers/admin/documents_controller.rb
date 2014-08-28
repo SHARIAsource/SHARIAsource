@@ -14,7 +14,6 @@ class Admin::DocumentsController < AdminController
   end
 
   def edit
-    puts admin_document_path(@document)
   end
 
   def create
