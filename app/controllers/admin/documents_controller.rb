@@ -62,6 +62,10 @@ class Admin::DocumentsController < AdminController
   end
 
   def fetch_document
-    @document = @current_user.documents.where(id: params[:id]).first
+    @document = Document.find params[:id]
+    ids = @current_user.self_and_descendant_ids
+    unless ids.include? @document.contributor.id
+      redirect_to admin_documents_path
+    end
   end
 end
