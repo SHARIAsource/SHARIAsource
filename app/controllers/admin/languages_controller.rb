@@ -46,7 +46,7 @@ class Admin::LanguagesController < AdminController
   protected
 
   def permitted_params
-    params.require(:language).permit(:name)
+    params.require(:language).permit(:name, :is_rtl)
   end
 
   def fetch_language
