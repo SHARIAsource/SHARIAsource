@@ -18,7 +18,8 @@ class PdfToImagesWorker
       source_page = source.pages.build(image: File.open(path),
                                        number: page.number)
       source_page.build_body
-      source_page.body.text = Kramdown::Document.new(page.text).to_html
+      text = page.text || ''
+      source_page.body.text = Kramdown::Document.new(text).to_html
       source_page.save!
       File.delete path
     end
