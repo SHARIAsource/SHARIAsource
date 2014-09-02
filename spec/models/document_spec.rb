@@ -50,6 +50,7 @@ describe Document do
   it { should respond_to :alternate_titles }
   it { should respond_to :alternate_authors }
   it { should respond_to :popular_count }
+  it { should respond_to :permission_giver }
 
   it { should have_and_belong_to_many :themes }
   it { should have_and_belong_to_many :topics }
@@ -57,6 +58,7 @@ describe Document do
   it { should have_and_belong_to_many :eras }
   it { should have_and_belong_to_many :regions }
   it { should have_and_belong_to_many :referenced_documents }
+  it { should have_and_belong_to_many :referencing_documents }
   it { should have_many(:pages).dependent :destroy }
   it { should have_one :body }
   it { should belong_to :document_type }

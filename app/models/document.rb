@@ -56,6 +56,9 @@ class Document < ActiveRecord::Base
   has_and_belongs_to_many :referenced_documents, class_name: 'Document',
     join_table: :document_documents, foreign_key: :document_id,
     association_foreign_key: :referenced_id
+  has_and_belongs_to_many :referencing_documents, class_name: 'Document',
+    join_table: :document_documents, foreign_key: :referenced_id,
+    association_foreign_key: :document_id
   has_many :pages, dependent: :destroy
   has_one :body
   belongs_to :document_type

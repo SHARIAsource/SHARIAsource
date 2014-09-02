@@ -58,11 +58,14 @@
         = f.input :publisher_location
     .row
       .large-6.columns
+        = f.input :permission_giver
+      .large-6.columns
+        = f.input :volume_count
+    .row
+      .large-6.columns.end
         = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
         - if @document.pdf.file
           p= @document.pdf.file.identifier
-      .large-6.columns
-          = f.input :volume_count
     
     - if @document.pages.present?
       .clearfix

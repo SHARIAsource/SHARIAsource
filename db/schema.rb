@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140829195228) do
+ActiveRecord::Schema.define(version: 20140829233534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 20140829195228) do
     t.datetime "updated_at"
     t.integer  "featured_position"
     t.integer  "reference_type_id"
+    t.string   "permission_giver"
   end
 
   add_index "documents", ["contributor_id"], name: "index_documents_on_contributor_id", using: :btree

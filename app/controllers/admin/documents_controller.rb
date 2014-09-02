@@ -54,8 +54,9 @@ class Admin::DocumentsController < AdminController
                  :source_name,:source_url, :author, :translators, :editors,
                  :publisher, :publisher_location, :alternate_titles,
                  :alternate_authors, :featured_position, :reference_type_id,
-                 region_ids: [], theme_ids: [], topic_ids: [], tag_ids: [],
-                 referenced_document_ids: [], era_ids: [], pages_attributes: [
+                 :permission_giver, region_ids: [], theme_ids: [],
+                 topic_ids: [], tag_ids: [], referenced_document_ids: [],
+                 era_ids: [], pages_attributes: [
                    :id, body_attributes: [:id, :text]
                  ], body_attributes: [:id, :text]]
     params.require(:document).permit(*whitelist)

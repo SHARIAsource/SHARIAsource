@@ -8,18 +8,9 @@
     float:left;
     width:600px;
 
-    .breadcrumb {
-      margin:0;
-      font-size:12px;
-
-      a {
-        font-weight:bold;
-        @include underline-hover($ss-color-bodytext);
-      }
-    }
-
     h3 {
       font-size:28px;
+      font-weight:bold;
       line-height:1.14286;
       margin-bottom:16px;
 
@@ -29,15 +20,7 @@
     }
 
     .byline {
-      font-size:12px;
-      font-weight:bold;
-      color:$ss-color-heading;
       margin:0;
-      line-height:1;
-
-      a {
-        @include underline-hover($ss-color-heading);
-      }
     }
 
     .references {

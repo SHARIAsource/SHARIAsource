@@ -1,20 +1,6 @@
 class DocumentPresenter < BasePresenter
   REFERENCE_LIMIT = 3
 
-  def bylines
-    byline = []
-    if @object.author.present?
-      byline << @object.author
-    end
-    if @object.editors.present?
-      byline << "Edited by #{@object.editors}"
-    end
-    if @object.translators.present?
-      byline << "Translated by #{@object.translators}"
-    end
-    byline.join ', '
-  end
-
   def dates
     hijri = I18n.l(@object.lunar_hijri_date, format: :dd_month_yyyy,
                    locale: :en_ar)
@@ -44,7 +30,13 @@ class DocumentPresenter < BasePresenter
   end
 
   def referenced_documents
-    @object.referenced_documents.take(REFERENCE_LIMIT).map do |document|
+    @object.referenced_documents.map do |document|
+      DocumentPresenter.new document
+    end
+  end
+
+  def referencing_documents
+    @object.referencing_documents.map do |document|
       DocumentPresenter.new document
     end
   end
