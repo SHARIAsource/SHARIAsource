@@ -127,3 +127,19 @@
     }
   }
 }
+
+.document-content {
+  color:$ss-color-content;
+  width:740px;
+  margin:0 auto;
+  padding:0 10px 10px 10px;
+
+  p, ul, ol, {
+    font-family:$ss-font-serif;
+    font-size:22px;
+  }
+
+  a {
+    @include underline-hover($ss-color-contentlink);
+  }
+}

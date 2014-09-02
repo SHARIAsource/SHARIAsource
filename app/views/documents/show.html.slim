@@ -111,3 +111,9 @@
           ul
             - @document.referencing_documents.each do |d|
               li= link_to d.title_with_author, document_path(d.object)
+
+- if @document.body.present?
+  .inner-wrapper
+    .inner.document-content
+      div class="#{@document.language ? @document.language.name.downcase : 'english'}"
+        == @document.body.text

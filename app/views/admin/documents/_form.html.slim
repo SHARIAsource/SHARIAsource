@@ -6,19 +6,19 @@
       = f.association :document_type, collection: DocumentType.all
   .row
     .large-6.columns
-      = f.association :themes, collection: Theme.all
-    .large-6.columns
-      = f.association :topics, collection: Topic.all
-  .row
-    .large-6.columns
-      = f.association :tags, collection: Tag.all
-    .large-6.columns
-      = f.association :eras, collection: Era.all
-  .row
+      = f.association :language, collection: Language.all
     .large-6.columns
       = f.association :regions, collection: Region.all
+  .row
     .large-6.columns
-      = f.association :language, collection: Language.all
+      = f.association :topics, collection: Topic.all
+    .large-6.columns
+      = f.association :themes, collection: Theme.all
+  .row
+    .large-6.columns
+      = f.association :eras, collection: Era.all
+    .large-6.columns
+      = f.association :tags, collection: Tag.all
   .row
     .large-6.columns
       = f.association :referenced_documents, collection: Document.where.not(id: @document.id)

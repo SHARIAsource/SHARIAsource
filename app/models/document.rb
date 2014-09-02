@@ -40,6 +40,7 @@ class Document < ActiveRecord::Base
   validates :title, presence: true
   validates :contributor_id, presence: true
   validates :document_type_id, presence: true
+  validates :language_id, presence: true
   validates :popular_count, numericality: true
   validates :featured_position, allow_blank: true, inclusion: {
     in: 1..3,
