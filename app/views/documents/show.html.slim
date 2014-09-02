@@ -1,28 +1,29 @@
 .inner-wrapper.document
   .inner
-    ul.share-links
-      li
-        a href='#TODO' Print
-      li
-        a href='#TODO' Email
-      li
-        a href='#TODO' Twitter
-      li
-        a href='#TODO' Facebook
+    .clearfix
+      ul.share-links
+        li
+          a href='#TODO' Print
+        li
+          a href='#TODO' Email
+        li
+          a href='#TODO' Twitter
+        li
+          a href='#TODO' Facebook
 
-    p.breadcrumb
-      = link_to @document.document_type.name, '#TODO'
-      span= " :: #{@document.created_at}"
+      p.breadcrumb
+        = link_to @document.document_type.name, '#TODO'
+        span= " :: #{@document.created_at}"
 
-    h2= @document.title
+      h2= @document.title
 
-    p.byline
-      = link_to @document.contributor.name, '#TODO'
-      span= @document.edited_by
+      p.byline
+        = link_to @document.contributor.name, '#TODO'
+        span= @document.edited_by
 
   .metadata-inner
-    .metadata
-      .meta-column.first
+    .metadata.js-same-height-container
+      .meta-column.first.js-same-height
         ul
           - if @document.reference_types.present?
             li
@@ -68,7 +69,7 @@
               - else
                 span= @document.source_name
 
-      .meta-column
+      .meta-column.js-same-height
         ul
           - if @document.topics.present?
             li
@@ -95,17 +96,16 @@
               strong Additional Tags:
               span= @document.tags.pluck(:name).join(', ')
 
-          li
-            a href='#TODO' Suggest More Tags
+          li.suggest-tags= link_to 'Suggest More Tags', '#TODO'
 
-      .meta-column
+      .meta-column.references.js-same-height
         - if @document.referenced_documents.present?
           h3 Documents referenced:
           ul 
             - @document.referenced_documents.each do |d|
               li= link_to d.title_with_author, document_path(d.object)
         
-      .meta-column.last
+      .meta-column.last.references.js-same-height
         - if @document.referencing_documents.present?
           h3 This document is referenced by:
           ul
