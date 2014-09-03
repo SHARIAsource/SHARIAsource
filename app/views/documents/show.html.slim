@@ -2,14 +2,10 @@
   .inner
     .clearfix
       ul.share-links
-        li
-          a href='#TODO' Print
-        li
-          a href='#TODO' Email
-        li
-          a href='#TODO' Twitter
-        li
-          a href='#TODO' Facebook
+        li= link_to 'Print', '#TODO', class: 'print', title: 'Print this page'
+        li= link_to 'Email', '#TODO', class: 'email', title: 'Email a link to this page'
+        li= link_to 'Twitter', '#TODO', class: 'twitter', title: 'Share this page on Twitter'
+        li= link_to 'Facebook', '#TODO', class: 'facebook', title: 'Share this page on Facebook'
 
       p.breadcrumb
         = link_to @document.document_type.name, '#TODO'

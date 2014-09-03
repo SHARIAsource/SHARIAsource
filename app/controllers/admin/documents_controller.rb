@@ -22,7 +22,7 @@ class Admin::DocumentsController < AdminController
     @document = current_user.documents.build permitted_params
     if @document.save
       flash[:notice] = 'Document created successfully'
-      redirect_to admin_document_path(@document)
+      redirect_to edit_admin_document_path(@document)
     else
       flash[:error] = @document.errors.full_messages.to_sentence
       render :new
@@ -32,7 +32,7 @@ class Admin::DocumentsController < AdminController
   def update
     if @document.update permitted_params
       flash[:notice] = 'Document updated successfully'
-      redirect_to admin_document_path(@document)
+      redirect_to edit_admin_document_path(@document)
     else
       flash[:error] = @document.errors.full_messages.to_sentence
       render :edit
@@ -61,6 +61,9 @@ class Admin::DocumentsController < AdminController
                  era_ids: [], pages_attributes: [
                    :id, body_attributes: [:id, :text]
                  ], body_attributes: [:id, :text]]
+    unless current_user.requires_approval?
+      whitelist << :published
+    end
     params.require(:document).permit(*whitelist)
   end
 

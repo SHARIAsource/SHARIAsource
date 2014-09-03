@@ -21,6 +21,56 @@
 
 .share-links {
   float:right;
+  margin:0;
+
+  li {
+    float:left;
+    margin-left:10px;
+  }
+
+  a {
+    display:block;
+    width:48px;
+    height:48px;
+    overflow:hidden;
+    text-indent:-9999px;
+  }
+
+  .print {
+    background:url(image-path('docs-print.svg')) 0 0 no-repeat;
+    background-size:48px 48px;
+
+    &:hover {
+      background-image:url(image-path('docs-print-hover.svg'));
+    }
+  }
+
+  .email {
+    background:url(image-path('docs-email.svg')) 0 0 no-repeat;
+    background-size:48px 48px;
+
+    &:hover {
+      background-image:url(image-path('docs-email-hover.svg'));
+    }
+  }
+
+  .twitter {
+    background:url(image-path('docs-twitter.svg')) 0 0 no-repeat;
+    background-size:48px 48px;
+
+    &:hover {
+      background-image:url(image-path('docs-twitter-hover.svg'));
+    }
+  }
+
+  .facebook {
+    background:url(image-path('docs-facebook.svg')) 0 0 no-repeat;
+    background-size:48px 48px;
+
+    &:hover {
+      background-image:url(image-path('docs-facebook-hover.svg'));
+    }
+  }
 }
 
 .document {

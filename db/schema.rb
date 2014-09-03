@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140902231658) do
+ActiveRecord::Schema.define(version: 20140903182420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20140902231658) do
     t.integer  "featured_position"
     t.integer  "reference_type_id"
     t.string   "permission_giver"
+    t.boolean  "published",          default: false
   end
 
   add_index "documents", ["contributor_id"], name: "index_documents_on_contributor_id", using: :btree
@@ -99,6 +100,7 @@ ActiveRecord::Schema.define(version: 20140902231658) do
   add_index "documents", ["featured_position"], name: "index_documents_on_featured_position", using: :btree
   add_index "documents", ["language_id"], name: "index_documents_on_language_id", using: :btree
   add_index "documents", ["popular_count"], name: "index_documents_on_popular_count", using: :btree
+  add_index "documents", ["published"], name: "index_documents_on_published", using: :btree
   add_index "documents", ["reference_type_id"], name: "index_documents_on_reference_type_id", using: :btree
 
   create_table "documents_eras", id: false, force: true do |t|
