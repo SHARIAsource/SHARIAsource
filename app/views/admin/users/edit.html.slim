@@ -9,7 +9,7 @@ h2 Edit Account
       fieldset
         legend Roles
         = f.input :is_editor, boolean_style: :inline, label: 'Editor'
-        = f.input :is_contributor, boolean_style: :inline, label: 'Contributor'
+        = f.input :requires_approval, boolean_style: :inline
       = f.association :collaborator, collection: Collaborator.all, include_blank: 'None'
       = f.association :parent, collection: User.where.not(id: @user.self_and_descendant_ids), include_blank: 'None', label: 'Supervisor'
   .row

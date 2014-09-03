@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
 
   devise_for :users,
-    controllers: { registrations: 'registrations' },
+    controllers: { registrations: 'registrations', sessions: 'sessions' },
     path_names: { sign_in: 'login', sign_up: 'signup', sign_out: 'logout' }
 
   root 'home#index'

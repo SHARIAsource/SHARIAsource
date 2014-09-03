@@ -1,5 +1,5 @@
 class Admin::UsersController < AdminController
-  before_filter :ensure_admin!
+  before_filter :ensure_editor!
 
   def index
     @users = User.order(:last_name_without_articles)
@@ -18,7 +18,7 @@ class Admin::UsersController < AdminController
   protected
 
   def permitted_params
-    params.require(:user).permit(:is_editor, :is_contributor, :collaborator_id,
-                                 :parent_id)
+    params.require(:user).permit(:is_editor, :requires_approval,
+                                 :collaborator_id, :parent_id)
   end
 end

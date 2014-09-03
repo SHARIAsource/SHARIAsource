@@ -1,26 +1,28 @@
 class Admin::DocumentsController < AdminController
-  before_filter :ensure_contributor!
   before_filter :fetch_document, only: [:edit, :update, :destroy]
 
   def index
     @documents = Document.where(
-      contributor_id: @current_user.self_and_descendant_ids
+      contributor_id: current_user.self_and_descendant_ids
     )
   end
 
   def new
-    @document = @current_user.documents.build
+    @document = current_user.documents.build
     @document.build_body
   end
 
   def edit
+    unless @document.processed
+      redirect_to admin_documents_path
+    end
   end
 
   def create
-    @document = @current_user.documents.build permitted_params
+    @document = current_user.documents.build permitted_params
     if @document.save
       flash[:notice] = 'Document created successfully'
-      redirect_to admin_documents_path
+      redirect_to admin_document_path(@document)
     else
       flash[:error] = @document.errors.full_messages.to_sentence
       render :new
@@ -30,7 +32,7 @@ class Admin::DocumentsController < AdminController
   def update
     if @document.update permitted_params
       flash[:notice] = 'Document updated successfully'
-      redirect_to admin_documents_path
+      redirect_to admin_document_path(@document)
     else
       flash[:error] = @document.errors.full_messages.to_sentence
       render :edit
@@ -64,7 +66,7 @@ class Admin::DocumentsController < AdminController
 
   def fetch_document
     @document = Document.find params[:id]
-    ids = @current_user.self_and_descendant_ids
+    ids = current_user.self_and_descendant_ids
     unless ids.include? @document.contributor.id
       redirect_to admin_documents_path
     end

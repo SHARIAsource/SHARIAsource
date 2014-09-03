@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140829233534) do
+ActiveRecord::Schema.define(version: 20140902231658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -270,9 +270,7 @@ ActiveRecord::Schema.define(version: 20140829233534) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_admin",                   default: false
     t.boolean  "is_editor",                  default: false
-    t.boolean  "is_contributor",             default: false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "last_name_without_articles"
@@ -280,15 +278,15 @@ ActiveRecord::Schema.define(version: 20140829233534) do
     t.integer  "parent_id"
     t.text     "about"
     t.string   "avatar"
+    t.boolean  "requires_approval",          default: false
   end
 
   add_index "users", ["collaborator_id"], name: "index_users_on_collaborator_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["is_admin"], name: "index_users_on_is_admin", using: :btree
-  add_index "users", ["is_contributor"], name: "index_users_on_is_contributor", using: :btree
   add_index "users", ["is_editor"], name: "index_users_on_is_editor", using: :btree
   add_index "users", ["last_name_without_articles"], name: "index_users_on_last_name_without_articles", using: :btree
   add_index "users", ["parent_id"], name: "index_users_on_parent_id", using: :btree
+  add_index "users", ["requires_approval"], name: "index_users_on_requires_approval", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

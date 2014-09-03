@@ -19,8 +19,8 @@ table
           ul.inline-list
             - if user.is_editor?
               li.label.radius.secondary Editor
-            - if user.is_contributor?
-              li.label.radius.secondary Contributor
+            - if user.requires_approval?
+              li.label.radius.secondary Requires Approval
         td.actions
           ul.inline-list
             li= link_to t('edit'), edit_admin_user_path(user), class: 'tiny radius pill button'
