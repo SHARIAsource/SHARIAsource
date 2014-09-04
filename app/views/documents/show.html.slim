@@ -108,7 +108,25 @@
             - @document.referencing_documents.each do |d|
               li= link_to d.title_with_author, document_path(d.object)
 
-- if @document.body.present?
+- if @document.pages.present?
+  .inner-wrapper
+    .inner
+      .deck-container
+        - @document.pages.each do |page|
+          .slide
+            .text== page.body.text
+            .image-viewer data-src=page.image.url data-width=page.width data-height=page.height
+        .controls
+          a.deck-prev-link href='#' title='Previous Page' Previous
+          span.status
+            = "Page "
+            span.deck-status-current 1
+            = " of "
+            span.deck-status-total X
+          a.deck-next-link href='#' title='Next Page' Next
+    hr.source-end
+
+- elsif @document.body.present?
   .inner-wrapper
     .inner.document-content
       div class="#{@document.language ? @document.language.name.downcase : 'english'}"

@@ -14,6 +14,10 @@
 //= require jquery_ujs
 //= require foundation
 //= require turbolinks
+//= require openseadragon
+//= require ./deckjs/core/deck.core.js
+//= require ./deckjs/extensions/navigation/deck.navigation.js
+//= require ./deckjs/extensions/status/deck.status.js
 //= require_tree ./application/
 
 $(function(){ $(document).foundation(); });
