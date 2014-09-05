@@ -1,3 +1,5 @@
+- content_for :page_title, @document.title
+
 .inner-wrapper.document
   .inner
     .clearfix
@@ -111,19 +113,25 @@
 - if @document.pages.present?
   .inner-wrapper
     .inner
-      .deck-container
-        - @document.pages.each do |page|
-          .slide
-            .text== page.body.text
-            .image-viewer data-src=page.image.url data-width=page.width data-height=page.height
+      .image-viewer-container
+        .text
+          - @document.pages.each do |page|
+            .page-text== page.body.text
+        .image-viewer
+          .zoom-controls
+            a#js-zoomin-link.zoomin-link href='#' title='Zoom in' Zoom In
+            a#js-zoomout-link.zoomout-link href='#' title='Zoom out' Zoom Out
+            a#js-fullscreen-link.fullscreen-link href='#' title='Fullscreen' Fullscreen
+          -@document.pages.each do |page|
+            span.image data-src=page.image.url data-width=page.width data-height=page.height
         .controls
-          a.deck-prev-link href='#' title='Previous Page' Previous
+          a#js-prev-link.prev-link href='#' title='Previous Page' Previous
           span.status
             = "Page "
-            span.deck-status-current 1
+            span.current 1
             = " of "
-            span.deck-status-total X
-          a.deck-next-link href='#' title='Next Page' Next
+            span.total X
+          a#js-next-link.next-link href='#' title='Next Page' Next
     hr.source-end
 
 - elsif @document.body.present?
