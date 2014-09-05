@@ -2,7 +2,7 @@ class Admin::DocumentsController < AdminController
   before_filter :fetch_document, only: [:edit, :update, :destroy]
 
   def index
-    @documents = Document.where(
+    @documents = Document.unscoped.load.where(
       contributor_id: current_user.self_and_descendant_ids
     )
   end
@@ -68,7 +68,7 @@ class Admin::DocumentsController < AdminController
   end
 
   def fetch_document
-    @document = Document.find params[:id]
+    @document = Document.unscoped.load.find params[:id]
     ids = current_user.self_and_descendant_ids
     unless ids.include? @document.contributor.id
       redirect_to admin_documents_path
