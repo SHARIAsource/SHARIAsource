@@ -6,6 +6,8 @@
 #  image       :string(255)
 #  document_id :integer
 #  number      :integer
+#  width       :integer
+#  height      :integer
 #
 
 class Page < ActiveRecord::Base

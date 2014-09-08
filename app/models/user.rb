@@ -15,9 +15,7 @@
 #  last_sign_in_ip            :string(255)
 #  created_at                 :datetime
 #  updated_at                 :datetime
-#  is_admin                   :boolean          default(FALSE)
 #  is_editor                  :boolean          default(FALSE)
-#  is_contributor             :boolean          default(FALSE)
 #  first_name                 :string(255)
 #  last_name                  :string(255)
 #  last_name_without_articles :string(255)
@@ -25,6 +23,7 @@
 #  parent_id                  :integer
 #  about                      :text
 #  avatar                     :string(255)
+#  requires_approval          :boolean          default(FALSE)
 #
 
 class User < ActiveRecord::Base

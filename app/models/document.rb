@@ -25,6 +25,9 @@
 #  created_at         :datetime
 #  updated_at         :datetime
 #  featured_position  :integer
+#  reference_type_id  :integer
+#  permission_giver   :string(255)
+#  published          :boolean          default(FALSE)
 #
 
 class Document < ActiveRecord::Base
@@ -69,7 +72,7 @@ class Document < ActiveRecord::Base
 
   mount_uploader :pdf, PdfUploader
   accepts_nested_attributes_for :pages, :body
-  default_scope { where(published: true).order('created_At DESC') }
+  default_scope { where(published: true).order('created_at DESC') }
 
   def self.featured
     self.where.not(featured_position: nil).order(:featured_position)

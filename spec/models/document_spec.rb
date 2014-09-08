@@ -25,6 +25,9 @@
 #  created_at         :datetime
 #  updated_at         :datetime
 #  featured_position  :integer
+#  reference_type_id  :integer
+#  permission_giver   :string(255)
+#  published          :boolean          default(FALSE)
 #
 
 describe Document do
