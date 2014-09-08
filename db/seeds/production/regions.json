@@ -1,0 +1,80 @@
+{
+  "options": {
+    "find_existing_by": ["name"]
+  },
+
+  "records": [{
+    "sprig_id": 1,
+    "name": "Africa"
+  }, {
+    "sprig_id": 2,
+    "name": "Americas"
+  }, {
+    "sprig_id": 3,
+    "name": "Asia"
+  }, {
+    "sprig_id": 4,
+    "name": "Australia & New Zealand"
+  }, {
+    "sprig_id": 5,
+    "name": "Europe"
+  }, {
+    "sprig_id": 6,
+    "name": "Middle East & North Africa"
+  }, {
+    "sprig_id": 7,
+    "name": "Turkey"
+  }, {
+    "sprig_id": 8,
+    "name": "East Africa",
+    "parent_id": "<%= sprig_record(Region, 1).id %>"
+  }, {
+    "sprig_id": 9,
+    "name": "North Africa",
+    "parent_id": "<%= sprig_record(Region, 1).id %>"
+  }, {
+    "sprig_id": 10,
+    "name": "Southern Africa",
+    "parent_id": "<%= sprig_record(Region, 1).id %>"
+  }, {
+    "sprig_id": 11,
+    "name": "Subsaharan West Africa",
+    "parent_id": "<%= sprig_record(Region, 1).id %>"
+  }, {
+    "sprig_id": 12,
+    "name": "North America",
+    "parent_id": "<%= sprig_record(Region, 2).id %>"
+  }, {
+    "sprig_id": 13,
+    "name": "Central America & Caribbean",
+    "parent_id": "<%= sprig_record(Region, 2).id %>"
+  }, {
+    "sprig_id": 14,
+    "name": "South America",
+    "parent_id": "<%= sprig_record(Region, 2).id %>"
+  }, {
+    "sprig_id": 15,
+    "name": "Central Asia & Russia",
+    "parent_id": "<%= sprig_record(Region, 3).id %>"
+  }, {
+    "sprig_id": 16,
+    "name": "East Asia: China, Japan, etc.",
+    "parent_id": "<%= sprig_record(Region, 3).id %>"
+  }, {
+    "sprig_id": 17,
+    "name": "South Asia: India, Pakistan, etc.",
+    "parent_id": "<%= sprig_record(Region, 3).id %>"
+  }, {
+    "sprig_id": 18,
+    "name": "Southeast Asia: Indonesia, Malaysia, etc.",
+    "parent_id": "<%= sprig_record(Region, 3).id %>"
+  }, {
+    "sprig_id": 19,
+    "name": "Eastern Europe (Balkans, etc.)",
+    "parent_id": "<%= sprig_record(Region, 5).id %>"
+  }, {
+    "sprig_id": 20,
+    "name": "Western Europe (EU)",
+    "parent_id": "<%= sprig_record(Region, 5).id %>"
+  }]
+}

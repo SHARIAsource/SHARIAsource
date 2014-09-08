@@ -1,0 +1,35 @@
+{
+  "options": {
+    "find_existing_by": ["name"]
+  },
+
+  "records": [{
+    "sprig_id": 1,
+    "name": "Apostasy & Blasphemy"
+  }, {
+    "sprig_id": 2,
+    "name": "Child Marriage"
+  }, {
+    "sprig_id": 3,
+    "name": "Copyright & Intellectual Property"
+  }, {
+    "sprig_id": 4,
+    "name": "Environmental Law"
+  }, {
+    "sprig_id": 5,
+    "name": "Human Rights"
+  }, {
+    "sprig_id": 6,
+    "name": "Islamic Government"
+  }, {
+    "sprig_id": 7,
+    "name": "Law & Development"
+  }, {
+    "sprig_id": 8,
+    "name": "Legal Education"
+  }, {
+    "sprig_id": 9,
+    "name": "Legal Pluralism"
+  }]
+}
+

@@ -1,0 +1,64 @@
+{
+  "options": {
+    "find_existing_by": ["name"]
+  },
+
+  "records": [{
+    "sprig_id": 1,
+    "name": "Administrative Law"
+  }, {
+    "sprig_id": 2,
+    "name": "Animal Law"
+  }, {
+    "sprig_id": 3,
+    "name": "Commercial Law"
+  }, {
+    "sprig_id": 4,
+    "name": "Constitutional Law"
+  }, {
+    "sprig_id": 5,
+    "name": "Contracts"
+  }, {
+    "sprig_id": 6,
+    "name": "Criminal Law"
+  }, {
+    "sprig_id": 7,
+    "name": "Disability Law"
+  }, {
+    "sprig_id": 8,
+    "name": "Family Law"
+  }, {
+    "sprig_id": 9,
+    "name": "Health Law"
+  }, {
+    "sprig_id": 10,
+    "name": "Inheritance Law"
+  }, {
+    "sprig_id": 11,
+    "name": "Islamic Finance"
+  }, {
+    "sprig_id": 12,
+    "name": "Jurisprudence"
+  }, {
+    "sprig_id": 13,
+    "name": "Legal History"
+  }, {
+    "sprig_id": 14,
+    "name": "Legislation"
+  }, {
+    "sprig_id": 15,
+    "name": "Procedure"
+  }, {
+    "sprig_id": 16,
+    "name": "Property"
+  }, {
+    "sprig_id": 17,
+    "name": "Ritual Law"
+  }, {
+    "sprig_id": 18,
+    "name": "Torts"
+  }, {
+    "sprig_id": 19,
+    "name": "Wills, Trusts, & Estates"
+  }]
+}

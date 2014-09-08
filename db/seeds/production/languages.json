@@ -1,0 +1,23 @@
+{
+  "options": {
+    "find_existing_by": ["name"]
+  },
+
+  "records": [{
+    "sprig_id": 1,
+    "name": "English",
+    "is_rtl": false
+  }, {
+    "sprig_id": 2,
+    "name": "Arabic",
+    "is_rtl": true
+  }, {
+    "sprig_id": 3,
+    "name": "Persian",
+    "is_rtl": true
+  }, {
+    "sprig_id": 4,
+    "name": "Bahasa",
+    "is_rtl": false
+  }]
+}
