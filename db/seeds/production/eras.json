@@ -1,0 +1,340 @@
+{
+  "options": {
+    "find_existing_by": ["name"]
+  },
+
+  "records": [{
+    "sprig_id": 1,
+    "name": "Early Islamic Rule (Arabia, Iraq, Persia)",
+    "start_year_hijri": 10,
+    "start_year_gregorian": 632
+  }, {
+    "sprig_id": 2,
+    "name": "Prophet Muḥammad’s Time",
+    "start_year_hijri": 11,
+    "start_year_gregorian": 631,
+    "hijri_display": "d. 11",
+    "parent_id": "<%= sprig_record(Era, 1).id %>"
+  }, {
+    "sprig_id": 3,
+    "name": "Rightly Guided Caliphs (al-Khulafāʾ al-Rāshidūn)",
+    "start_year_hijri": 11,
+    "end_year_hijri": 40,
+    "start_year_gregorian": 632,
+    "end_year_gregorian": 661,
+    "parent_id": "<%= sprig_record(Era, 1).id %>"
+  }, {
+    "sprig_id": 4,
+    "name": "The 12 Shīʿī Imāms",
+    "start_year_hijri": 35,
+    "start_year_gregorian": 656,
+    "hijri_display": "35-mid-4th c.",
+    "gregorian_display": "656-mid-10th c.",
+    "parent_id": "<%= sprig_record(Era, 1).id %>"
+  }, {
+    "sprig_id": 5,
+    "name": "Umayyads",
+    "start_year_hijri": 41,
+    "start_year_gregorian": 661
+  }, {
+    "sprig_id": 6,
+    "name": "Umayyad East (Iraq, Syria, Arabian Peninsula)",
+    "start_year_hijri": 41,
+    "start_year_gregorian": 661,
+    "end_year_hijri": 132,
+    "end_year_gregorian": 750,
+    "parent_id": "<%= sprig_record(Era, 5).id %>"
+  }, {
+    "sprig_id": 7,
+    "name": "Umayyad West (Iberian Peninsula, except the north)",
+    "start_year_hijri": 138,
+    "start_year_gregorian": 756,
+    "end_year_hijri": 422,
+    "end_year_gregorian": 1031,
+    "parent_id": "<%= sprig_record(Era, 5).id %>"
+  }, {
+    "sprig_id": 8,
+    "name": "ʿAbbāsids",
+    "start_year_hijri": 132,
+    "start_year_gregorian": 750,
+    "end_year_hijri": 923,
+    "end_year_gregorian": 1517
+  }, {
+    "sprig_id": 9,
+    "name": "Caliphs in Iraq",
+    "start_year_hijri": 132,
+    "start_year_gregorian": 749,
+    "end_year_hijri": 656,
+    "end_year_gregorian": 1258,
+    "parent_id": "<%= sprig_record(Era, 8).id %>"
+  }, {
+    "sprig_id": 10,
+    "name": "Caliphs in Cairo",
+    "start_year_hijri": 659,
+    "start_year_gregorian": 1261,
+    "end_year_hijri": 923,
+    "end_year_gregorian": 1517,
+    "parent_id": "<%= sprig_record(Era, 8).id %>"
+  }, {
+    "sprig_id": 11,
+    "name": "Sultans in Egypt and Syria",
+    "start_year_hijri": 254,
+    "start_year_gregorian": 868,
+    "end_year_hijri": 692,
+    "end_year_gregorian": 1571,
+    "parent_id": "<%= sprig_record(Era, 8).id %>"
+  }, {
+    "sprig_id": 12,
+    "name": "Ṭūlūnids (Egypt, Syria)",
+    "start_year_hijri": 254,
+    "start_year_gregorian": 868,
+    "end_year_hijri": 292,
+    "end_year_gregorian": 905,
+    "parent_id": "<%= sprig_record(Era, 11).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 13,
+    "name": "Ikhshidids (Egypt, S Syria)",
+    "start_year_hijri": 323,
+    "start_year_gregorian": 935,
+    "end_year_hijri": 358,
+    "end_year_gregorian": 969,
+    "parent_id": "<%= sprig_record(Era, 11).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 14,
+    "name": "Fāṭimids (N Africa, Egypt, S Syria)",
+    "start_year_hijri": 297,
+    "start_year_gregorian": 909,
+    "end_year_hijri": 567,
+    "end_year_gregorian": 1171,
+    "parent_id": "<%= sprig_record(Era, 11).id %>"
+  }, {
+    "sprig_id": 15,
+    "name": "Mirdasids (N and Central Syria)",
+    "start_year_hijri": 415,
+    "start_year_gregorian": 1024,
+    "end_year_hijri": 472,
+    "end_year_gregorian": 1080,
+    "parent_id": "<%= sprig_record(Era, 11).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 16,
+    "name": "Nizārī Ismāʿīlīs (W Syria)",
+    "start_year_hijri": 493,
+    "start_year_gregorian": 1100,
+    "end_year_hijri": 669,
+    "end_year_gregorian": 1271,
+    "hijri_display": "ca. 493-669",
+    "gregorian_display": "ca. 1100-1271",
+    "parent_id": "<%= sprig_record(Era, 11).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 17,
+    "name": "Ayyūbids (Egypt, Syria, Diyār Bakr, W Jazīra, Yemen)",
+    "start_year_hijri": 564,
+    "start_year_gregorian": 1169,
+    "hijri_display": "564-late 9th c.",
+    "gregorian_display": "1169-late 15th c.",
+    "parent_id": "<%= sprig_record(Era, 11).id %>"
+  }, {
+    "sprig_id": 18,
+    "name": "Mamlūks (Egypt and Syria)",
+    "start_year_hijri": 648,
+    "start_year_gregorian": 1250,
+    "end_year_hijri": 692,
+    "end_year_gregorian": 1517,
+    "parent_id": "<%= sprig_record(Era, 11).id %>"
+  }, {
+    "sprig_id": 19,
+    "name": "Subsequent Empires & Eras by Region",
+    "start_year_hijri": 161,
+    "start_year_gregorian": 778
+  }, {
+    "sprig_id": 20,
+    "name": "North Africa & Iberian Peninsula",
+    "start_year_hijri": 161,
+    "start_year_gregorian": 778,
+    "end_year_hijri": 1389,
+    "end_year_gregorian": 1969,
+    "parent_id": "<%= sprig_record(Era, 19).id %>"
+  }, {
+    "sprig_id": 21,
+    "name": "Idrīsids (Morocco)",
+    "start_year_hijri": 172,
+    "start_year_gregorian": 789,
+    "end_year_hijri": 375,
+    "end_year_gregorian": 985,
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 22,
+    "name": "Rustamids (Algeria)",
+    "start_year_hijri": 161,
+    "start_year_gregorian": 778,
+    "end_year_hijri": 296,
+    "end_year_gregorian": 909,
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 23,
+    "name": "Midrarids (Morocco)",
+    "start_year_hijri": 208,
+    "start_year_gregorian": 823,
+    "end_year_hijri": 366,
+    "end_year_gregorian": 977,
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 24,
+    "name": "Aghlabids (Ifrīqiya, Algeria, Sicily)",
+    "start_year_hijri": 184,
+    "start_year_gregorian": 800,
+    "end_year_hijri": 296,
+    "end_year_gregorian": 900,
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 25,
+    "name": "The Kalbids (Sicily)",
+    "start_year_hijri": 337,
+    "start_year_gregorian": 948,
+    "end_year_hijri": 445,
+    "end_year_gregorian": 1053,
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 26,
+    "name": "Zirids and Hammādids (Tunisia, E Algeria)",
+    "start_year_hijri": 361,
+    "end_year_hijri": 547,
+    "start_year_gregorian": 972,
+    "end_year_gregorian": 1152,
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 27,
+    "name": "Almoravids or al-Murābiṭūn (NW Africa, Spain)",
+    "start_year_hijri": 454,
+    "end_year_hijri": 541,
+    "start_year_gregorian": 1062,
+    "end_year_gregorian": 1147,
+    "parent_id": "<%= sprig_record(Era, 20).id %>"
+  }, {
+    "sprig_id": 28,
+    "name": "Almohads or al-Muwaḥiddūn (N Africa and Spain)",
+    "start_year_hijri": 524,
+    "end_year_hijri": 668,
+    "start_year_gregorian": 1130,
+    "end_year_gregorian": 1269,
+    "parent_id": "<%= sprig_record(Era, 20).id %>"
+  }, {
+    "sprig_id": 29,
+    "name": "Mulūk al-Ṭawāʾif/Reyes de Taifas (Central and Southern Spain)",
+    "start_year_hijri": 600,
+    "start_year_gregorian": 1000,
+    "hijri_display": "early 7th-early 9th c.",
+    "gregorian_display": "early 11th-early 13th c.",
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 30,
+    "name": "Banū Ghāniya (Balearic Islands)",
+    "start_year_hijri": 520,
+    "end_year_hijri": 599,
+    "start_year_gregorian": 1126,
+    "end_year_gregorian": 1203,
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 31,
+    "name": "Naṣrids or Banū al-Aḥmar (Granada)",
+    "start_year_hijri": 629,
+    "end_year_hijri": 897,
+    "start_year_gregorian": 1232,
+    "end_year_gregorian": 1492,
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 32,
+    "name": "Marīnids (N Africa)",
+    "start_year_hijri": 614,
+    "end_year_hijri": 869,
+    "start_year_gregorian": 1217,
+    "end_year_gregorian": 1465,
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 33,
+    "name": "ʿAbd al-Wādids or Zayyānids (Algeria)",
+    "start_year_hijri": 633,
+    "end_year_hijri": 962,
+    "start_year_gregorian": 1235,
+    "end_year_gregorian": 1554,
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 34,
+    "name": "Hafsids (Tunisia, Algeria)",
+    "start_year_hijri": 627,
+    "end_year_hijri": 982,
+    "start_year_gregorian": 1229,
+    "end_year_gregorian": 1574,
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 35,
+    "name": "Wattāsids (Morocco, Central Maghrib)",
+    "start_year_hijri": 832,
+    "end_year_hijri": 946,
+    "start_year_gregorian": 1428,
+    "end_year_gregorian": 1549,
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 36,
+    "name": "Saʿdid Sharīfs (Morocco)",
+    "start_year_hijri": 916,
+    "end_year_hijri": 1069,
+    "start_year_gregorian": 1510,
+    "end_year_gregorian": 1659,
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 37,
+    "name": "ʿAlawid or Filalī Sharīfs (Morocco)",
+    "start_year_hijri": 1041,
+    "start_year_gregorian": 1631,
+    "hijri_display": "1041-",
+    "gregorian_display": "1631-",
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 38,
+    "name": "Husaynid Beys (Tunisia)",
+    "start_year_hijri": 1117,
+    "end_year_hijri": 1376,
+    "start_year_gregorian": 1705,
+    "end_year_gregorian": 1957,
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 39,
+    "name": "The Qaramanlīs (Tripolitania)",
+    "start_year_hijri": 1123,
+    "end_year_hijri": 1251,
+    "start_year_gregorian": 1711,
+    "end_year_gregorian": 1835,
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 40,
+    "name": "Sanūsī Chiefs an Rulers (Sudan, Libya)",
+    "start_year_hijri": 1253,
+    "end_year_hijri": 1389,
+    "start_year_gregorian": 1837,
+    "end_year_gregorian": 1969,
+    "parent_id": "<%= sprig_record(Era, 20).id %>",
+    "extended": true
+  }]
+}

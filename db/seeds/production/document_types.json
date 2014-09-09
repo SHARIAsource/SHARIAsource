@@ -1,0 +1,112 @@
+{
+  "options": {
+    "find_existing_by": ["name"]
+  },
+
+  "records": [{
+    "sprig_id": 1,
+    "name": "Historical Primary Sources"
+  }, {
+    "sprig_id": 2,
+    "name": "Qurʾān",
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+  }, {
+    "sprig_id": 3,
+    "name": "Ḥadīth (Prophetic Reports)",
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+  }, {
+    "sprig_id": 4,
+    "name": "Legal Treatises (Fiqh)",
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+  }, {
+    "sprig_id": 5,
+    "name": "Jurisprudential Treatises (Uṣūl al-Fiqh)",
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+  }, {
+    "sprig_id": 6,
+    "name": "Legal Maxims Treatises (Qawāʿid al-Fiqh)",
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+  }, {
+    "sprig_id": 7,
+    "name": "Judicial Biographies (Akhbār al-Quḍāt)",
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+  }, {
+    "sprig_id": 8,
+    "name": "Judicial Procedure (Adab al-Qāḍī)",
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+  }, {
+    "sprig_id": 9,
+    "name": "Court Records",
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+  }, {
+    "sprig_id": 10,
+    "name": "Archival Documents",
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+  }, {
+    "sprig_id": 11,
+    "name": "Genizah Papyri",
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+  }, {
+    "sprig_id": 12,
+    "name": "Contemporary Primary Sources"
+  }, {
+    "sprig_id": 13,
+    "name": "Administrative Decisions",
+    "parent_id": "<%= sprig_record(DocumentType, 12).id %>"
+  }, {
+    "sprig_id": 14,
+    "name": "Constitutions",
+    "parent_id": "<%= sprig_record(DocumentType, 12).id %>"
+  }, {
+    "sprig_id": 15,
+    "name": "Court Cases",
+    "parent_id": "<%= sprig_record(DocumentType, 12).id %>"
+  }, {
+    "sprig_id": 16,
+    "name": "Fatwās",
+    "parent_id": "<%= sprig_record(DocumentType, 12).id %>"
+  }, {
+    "sprig_id": 17,
+    "name": "Legislation",
+    "parent_id": "<%= sprig_record(DocumentType, 12).id %>"
+  }, {
+    "sprig_id": 18,
+    "name": "Secondary Sources"
+  }, {
+    "sprig_id": 19,
+    "name": "Books",
+    "parent_id": "<%= sprig_record(DocumentType, 18).id %>"
+  }, {
+    "sprig_id": 20,
+    "name": "Articles",
+    "parent_id": "<%= sprig_record(DocumentType, 18).id %>"
+  }, {
+    "sprig_id": 21,
+    "name": "Media",
+    "parent_id": "<%= sprig_record(DocumentType, 18).id %>"
+  }, {
+    "sprig_id": 22,
+    "name": "Policy Papers"
+  }, {
+    "sprig_id": 23,
+    "name": "Amicus Briefs"
+  }, {
+    "sprig_id": 24,
+    "name": "Additional Legal Documents"
+  }, {
+    "sprig_id": 25,
+    "name": "Arbitration Decisions",
+    "parent_id": "<%= sprig_record(DocumentType, 24).id %>"
+  }, {
+    "sprig_id": 26,
+    "name": "Contracts",
+    "parent_id": "<%= sprig_record(DocumentType, 24).id %>"
+  }, {
+    "sprig_id": 27,
+    "name": "Forms",
+    "parent_id": "<%= sprig_record(DocumentType, 24).id %>"
+  }, {
+    "sprig_id": 28,
+    "name": "Commentary"
+  }]
+}

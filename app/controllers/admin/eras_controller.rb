@@ -46,7 +46,10 @@ class Admin::ErasController < AdminController
   protected
 
   def permitted_params
-    params.require(:era).permit(:name, :parent_id, :start_year, :end_year)
+    params.require(:era).permit(:name, :parent_id, :start_year_gregorian,
+                                :end_year_gregorian, :start_year_hijri,
+                                :end_year_hijri, :extended, :hijri_display,
+                                :gregorian_display)
   end
 
   def fetch_era
