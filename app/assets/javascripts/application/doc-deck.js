@@ -1,63 +1,65 @@
-var $document = $(document)
-var viewerCount = 0;
+(function() {
+  var $document = $(document)
+  var viewerCount = 0;
 
-function extractPageImages($viewer) {
-  return $.map($viewer.find('.image').get(), function(img) {
-    var $img = $(img)
-    return {
-      type: 'legacy-image-pyramid',
-      levels: [{
-        url: $img.data('src'),
-        width: parseInt($img.data('width'), 10),
-        height: parseInt($img.data('height'))
-      }]
-    }
-  })
-}
-
-function createDragon($viewer, pages) {
-  return new OpenSeadragon({
-    element: $viewer[0],
-    hash: 'viewer' + viewerCount++,
-    tileSources: pages,
-    showHomeControl: false,
-    prefixUrl: '/assets/',
-    zoomInButton: 'js-zoomin-link',
-    zoomOutButton: 'js-zoomout-link',
-    fullPageButton: 'js-fullscreen-link',
-    previousButton: 'js-prev-link',
-    nextButton: 'js-next-link',
-    navigationControlAnchor: OpenSeadragon.ControlAnchor.TOP_RIGHT,
-    sequenceControlAnchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT,
-    navigatorSizeRatio: 0.1
-  })
-}
-
-$document.on('page:change', function() {
-  var $viewer = $('.image-viewer')
-  var dragon = $viewer.data('dragon')
-  var pages, width, height, $texts
-
-  if (!dragon) {
-    pages = extractPageImages($viewer)
-    dragon = createDragon($viewer, pages)
-    $viewer.data('dragon', dragon)
-    dragon.innerTracker.scrollHandler = false
-    $('.controls .total').text(pages.length)
-    $texts = $viewer.closest('.image-viewer-container').find('.page-text')
-    $texts.eq(0).addClass('active')
-    dragon.addHandler('page', function(info) {
-      $('.status .current').text(info.page + 1)
-      $texts.filter('.active').removeClass('active')
-      $texts.eq(info.page).addClass('active')
-    })
-    dragon.addHandler('pre-full-screen', function(info) {
-      if (info.fullScreen) {
-        $('.image-viewer-container .controls').appendTo('.image-viewer')
+  function extractPageImages($viewer) {
+    return $.map($viewer.find('.image').get(), function(img) {
+      var $img = $(img)
+      return {
+        type: 'legacy-image-pyramid',
+        levels: [{
+          url: $img.data('src'),
+          width: parseInt($img.data('width'), 10),
+          height: parseInt($img.data('height'))
+        }]
       }
     })
-    dragon.addHandler('full-screen', function(info) {
-      $('.image-viewer .controls').appendTo('.image-viewer-container')
+  }
+
+  function createDragon($viewer, pages) {
+    return new OpenSeadragon({
+      element: $viewer[0],
+      hash: 'viewer' + viewerCount++,
+      tileSources: pages,
+      showHomeControl: false,
+      prefixUrl: '/assets/',
+      zoomInButton: 'js-zoomin-link',
+      zoomOutButton: 'js-zoomout-link',
+      fullPageButton: 'js-fullscreen-link',
+      previousButton: 'js-prev-link',
+      nextButton: 'js-next-link',
+      navigationControlAnchor: OpenSeadragon.ControlAnchor.TOP_RIGHT,
+      sequenceControlAnchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT,
+      navigatorSizeRatio: 0.1
     })
   }
-})
+
+  $document.on('page:change', function() {
+    var $viewer = $('.image-viewer')
+    var dragon = $viewer.data('dragon')
+    var pages, width, height, $texts
+
+    if (!dragon && $viewer.length) {
+      pages = extractPageImages($viewer)
+      dragon = createDragon($viewer, pages)
+      $viewer.data('dragon', dragon)
+      dragon.innerTracker.scrollHandler = false
+      $('.controls .total').text(pages.length)
+      $texts = $viewer.closest('.image-viewer-container').find('.page-text')
+      $texts.eq(0).addClass('active')
+      dragon.addHandler('page', function(info) {
+        $('.status .current').text(info.page + 1)
+        $texts.filter('.active').removeClass('active')
+        $texts.eq(info.page).addClass('active')
+      })
+      dragon.addHandler('pre-full-screen', function(info) {
+        if (info.fullScreen) {
+          $('.image-viewer-container .controls').appendTo('.image-viewer')
+        }
+      })
+      dragon.addHandler('full-screen', function(info) {
+        $('.image-viewer .controls').appendTo('.image-viewer-container')
+      })
+    }
+  })
+}())

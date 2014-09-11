@@ -1,3 +1,38 @@
 = content_for :page_title, 'Topics & Themes'
 
-h2 Topics & Themes
+.inner-wrapper
+  .inner.browse-tables
+    h2.section-heading.browse Topics
+
+    table.browse-table
+      thead
+        tr.browse-headings
+          th scope='col' &nbsp;
+          - @topic_table[:document_types].each do |document_type|
+            th scope='col'= document_type.name
+      tbody
+        tr
+        - @topic_table[:topics].each_with_index do |topic, topic_index|
+          tr
+            th scope='row'= topic.name
+            - @topic_table[:document_types].each_with_index do |document_type, document_type_index|
+              - count = @topic_table[:counts][topic_index][document_type_index]
+              td data-count=count
+                = link_to count, '#TODO'
+
+    h2.section-heading.browse Themes
+
+    table.browse-table
+      thead
+        tr.browse-headings
+          th scope='col' &nbsp;
+          - @theme_table[:document_types].each do |document_type|
+            th scope='col'= document_type.name
+      tbody
+        - @theme_table[:themes].each_with_index do |theme, theme_index|
+          tr
+            th scope='row'= theme.name
+            - @theme_table[:document_types].each_with_index do |document_type, document_type_index|
+              - count = @theme_table[:counts][theme_index][document_type_index]
+              td data-count=count
+                = link_to count, '#TODO'

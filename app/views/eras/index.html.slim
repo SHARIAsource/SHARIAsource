@@ -1,3 +1,23 @@
 = content_for :page_title, 'Empires & Eras'
 
-h2 Empires & Eras
+.inner-wrapper
+  .inner.browse-tables
+    h2.section-heading.browse Empires & Eras
+
+    table.browse-table
+      thead
+        tr.browse-headings
+          th scope='col' &nbsp;
+          - @era_table[:document_types].each do |document_type|
+            th scope='col'= document_type.name
+      tbody
+        tr
+        - @era_table[:eras].each_with_index do |era, era_index|
+          tr data-depth=era.depth data-extended=era.extended
+            th scope='row'= era.name
+            - @era_table[:document_types].each_with_index do |document_type, document_type_index|
+              - count = @era_table[:counts][era_index][document_type_index]
+              td data-count=count
+                = link_to count, '#TODO'
+
+    a.ss-button.js-expand-all.expand-all data-contract-text='Contract Full List' data-expand-text='Expand Full List' Expand Full List

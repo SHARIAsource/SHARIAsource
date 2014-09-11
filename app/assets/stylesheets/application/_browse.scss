@@ -1,0 +1,123 @@
+.browse-tables {
+  padding-bottom:60px;
+
+  .expand-all {
+    margin-top:8px;
+  }
+}
+
+.section-heading.browse {
+  border-bottom:5px solid $ss-color-bodybg;
+  margin-bottom:16px;
+}
+
+.browse-table {
+  font-family:$ss-font-serif;
+  font-size:14px;
+  border:0;
+  border-spacing:0;
+  border-collapse:collapse;
+  margin:0;
+  padding:0 0 32px 0;
+  table-layout:fixed;
+  width:100%;
+
+  tr {
+    &:nth-of-type(even) {
+      background:white;
+    }
+
+    &[data-depth="0"] {
+      th {
+        padding-top:24px;
+        font-weight:bold;
+      }
+
+      td {
+        padding-top:12px;
+      }
+
+    }
+
+    &[data-depth="2"] th {
+      padding-left:40px;
+    }
+
+    &[data-extended] {
+      display:none;
+    }
+  }
+
+  th, td {
+    line-height:1.14286;
+    width:96px;
+
+    &:first-child {
+      width:auto;
+    }
+  }
+
+  th {
+    border-bottom:1px solid #e7e9e8;
+
+    &[scope="col"] {
+      background:white;
+
+      &:nth-child(even) {
+        background:$ss-color-bodybg;
+      }
+    }
+
+    &[scope="row"] {
+      font-weight:normal;
+      //width:250px;
+      padding:6px 20px 4px 0;
+    }
+  }
+
+  td {
+    border-bottom:1px solid #e7e9e8;
+    vertical-align:top;
+    padding:6px 4px 4px 4px;
+
+    &:nth-child(even) {
+      background:$ss-color-bodybg;
+    }
+
+    &[data-count="0"] a {
+      visibility:hidden;
+    }
+
+    a {
+      color:$ss-color-bodytext;
+    }
+  }
+
+  .browse-headings th {
+    border-bottom-width:2px;
+    vertical-align:bottom;
+    padding:8px 8px 4px 4px;
+  }
+
+  .expand {
+    display:inline-block;
+    text-indent:-9999px;
+    overflow:hidden;
+    width:12px;
+    height:9px;
+    background:url(image-path('browse-expand.svg')) 0 0 no-repeat;
+    background-size:12px 9px;
+
+    &:hover, &:focus {
+      background-image:url(image-path('browse-expand-hover.svg'));
+    }
+
+    &.is-expanded {
+      background-image:url(image-path('browse-contract.svg'));
+
+      &:hover, &:focus {
+        background-image:url(image-path('browse-contract-hover.svg'));
+      }
+    }
+  }
+}
