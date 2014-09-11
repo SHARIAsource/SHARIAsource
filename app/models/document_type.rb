@@ -24,7 +24,7 @@ class DocumentType < ActiveRecord::Base
       document_types: roots,
       counts: topics.map do |t|
         roots.map do |d|
-          t.documents.where(document_type: d.self_and_ancestor_ids).count
+          t.documents.where(document_type: d.self_and_descendant_ids).count
         end
       end
     }
