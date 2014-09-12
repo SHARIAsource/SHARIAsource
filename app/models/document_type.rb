@@ -72,4 +72,18 @@ class DocumentType < ActiveRecord::Base
       end
     }
   end
+
+  def self.author_counts
+    roots = DocumentType.roots.select(:id, :name)
+    authors = User.joins(:documents).distinct
+    {
+      authors: authors,
+      document_types: roots,
+      counts: authors.map do |a|
+        roots.map do |d|
+          a.documents.where(document_type: d.self_and_descendant_ids).count
+        end
+      end
+    }
+  end
 end

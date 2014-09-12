@@ -1,3 +1,21 @@
 = content_for :page_title, "Authors & Commentators"
 
-h2 Authors & Commentators
+.inner-wrapper
+  .inner.browse-tables
+    h2.section-heading.browse Authors & Commentators
+
+    table.browse-table
+      thead
+        tr.browse-headings
+          th scope='col' &nbsp;
+          - @author_table[:document_types].each do |document_type|
+            th scope='col'= document_type.name
+      tbody
+        tr
+        - @author_table[:authors].each_with_index do |author, author_index|
+          tr
+            th scope='row'= author.name
+            - @author_table[:document_types].each_with_index do |document_type, document_type_index|
+              - count = @author_table[:counts][author_index][document_type_index]
+              td data-count=count
+                = link_to count, '#TODO'
