@@ -12,8 +12,9 @@
 class DocumentType < ActiveRecord::Base
   extend HashUtils
 
-  acts_as_tree order: 'name'
+  acts_as_tree order: 'sort_order ASC'
   validates :name, presence: true, uniqueness: true
+  validates :sort_order, numericality: true
   has_many :documents
 
   def self.topic_counts

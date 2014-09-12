@@ -46,7 +46,7 @@ class Admin::DocumentTypesController < AdminController
   protected
 
   def permitted_params
-    params.require(:document_type).permit(:name, :parent_id)
+    params.require(:document_type).permit(:name, :parent_id, :sort_order)
   end
 
   def fetch_document_type

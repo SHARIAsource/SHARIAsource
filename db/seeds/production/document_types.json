@@ -5,108 +5,136 @@
 
   "records": [{
     "sprig_id": 1,
-    "name": "Historical Primary Sources"
+    "name": "Historical Primary Sources",
+    "sort_order": 0
   }, {
     "sprig_id": 2,
     "name": "Qurʾān",
-    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>",
+    "sort_order": 100
   }, {
     "sprig_id": 3,
     "name": "Ḥadīth (Prophetic Reports)",
-    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>",
+    "sort_order": 200
   }, {
     "sprig_id": 4,
     "name": "Legal Treatises (Fiqh)",
-    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>",
+    "sort_order": 300
   }, {
     "sprig_id": 5,
     "name": "Jurisprudential Treatises (Uṣūl al-Fiqh)",
-    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>",
+    "sort_order": 400
   }, {
     "sprig_id": 6,
     "name": "Legal Maxims Treatises (Qawāʿid al-Fiqh)",
-    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>",
+    "sort_order": 500
   }, {
     "sprig_id": 7,
     "name": "Judicial Biographies (Akhbār al-Quḍāt)",
-    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>",
+    "sort_order": 600
   }, {
     "sprig_id": 8,
     "name": "Judicial Procedure (Adab al-Qāḍī)",
-    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>",
+    "sort_order": 700
   }, {
     "sprig_id": 9,
     "name": "Court Records",
-    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>",
+    "sort_order": 800
   }, {
     "sprig_id": 10,
     "name": "Archival Documents",
-    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>",
+    "sort_order": 900
   }, {
     "sprig_id": 11,
     "name": "Genizah Papyri",
-    "parent_id": "<%= sprig_record(DocumentType, 1).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 1).id %>",
+    "sort_order": 950
   }, {
     "sprig_id": 12,
-    "name": "Contemporary Primary Sources"
+    "name": "Contemporary Primary Sources",
+    "sort_order": 1000
   }, {
     "sprig_id": 13,
     "name": "Administrative Decisions",
-    "parent_id": "<%= sprig_record(DocumentType, 12).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 12).id %>",
+    "sort_order": 1100
   }, {
     "sprig_id": 14,
     "name": "Constitutions",
-    "parent_id": "<%= sprig_record(DocumentType, 12).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 12).id %>",
+    "sort_order": 1200
   }, {
     "sprig_id": 15,
     "name": "Court Cases",
-    "parent_id": "<%= sprig_record(DocumentType, 12).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 12).id %>",
+    "sort_order": 1300
   }, {
     "sprig_id": 16,
     "name": "Fatwās",
-    "parent_id": "<%= sprig_record(DocumentType, 12).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 12).id %>",
+    "sort_order": 1400
   }, {
     "sprig_id": 17,
     "name": "Legislation",
-    "parent_id": "<%= sprig_record(DocumentType, 12).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 12).id %>",
+    "sort_order": 1500
   }, {
     "sprig_id": 18,
-    "name": "Secondary Sources"
+    "name": "Secondary Sources",
+    "sort_order": 2000
   }, {
     "sprig_id": 19,
     "name": "Books",
-    "parent_id": "<%= sprig_record(DocumentType, 18).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 18).id %>",
+    "sort_order": 2100
   }, {
     "sprig_id": 20,
     "name": "Articles",
-    "parent_id": "<%= sprig_record(DocumentType, 18).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 18).id %>",
+    "sort_order": 2200
   }, {
     "sprig_id": 21,
     "name": "Media",
-    "parent_id": "<%= sprig_record(DocumentType, 18).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 18).id %>",
+    "sort_order": 2300
   }, {
     "sprig_id": 22,
-    "name": "Policy Papers"
+    "name": "Policy Papers",
+    "sort_order": 3000
   }, {
     "sprig_id": 23,
-    "name": "Amicus Briefs"
+    "name": "Amicus Briefs",
+    "sort_order": 4000
   }, {
     "sprig_id": 24,
-    "name": "Additional Legal Documents"
+    "name": "Additional Legal Documents",
+    "sort_order": 5000
   }, {
     "sprig_id": 25,
     "name": "Arbitration Decisions",
-    "parent_id": "<%= sprig_record(DocumentType, 24).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 24).id %>",
+    "sort_order": 5100
   }, {
     "sprig_id": 26,
     "name": "Contracts",
-    "parent_id": "<%= sprig_record(DocumentType, 24).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 24).id %>",
+    "sort_order": 5200
   }, {
     "sprig_id": 27,
     "name": "Forms",
-    "parent_id": "<%= sprig_record(DocumentType, 24).id %>"
+    "parent_id": "<%= sprig_record(DocumentType, 24).id %>",
+    "sort_order": 5300
   }, {
     "sprig_id": 28,
-    "name": "Commentary"
+    "name": "Commentary",
+    "sort_order": 6000
   }]
 }
