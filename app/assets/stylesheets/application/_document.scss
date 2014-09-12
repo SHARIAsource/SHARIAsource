@@ -328,3 +328,52 @@
   height:48px;
   margin:0;
 }
+
+.document-type-lists {
+  width:760px;
+  overflow:hidden;
+  margin-left:-40px;
+  padding-bottom:40px;
+}
+
+.document-type-column {
+  float:left;
+  width:320px;
+  margin-left:60px;
+
+  ul {
+    list-style:none;
+    margin-left:0;
+  }
+
+  li {
+    display:block;
+    font-size:14px;
+    font-family:$ss-font-serif;
+    line-height:1.14286;
+    padding:6px 0 4px 0;
+    border-bottom:1px solid $ss-color-bodybg;
+    width:100%;
+    overflow:hidden;
+    position:relative;
+
+    &.root {
+      color:$ss-color-heading;
+      font-weight:bold;
+    }
+  }
+
+  span {
+    display:block;
+    padding-right:40px;
+  }
+
+  a {
+    position:absolute;
+    right:0;
+    top:6px;
+    color:$ss-color-bodytext;
+  }
+}
+
+

@@ -1,3 +1,19 @@
 = content_for :page_title, 'Document Types'
 
-h2 Document Types
+.inner-wrapper
+  .inner
+    h2.section-heading.browse Document Types
+
+    .document-type-lists
+      - @document_types.each_slice(2) do |column_types|
+        .document-type-column
+          - column_types.each do |document_type, children|
+            ul
+              li.root
+                span= document_type.name
+                = link_to document_type.self_and_descendants_document_count, '#TODO'
+              - children.each do |child, noop|
+                li
+                  span= child.name
+                  = link_to child.self_and_descendants_document_count, '#TODO'
+                  

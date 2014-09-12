@@ -17,6 +17,10 @@ class DocumentType < ActiveRecord::Base
   validates :sort_order, numericality: true
   has_many :documents
 
+  def self_and_descendants_document_count
+    self.self_and_descendants.joins(:documents).count
+  end
+
   def self.topic_counts
     roots = DocumentType.roots.select(:id, :name)
     topics = Topic.select(:id, :name)
