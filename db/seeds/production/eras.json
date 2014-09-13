@@ -336,5 +336,1586 @@
     "end_year_gregorian": 1969,
     "parent_id": "<%= sprig_record(Era, 20).id %>",
     "extended": true
+  }, {
+    "sprig_id": 41,
+    "name": "Iraq, Jazīra, Lebanon",
+    "start_year_hijri": 293,
+    "end_year_hijri": 1257,
+    "start_year_gregorian": 906,
+    "end_year_gregorian": 1842,
+    "parent_id": "<%= sprig_record(Era, 19).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 42,
+    "name": "Hamdānids (Jazīra and N. Syria)",
+    "start_year_hijri": 293,
+    "end_year_hijri": 394,
+    "start_year_gregorian": 906,
+    "end_year_gregorian": 1004,
+    "parent_id": "<%= sprig_record(Era, 41).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 43,
+    "name": "Mazyadids (Ḥilla and Central Iraq)",
+    "start_year_hijri": 350,
+    "end_year_hijri": 545,
+    "start_year_gregorian": 961,
+    "end_year_gregorian": 1150,
+    "hijri_display": "ca. 350-ca. 545",
+    "gregorian_display": "ca. 961-ca. 1150",
+    "parent_id": "<%= sprig_record(Era, 41).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 44,
+    "name": "Marwānids (Diyār Bakr)",
+    "start_year_hijri": 372,
+    "end_year_hijri": 478,
+    "start_year_gregorian": 983,
+    "end_year_gregorian": 1085,
+    "parent_id": "<%= sprig_record(Era, 41).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 45,
+    "name": "The ʿUqaylids (Iraq, Jazīra, N Syria)",
+    "start_year_hijri": 380,
+    "end_year_hijri": 564,
+    "start_year_gregorian": 990,
+    "end_year_gregorian": 1169,
+    "hijri_display": "ca. 380-564",
+    "gregorian_display": "ca. 990-1169",
+    "parent_id": "<%= sprig_record(Era, 41).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 46,
+    "name": "Numayrids (Ḥarrān, Sarūj, Qalʿat Jaʿbar, Raqqa)",
+    "start_year_hijri": 380,
+    "end_year_hijri": 474,
+    "start_year_gregorian": 991,
+    "end_year_gregorian": 1081,
+    "hijri_display": "380-ca. 474",
+    "gregorian_display": "990-ca. 1081",
+    "parent_id": "<%= sprig_record(Era, 41).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 47,
+    "name": "Maʾn Amīrs (S Lebanon)",
+    "start_year_hijri": 900,
+    "end_year_hijri": 1109,
+    "start_year_gregorian": 1500,
+    "end_year_gregorian": 1697,
+    "hijri_display": "10th c.-1109",
+    "gregorian_display": "16th c.-1697",
+    "parent_id": "<%= sprig_record(Era, 41).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 48,
+    "name": "Shihāb Amīrs (Lebanon)",
+    "start_year_hijri": 1109,
+    "end_year_hijri": 1257,
+    "start_year_gregorian": 1697,
+    "end_year_gregorian": 1842,
+    "parent_id": "<%= sprig_record(Era, 41).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 49,
+    "name": "Arabian Peninsula",
+    "start_year_hijri": 1,
+    "start_year_gregorian": 601,
+    "hijri_display": "1st c.-",
+    "gregorian_display": "7th c.-",
+    "parent_id": "<%= sprig_record(Era, 19).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 50,
+    "name": "Carmathian (Qarmaṭī) Rulers (Syria, Iraq, E Arabia)",
+    "start_year_hijri": 273,
+    "end_year_hijri": 470,
+    "start_year_gregorian": 886,
+    "end_year_gregorian": 1078,
+    "hijri_display": "ca. 273-470",
+    "gregorian_display": "ca. 886-1078",
+    "parent_id": "<%= sprig_record(Era, 49).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 51,
+    "name": "Zaydī Imāms (Yemen: Ṣaʿda, Ṣanʿāʾ)",
+    "start_year_hijri": 284,
+    "end_year_hijri": 1382,
+    "start_year_gregorian": 897,
+    "end_year_gregorian": 1962,
+    "parent_id": "<%= sprig_record(Era, 49).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 52,
+    "name": "Ziyādids (Yemen: Zabīd)",
+    "start_year_hijri": 203,
+    "end_year_hijri": 409,
+    "start_year_gregorian": 818,
+    "end_year_gregorian": 1018,
+    "parent_id": "<%= sprig_record(Era, 49).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 53,
+    "name": "Yuʿfirids (Yemen: Ṣanʿāʾ, Janad)",
+    "start_year_hijri": 232,
+    "end_year_hijri": 387,
+    "start_year_gregorian": 847,
+    "end_year_gregorian": 997,
+    "parent_id": "<%= sprig_record(Era, 49).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 54,
+    "name": "Najāhids (Yemen: Zabīd)",
+    "start_year_hijri": 412,
+    "end_year_hijri": 553,
+    "start_year_gregorian": 1022,
+    "end_year_gregorian": 1158,
+    "parent_id": "<%= sprig_record(Era, 49).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 55,
+    "name": "Ṣulayhids (Yemen: Ṣanʿāʾ, Dhū Jibla)",
+    "start_year_hijri": 439,
+    "end_year_hijri": 532,
+    "start_year_gregorian": 1047,
+    "end_year_gregorian": 1138,
+    "parent_id": "<%= sprig_record(Era, 49).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 56,
+    "name": "Zurayʿids or Banū ʾl-Karam (S Yemen: Aden)",
+    "start_year_hijri": 473,
+    "end_year_hijri": 571,
+    "start_year_gregorian": 1080,
+    "end_year_gregorian": 1175,
+    "parent_id": "<%= sprig_record(Era, 49).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 57,
+    "name": "Hamdānids (N Yemen: Ṣanʿāʾ)",
+    "start_year_hijri": 492,
+    "end_year_hijri": 570,
+    "start_year_gregorian": 1099,
+    "end_year_gregorian": 1174,
+    "parent_id": "<%= sprig_record(Era, 49).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 58,
+    "name": "Mahdids (Yemen: Zabīd)",
+    "start_year_hijri": 554,
+    "end_year_hijri": 569,
+    "start_year_gregorian": 1159,
+    "end_year_gregorian": 1173,
+    "parent_id": "<%= sprig_record(Era, 49).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 59,
+    "name": "Rasūlids (S Yemen, Tihāma: Taʿizz)",
+    "start_year_hijri": 626,
+    "end_year_hijri": 858,
+    "start_year_gregorian": 1228,
+    "end_year_gregorian": 1454,
+    "parent_id": "<%= sprig_record(Era, 49).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 60,
+    "name": "Ṭāhirds (S Yemen, Tihāma: al-Miqrāna, Juban)",
+    "start_year_hijri": 858,
+    "end_year_hijri": 923,
+    "start_year_gregorian": 1454,
+    "end_year_gregorian": 1517,
+    "parent_id": "<%= sprig_record(Era, 49).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 61,
+    "name": "Āl al-Julanda (Oman)",
+    "start_year_hijri": 1,
+    "end_year_hijri": 101,
+    "start_year_gregorian": 601,
+    "end_year_gregorian": 701,
+    "hijri_display": "1st c.-2nd c.",
+    "gregorian_display": "7th c.-8th c.",
+    "parent_id": "<%= sprig_record(Era, 49).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 62,
+    "name": "Mukramids (Coastal Oman)",
+    "start_year_hijri": 390,
+    "end_year_hijri": 443,
+    "start_year_gregorian": 1000,
+    "end_year_gregorian": 1040,
+    "hijri_display": "ca. 390-443",
+    "gregorian_display": "ca. 1000-1040",
+    "parent_id": "<%= sprig_record(Era, 49).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 63,
+    "name": "Yaʿrubids (Oman: Rustāq)",
+    "start_year_hijri": 1034,
+    "end_year_hijri": 1156,
+    "start_year_gregorian": 1625,
+    "end_year_gregorian": 1743,
+    "parent_id": "<%= sprig_record(Era, 49).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 64,
+    "name": "Āl Bū Saʿīd (Oman: Muscat; Zanzibar)",
+    "start_year_hijri": 1167,
+    "start_year_gregorian": 1754,
+    "hijri_display": "ca. 1167-",
+    "gregorian_display": "ca. 1754-",
+    "parent_id": "<%= sprig_record(Era, 49).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 65,
+    "name": "Āl Saʿūd (Najd, Ḥijāz, modern Saudi Arabia)",
+    "start_year_hijri": 1148,
+    "start_year_gregorian": 1735,
+    "parent_id": "<%= sprig_record(Era, 49).id %>"
+  }, {
+    "sprig_id": 66,
+    "name": "Hāshimite Sharīfs (Mecca, Ḥijāz, Fertile Crescent)",
+    "start_year_hijri": 1253,
+    "end_year_hijri": 1344,
+    "start_year_gregorian": 1827,
+    "end_year_gregorian": 1925,
+    "parent_id": "<%= sprig_record(Era, 49).id %>"
+  }, {
+    "sprig_id": 67,
+    "name": "Āl Rashīd (N Najd)",
+    "start_year_hijri": 1252,
+    "end_year_hijri": 1340,
+    "start_year_gregorian": 1836,
+    "end_year_gregorian": 1921,
+    "parent_id": "<%= sprig_record(Era, 49).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 68,
+    "name": "West Africa",
+    "start_year_hijri": 299,
+    "start_year_gregorian": 899,
+    "hijri_display": "ca. 3rd c.-",
+    "gregorian_display": "ca. 9th c.-",
+    "parent_id": "<%= sprig_record(Era, 19).id %>"
+  }, {
+    "sprig_id": 69,
+    "name": "Keita Kings (Mali, N Guinea, Gambia, Senegal)",
+    "start_year_hijri": 601,
+    "end_year_hijri": 850,
+    "start_year_gregorian": 1201,
+    "end_year_gregorian": 1450,
+    "hijri_display": "early 7th c.-mid 9th c.",
+    "gregorian_display": "early 13th c.-mid 15th c.",
+    "parent_id": "<%= sprig_record(Era, 68).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 70,
+    "name": "Kings of Songhay (Mali: Savannah Zone)",
+    "start_year_hijri": 201,
+    "end_year_hijri": 1000,
+    "start_year_gregorian": 801,
+    "end_year_gregorian": 1592,
+    "hijri_display": "ca. 3rd c.-1000",
+    "gregorian_display": "ca. 9th c.-1592",
+    "parent_id": "<%= sprig_record(Era, 68).id %>"
+  }, {
+    "sprig_id": 71,
+    "name": "Rulers of Kanem and Bornu (E-Central Sudan)",
+    "start_year_hijri": 202,
+    "start_year_gregorian": 802,
+    "hijri_display": "ca. 3rd c-",
+    "gregorian_display": "ca. 9th c.-",
+    "parent_id": "<%= sprig_record(Era, 68).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 72,
+    "name": "Fulānī Rulers in Hausaland, Sokoto (N Nigeria, Niger Valley)",
+    "start_year_hijri": 1218,
+    "start_year_gregorian": 1804,
+    "parent_id": "<%= sprig_record(Era, 68).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 73,
+    "name": "East Africa & Horn of Africa",
+    "start_year_hijri": 301,
+    "end_year_hijri": 1383,
+    "start_year_gregorian": 901,
+    "end_year_gregorian": 1964,
+    "parent_id": "<%= sprig_record(Era, 19).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 74,
+    "name": "Sultans of Kilwa (Tanzanian coastland)",
+    "start_year_hijri": 301,
+    "end_year_hijri": 957,
+    "start_year_gregorian": 901,
+    "end_year_gregorian": 1550,
+    "hijri_display": "ca. 4th c.-ca. 957",
+    "gregorian_display": "ca. 10th c.-ca. 1550",
+    "parent_id": "<%= sprig_record(Era, 73).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 75,
+    "name": "Nabhānī Rulers of Pate (Island of Pate, modern Kenyan coastland)",
+    "start_year_hijri": 600,
+    "end_year_hijri": 1312,
+    "start_year_gregorian": 1203,
+    "end_year_gregorian": 1894,
+    "parent_id": "<%= sprig_record(Era, 73).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 76,
+    "name": "Mazrūʿī Liwalis of Mombasa (Mobasa, Pemba Island)",
+    "start_year_hijri": 1109,
+    "end_year_hijri": 1253,
+    "start_year_gregorian": 1698,
+    "end_year_gregorian": 1837,
+    "hijri_display": "ca. 1109-1253",
+    "gregorian_display": "ca. 1698-1837",
+    "parent_id": "<%= sprig_record(Era, 73).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 77,
+    "name": "Āl Bū Saʿīd (Zanzibar and E Africa coastland)",
+    "start_year_hijri": 1256,
+    "end_year_hijri": 1383,
+    "start_year_gregorian": 1840,
+    "end_year_gregorian": 1964,
+    "parent_id": "<%= sprig_record(Era, 73).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 78,
+    "name": "Sultans of Harar (SE Ethiopia)",
+    "start_year_hijri": 912,
+    "end_year_hijri": 1304,
+    "start_year_gregorian": 1506,
+    "end_year_gregorian": 1887,
+    "parent_id": "<%= sprig_record(Era, 73).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 79,
+    "name": "Persia & Central Asia I: Western Persia, Central Asia, Iraq, Syria",
+    "start_year_hijri": 19,
+    "end_year_hijri": 1001,
+    "start_year_gregorian": 640,
+    "end_year_gregorian": 1601,
+    "hijri_display": "ca. 19-early 11th c.",
+    "gregorian_display": "ca. 640-early 17th c.",
+    "parent_id": "<%= sprig_record(Era, 19).id %>"
+  }, {
+    "sprig_id": 80,
+    "name": "Sharwan Shāhs (E Transcaucasia: Yazīdiyya)",
+    "start_year_hijri": 183,
+    "end_year_hijri": 1001,
+    "start_year_gregorian": 799,
+    "end_year_gregorian": 1601,
+    "hijri_display": "183-early 11th c.",
+    "gregorian_display": "799-early 17th c.",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 81,
+    "name": "Hāshimids (Bāb Abwāb/Darband and its hinterland)",
+    "start_year_hijri": 255,
+    "end_year_hijri": 468,
+    "start_year_gregorian": 869,
+    "end_year_gregorian": 1075,
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 82,
+    "name": "Justānids (Daylam: Rūdbār-Shāh Rūd valleys)",
+    "start_year_hijri": 199,
+    "end_year_hijri": 550,
+    "start_year_gregorian": 799,
+    "end_year_gregorian": 1050,
+    "hijri_display": "late 2nd c.-5th c.",
+    "gregorian_display": "late 8th c.-11th c.",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 83,
+    "name": "Sājids (Azerbaijan)",
+    "start_year_hijri": 276,
+    "end_year_hijri": 312,
+    "start_year_gregorian": 889,
+    "end_year_gregorian": 929,
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 84,
+    "name": "Musāfirids or Sallārids (Daylam: Ṭārum and Samīran; Azerbaijan; Arrān)",
+    "start_year_hijri": 304,
+    "end_year_hijri": 483,
+    "start_year_gregorian": 916,
+    "end_year_gregorian": 1090,
+    "hijri_display": "before 304-ca. 483",
+    "gregorian_display": "before 916-ca. 1090",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 85,
+    "name": "Rawwādids (Azerbaijan: Tabrīz)",
+    "start_year_hijri": 310,
+    "end_year_hijri": 463,
+    "start_year_gregorian": 910,
+    "end_year_gregorian": 1071,
+    "hijri_display": "early 4th c.-463",
+    "gregorian_display": "early 10th c.-1071",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 86,
+    "name": "Shāddādids (Arrān, E. Armenia)",
+    "start_year_hijri": 340,
+    "end_year_hijri": 570,
+    "start_year_gregorian": 951,
+    "end_year_gregorian": 1174,
+    "hijri_display": "ca. 340-570",
+    "gregorian_display": "ca. 951-1174",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 87,
+    "name": "Dulafids (Central Jibāl: Karaj)",
+    "start_year_hijri": 201,
+    "end_year_hijri": 284,
+    "start_year_gregorian": 814,
+    "end_year_gregorian": 897,
+    "hijri_display": "early 3rd c.-284",
+    "gregorian_display": "early 9th c.-897",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 88,
+    "name": "Būyids or Buwayhids (N, W, S Persia; Iraq)",
+    "start_year_hijri": 320,
+    "end_year_hijri": 454,
+    "start_year_gregorian": 932,
+    "end_year_gregorian": 1062,
+    "parent_id": "<%= sprig_record(Era, 79).id %>"
+  }, {
+    "sprig_id": 89,
+    "name": "Ḥasanūyids or Ḥasanawayhid (S Kurdistan)",
+    "start_year_hijri": 350,
+    "end_year_hijri": 406,
+    "start_year_gregorian": 961,
+    "end_year_gregorian": 1015,
+    "hijri_display": "ca. 350-406",
+    "gregorian_display": "ca. 961-1015",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 90,
+    "name": "ʿAnnāzids (S Kurdistan, Luristān)",
+    "start_year_hijri": 381,
+    "end_year_hijri": 599,
+    "start_year_gregorian": 991,
+    "end_year_gregorian": 1199,
+    "hijri_display": "381-late 6th c.",
+    "gregorian_display": "991-late 12th c.",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 91,
+    "name": "Kākūyids or Kākawayhids (Jibāl and Kurdistan)",
+    "start_year_hijri": 398,
+    "end_year_hijri": 443,
+    "start_year_gregorian": 1008,
+    "end_year_gregorian": 1051,
+    "hijri_display": "ca. 398-443",
+    "gregorian_display": "ca. 1008-51; feudatories of Seljuqs until mid 6th/mid 12th c.",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 92,
+    "name": "Dābūyid Ispahbadhs (Gīlān; Rūyān, Ṭabaristān coastlands: Sārī)",
+    "start_year_hijri": 19,
+    "end_year_hijri": 144,
+    "start_year_gregorian": 640,
+    "end_year_gregorian": 761,
+    "hijri_display": "ca. 19-144",
+    "gregorian_display": "ca. 640-761",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 93,
+    "name": "Bāwandid Ispahbadhs (Ṭabaristan, Gīlān highlands)",
+    "start_year_hijri": 45,
+    "end_year_hijri": 750,
+    "start_year_gregorian": 665,
+    "end_year_gregorian": 1349,
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 94,
+    "name": "Ziyārids (Ṭabaristan, Gurgān)",
+    "start_year_hijri": 319,
+    "end_year_hijri": 483,
+    "start_year_gregorian": 931,
+    "end_year_gregorian": 1090,
+    "hijri_display": "319-ca. 483",
+    "gregorian_display": "931-ca. 1090",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 95,
+    "name": "Seljuqs (Persia, Iraq, Syria)",
+    "start_year_hijri": 431,
+    "end_year_hijri": 590,
+    "start_year_gregorian": 1040,
+    "end_year_gregorian": 1194,
+    "parent_id": "<%= sprig_record(Era, 79).id %>"
+  }, {
+    "sprig_id": 96,
+    "name": "Börids or Būrids (Damascus, S Syria)",
+    "start_year_hijri": 497,
+    "end_year_hijri": 549,
+    "start_year_gregorian": 1104,
+    "end_year_gregorian": 1154,
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 97,
+    "name": "Zangids (Jazīra and Syria)",
+    "start_year_hijri": 521,
+    "end_year_hijri": 649,
+    "start_year_gregorian": 1127,
+    "end_year_gregorian": 1251,
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 98,
+    "name": "Begtiginids (NE Iraq, Kurdistan: Irbīl; N Syria: Ḥarrān)",
+    "start_year_hijri": 529,
+    "end_year_hijri": 630,
+    "start_year_gregorian": 1145,
+    "end_year_gregorian": 1233,
+    "hijri_display": "before 529-630",
+    "gregorian_display": "before 1145-1233",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 99,
+    "name": "Luʾluʾids (Mosul and Jazīra)",
+    "start_year_hijri": 631,
+    "end_year_hijri": 660,
+    "start_year_gregorian": 1234,
+    "end_year_gregorian": 1262,
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 100,
+    "name": "Artuqids (Diyār Bakr)",
+    "start_year_hijri": 494,
+    "end_year_hijri": 812,
+    "start_year_gregorian": 1101,
+    "end_year_gregorian": 1409,
+    "hijri_display": "ca. 494-812",
+    "gregorian_display": "ca. 1101-1409",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 101,
+    "name": "Shāh-i Armanids (E Anatolia: Akhlāṭ)",
+    "start_year_hijri": 493,
+    "end_year_hijri": 604,
+    "start_year_gregorian": 1100,
+    "end_year_gregorian": 1207,
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 102,
+    "name": "Aḥmadīlīs (Azerbaijan: Marāgha, Rūʾīn Diz)",
+    "start_year_hijri": 516,
+    "end_year_hijri": 617,
+    "start_year_gregorian": 1122,
+    "end_year_gregorian": 1220,
+    "hijri_display": "ca. 516-after 617",
+    "gregorian_display": "ca. 1122-after 1220",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 103,
+    "name": "Eldigüzids or Ildegizids (Azerbaijan, Arrān, N Jibāl)",
+    "start_year_hijri": 540,
+    "end_year_hijri": 622,
+    "start_year_gregorian": 1145,
+    "end_year_gregorian": 1225,
+    "hijri_display": "ca. 540-622",
+    "gregorian_display": "ca. 1145-1225",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 104,
+    "name": "Bādūspānis (Caspian coastlands: Rūyan, Rustamdār)",
+    "start_year_hijri": 493,
+    "end_year_hijri": 901,
+    "start_year_gregorian": 1100,
+    "end_year_gregorian": 1501,
+    "hijri_display": "ca. 493-10th c.",
+    "gregorian_display": "ca. 1100-16th c.",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 105,
+    "name": "Nizārī Ismāʿīlīs in Persia (Persian mountainous regions Alamūt)",
+    "start_year_hijri": 483,
+    "end_year_hijri": 654,
+    "start_year_gregorian": 1090,
+    "end_year_gregorian": 1256,
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 106,
+    "name": "Hazāraspids (Luristān)",
+    "start_year_hijri": 543,
+    "end_year_hijri": 847,
+    "start_year_gregorian": 1148,
+    "end_year_gregorian": 1424,
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 107,
+    "name": "Salghurids (Fars)",
+    "start_year_hijri": 543,
+    "end_year_hijri": 681,
+    "start_year_gregorian": 1148,
+    "end_year_gregorian": 1252,
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 108,
+    "name": "Atabegs (Yazd)",
+    "start_year_hijri": 536,
+    "end_year_hijri": 696,
+    "start_year_gregorian": 1141,
+    "end_year_gregorian": 1297,
+    "hijri_display": "ca. 536-696",
+    "gregorian_display": "ca. 1141-1297",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 109,
+    "name": "Qutlughkhānids (Kirmān)",
+    "start_year_hijri": 619,
+    "end_year_hijri": 706,
+    "start_year_gregorian": 1222,
+    "end_year_gregorian": 1307,
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 110,
+    "name": "Maliks of Nīmrūz (Sīstān)",
+    "start_year_hijri": 421,
+    "end_year_hijri": 949,
+    "start_year_gregorian": 1030,
+    "end_year_gregorian": 1542,
+    "hijri_display": "421-ca. 949",
+    "gregorian_display": "1030-ca. 1542",
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 111,
+    "name": "Persia & Central Asia II: Eastern Persia, Central Asia, Iraq",
+    "start_year_hijri": 204,
+    "end_year_hijri": 609,
+    "start_year_gregorian": 819,
+    "end_year_gregorian": 1212,
+    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 112,
+    "name": "Ṭāhirids & Muṣʿabids (Khurāsān, Iraq: Baghdad)",
+    "start_year_hijri": 205,
+    "end_year_hijri": 278,
+    "start_year_gregorian": 821,
+    "end_year_gregorian": 891,
+    "parent_id": "<%= sprig_record(Era, 111).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 113,
+    "name": "Sāmānids (Transoxania, Khurāsān)",
+    "start_year_hijri": 204,
+    "end_year_hijri": 395,
+    "start_year_gregorian": 819,
+    "end_year_gregorian": 1005,
+    "parent_id": "<%= sprig_record(Era, 111).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 114,
+    "name": "Ṣaffārids (Sīstān, Persia, E Afghanistan)",
+    "start_year_hijri": 247,
+    "end_year_hijri": 393,
+    "start_year_gregorian": 861,
+    "end_year_gregorian": 1003,
+    "parent_id": "<%= sprig_record(Era, 111).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 115,
+    "name": "Bānījūrids or Abū Dāwūddids (Balkh, Ṭukhāristān)",
+    "start_year_hijri": 233,
+    "end_year_hijri": 295,
+    "start_year_gregorian": 848,
+    "end_year_gregorian": 908,
+    "hijri_display": "ca. 233-ca. 295",
+    "gregorian_display": "ca. 848-ca. 908",
+    "parent_id": "<%= sprig_record(Era, 111).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 116,
+    "name": "Sīmjūrids (Khurāsān, Quhistān)",
+    "start_year_hijri": 300,
+    "end_year_hijri": 392,
+    "start_year_gregorian": 913,
+    "end_year_gregorian": 1002,
+    "parent_id": "<%= sprig_record(Era, 111).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 117,
+    "name": "Ilyāsids (Kirman)",
+    "start_year_hijri": 320,
+    "end_year_hijri": 357,
+    "start_year_gregorian": 932,
+    "end_year_gregorian": 968,
+    "parent_id": "<%= sprig_record(Era, 111).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 118,
+    "name": "Muḥtājids (Khurāsān, Chaghāniyān)",
+    "start_year_hijri": 321,
+    "end_year_hijri": 343,
+    "start_year_gregorian": 933,
+    "end_year_gregorian": 954,
+    "parent_id": "<%= sprig_record(Era, 111).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 119,
+    "name": "Khwārazm Shāhs (Khwārazm)",
+    "start_year_hijri": 0,
+    "end_year_hijri": 601,
+    "start_year_gregorian": 0,
+    "end_year_gregorian": 1201,
+    "hijri_display": "pre-Islamic times-7th c.",
+    "gregorian_display": "13th c.",
+    "parent_id": "<%= sprig_record(Era, 111).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 120,
+    "name": "Qarakhānids (Transoxania, Farghāna, Semirechye, E Turkestan)",
+    "start_year_hijri": 382,
+    "end_year_hijri": 609,
+    "start_year_gregorian": 992,
+    "end_year_gregorian": 1212,
+    "parent_id": "<%= sprig_record(Era, 111).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 121,
+    "name": "Persia: After the Mongols",
+    "start_year_hijri": 643,
+    "end_year_hijri": 1398,
+    "start_year_gregorian": 1245,
+    "end_year_gregorian": 1979,
+    "parent_id": "<%= sprig_record(Era, 19).id %>"
+  }, {
+    "sprig_id": 122,
+    "name": "Karts or Kurts (E Khurāsān, N Afghanistan)",
+    "start_year_hijri": 643,
+    "end_year_hijri": 791,
+    "start_year_gregorian": 1245,
+    "end_year_gregorian": 1389,
+    "parent_id": "<%= sprig_record(Era, 121).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 123,
+    "name": "Muẓaffarids (S, W Persia)",
+    "start_year_hijri": 713,
+    "end_year_hijri": 795,
+    "start_year_gregorian": 1314,
+    "end_year_gregorian": 1393,
+    "parent_id": "<%= sprig_record(Era, 121).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 124,
+    "name": "Injuʾids (Fars)",
+    "start_year_hijri": 725,
+    "end_year_hijri": 754,
+    "start_year_gregorian": 1325,
+    "end_year_gregorian": 1353,
+    "hijri_display": "ca. 725-754",
+    "gregorian_display": "ca. 1325-1353",
+    "parent_id": "<%= sprig_record(Era, 121).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 125,
+    "name": "Jalāyrids (Iraq, Kurdistan, Azerbaijan)",
+    "start_year_hijri": 740,
+    "end_year_hijri": 835,
+    "start_year_gregorian": 1340,
+    "end_year_gregorian": 1432,
+    "parent_id": "<%= sprig_record(Era, 121).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 126,
+    "name": "Sarbadārids (W Khurāsān)",
+    "start_year_hijri": 737,
+    "end_year_hijri": 788,
+    "start_year_gregorian": 1337,
+    "end_year_gregorian": 1386,
+    "parent_id": "<%= sprig_record(Era, 121).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 127,
+    "name": "Tīmūrids (Transoxania, Persia)",
+    "start_year_hijri": 771,
+    "end_year_hijri": 913,
+    "start_year_gregorian": 1370,
+    "end_year_gregorian": 1507,
+    "parent_id": "<%= sprig_record(Era, 121).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 128,
+    "name": "Qara Qoyunlu (E Anatolia, Azerbaijan, Iraq, W Persia)",
+    "start_year_hijri": 752,
+    "end_year_hijri": 874,
+    "start_year_gregorian": 1351,
+    "end_year_gregorian": 1469,
+    "parent_id": "<%= sprig_record(Era, 121).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 129,
+    "name": "Aq Qoyunlu (Diyār Bakr, E Anatolia, Azerbaijan, W. Persia, Fars, Kirman)",
+    "start_year_hijri": 798,
+    "end_year_hijri": 914,
+    "start_year_gregorian": 1396,
+    "end_year_gregorian": 1508,
+    "parent_id": "<%= sprig_record(Era, 121).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 130,
+    "name": "Mushaʾshaʾids (SW Persia: ʿArabistān)",
+    "start_year_hijri": 839,
+    "end_year_hijri": 1342,
+    "start_year_gregorian": 1435,
+    "end_year_gregorian": 1924,
+    "parent_id": "<%= sprig_record(Era, 121).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 131,
+    "name": "Ṣafavids (Persia)",
+    "start_year_hijri": 907,
+    "end_year_hijri": 1135,
+    "start_year_gregorian": 1501,
+    "end_year_gregorian": 1722,
+    "parent_id": "<%= sprig_record(Era, 121).id %>"
+  }, {
+    "sprig_id": 132,
+    "name": "Afshārids (Persia)",
+    "start_year_hijri": 1148,
+    "end_year_hijri": 1210,
+    "start_year_gregorian": 1736,
+    "end_year_gregorian": 1794,
+    "parent_id": "<%= sprig_record(Era, 121).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 133,
+    "name": "Zands (Persia, except Khurāsān)",
+    "start_year_hijri": 1164,
+    "end_year_hijri": 1209,
+    "start_year_gregorian": 1751,
+    "end_year_gregorian": 1794,
+    "parent_id": "<%= sprig_record(Era, 121).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 134,
+    "name": "Qājārs (Persia)",
+    "start_year_hijri": 1193,
+    "end_year_hijri": 1344,
+    "start_year_gregorian": 1779,
+    "end_year_gregorian": 1925,
+    "parent_id": "<%= sprig_record(Era, 121).id %>"
+  }, {
+    "sprig_id": 135,
+    "name": "Pahlavīs (Persia)",
+    "start_year_hijri": 1344,
+    "end_year_hijri": 1398,
+    "start_year_gregorian": 1925,
+    "end_year_gregorian": 1979,
+    "parent_id": "<%= sprig_record(Era, 121).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 136,
+    "name": "Anatolia",
+    "start_year_hijri": 473,
+    "end_year_hijri": 1342,
+    "start_year_gregorian": 707,
+    "end_year_gregorian": 1924,
+    "parent_id": "<%= sprig_record(Era, 19).id %>"
+  }, {
+    "sprig_id": 137,
+    "name": "Seljuqs of Rūm (W-Central Anatolia: Konya; most of Anatolia)",
+    "start_year_hijri": 473,
+    "end_year_hijri": 707,
+    "start_year_gregorian": 1081,
+    "end_year_gregorian": 1307,
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 138,
+    "name": "Dānishmendids (N-Central Anatolia; E Anatolia)",
+    "start_year_hijri": 490,
+    "end_year_hijri": 573,
+    "start_year_gregorian": 1097,
+    "end_year_gregorian": 1178,
+    "hijri_display": "before 490-573",
+    "gregorian_display": "before 1097-1178",
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 139,
+    "name": "Mengüjekids (N Anatolia: Erzincan, Divriği, Kemakh)",
+    "start_year_hijri": 512,
+    "end_year_hijri": 650,
+    "start_year_gregorian": 1118,
+    "end_year_gregorian": 1250,
+    "hijri_display": "before 512-mid 7th c.",
+    "gregorian_display": "before 1118-mid 13th c.",
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 140,
+    "name": "Saltuqis (E Anatollia: Erzurum)",
+    "start_year_hijri": 499,
+    "end_year_hijri": 598,
+    "start_year_gregorian": 1099,
+    "end_year_gregorian": 1202,
+    "hijri_display": "late 5th c.-598",
+    "gregorian_display": "late 11th c.-1201",
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 141,
+    "name": "Qarasī or Karasī Oghullarï (SW Anatolia)",
+    "start_year_hijri": 696,
+    "end_year_hijri": 761,
+    "start_year_gregorian": 1297,
+    "end_year_gregorian": 1360,
+    "hijri_display": "ca. 696-ca. 761",
+    "gregorian_display": "ca. 1297-ca. 1360",
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 142,
+    "name": "Ṣarukhān Oghullarï (W Anatolia)",
+    "start_year_hijri": 713,
+    "end_year_hijri": 813,
+    "start_year_gregorian": 1313,
+    "end_year_gregorian": 1410,
+    "hijri_display": "ca. 713-813",
+    "gregorian_display": "ca. 1313-1410",
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 143,
+    "name": "Aydïn Oghullari (W Anatolia)",
+    "start_year_hijri": 708,
+    "end_year_hijri": 829,
+    "start_year_gregorian": 1308,
+    "end_year_gregorian": 1426,
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 144,
+    "name": "Menteshe Oghullarï (SW Anatolia)",
+    "start_year_hijri": 699,
+    "end_year_hijri": 847,
+    "start_year_gregorian": 1299,
+    "end_year_gregorian": 1424,
+    "hijri_display": "late 7th c.-847",
+    "gregorian_display": "late 13th c.-1424",
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 145,
+    "name": "Inanj Oghullarï (SW Anatolia: Deñizli)",
+    "start_year_hijri": 659,
+    "end_year_hijri": 769,
+    "start_year_gregorian": 1261,
+    "end_year_gregorian": 1369,
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 146,
+    "name": "Germiyān Oghullari (W Anatolia)",
+    "start_year_hijri": 699,
+    "end_year_hijri": 832,
+    "start_year_gregorian": 1299,
+    "end_year_gregorian": 1428,
+    "hijri_display": "by 699-832",
+    "gregorian_display": "by 1299-1428",
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 147,
+    "name": "Ṣāḥib Atā Oghullarï (W-Central Anatolia)",
+    "start_year_hijri": 670,
+    "end_year_hijri": 742,
+    "start_year_gregorian": 1271,
+    "end_year_gregorian": 1341,
+    "hijri_display": "ca. 670-ca. 742",
+    "gregorian_display": "ca. 1271-ca. 1341",
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 148,
+    "name": "Ḥamīd Oghullarï and Tekke Oghullarï (W-Central Anatolia, SW coastland)",
+    "start_year_hijri": 700,
+    "end_year_hijri": 826,
+    "start_year_gregorian": 1301,
+    "end_year_gregorian": 1423,
+    "hijri_display": "ca. 700-826",
+    "gregorian_display": "ca. 1301-1423",
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 149,
+    "name": "Beys of Alanya (S Anatolia coastland)",
+    "start_year_hijri": 629,
+    "end_year_hijri": 876,
+    "start_year_gregorian": 1293,
+    "end_year_gregorian": 1471,
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 150,
+    "name": "Ashraf or Eshref Oghullari (S-Central Anatolia)",
+    "start_year_hijri": 630,
+    "end_year_hijri": 726,
+    "start_year_gregorian": 1294,
+    "end_year_gregorian": 1326,
+    "hijri_display": "?-726",
+    "gregorian_display": "?-1326",
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 151,
+    "name": "Jāndār Oghullarï or Isfandiyār Oghullarï (Black Sea coastland)",
+    "start_year_hijri": 691,
+    "end_year_hijri": 866,
+    "start_year_gregorian": 1292,
+    "end_year_gregorian": 1462,
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 152,
+    "name": "Parwāna Oghullarï (Black Sea coast: Sinop)",
+    "start_year_hijri": 676,
+    "end_year_hijri": 722,
+    "start_year_gregorian": 1277,
+    "end_year_gregorian": 1322,
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 153,
+    "name": "Chobān Oghullarï (Kastamonu/Qasṭamūnī)",
+    "start_year_hijri": 624,
+    "end_year_hijri": 708,
+    "start_year_gregorian": 1227,
+    "end_year_gregorian": 1309,
+    "hijri_display": "ca. 624-ca. 708",
+    "gregorian_display": "ca. 1227-ca. 1309",
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 154,
+    "name": "Qaramān Oghullarï (S-Central Anatolia, Mediterranean coastland)",
+    "start_year_hijri": 654,
+    "end_year_hijri": 880,
+    "start_year_gregorian": 1256,
+    "end_year_gregorian": 1475,
+    "hijri_display": "ca. 654-880",
+    "gregorian_display": "ca. 1256-1475",
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 155,
+    "name": "Eretna Oghullarï (NE Anatolia)",
+    "start_year_hijri": 736,
+    "end_year_hijri": 782,
+    "start_year_gregorian": 1336,
+    "end_year_gregorian": 1380,
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 156,
+    "name": "Qāḍī Burhān al-Dīn Oghullarï (NE Anatolia)",
+    "start_year_hijri": 783,
+    "end_year_hijri": 800,
+    "start_year_gregorian": 1381,
+    "end_year_gregorian": 1398,
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 157,
+    "name": "Tāj al-Dīn Oghullarï (Black Sea Coast hinterland: Canik/Jānīk)",
+    "start_year_hijri": 749,
+    "end_year_hijri": 831,
+    "start_year_gregorian": 1348,
+    "end_year_gregorian": 1428,
+    "hijri_display": "ca. 749-831",
+    "gregorian_display": "ca. 1348-1428",
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 158,
+    "name": "Ramaḍan Oghullarï (Cilicia, Little Armenia)",
+    "start_year_hijri": 780,
+    "end_year_hijri": 1017,
+    "start_year_gregorian": 1378,
+    "end_year_gregorian": 1608,
+    "hijri_display": "ca. 780-1017",
+    "gregorian_display": "ca. 1378-1608",
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 159,
+    "name": "Dulghadïr Oghullarï or Dhū ʾl-Qadrids (SE Anatolia)",
+    "start_year_hijri": 738,
+    "end_year_hijri": 928,
+    "start_year_gregorian": 1337,
+    "end_year_gregorian": 1521,
+    "parent_id": "<%= sprig_record(Era, 136).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 160,
+    "name": "Ottomans (NW Anatolia, Balkans, Arab lands from Iraq to Algeria and Eritrea)",
+    "start_year_hijri": 699,
+    "end_year_hijri": 1342,
+    "start_year_gregorian": 1299,
+    "end_year_gregorian": 1924,
+    "hijri_display": "late 7th c.-1342",
+    "gregorian_display": "late 13th c.-1924",
+    "parent_id": "<%= sprig_record(Era, 136).id %>"
+  }, {
+    "sprig_id": 161,
+    "name": "Central Asia & Far East: Mongols and Successors in Mongolia, Central Asia, Eastern Europe",
+    "start_year_hijri": 602,
+    "end_year_hijri": 1208,
+    "start_year_gregorian": 1206,
+    "end_year_gregorian": 1792,
+    "parent_id": "<%= sprig_record(Era, 19).id %>"
+  }, {
+    "sprig_id": 162,
+    "name": "Mongols and later Yüan Dynasty of China (Mongolia, China)",
+    "start_year_hijri": 602,
+    "end_year_hijri": 1043,
+    "start_year_gregorian": 1206,
+    "end_year_gregorian": 1634,
+    "parent_id": "<%= sprig_record(Era, 161).id %>"
+  }, {
+    "sprig_id": 163,
+    "name": "Chaghatayids (Transoxania; Mogholistan: Semirechye, E Turkestan)",
+    "start_year_hijri": 624,
+    "end_year_hijri": 764,
+    "start_year_gregorian": 1227,
+    "end_year_gregorian": 1363,
+    "parent_id": "<%= sprig_record(Era, 161).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 164,
+    "name": "Il Khānids (Persia, Iraq, E and Central Anatolia)",
+    "start_year_hijri": 654,
+    "end_year_hijri": 754,
+    "start_year_gregorian": 1256,
+    "end_year_gregorian": 1353,
+    "parent_id": "<%= sprig_record(Era, 161).id %>"
+  }, {
+    "sprig_id": 165,
+    "name": "Khāns of the Golden Horde (W Siberia, Khwārazm, S Russia)",
+    "start_year_hijri": 624,
+    "end_year_hijri": 907,
+    "start_year_gregorian": 1227,
+    "end_year_gregorian": 1502,
+    "parent_id": "<%= sprig_record(Era, 161).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 166,
+    "name": "Giray Khāns (Crimea, S Ukraine)",
+    "start_year_hijri": 853,
+    "end_year_hijri": 1208,
+    "start_year_gregorian": 1449,
+    "end_year_gregorian": 1792,
+    "parent_id": "<%= sprig_record(Era, 161).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 167,
+    "name": "Khāns of Astrakhān (Lower Volga and adjacent steppelands)",
+    "start_year_hijri": 871,
+    "end_year_hijri": 964,
+    "start_year_gregorian": 1466,
+    "end_year_gregorian": 1557,
+    "parent_id": "<%= sprig_record(Era, 161).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 168,
+    "name": "Khāns of Qāzān (Middle Volga)",
+    "start_year_hijri": 840,
+    "end_year_hijri": 959,
+    "start_year_gregorian": 1437,
+    "end_year_gregorian": 1552,
+    "parent_id": "<%= sprig_record(Era, 161).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 169,
+    "name": "Khāns of Qāsimov (Ryazan to SE of Moscow)",
+    "start_year_hijri": 856,
+    "end_year_hijri": 1092,
+    "start_year_gregorian": 1452,
+    "end_year_gregorian": 1681,
+    "hijri_display": "ca. 856-1092",
+    "gregorian_display": "ca. 1452-1681",
+    "parent_id": "<%= sprig_record(Era, 161).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 170,
+    "name": "Central Asia & Afghanistan: After the Mongols",
+    "start_year_hijri": 906,
+    "end_year_hijri": 1339,
+    "start_year_gregorian": 1500,
+    "end_year_gregorian": 1920,
+    "parent_id": "<%= sprig_record(Era, 19).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 171,
+    "name": "Shïbānids (or Shaybānids) or Abū ʾl-Khayrids (Transoxania, N Afghanistan)",
+    "start_year_hijri": 906,
+    "end_year_hijri": 1007,
+    "start_year_gregorian": 1500,
+    "end_year_gregorian": 1599,
+    "parent_id": "<%= sprig_record(Era, 170).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 172,
+    "name": "Toqay Temürids or Jānids or Ashtarkhānids (Transoxania, N Afghanistan)",
+    "start_year_hijri": 1007,
+    "end_year_hijri": 1160,
+    "start_year_gregorian": 1599,
+    "end_year_gregorian": 1747,
+    "parent_id": "<%= sprig_record(Era, 170).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 173,
+    "name": "Mangïts (Khanate of Bukhārā)",
+    "start_year_hijri": 1166,
+    "end_year_hijri": 1339,
+    "start_year_gregorian": 1753,
+    "end_year_gregorian": 1920,
+    "parent_id": "<%= sprig_record(Era, 170).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 174,
+    "name": "Qungrats or Ïnaqids (Khanate of Khīva)",
+    "start_year_hijri": 1184,
+    "end_year_hijri": 1338,
+    "start_year_gregorian": 1770,
+    "end_year_gregorian": 1920,
+    "parent_id": "<%= sprig_record(Era, 170).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 175,
+    "name": "Mings (Khanate of Khoqand)",
+    "start_year_hijri": 1213,
+    "end_year_hijri": 1293,
+    "start_year_gregorian": 1798,
+    "end_year_gregorian": 1876,
+    "parent_id": "<%= sprig_record(Era, 170).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 176,
+    "name": "Indian Subcontinent & Afghanistan",
+    "start_year_hijri": 366,
+    "end_year_hijri": 1393,
+    "start_year_gregorian": 977,
+    "end_year_gregorian": 1973,
+    "parent_id": "<%= sprig_record(Era, 19).id %>"
+  }, {
+    "sprig_id": 177,
+    "name": "Ghaznavids (Afghanistan, Khurāsān, Baluchistan, NW India)",
+    "start_year_hijri": 366,
+    "end_year_hijri": 582,
+    "start_year_gregorian": 977,
+    "end_year_gregorian": 1186,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 178,
+    "name": "Ghūrids (Ghūr, Khurāsān, NW India)",
+    "start_year_hijri": 401,
+    "end_year_hijri": 612,
+    "start_year_gregorian": 1001,
+    "end_year_gregorian": 1215,
+    "hijri_display": "early 5th c.-612",
+    "gregorian_display": "early 11th c.-1215",
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 179,
+    "name": "Delhi Sultans (N India, N Deccan)",
+    "start_year_hijri": 602,
+    "end_year_hijri": 962,
+    "start_year_gregorian": 1206,
+    "end_year_gregorian": 1555,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 180,
+    "name": "Sultans of Bengal (Bengal, Bihār)",
+    "start_year_hijri": 594,
+    "end_year_hijri": 984,
+    "start_year_gregorian": 1198,
+    "end_year_gregorian": 1576,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 181,
+    "name": "Sultans of Kashmir (Kashmir)",
+    "start_year_hijri": 739,
+    "end_year_hijri": 996,
+    "start_year_gregorian": 1339,
+    "end_year_gregorian": 1588,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 182,
+    "name": "Sultans of Gujarāt (W India)",
+    "start_year_hijri": 806,
+    "end_year_hijri": 980,
+    "start_year_gregorian": 1403,
+    "end_year_gregorian": 1573,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 183,
+    "name": "Sharqī Sultans of Jawnpur (E-Central, N India)",
+    "start_year_hijri": 796,
+    "end_year_hijri": 888,
+    "start_year_gregorian": 1394,
+    "end_year_gregorian": 1483,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 184,
+    "name": "Sultans and Rulers of Mālwa (Central India)",
+    "start_year_hijri": 804,
+    "end_year_hijri": 969,
+    "start_year_gregorian": 1402,
+    "end_year_gregorian": 1562,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 185,
+    "name": "Sultans of Maʿbar or Madura (S Deccan)",
+    "start_year_hijri": 734,
+    "end_year_hijri": 779,
+    "start_year_gregorian": 1334,
+    "end_year_gregorian": 1377,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 186,
+    "name": "Bahmanids (N Deccan)",
+    "start_year_hijri": 748,
+    "end_year_hijri": 934,
+    "start_year_gregorian": 1347,
+    "end_year_gregorian": 1528,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 187,
+    "name": "Fārūqī Rulers of Khāndesh (NW Deccan)",
+    "start_year_hijri": 784,
+    "end_year_hijri": 1009,
+    "start_year_gregorian": 1382,
+    "end_year_gregorian": 1601,
+    "hijri_display": "ca. 784-1009",
+    "gregorian_display": "ca. 1382-1601",
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 188,
+    "name": "Barīd Shāhīs (Bīdar)",
+    "start_year_hijri": 892,
+    "end_year_hijri": 1028,
+    "start_year_gregorian": 1487,
+    "end_year_gregorian": 1619,
+    "hijri_display": "ca. 892-1028",
+    "gregorian_display": "ca. 1487-1619",
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 189,
+    "name": "ʿĀdil Shāhīs (Bījapur)",
+    "start_year_hijri": 895,
+    "end_year_hijri": 1097,
+    "start_year_gregorian": 1490,
+    "end_year_gregorian": 1686,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 190,
+    "name": "Niẓām Shāhīs (Aḥmadnagar)",
+    "start_year_hijri": 895,
+    "end_year_hijri": 1046,
+    "start_year_gregorian": 1490,
+    "end_year_gregorian": 1636,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 191,
+    "name": "ʿImād Shāhīs (Berār)",
+    "start_year_hijri": 896,
+    "end_year_hijri": 982,
+    "start_year_gregorian": 1491,
+    "end_year_gregorian": 1574,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 192,
+    "name": "Quṭb Shāhīs (Golconda-Muḥammadnagar)",
+    "start_year_hijri": 901,
+    "end_year_hijri": 1098,
+    "start_year_gregorian": 1496,
+    "end_year_gregorian": 1687,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 193,
+    "name": "Arghūns (Multan and Sind)",
+    "start_year_hijri": 926,
+    "end_year_hijri": 999,
+    "start_year_gregorian": 1520,
+    "end_year_gregorian": 1591,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 194,
+    "name": "Mughal Emperors (India)",
+    "start_year_hijri": 932,
+    "end_year_hijri": 1274,
+    "start_year_gregorian": 1526,
+    "end_year_gregorian": 1858,
+    "parent_id": "<%= sprig_record(Era, 176).id %>"
+  }, {
+    "sprig_id": 195,
+    "name": "Nawwāb-Viziers and Nawwāb-Nāẓims (Bengal)",
+    "start_year_hijri": 1116,
+    "end_year_hijri": 1274,
+    "start_year_gregorian": 1704,
+    "end_year_gregorian": 1858,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 196,
+    "name": "Nawwāb-Viziers and Kings of Qudh (Awadh) (N India)",
+    "start_year_hijri": 1134,
+    "end_year_hijri": 1272,
+    "start_year_gregorian": 1722,
+    "end_year_gregorian": 1856,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 197,
+    "name": "Niẓāms of Hyderabad (S India)",
+    "start_year_hijri": 1137,
+    "end_year_hijri": 1367,
+    "start_year_gregorian": 1724,
+    "end_year_gregorian": 1948,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 198,
+    "name": "Muslim Rulers in Mysore (S India)",
+    "start_year_hijri": 1173,
+    "end_year_hijri": 1213,
+    "start_year_gregorian": 1760,
+    "end_year_gregorian": 1799,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 199,
+    "name": "Abdālī or Durrānī Rulers and Kings (Afghanistan)",
+    "start_year_hijri": 1160,
+    "end_year_hijri": 1393,
+    "start_year_gregorian": 1747,
+    "end_year_gregorian": 1973,
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 200,
+    "name": "SE Asia and Indonesia",
+    "start_year_hijri": 650,
+    "start_year_gregorian": 1250,
+    "hijri_display": "7th c.-",
+    "gregorian_display": "13th c.-",
+    "parent_id": "<%= sprig_record(Era, 176).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 201,
+    "name": "Rulers of Malacca (SW Coast of Malay peninsula)",
+    "start_year_hijri": 805,
+    "end_year_hijri": 1110,
+    "start_year_gregorian": 1403,
+    "end_year_gregorian": 1699,
+    "hijri_display": "ca. 805-1110",
+    "gregorian_display": "ca. 1403-1699",
+    "parent_id": "<%= sprig_record(Era, 200).id %>"
+  }, {
+    "sprig_id": 202,
+    "name": "Sultans of Aceh (N Sumatra)",
+    "start_year_hijri": 901,
+    "end_year_hijri": 1321,
+    "start_year_gregorian": 1496,
+    "end_year_gregorian": 1903,
+    "hijri_display": "ca. 901-1321",
+    "gregorian_display": "ca. 1496-1903",
+    "parent_id": "<%= sprig_record(Era, 200).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 203,
+    "name": "Rulers of Mataram (Central Java)",
+    "start_year_hijri": 983,
+    "end_year_hijri": 1168,
+    "start_year_gregorian": 1575,
+    "end_year_gregorian": 1755,
+    "hijri_display": "ca. 983-1168",
+    "gregorian_display": "ca. 1575-1755",
+    "parent_id": "<%= sprig_record(Era, 200).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 204,
+    "name": "Susuhanans of Surakarta (Central Java)",
+    "start_year_hijri": 1168,
+    "end_year_hijri": 1368,
+    "start_year_gregorian": 1755,
+    "end_year_gregorian": 1949,
+    "parent_id": "<%= sprig_record(Era, 200).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 205,
+    "name": "Sultans of Jogjakarta (S-Central Java)",
+    "start_year_hijri": 1168,
+    "end_year_hijri": 1368,
+    "start_year_gregorian": 1755,
+    "end_year_gregorian": 1949,
+    "parent_id": "<%= sprig_record(Era, 200).id %>",
+    "extended": true
+  }, {
+    "sprig_id": 206,
+    "name": "Sultans of Brunei (N Borneo)",
+    "start_year_hijri": 650,
+    "start_year_gregorian": 1250,
+    "hijri_display": "7th c.-",
+    "gregorian_display": "13th c.-",
+    "parent_id": "<%= sprig_record(Era, 200).id %>"
   }]
 }
