@@ -424,7 +424,7 @@
     "hijri_display": "1st c.-",
     "gregorian_display": "7th c.-",
     "parent_id": "<%= sprig_record(Era, 19).id %>",
-    "extended": true
+    "extended": false
   }, {
     "sprig_id": 50,
     "name": "Carmathian (Qarmaṭī) Rulers (Syria, Iraq, E Arabia)",
@@ -1022,7 +1022,7 @@
     "end_year_hijri": 609,
     "start_year_gregorian": 819,
     "end_year_gregorian": 1212,
-    "parent_id": "<%= sprig_record(Era, 79).id %>",
+    "parent_id": "<%= sprig_record(Era, 19).id %>",
     "extended": true
   }, {
     "sprig_id": 112,
@@ -1857,8 +1857,8 @@
     "start_year_gregorian": 1250,
     "hijri_display": "7th c.-",
     "gregorian_display": "13th c.-",
-    "parent_id": "<%= sprig_record(Era, 176).id %>",
-    "extended": true
+    "parent_id": "<%= sprig_record(Era, 19).id %>",
+    "extended": "false"
   }, {
     "sprig_id": 201,
     "name": "Rulers of Malacca (SW Coast of Malay peninsula)",
