@@ -10,8 +10,10 @@
         li= link_to 'Facebook', '#TODO', class: 'facebook', title: 'Share this page on Facebook'
 
       p.breadcrumb
-        = link_to @document.document_type.name, '#TODO'
-        span= " :: #{@document.created_at}"
+        - @document.document_type.self_and_ancestors.reverse.each do |dt|
+          = link_to dt.name, '#TODO'
+          span= ' :: '
+        span= @document.created_at
 
       h2= @document.title
 
