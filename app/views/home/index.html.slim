@@ -14,7 +14,7 @@
     .collaborator-list
       - @home_presenter.collaborators.take(3).each_with_index do |collaborator, index|
         .collaborator id="collaborator-#{index}"
-          = image_tag collaborator.image.url 
+          = image_tag collaborator.image.corner_cut.url
           .content
             h3= link_to collaborator.name, '#TODO'
             p.contributors

@@ -32,6 +32,9 @@ class Admin::DocumentsController < AdminController
   def update
     if @document.update permitted_params
       flash[:notice] = 'Document updated successfully'
+      if current_user.requires_approval?
+        @document.update! published: false
+      end
       redirect_to edit_admin_document_path(@document)
     else
       flash[:error] = @document.errors.full_messages.to_sentence
