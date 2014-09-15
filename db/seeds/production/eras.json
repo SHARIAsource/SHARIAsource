@@ -6,14 +6,18 @@
   "records": [{
     "sprig_id": 1,
     "name": "Early Islamic Rule (Arabia, Iraq, Persia)",
-    "start_year_hijri": 10,
-    "start_year_gregorian": 632
+    "start_year_hijri": -52,
+    "start_year_gregorian": 570,
+    "hijri_display": "-52-mid 4th c.",
+    "gregorian_display": "570-mid 10th c."
   }, {
     "sprig_id": 2,
     "name": "Prophet Muḥammad’s Time",
-    "start_year_hijri": 11,
-    "start_year_gregorian": 631,
-    "hijri_display": "d. 11",
+    "start_year_hijri": -52,
+    "end_year_hijri": -13,
+    "start_year_gregorian": 570,
+    "end_year_gregorian": 632,
+    "hijri_display": null,
     "parent_id": "<%= sprig_record(Era, 1).id %>"
   }, {
     "sprig_id": 3,
@@ -28,14 +32,16 @@
     "name": "The 12 Shīʿī Imāms",
     "start_year_hijri": 35,
     "start_year_gregorian": 656,
-    "hijri_display": "35-mid-4th c.",
-    "gregorian_display": "656-mid-10th c.",
+    "hijri_display": "35-mid 4th c.",
+    "gregorian_display": "656-mid 10th c.",
     "parent_id": "<%= sprig_record(Era, 1).id %>"
   }, {
     "sprig_id": 5,
     "name": "Umayyads",
     "start_year_hijri": 41,
-    "start_year_gregorian": 661
+    "end_year_hijri": 422
+    "start_year_gregorian": 661,
+    "end_year_gregorian": 1031
   }, {
     "sprig_id": 6,
     "name": "Umayyad East (Iraq, Syria, Arabian Peninsula)",
