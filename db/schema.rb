@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140912011147) do
+ActiveRecord::Schema.define(version: 20140915230429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 20140912011147) do
     t.integer  "reference_type_id"
     t.string   "permission_giver"
     t.boolean  "published",          default: false
+    t.string   "document_style",     default: "scan"
   end
 
   add_index "documents", ["contributor_id"], name: "index_documents_on_contributor_id", using: :btree

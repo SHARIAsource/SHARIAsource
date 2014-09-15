@@ -49,6 +49,10 @@ class Document < ActiveRecord::Base
     in: 1..3,
     message: 'Must be between 1 and 3'
   }
+  validates :document_style, inclusion: {
+    in: ['scan', 'noscan'],
+    message: 'Must be scan or no-scan'
+  }
   validate :validate_dates
 
   # Associations

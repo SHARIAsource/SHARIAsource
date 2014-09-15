@@ -112,7 +112,7 @@
             - @document.referencing_documents.each do |d|
               li= link_to d.title_with_author, document_path(d.object)
 
-- if @document.pages.present?
+- if @document.document_style == 'scan' && @document.pages.present?
   .inner-wrapper
     .inner
       .image-viewer-container

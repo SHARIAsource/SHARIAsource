@@ -8,7 +8,7 @@
     .large-6.columns
       = f.association :language, collection: Language.all
     .large-6.columns
-      = f.association :regions, collection: Region.all
+      = f.input :document_style, as: :select, collection: [['With Scan', 'scan'], ['Without Scan', 'noscan']], include_blank: false
   .row
     .large-6.columns
       = f.association :topics, collection: Topic.all
@@ -18,14 +18,17 @@
     .large-6.columns
       = f.association :eras, collection: Era.all
     .large-6.columns
-      = f.association :tags, collection: Tag.all
+      = f.association :regions, collection: Region.all
   .row
     .large-6.columns
       = f.association :referenced_documents, collection: Document.where.not(id: @document.id)
     .large-6.columns
       = f.input :featured_position, input_html: { max: 3 }
+  .row
+    .large-6.columns.end
+      = f.association :tags, collection: Tag.all
 
-  .js-source-only.panel
+  .js-scan-only.panel
     .row
       .large-6.columns
         = f.association :reference_type, collection: ReferenceType.all
@@ -84,7 +87,7 @@
                 .large-4.columns
                   img src=p.object.image.url
 
-  .js-commentary-only.panel
+  .js-noscan-only.panel
     .row
       .large-12.columns
         = f.fields_for :body do |b|
