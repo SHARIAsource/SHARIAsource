@@ -344,7 +344,7 @@
     "start_year_gregorian": 906,
     "end_year_gregorian": 1842,
     "parent_id": "<%= sprig_record(Era, 19).id %>",
-    "extended": true
+    "extended": false
   }, {
     "sprig_id": 42,
     "name": "Hamdānids (Jazīra and N. Syria)",
@@ -642,7 +642,7 @@
     "start_year_gregorian": 901,
     "end_year_gregorian": 1964,
     "parent_id": "<%= sprig_record(Era, 19).id %>",
-    "extended": true
+    "extended": false
   }, {
     "sprig_id": 74,
     "name": "Sultans of Kilwa (Tanzanian coastland)",
@@ -1023,7 +1023,7 @@
     "start_year_gregorian": 819,
     "end_year_gregorian": 1212,
     "parent_id": "<%= sprig_record(Era, 19).id %>",
-    "extended": true
+    "extended": false
   }, {
     "sprig_id": 112,
     "name": "Ṭāhirids & Muṣʿabids (Khurāsān, Iraq: Baghdad)",
@@ -1584,7 +1584,7 @@
     "start_year_gregorian": 1500,
     "end_year_gregorian": 1920,
     "parent_id": "<%= sprig_record(Era, 19).id %>",
-    "extended": true
+    "extended": false
   }, {
     "sprig_id": 171,
     "name": "Shïbānids (or Shaybānids) or Abū ʾl-Khayrids (Transoxania, N Afghanistan)",

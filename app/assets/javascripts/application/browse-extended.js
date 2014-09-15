@@ -48,7 +48,7 @@
     var depth = parseInt($tr.data('depth'), 10)
     var $targets = $tr.prevUntil('[data-depth=' + (depth - 1) + ']')
 
-    $targets = $targets.filter('[data-extended]')
+    $targets = $targets.filter('[data-depth=' + depth + '][data-extended]')
     $targets[$this.hasClass('is-expanded') ? 'hide' : 'show']()
     $this.toggleClass('is-expanded')
     event.preventDefault()
