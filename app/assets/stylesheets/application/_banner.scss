@@ -1,13 +1,13 @@
 .banner {
   background:$ss-color-primary;
-  border-top:1px solid $ss-color-secondary;
-  border-bottom:1px solid $ss-color-secondary;
   font-weight:bold;
 
   .inner-wrapper {
     height:184px;
     background:url(image-path('header-bg.png')) 50% 0 no-repeat;
     background-size:100% 100%;
+    border-top:1px solid $ss-color-secondary;
+    border-bottom:1px solid $ss-color-secondary;
   }
 
   .inner {
@@ -77,7 +77,7 @@
     text-align:left;
     font-size:14px;
     line-height:1.14286;
-    color:$ss-color-secondary;
+    color:$ss-color-headerfooterlink;
 
     &:hover, &:focus {
       color:#fff;

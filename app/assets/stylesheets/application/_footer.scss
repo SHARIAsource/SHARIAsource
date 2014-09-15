@@ -30,7 +30,7 @@
     }
 
     a {
-      @include underline-hover($ss-color-secondary);
+      @include underline-hover($ss-color-headerfooterlink);
     }
   }
 
@@ -63,7 +63,7 @@
       font-weight:bold;
 
       &:hover, &:focus {
-        color:$ss-color-secondary;
+        color:$ss-color-headerfooterlink;
       }
     }
   }
@@ -82,7 +82,7 @@
 
     input {
       margin-bottom:8px;
-      border:1px solid $ss-color-secondary;
+      border:1px solid $ss-color-headerfooterlink;
     }
 
     .ss-button {
