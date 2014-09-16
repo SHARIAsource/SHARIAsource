@@ -1,5 +1,5 @@
-= content_for :page_title, 'Edit Profile'
-= content_for :admin_active, 'My Profile'
+= content_for :page_title, 'Edit Account'
+= content_for :admin_active, 'My Account'
 
 .row
   .large-6.large-centered.columns
@@ -9,22 +9,6 @@
       = devise_error_messages!
 
       = f.input :email
-
-      .row
-        .large-6.columns
-          = f.input :first_name
-        .large-6.columns
-          = f.input :last_name
-
-      .row
-        .large-6.columns
-          = f.input :avatar, as: :file, input_html: { accept: 'image/png,image/jpg,image/gif' }
-          = f.hidden_field :avatar_cache
-        .large-6.columns
-          - if f.object.avatar?
-            = image_tag f.object.avatar_url
-
-      = f.input :about, input_html: { class: 'wysiwyg' }
       = f.input :password, autocomplete: 'off'
       = f.input :password_confirmation, autocomplete: 'off'
       = f.input :current_password, autocomplete: 'off', required: true
