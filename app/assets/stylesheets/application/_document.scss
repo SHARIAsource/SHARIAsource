@@ -136,7 +136,7 @@
   }
 
   a {
-    color:$ss-color-secondary;
+    @include color-hover($ss-color-secondary, $ss-color-headerfooterlink);
   }
 
   strong {
@@ -156,7 +156,7 @@
     a {
       line-height:1;
       vertical-align:top;
-      @include underline-hover($ss-color-bodytext);
+      @include color-hover($ss-color-bodytext, $ss-color-heading);
     }
   }
 
@@ -164,16 +164,13 @@
     font-weight:bold;
     margin-top:12px;
 
-    &:before {
-      content:'';
+    a:before {
+      content:'»';
       display:inline-block;
-      background:url(image-path('doublearrow.svg')) 0 0 no-repeat;
-      width:15px;
-      height:12px;
-      background-size:15px 12px;
       margin-right:5px;
-      position:relative;
-      top:1px;
+      font-size:2em;
+      line-height:.5;
+      vertical-align:top;
     }
   }
 }
@@ -190,7 +187,7 @@
   }
 
   a {
-    @include underline-hover($ss-color-contentlink);
+    @include color-hover($ss-color-secondary, $ss-color-headerfooterlink);
   }
 }
 

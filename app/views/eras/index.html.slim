@@ -15,7 +15,7 @@
         - @era_table[:eras].each_with_index do |era, era_index|
           - era_presenter = EraPresenter.new era
           tr data-depth=era.depth data-extended=era.extended
-            th scope='row'= era_presenter.name_with_dates
+            th scope='row'= link_to era_presenter.name_with_dates, '#TODO'
             - @era_table[:document_types].each_with_index do |document_type, document_type_index|
               - count = @era_table[:counts][era_index][document_type_index]
               td data-count=count

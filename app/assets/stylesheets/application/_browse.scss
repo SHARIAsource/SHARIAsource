@@ -31,12 +31,22 @@
       th {
         padding-top:24px;
         font-weight:bold;
+
+        a {
+          @include color-hover($ss-color-heading, $ss-color-heading);
+        }
       }
 
       td {
         padding-top:12px;
       }
 
+    }
+
+    &[data-depth="1"], &[data-depth="2"] {
+      a {
+        @include color-hover($ss-color-bodytext, $ss-color-heading);
+      }
     }
 
     &[data-depth="2"] th {
@@ -89,7 +99,7 @@
     }
 
     a {
-      color:$ss-color-bodytext;
+      @include color-hover($ss-color-bodytext, $ss-color-heading);
     }
   }
 

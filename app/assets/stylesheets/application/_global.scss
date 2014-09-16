@@ -6,6 +6,15 @@
   }
 }
 
+@mixin color-hover($offColor, $onColor) {
+  color:$offColor;
+
+  &:hover, &:focus {
+    color:$onColor;
+    text-decoration:none;
+  }
+}
+
 body {
   font-family:$ss-font-sans;
   color:$ss-color-bodytext;

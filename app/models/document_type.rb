@@ -29,7 +29,8 @@ class DocumentType < ActiveRecord::Base
       document_types: roots,
       counts: topics.map do |t|
         roots.map do |d|
-          t.documents.where(document_type: d.self_and_descendant_ids).count
+          t.documents.published
+            .where(document_type: d.self_and_descendant_ids).count
         end
       end
     }
@@ -43,7 +44,8 @@ class DocumentType < ActiveRecord::Base
       document_types: roots,
       counts: themes.map do |t|
         roots.map do |d|
-          t.documents.where(document_type: d.self_and_descendant_ids).count
+          t.documents.published
+            .where(document_type: d.self_and_descendant_ids).count
         end
       end
     }
@@ -57,7 +59,8 @@ class DocumentType < ActiveRecord::Base
       document_types: roots,
       counts: regions.map do |region|
         roots.map do |d|
-          region.documents.where(document_type: d.self_and_descendant_ids).count
+          region.documents.published
+            .where(document_type: d.self_and_descendant_ids).count
         end
       end
     }
@@ -71,7 +74,8 @@ class DocumentType < ActiveRecord::Base
       document_types: roots,
       counts: eras.map do |era|
         roots.map do |d|
-          era.documents.where(document_type: d.self_and_descendant_ids).count
+          era.documents.published
+            .where(document_type: d.self_and_descendant_ids).count
         end
       end
     }

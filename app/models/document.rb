@@ -76,10 +76,14 @@ class Document < ActiveRecord::Base
 
   mount_uploader :pdf, PdfUploader
   accepts_nested_attributes_for :pages, :body
-  default_scope { where(published: true).order('created_at DESC') }
+  default_scope { order('created_at DESC') }
+
+  def self.published
+    where(published: true)
+  end
 
   def self.featured
-    self.where.not(featured_position: nil).order(:featured_position)
+    where.not(featured_position: nil).order(:featured_position)
   end
 
   private
