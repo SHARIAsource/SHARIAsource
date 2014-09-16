@@ -13,13 +13,15 @@
         - @document.document_type.self_and_ancestors.reverse.each do |dt|
           = link_to dt.name, '#TODO'
           span= ' :: '
-        span= @document.created_at
+        span= @document.dates
 
       h2= @document.title
 
       p.byline
-        = link_to @document.contributor.name, '#TODO'
-        span= @document.edited_by
+        - if @document.document_type.name === 'Commentary'
+          = link_to @document.contributor.name, '#TODO'
+        - else
+          span= @document.byline
 
   .metadata-inner
     .metadata.js-same-height-container
@@ -29,22 +31,21 @@
             li
               strong Reference Type:
               span= @document.reference_types.pluck(:name).join(', ')
-          - if @document.author.present?
+          - if @document.alternate_authors.present?
             li
               strong Author(s):
-              span= @document.author
-          - if @document.alternate_titles.present?
-            li
-              strong Alternate Titles:
-              span= @document.alternate_titles
-          - if @document.editors.present?
+              span= @document.alternate_authors
+          li
+            strong Title:
+            span= @document.alternate_titles
+          - if @document.alternate_editors.present?
             li
               strong Editor(s):
-              span= @document.editors
-          - if @document.translators.present?
+              span= @document.alternate_editors
+          - if @document.alternate_translators.present?
             li
               strong Translator(s):
-              span= @document.translators
+              span= @document.alternate_translators
           - if @document.publisher_location.present?
             li
               strong City of Publication:
@@ -53,10 +54,10 @@
             li
               strong Publisher:
               span= @document.publisher
-          - if @document.years.present?
+          - if @document.alternate_years.present?
             li
               strong Year:
-              span= @document.years
+              span= @document.alternate_years
           - if @document.volume_count.present?
             li
               strong Volumes:
@@ -68,6 +69,10 @@
                 span= link_to @document.source_name, @document.source_url, target: '_blank'
               - else
                 span= @document.source_name
+          - if @document.permission_giver.present?
+            li
+              strong Permission Granted By:
+              span= @document.permission_giver
 
       .meta-column.js-same-height
         ul

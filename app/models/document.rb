@@ -2,32 +2,36 @@
 #
 # Table name: documents
 #
-#  id                 :integer          not null, primary key
-#  title              :string(255)
-#  document_type_id   :integer
-#  pdf                :string(255)
-#  processed          :boolean          default(TRUE)
-#  gregorian_date     :date
-#  lunar_hijri_date   :date
-#  source_name        :string(255)
-#  source_url         :string(255)
-#  author             :string(255)
-#  translators        :string(255)
-#  editors            :string(255)
-#  publisher          :string(255)
-#  publisher_location :string(255)
-#  volume_count       :integer
-#  alternate_titles   :string(255)
-#  alternate_authors  :string(255)
-#  language_id        :integer
-#  contributor_id     :integer
-#  popular_count      :integer          default(0)
-#  created_at         :datetime
-#  updated_at         :datetime
-#  featured_position  :integer
-#  reference_type_id  :integer
-#  permission_giver   :string(255)
-#  published          :boolean          default(FALSE)
+#  id                    :integer          not null, primary key
+#  title                 :string(255)
+#  document_type_id      :integer
+#  pdf                   :string(255)
+#  processed             :boolean          default(TRUE)
+#  gregorian_date        :date
+#  lunar_hijri_date      :date
+#  source_name           :string(255)
+#  source_url            :string(255)
+#  author                :string(255)
+#  translators           :string(255)
+#  editors               :string(255)
+#  publisher             :string(255)
+#  publisher_location    :string(255)
+#  volume_count          :integer
+#  alternate_titles      :string(255)
+#  alternate_authors     :string(255)
+#  language_id           :integer
+#  contributor_id        :integer
+#  popular_count         :integer          default(0)
+#  created_at            :datetime
+#  updated_at            :datetime
+#  featured_position     :integer
+#  reference_type_id     :integer
+#  permission_giver      :string(255)
+#  published             :boolean          default(FALSE)
+#  document_style        :string(255)      default("scan")
+#  alternate_editors     :string(255)
+#  alternate_translators :string(255)
+#  alternate_years       :string(255)
 #
 
 class Document < ActiveRecord::Base

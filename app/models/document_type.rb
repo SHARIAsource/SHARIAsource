@@ -7,6 +7,7 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  parent_id  :integer
+#  sort_order :integer
 #
 
 class DocumentType < ActiveRecord::Base

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140915230429) do
+ActiveRecord::Schema.define(version: 20140916194223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 20140915230429) do
     t.string   "title"
     t.integer  "document_type_id"
     t.string   "pdf"
-    t.boolean  "processed",          default: true
+    t.boolean  "processed",             default: true
     t.date     "gregorian_date"
     t.date     "lunar_hijri_date"
     t.string   "source_name"
@@ -87,14 +87,17 @@ ActiveRecord::Schema.define(version: 20140915230429) do
     t.string   "alternate_authors"
     t.integer  "language_id"
     t.integer  "contributor_id"
-    t.integer  "popular_count",      default: 0
+    t.integer  "popular_count",         default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "featured_position"
     t.integer  "reference_type_id"
     t.string   "permission_giver"
-    t.boolean  "published",          default: false
-    t.string   "document_style",     default: "scan"
+    t.boolean  "published",             default: false
+    t.string   "document_style",        default: "scan"
+    t.string   "alternate_editors"
+    t.string   "alternate_translators"
+    t.string   "alternate_years"
   end
 
   add_index "documents", ["contributor_id"], name: "index_documents_on_contributor_id", using: :btree

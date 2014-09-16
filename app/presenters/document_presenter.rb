@@ -1,23 +1,74 @@
 class DocumentPresenter < BasePresenter
   REFERENCE_LIMIT = 3
 
-  def dates
-    hijri = I18n.l(@object.lunar_hijri_date, format: :dd_month_yyyy,
-                   locale: :en_ar)
-    gregorian = @object.gregorian_date.to_s :dd_month_yyyy
-    [hijri, gregorian].reject(&:empty?).join(' / ')
+  def alternate_authors
+    if @object.alternate_authors.present?
+      @object.alternate_authors
+    else
+      author
+    end
   end
 
-  def edited_by
-    if @object.editors.present?
-      "Edited by #{@object.editors}"
+  def alternate_editors
+    if @object.alternate_editors.present?
+      @object.alternate_editors
     else
-      ''
+      editors
+    end
+  end
+
+  def alternate_titles
+    if @object.alternate_titles.present?
+      @object.alternate_titles
+    else
+      title
+    end
+  end
+
+  def alternate_translators
+    if @object.alternate_translators.present?
+      @object.alternate_translators
+    else
+      translators
+    end
+  end
+
+  def alternate_years
+    if @object.alternate_years.present?
+      @object.alternate_years
+    else
+      years
+    end
+  end
+
+  def byline
+    result = [@object.author]
+    if editors.present?
+      result << "Edited by #{editors}"
+    end
+    if translators.present?
+      result << "Translated by #{translators}"
+    end
+    result.join(', ')
+  end
+
+  def dates
+    result = []
+    if lunar_hijri_date.present?
+      result << I18n.l(lunar_hijri_date, format: :dd_month_yyyy, locale: :en_ar)
+    end
+    if gregorian_date.present?
+      result << gregorian_date.to_s(:dd_month_yyyy)
+    end
+    if result.present?
+      result.join(' / ')
+    else
+      created_at
     end
   end
 
   def document_types
-    @object.document_type.self_and_ancestors.pluck(:name).reverse
+    document_type.self_and_ancestors.pluck(:name).reverse
   end
 
   def other_documents
@@ -42,13 +93,14 @@ class DocumentPresenter < BasePresenter
   end
 
   def title_with_author
-    [@object.title, @object.contributor.name].reject(&:empty?).join ' by '
+    [title, contributor.name].reject(&:empty?).join ' by '
   end
 
   def years
-    [
-      @object.lunar_hijri_date,
-      @object.gregorian_date
-    ].compact.map(&:year).join(' / ')
+    if lunar_hijri_date.present? || gregorian_date.present?
+      [lunar_hijri_date, gregorian_date].compact.map(&:year).join(' / ')
+    else
+      @object.created_at.year
+    end
   end
 end
