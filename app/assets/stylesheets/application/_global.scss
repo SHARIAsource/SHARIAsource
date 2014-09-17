@@ -67,6 +67,7 @@ a, button, input {
   &:hover, &:focus {
     color:#fff;
     background-position:0 -96px;
+    background-color:transparent;
 
     &:before {
       background-position: 0 -128px;

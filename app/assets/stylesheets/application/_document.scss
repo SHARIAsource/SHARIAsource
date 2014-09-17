@@ -373,4 +373,29 @@
   }
 }
 
+.tag-suggestion-form {
+  display:none;
+  position:relative;
+  font-family:$ss-font-serif;
 
+  label {
+    font-size:14px;
+    font-weight:bold;
+    color:$ss-color-heading;
+  }
+
+  input {
+    margin-bottom:8px;
+  }
+
+  .cancel {
+    position:absolute;
+    right:10px;
+    bottom:5px;
+    font-size:14px;
+  }
+
+  .ss-button {
+    margin-bottom:5px;
+  }
+}

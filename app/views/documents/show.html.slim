@@ -101,7 +101,13 @@
               strong Additional Tags:
               span= @document.tags.pluck(:name).join(', ')
 
-          li.suggest-tags= link_to 'Suggest More Tags', '#TODO'
+          li.suggest-tags= link_to 'Suggest More Tags', '#TODO', class: 'js-suggest-tags'
+
+        = form_for :tag_suggestion, url: document_tag_suggestions_url(@document.object), html: { class: 'tag-suggestion-form'} do |f|
+          label Tag Suggestions
+          = f.text_field :tags, placeholder: 'separate, tags, with commas'
+          button.ss-button type='submit' Submit
+          a.cancel.js-tag-cancel href='#' Cancel
 
       .meta-column.references.js-same-height
         - if @document.referenced_documents.present?

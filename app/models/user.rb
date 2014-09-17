@@ -49,6 +49,10 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def self.editors
+    where(is_editor: true)
+  end
+
   private
 
   def remove_articles

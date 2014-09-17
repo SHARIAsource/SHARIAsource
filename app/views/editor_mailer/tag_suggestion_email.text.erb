@@ -1,0 +1,9 @@
+New additional tags have been suggested for <%= @document.title %>:
+
+<% @suggestions.each do |suggestion| %>
+   - <%= suggestion %>
+<% end %>
+
+You can edit this document at the following link: <%= edit_admin_document_url(@document) %>
+
+To view, edit, and add to the list of Additional Tags, go to: <%= admin_tags_url %>
