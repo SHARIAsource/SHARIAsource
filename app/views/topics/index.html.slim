@@ -14,7 +14,7 @@
         tr
         - @topic_table[:topics].each_with_index do |topic, topic_index|
           tr
-            th scope='row'= topic.name
+            th scope='row'= link_to topic.name, '#TODO'
             - @topic_table[:document_types].each_with_index do |document_type, document_type_index|
               - count = @topic_table[:counts][topic_index][document_type_index]
               td data-count=count

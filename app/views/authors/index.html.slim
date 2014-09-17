@@ -14,7 +14,7 @@
         tr
         - @author_table[:authors].each_with_index do |author, author_index|
           tr
-            th scope='row'= author.name
+            th scope='row'= link_to author.name, '#TODO'
             - @author_table[:document_types].each_with_index do |document_type, document_type_index|
               - count = @author_table[:counts][author_index][document_type_index]
               td data-count=count

@@ -2,7 +2,6 @@
   var $document = $(document)
 
   function sameHeight() {
-    console.log('hi')
     $('.js-same-height-container').each(function() {
       var $items = $(this).find('.js-same-height')
       $items.css('height', 'auto')

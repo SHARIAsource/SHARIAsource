@@ -23,6 +23,10 @@
   width:100%;
 
   tr {
+    a {
+      @include color-hover($ss-color-heading, $ss-color-heading);
+    }
+
     &:nth-of-type(even) {
       background:white;
     }
@@ -31,16 +35,11 @@
       th {
         padding-top:24px;
         font-weight:bold;
-
-        a {
-          @include color-hover($ss-color-heading, $ss-color-heading);
-        }
       }
 
       td {
         padding-top:12px;
       }
-
     }
 
     &[data-depth="1"], &[data-depth="2"] {

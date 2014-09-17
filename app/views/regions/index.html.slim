@@ -14,7 +14,7 @@
         tr
         - @region_table[:regions].each_with_index do |region, region_index|
           tr data-depth=region.depth
-            th scope='row'= region.name
+            th scope='row'= link_to region.name, '#TODO'
             - @region_table[:document_types].each_with_index do |document_type, document_type_index|
               - count = @region_table[:counts][region_index][document_type_index]
               td data-count=count
