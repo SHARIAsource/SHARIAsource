@@ -1,3 +1,11 @@
 = content_for :page_title, "Search"
 
-h2 Search
+.inner-wrapper
+  .inner
+    .search-two-columns
+      .search-sidebar
+        = render 'searches/filters'
+      .search-results
+        p Results
+    .full-width
+      = render 'searches/filters'

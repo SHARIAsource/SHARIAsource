@@ -1,0 +1,155 @@
+.search-two-columns {
+  @include clearfix;
+}
+
+.search-results {
+  float:right;
+  width:640px;
+}
+
+.filter-header {
+  background:$ss-color-bodybg;
+  line-height:32px;
+  height:32px;
+  vertical-align:middle;
+  font-size:12px;
+  padding:0 10px;
+  position:relative;
+
+  h3 {
+    display:inline-block;
+    font-size:12px;
+    font-weight:bold;
+    margin-right:10px;
+    text-transform:uppercase;
+  }
+
+  a {
+    position:absolute;
+    display:block;
+    height:32px;
+    line-height:32px;
+    right:10px;
+    top:0;
+    @include color-hover($ss-color-secondary, $ss-color-headerfooterlink);
+  }
+}
+
+.search-field-large {
+  position:relative;
+
+  input[type="text"] {
+    background:white;
+    border:4px solid $ss-color-bodybg;
+    box-shadow:none;
+    padding-right:40px;
+  }
+
+  input[type="submit"] {
+    position:absolute;
+    right:0;
+    top:0;
+    height:100%;
+    width:40px;
+    border:0;
+    text-indent:-9999px;
+    overflow:hidden;
+    background:url(image-path('search-magglass.svg')) center center no-repeat;
+    background-size:14px 14px;
+  }
+}
+
+.filter-block {
+  @include clearfix;
+
+  h3 {
+    font-size:12px;
+    font-weight:bold;
+    color:$ss-color-secondary;
+    line-height:1.14286;
+    margin-bottom:4px;
+    text-transform:uppercase;
+    margin:12px 0;
+    letter-spacing:1px;
+  }
+
+  label {
+    font-family:$ss-font-serif;
+    color:$ss-color-bodytext;
+    text-transform:capitalize;
+
+    &.all {
+      color:$ss-color-heading;
+      font-weight:bold;
+      margin-bottom:8px;
+    }
+  }
+
+  input[type="checkbox"] {
+    border:0;
+    background:$ss-color-bodybg;
+    margin:0 8px 0 0;
+  }
+
+  input[type="radio"] {
+    margin-right:8px;
+  }
+
+  ul {
+    list-style:none;
+    margin:0;
+
+    ul {
+      list-style:none;
+      margin-left:20px;
+    }
+
+    &.filter-hierarchy > li > label {
+      font-weight:bold;
+      color:$ss-color-heading;
+    }
+  }
+
+  li {
+  }
+}
+
+.date-block {
+  label {
+    color:$ss-color-heading;
+    font-weight:bold;
+  }
+
+  input[type="text"] {
+    border:1px solid #ccc;
+    box-shadow:none;
+  }
+}
+
+.search-sidebar {
+  float:left;
+  width:320px;
+  padding-right:16px;
+  border-right:4px solid $ss-color-bodybg;
+
+  .filter-block {
+    padding-bottom:12px;
+    border-bottom:4px solid $ss-color-bodybg;
+  }
+
+  .date-block {
+    float:left;
+    width:140px;
+    margin-right:10px;
+
+    &.format {
+      display:block;
+      width:auto;
+
+      label {
+        display:inline-block;
+        margin-right:20px;
+      }
+    }
+  }
+}

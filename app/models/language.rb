@@ -12,4 +12,5 @@
 class Language < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   has_many :documents
+  default_scope { order('name') }
 end
