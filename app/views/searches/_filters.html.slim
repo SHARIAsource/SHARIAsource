@@ -1,89 +1,104 @@
-h2.section-heading Advanced Search
 
 = form_tag search_path, method: :get do
   .search-field-large
     = text_field_tag :q
     = submit_tag 'Search', name: nil
 
-.filter-header
-  h3 Filter
-  a href='#TODO' clear all
+  .filter-header
+    h3 Filter
+    a href='#TODO' clear all
 
-.filter-row
-  .filter-date
-    .filter-block
-      h3 Date
-      = render 'searches/all'
-      .date-block
-        = label_tag :date_from, 'From:'
-        = text_field_tag :date_from, '', placeholder: 'dd/mm/yyyy'
-      .date-block
-        = label_tag :date_to, 'To:'
-        = text_field_tag :date_to, '', placeholder: 'dd/mm/yyyy'
-      .date-block.format
-        = label_tag do
-          = radio_button_tag :date_format, 'ah'
-          | AH
-        = label_tag do
-          = radio_button_tag :date_format, 'ce'
-          | CE
-
-  .filter-language
-    .filter-block
-      h3 Original Language
-      = render 'searches/all'
-      ul
-        - @languages.each do |language|
-          li
+  .filter-row
+    .filter-date
+      .filter-block
+        h3 Date
+        a.expand-contract href='#' Expand/Contract 
+        .filter-content
+          = render 'searches/all'
+          .date-block
+            = label_tag :date_from, 'From:'
+            = text_field_tag :date_from, '', placeholder: 'dd/mm/yyyy'
+          .date-block
+            = label_tag :date_to, 'To:'
+            = text_field_tag :date_to, '', placeholder: 'dd/mm/yyyy'
+          .date-block.format
             = label_tag do
-              = check_box_tag :language, language.id
-              = language.name
-
-  .filter-author
-    .filter-block
-      h3 Author/Commentator
-      = render 'searches/all'
-      = select_tag :author, options_from_collection_for_select(@authors, 'id', 'name')
-
-.filter-row
-  .filter-topics-themes
-    .filter-block
-      h3 Topics
-      = render 'searches/all'
-      ul
-        - @topics.each do |topic|
-          li
+              = radio_button_tag :date_format, 'ah'
+              | AH
             = label_tag do
-              = check_box_tag :topic, topic.id
-              = topic.name
-    
-    .filter-block
-      h3 Themes
-      = render 'searches/all'
-      ul
-        - @themes.each do |theme|
-          li
-            = label_tag do
-              = check_box_tag :theme, theme.id
-              = theme.name
+              = radio_button_tag :date_format, 'ce'
+              | CE
 
-  .filter-regions
-    .filter-block
-      h3 Geographic Regions
-      = render 'searches/all'
-      ul.filter-hierarchy
-        = render partial: 'searches/hierarchy', locals: { hash: @regions, field_name: :region }
+    .filter-language
+      .filter-block
+        h3 Original Language
+        a.expand-contract href='#' Expand/Contract 
+        .filter-content
+          = render 'searches/all'
+          ul
+            - @languages.each do |language|
+              li
+                = label_tag do
+                  = check_box_tag :language, language.id
+                  = language.name
 
-  .filter-eras
-    .filter-block
-      h3 Empires & Eras
-      = render 'searches/all'
-      ul.filter-hierarchy
-        = render partial: 'searches/hierarchy', locals: { hash: @eras, field_name: :era }
+    .filter-author
+      .filter-block
+        h3 Author/Commentator
+        a.expand-contract href='#' Expand/Contract 
+        .filter-content
+          = render 'searches/all'
+          = select_tag :author, options_from_collection_for_select(@authors, 'id', 'name')
 
-  .filter-document-types
-    .filter-block
-      h3 Document Types
-      = render 'searches/all'
-      ul.filter-hierarchy
-        = render partial: 'searches/hierarchy', locals: { hash: @document_types, field_name: :document_type }
+  .filter-row
+    .filter-topics-themes
+      .filter-block
+        h3 Topics
+        a.expand-contract href='#' Expand/Contract 
+        .filter-content
+          = render 'searches/all'
+          ul
+            - @topics.each do |topic|
+              li
+                = label_tag do
+                  = check_box_tag :topic, topic.id
+                  = topic.name
+      
+      .filter-block
+        h3 Themes
+        a.expand-contract href='#' Expand/Contract 
+        .filter-content
+          = render 'searches/all'
+          ul
+            - @themes.each do |theme|
+              li
+                = label_tag do
+                  = check_box_tag :theme, theme.id
+                  = theme.name
+
+    .filter-regions
+      .filter-block
+        h3 Geographic Regions
+        a.expand-contract href='#' Expand/Contract 
+        .filter-content
+          = render 'searches/all'
+          ul.filter-hierarchy
+            = render partial: 'searches/hierarchy', locals: { hash: @regions, field_name: :region }
+
+    .filter-eras
+      .filter-block
+        h3 Empires & Eras
+        a.expand-contract href='#' Expand/Contract 
+        .filter-content
+          = render 'searches/all'
+          ul.filter-hierarchy
+            = render partial: 'searches/hierarchy', locals: { hash: @eras, field_name: :era }
+
+    .filter-document-types
+      .filter-block
+        h3 Document Types
+        a.expand-contract href='#' Expand/Contract 
+        .filter-content
+          = render 'searches/all'
+          ul.filter-hierarchy
+            = render partial: 'searches/hierarchy', locals: { hash: @document_types, field_name: :document_type }

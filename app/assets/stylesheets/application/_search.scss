@@ -5,6 +5,7 @@
 .search-results {
   float:right;
   width:640px;
+  padding-left:40px;
 }
 
 .filter-header {
@@ -61,6 +62,7 @@
 
 .filter-block {
   @include clearfix;
+  position:relative;
 
   h3 {
     font-size:12px;
@@ -110,7 +112,28 @@
     }
   }
 
-  li {
+  .expand-contract {
+    position:absolute;
+    top:14px;
+    right:10px;
+    text-indent:-9999px;
+    overflow:hidden;
+    width:12px;
+    height:9px;
+    background:url(image-path('browse-contract.svg')) 0 0 no-repeat;
+    background-size:12px 9px;
+
+    &:hover, &:focus {
+      background-image:url(image-path('browse-contract-hover.svg'));
+    }
+  }
+
+  &.is-contracted .expand-contract {
+    background-image:url(image-path('browse-expand.svg'));
+
+    &:hover, &:focus {
+      background-image:url(image-path('browse-expand-hover.svg'));
+    }
   }
 }
 
@@ -123,6 +146,8 @@
   input[type="text"] {
     border:1px solid #ccc;
     box-shadow:none;
+    font-family:$ss-font-serif;
+    padding-top:10px;
   }
 }
 
