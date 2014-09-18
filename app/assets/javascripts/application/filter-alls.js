@@ -11,6 +11,7 @@
       $all.on('change.filter', function(event) {
         $checkboxes.prop('checked', false)
         $all.prop('checked', true)
+        $texts.val('')
       })
     }
 
@@ -45,10 +46,21 @@
       })
     }
 
+    function handleDateChanges() {
+      $texts.on('keyup.filter', function(event) {
+        var val = ''
+        $texts.each(function() {
+          val += $(this).val()
+        })
+        $all.prop('checked', !val)
+      })
+    }
+
     handleAllChanges()
     handleCheckboxChanges()
     handleHierarchyParentChanges()
     handleHierarchyChildrenChanges()
+    handleDateChanges()
   }
 
   $document.on('page:change', function() {
