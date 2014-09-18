@@ -21,7 +21,7 @@
     display:inline-block;
     font-size:12px;
     font-weight:bold;
-    margin-right:10px;
+    margin-right:20px;
     text-transform:uppercase;
   }
 
@@ -176,5 +176,66 @@
         margin-right:20px;
       }
     }
+  }
+}
+
+.search-full-width {
+  .filter-header {
+    a {
+      position:static;
+      display:inline;
+    }
+  }
+
+  .expand-contract {
+    display:none;
+  }
+
+  .filter-date {
+    float:left;
+    width:478px;
+    padding:10px 10px 10px 0;
+  }
+
+  .filter-language {
+    float:left;
+    width:244px;
+    border-left:4px solid $ss-color-bodybg;
+    border-right:4px solid $ss-color-bodybg;
+    padding:10px;
+  }
+
+  .filter-author {
+    float:left;
+    width:238px;
+    padding:10px 0 10px 10px;
+  }
+
+  .filter-row {
+    @include clearfix;
+    border-bottom:4px solid $ss-color-bodybg;
+  }
+
+  .filter-topics-themes {
+    float:left;
+    width:162px;
+    border-right:4px solid $ss-color-bodybg;
+  }
+
+  .filter-regions {
+    float:left;
+    width:260px;
+    border-right:4px solid $ss-color-bodybg;
+  }
+
+  .filter-eras {
+    float:left;
+    width:360px;
+    border-right:4px solid $ss-color-bodybg;
+  }
+
+  .filter-document-types {
+    float:left;
+    width:178px;
   }
 }
