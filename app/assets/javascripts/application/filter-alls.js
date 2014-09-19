@@ -6,12 +6,14 @@
     var $checkboxes = $block.find('li input[type="checkbox"]')
     var $texts = $block.find('input[type="text"]')
     var $all = $block.find('.all input[type="checkbox"]')
+    var $multiples = $block.find('select[multiple]')
 
     function handleAllChanges() {
       $all.on('change.filter', function(event) {
         $checkboxes.prop('checked', false)
         $all.prop('checked', true)
         $texts.val('')
+        $multiples.find('option').prop('selected', false)
       })
     }
 
@@ -25,6 +27,12 @@
         else {
           $all.prop('checked', false)
         }
+      })
+    }
+
+    function handleMultipleSelectChanges() {
+      $multiples.on('change.filter', function(event) {
+        $all.prop('checked', !$multiples.find('option:selected').length)
       })
     }
 
@@ -58,6 +66,7 @@
 
     handleAllChanges()
     handleCheckboxChanges()
+    handleMultipleSelectChanges()
     handleHierarchyParentChanges()
     handleHierarchyChildrenChanges()
     handleDateChanges()
