@@ -189,6 +189,21 @@
 }
 
 .search-full-width {
+  .search-field-large {
+    width:640px;
+
+    input[type="text"] {
+      height:52px;
+      font-size:20px;
+      padding-right:54px;
+    }
+
+    input[type="submit"] {
+      width:54px;
+      background-size:32px 24px;
+    }
+  }
+
   .filter-header {
     a {
       position:static;
@@ -223,6 +238,11 @@
   .filter-row {
     @include clearfix;
     border-bottom:4px solid $ss-color-bodybg;
+    margin:16px 0;
+  }
+
+  .filter-block + .filter-block {
+    margin-top:32px;
   }
 
   .filter-topics-themes {
@@ -262,9 +282,5 @@
       width:130px;
       padding-top:30px;
     }
-  }
-
-  .filter-row {
-    margin:16px 0;
   }
 }

@@ -3,10 +3,12 @@
 .inner-wrapper
   .inner
     h2.section-heading Advanced Search
-    .search-two-columns
-      .search-sidebar
+    - if @params[:q]
+      .search-two-columns
+        .search-sidebar
+          = render 'searches/filters'
+        .search-results
+          p Results
+    - else
+      .search-full-width
         = render 'searches/filters'
-      .search-results
-        p Results
-    .search-full-width
-      = render 'searches/filters'

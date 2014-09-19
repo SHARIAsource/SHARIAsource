@@ -1,7 +1,6 @@
-
 = form_tag search_path, method: :get do
   .search-field-large
-    = text_field_tag :q
+    = text_field_tag :q, @params[:q], id: 'q-large'
     = submit_tag 'Search', name: nil
 
   .filter-header

@@ -1,9 +1,7 @@
 class Search
+  attr_reader :q
+
   def initialize(params)
     @params = params
-  end
-
-  def date_from
-    params[:date_from]
   end
 end

@@ -7,6 +7,6 @@
 
       = form_tag search_path, method: :get, class: 'search-form' do
         .search-field
-          = text_field_tag :q
+          = text_field_tag :q, @params && @params[:q]
           = submit_tag 'Search', name: nil
           = link_to 'Advanced Search', search_path, class: 'advanced-search'
