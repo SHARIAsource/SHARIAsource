@@ -1,11 +1,14 @@
 @import url(http://fonts.googleapis.com/earlyaccess/amiri.css);
 
-@import 'shared/foundation_and_overrides';
-@import 'deckjs/core/deck.core';
-@import 'deckjs/extensions/status/deck.status';
+@import 'normalize';
+@import 'foundation/components/forms';
+@import 'foundation/components/type';
+@import 'foundation/components/visibility';
+@import 'foundation/components/tables';
+@import 'foundation/components/top-bar';
+
 @import 'application/variables';
 @import 'application/global';
-@import 'application/forms';
 @import 'application/layouts';
 @import 'application/site_nav';
 @import 'application/banner';

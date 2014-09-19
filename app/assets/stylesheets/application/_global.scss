@@ -30,6 +30,12 @@ a, button, input {
   transition:none;
 }
 
+select[multiple] {
+  background:none;
+  height:auto;
+  padding:0;
+}
+
 .ss-button {
   display:inline-block;
   text-align:center;

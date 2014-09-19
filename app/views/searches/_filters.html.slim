@@ -48,7 +48,8 @@
         a.expand-contract href='#' Expand/Contract 
         .filter-content
           = render 'searches/all'
-          = select_tag :author, options_from_collection_for_select(@authors, 'id', 'name')
+          = select_tag :author, options_from_collection_for_select(@authors, 'id', 'name'), multiple: true, size: 4
+          span.multiple-instructions Ctrl-click to select multiple people.
 
   .filter-row
     .filter-topics-themes

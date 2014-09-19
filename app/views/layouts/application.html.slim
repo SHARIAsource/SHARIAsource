@@ -11,7 +11,7 @@ html
 
   body
     .container
-      = render 'shared/admin_nav' if user_signed_in?
+      = render 'admin/admin_nav' if user_signed_in?
       = render 'shared/site_nav'
       = render 'shared/banner'
       == yield

@@ -23,6 +23,7 @@
     font-weight:bold;
     margin-right:20px;
     text-transform:uppercase;
+    letter-spacing:1px;
   }
 
   a {
@@ -97,6 +98,10 @@
     margin-right:8px;
   }
 
+  select[multiple] {
+    margin-bottom:4px;
+  }
+
   ul {
     list-style:none;
     margin:0;
@@ -137,10 +142,18 @@
   }
 }
 
+.multiple-instructions {
+  font-size:12px;
+  line-height:1;
+  font-family:$ss-font-serif;
+}
+
 .date-block {
   label {
     color:$ss-color-heading;
     font-weight:bold;
+    display:inline-block;
+    margin-right:20px;
   }
 
   input[type="text"] {
@@ -148,6 +161,7 @@
     box-shadow:none;
     font-family:$ss-font-serif;
     padding-top:10px;
+    font-weight:normal;
   }
 }
 
@@ -170,11 +184,6 @@
     &.format {
       display:block;
       width:auto;
-
-      label {
-        display:inline-block;
-        margin-right:20px;
-      }
     }
   }
 }
@@ -194,7 +203,7 @@
   .filter-date {
     float:left;
     width:478px;
-    padding:10px 10px 10px 0;
+    padding:0 10px 10px 0;
   }
 
   .filter-language {
@@ -202,13 +211,13 @@
     width:244px;
     border-left:4px solid $ss-color-bodybg;
     border-right:4px solid $ss-color-bodybg;
-    padding:10px;
+    padding:0 10px 10px 10px;
   }
 
   .filter-author {
     float:left;
     width:238px;
-    padding:10px 0 10px 10px;
+    padding:0 0 10px 10px;
   }
 
   .filter-row {
@@ -220,22 +229,42 @@
     float:left;
     width:162px;
     border-right:4px solid $ss-color-bodybg;
+    padding:0 10px 0 0;
   }
 
   .filter-regions {
     float:left;
     width:260px;
     border-right:4px solid $ss-color-bodybg;
+    padding:0 10px 0 10px;
   }
 
   .filter-eras {
     float:left;
     width:360px;
     border-right:4px solid $ss-color-bodybg;
+    padding:0 10px 0 10px;
   }
 
   .filter-document-types {
     float:left;
     width:178px;
+    padding:0 0 0 10px;
+  }
+
+  .date-block {
+    float:left;
+    width:150px;
+    margin-right:10px;
+
+    &.format {
+      margin-right:0;
+      width:130px;
+      padding-top:30px;
+    }
+  }
+
+  .filter-row {
+    margin:16px 0;
   }
 }
