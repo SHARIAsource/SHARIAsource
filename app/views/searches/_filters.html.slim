@@ -37,7 +37,7 @@
           ul
             - @languages.each do |language|
               li
-                = label_tag do
+                = label_tag nil, class: 'check-label' do
                   = check_box_tag :language, language.id
                   = language.name
 
@@ -60,7 +60,7 @@
           ul
             - @topics.each do |topic|
               li
-                = label_tag do
+                = label_tag nil, class: 'check-label' do
                   = check_box_tag :topic, topic.id
                   = topic.name
       
@@ -72,7 +72,7 @@
           ul
             - @themes.each do |theme|
               li
-                = label_tag do
+                = label_tag nil, class: 'check-label' do
                   = check_box_tag :theme, theme.id
                   = theme.name
 

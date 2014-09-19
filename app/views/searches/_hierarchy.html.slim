@@ -1,6 +1,6 @@
 - hash.map do |item, children|
   li
-    = label_tag do
+    = label_tag nil, class: 'check-label' do
       = check_box_tag field_name, item.id
       = item.name
     - if children.size > 0

@@ -42,7 +42,7 @@
 
   input[type="text"] {
     background:white;
-    border:4px solid $ss-color-bodybg;
+    border:4px solid $ss-color-borders;
     box-shadow:none;
     padding-right:40px;
   }
@@ -80,6 +80,28 @@
     font-family:$ss-font-serif;
     color:$ss-color-bodytext;
     text-transform:capitalize;
+    overflow:hidden;
+    padding:3px 0 2px 20px;
+    position:relative;
+    line-height:1.1486;
+
+    &.check-label {
+      &:before {
+        content:'';
+        position:absolute;
+        left:0;
+        top:3px;
+        width:12px;
+        height:12px;
+        background:$ss-color-borders;
+        border:2px solid #fff;
+      }
+
+      &.checked:before {
+        background:$ss-color-secondary;
+        border-color:$ss-color-borders;
+      }
+    }
 
     &.all {
       color:$ss-color-heading;
@@ -89,9 +111,8 @@
   }
 
   input[type="checkbox"] {
-    border:0;
-    background:$ss-color-bodybg;
-    margin:0 8px 0 0;
+    position:absolute;
+    left:-9999px;
   }
 
   input[type="radio"] {
@@ -111,9 +132,11 @@
       margin-left:20px;
     }
 
-    &.filter-hierarchy > li > label {
-      font-weight:bold;
-      color:$ss-color-heading;
+    &.filter-hierarchy {
+      > li > label {
+        font-weight:bold;
+        color:$ss-color-heading;
+      }
     }
   }
 
@@ -140,6 +163,12 @@
       background-image:url(image-path('browse-expand-hover.svg'));
     }
   }
+}
+
+.filter-hierarchy .check-label.soft:before,
+.filter-hierarchy .check-label.checked + ul .check-label:before {
+  background:$ss-color-secondarysoft;
+  border-color:#fff;
 }
 
 .multiple-instructions {
@@ -169,11 +198,11 @@
   float:left;
   width:320px;
   padding-right:16px;
-  border-right:4px solid $ss-color-bodybg;
+  border-right:4px solid $ss-color-borders;
 
   .filter-block {
     padding-bottom:12px;
-    border-bottom:4px solid $ss-color-bodybg;
+    border-bottom:4px solid $ss-color-borders;
   }
 
   .date-block {
@@ -224,8 +253,8 @@
   .filter-language {
     float:left;
     width:244px;
-    border-left:4px solid $ss-color-bodybg;
-    border-right:4px solid $ss-color-bodybg;
+    border-left:4px solid $ss-color-borders;
+    border-right:4px solid $ss-color-borders;
     padding:0 10px 10px 10px;
   }
 
@@ -237,7 +266,7 @@
 
   .filter-row {
     @include clearfix;
-    border-bottom:4px solid $ss-color-bodybg;
+    border-bottom:4px solid $ss-color-borders;
     margin:16px 0;
   }
 
@@ -248,21 +277,21 @@
   .filter-topics-themes {
     float:left;
     width:162px;
-    border-right:4px solid $ss-color-bodybg;
+    border-right:4px solid $ss-color-borders;
     padding:0 10px 0 0;
   }
 
   .filter-regions {
     float:left;
     width:260px;
-    border-right:4px solid $ss-color-bodybg;
+    border-right:4px solid $ss-color-borders;
     padding:0 10px 0 10px;
   }
 
   .filter-eras {
     float:left;
     width:360px;
-    border-right:4px solid $ss-color-bodybg;
+    border-right:4px solid $ss-color-borders;
     padding:0 10px 0 10px;
   }
 

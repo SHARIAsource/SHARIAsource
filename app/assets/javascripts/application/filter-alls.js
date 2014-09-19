@@ -11,7 +11,9 @@
     function handleAllChanges() {
       $all.on('change.filter', function(event) {
         $checkboxes.prop('checked', false)
+        $checkboxes.parent().removeClass('checked')
         $all.prop('checked', true)
+        $all.parent().addClass('checked')
         $texts.val('')
         $multiples.find('option').prop('selected', false)
       })
@@ -20,19 +22,26 @@
     function handleCheckboxChanges() {
       $checkboxes.on('change.filter', function(event) {
         var $checked = $checkboxes.filter(':checked')
+        var $this = $(this)
         if ($checked.length === $checkboxes.length || !$checked.length) {
           $all.prop('checked', true)
+          $all.parent().addClass('checked')
           $checkboxes.prop('checked', false)
+          $checkboxes.parent().removeClass('checked')
         }
         else {
           $all.prop('checked', false)
+          $all.parent().removeClass('checked')
         }
+        $this.parent().toggleClass('checked', this.checked).removeClass('soft')
       })
     }
 
     function handleMultipleSelectChanges() {
       $multiples.on('change.filter', function(event) {
-        $all.prop('checked', !$multiples.find('option:selected').length)
+        var allShouldBeChecked = !$multiples.find('option:selected').length
+        $all.prop('checked', allShouldBeChecked)
+        $all.parent().toggleClass('checked', allShouldBeChecked)
       })
     }
 
@@ -40,17 +49,29 @@
       $checkboxes.on('change.filter', function(event) {
         var $children = $(this).closest('label').next().find('input')
         $children.prop('checked', this.checked)
+        $children.parent().toggleClass('checked', this.checked)
       })
+    }
+
+    function handleSingleHierarchy(element) {
+      var $this = $(element)
+      var $siblings = $this.closest('li').siblings().andSelf().find('input')
+      var $checked = $siblings.filter(':checked')
+      var $parent = $this.closest('ul')
+      var $parentInputs = $parent.prev().find('input:not(.all input)')
+      var shouldBeChecked = $checked.length === $siblings.length
+      var parentSoft = !shouldBeChecked && $checked.length
+      $parentInputs.prop('checked', shouldBeChecked)
+      $parentInputs.parent().toggleClass('checked', shouldBeChecked)
+      $parentInputs.parent().toggleClass('soft', !!parentSoft)
+      if (!$parent.hasClass('filter-hierarchy')) {
+        handleSingleHierarchy($parentInputs[0])
+      }
     }
 
     function handleHierarchyChildrenChanges() {
       $checkboxes.on('change.filter', function(event) {
-        var $this = $(this)
-        var $siblings = $this.closest('li').siblings().andSelf().find('input')
-        var $checked = $siblings.filter(':checked')
-        var $parents = $this.parentsUntil('.filter-hierarchy', 'ul')
-        var $parentInputs = $parents.prev().find('input:not(.all input)')
-        $parentInputs.prop('checked', $checked.length === $siblings.length)
+        handleSingleHierarchy(this)
       })
     }
 
@@ -61,6 +82,7 @@
           val += $(this).val()
         })
         $all.prop('checked', !val)
+        $all.parent().toggleClass('checked', !val)
       })
     }
 
