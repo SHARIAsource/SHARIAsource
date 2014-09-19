@@ -71,4 +71,9 @@
       }
     })
   })
+
+  $document.on('click.filter', '.clear-all', function(event) {
+    $('.filter-block .all').trigger('click')
+    event.preventDefault()
+  })
 }())
