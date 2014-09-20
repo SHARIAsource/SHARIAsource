@@ -44,6 +44,7 @@ class User < ActiveRecord::Base
   has_many :documents, foreign_key: 'contributor_id'
 
   mount_uploader :avatar, ImageUploader
+  default_scope { order('last_name_without_articles') }
 
   def name
     "#{first_name} #{last_name}"

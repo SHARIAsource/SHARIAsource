@@ -81,11 +81,13 @@
     color:$ss-color-bodytext;
     text-transform:capitalize;
     overflow:hidden;
-    padding:3px 0 2px 20px;
+    padding:3px 0 2px 0;
     position:relative;
     line-height:1.1486;
 
     &.check-label {
+      padding-left:20px;
+
       &:before {
         content:'';
         position:absolute;
@@ -99,7 +101,28 @@
 
       &.checked:before {
         background:$ss-color-secondary;
-        border-color:$ss-color-borders;
+        border:1px solid $ss-color-borders;
+      }
+    }
+
+    &.radio-label {
+      padding-left:20px;
+
+      &:before {
+        content:'';
+        position:absolute;
+        left:0;
+        top:1px;
+        width:16px;
+        height:16px;
+        background:$ss-color-borders;
+        border:2px solid #fff;
+        border-radius:8px;
+      }
+
+      &.selected:before {
+        background:$ss-color-secondary;
+        border:1px solid $ss-color-borders;
       }
     }
 
@@ -110,13 +133,9 @@
     }
   }
 
-  input[type="checkbox"] {
+  input[type="checkbox"], input[type="radio"] {
     position:absolute;
     left:-9999px;
-  }
-
-  input[type="radio"] {
-    margin-right:8px;
   }
 
   select[multiple] {
@@ -168,7 +187,7 @@
 .filter-hierarchy .check-label.soft:before,
 .filter-hierarchy .check-label.checked + ul .check-label:before {
   background:$ss-color-secondarysoft;
-  border-color:#fff;
+  border:2px solid #fff;
 }
 
 .multiple-instructions {
@@ -191,6 +210,7 @@
     font-family:$ss-font-serif;
     padding-top:10px;
     font-weight:normal;
+    margin:-6px 0 8px 0;
   }
 }
 
@@ -214,6 +234,14 @@
       display:block;
       width:auto;
     }
+  }
+
+  .js-same-height {
+    height:auto !important;
+  }
+
+  .filter-document-types {
+    border-bottom:0;
   }
 }
 
@@ -268,6 +296,7 @@
     @include clearfix;
     border-bottom:4px solid $ss-color-borders;
     margin:16px 0;
+    padding-bottom:16px;
   }
 
   .filter-block + .filter-block {
@@ -309,7 +338,7 @@
     &.format {
       margin-right:0;
       width:130px;
-      padding-top:30px;
+      padding-top:38px;
     }
   }
 }

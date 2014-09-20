@@ -7,8 +7,8 @@
     h3 Filter
     a.clear-all href='#' clear all
 
-  .filter-row
-    .filter-date
+  .filter-row.js-same-height-container
+    .filter-date.js-same-height
       .filter-block
         h3 Date
         a.expand-contract href='#' Expand/Contract 
@@ -21,14 +21,14 @@
             = label_tag :date_to, 'To:'
             = text_field_tag :date_to, '', placeholder: 'dd/mm/yyyy'
           .date-block.format
-            = label_tag do
+            = label_tag nil, class: 'radio-label' do
               = radio_button_tag :date_format, 'ah'
               | AH
-            = label_tag do
+            = label_tag nil, class: 'radio-label selected' do
               = radio_button_tag :date_format, 'ce', checked=true
               | CE
 
-    .filter-language
+    .filter-language.js-same-height
       .filter-block
         h3 Original Language
         a.expand-contract href='#' Expand/Contract 
@@ -41,7 +41,7 @@
                   = check_box_tag :language, language.id
                   = language.name
 
-    .filter-author
+    .filter-author.js-same-height
       .filter-block
         h3 Author/Commentator
         a.expand-contract href='#' Expand/Contract 
@@ -50,8 +50,8 @@
           = select_tag :author, options_from_collection_for_select(@authors, 'id', 'name'), multiple: true, size: 4
           span.multiple-instructions Ctrl-click to select multiple people.
 
-  .filter-row
-    .filter-topics-themes
+  .filter-row.js-same-height-container
+    .filter-topics-themes.js-same-height
       .filter-block
         h3 Topics
         a.expand-contract href='#' Expand/Contract 
@@ -76,7 +76,7 @@
                   = check_box_tag :theme, theme.id
                   = theme.name
 
-    .filter-regions
+    .filter-regions.js-same-height
       .filter-block
         h3 Geographic Regions
         a.expand-contract href='#' Expand/Contract 
@@ -85,7 +85,7 @@
           ul.filter-hierarchy
             = render partial: 'searches/hierarchy', locals: { hash: @regions, field_name: :region }
 
-    .filter-eras
+    .filter-eras.js-same-height
       .filter-block
         h3 Empires & Eras
         a.expand-contract href='#' Expand/Contract 
@@ -94,7 +94,7 @@
           ul.filter-hierarchy
             = render partial: 'searches/hierarchy', locals: { hash: @eras, field_name: :era }
 
-    .filter-document-types
+    .filter-document-types.js-same-height
       .filter-block
         h3 Document Types
         a.expand-contract href='#' Expand/Contract 
