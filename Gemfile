@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 
+gem 'active_attr', '~> 0.8.4'
 gem 'autoprefixer-rails', '~> 2.1.0'
 gem 'carrierwave', '~> 0.10.0'
 gem 'chosen-rails', '~> 1.1.0'
@@ -14,7 +15,7 @@ gem 'jquery-rails', '~> 3.1.1'
 gem 'kramdown', '~> 1.4.1'
 gem 'pg', '~> 0.17.1'
 gem 'rack-timeout', '~> 0.0.4'
-gem 'rails', '4.1.5'
+gem 'rails', '4.1.6'
 gem 'rmagick', '~> 2.13.3', require: false
 gem 'sass-rails', '~> 4.0.3'
 gem 'sidekiq', '~> 3.2.1'

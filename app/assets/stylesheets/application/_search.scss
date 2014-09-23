@@ -1,3 +1,7 @@
+.search-heading {
+  padding-bottom:20px;
+}
+
 .search-two-columns {
   @include clearfix;
 }
@@ -341,6 +345,14 @@
       padding-top:38px;
     }
   }
+}
+
+.result-count {
+  font-size:16px;
+  color:$ss-color-heading;
+  font-weight:bold;
+  margin-top:-42px;
+  margin-bottom:18px;
 }
 
 .result {

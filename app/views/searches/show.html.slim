@@ -2,8 +2,8 @@
 
 .inner-wrapper
   .inner
-    h2.section-heading Advanced Search
-    - if @params[:q]
+    h2.section-heading.search-heading Advanced Search
+    - if @filters.q
       .search-two-columns
         .search-sidebar
           = render 'searches/filters'

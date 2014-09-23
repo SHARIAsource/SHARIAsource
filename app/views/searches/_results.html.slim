@@ -1,4 +1,4 @@
-p.result-count= "#{@search.total} #{'result'.pluralize(@search.total)} for \"#{@params[:q]}\""
+p.result-count= "#{@search.total} #{'result'.pluralize(@search.total)} for \"#{@filters.q}\""
 select name='sort'
   option value='' selected=true Best Match
   option value='recent' Recent First

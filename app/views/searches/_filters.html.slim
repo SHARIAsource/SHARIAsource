@@ -1,6 +1,6 @@
-= form_tag search_path, method: :get do
+= simple_form_for @filters, url: search_path, method: :get do |f|
   .search-field-large
-    = text_field_tag :q, @params[:q], id: 'q-large'
+    = f.input_field :q, id: 'q-large', name: :q
     = submit_tag 'Search', name: nil
 
   .filter-header
@@ -15,18 +15,11 @@
         .filter-content
           = render 'searches/all'
           .date-block
-            = label_tag :date_from, 'From:'
-            = text_field_tag :date_from, '', placeholder: 'dd/mm/yyyy'
+            = f.input :date_from, label: 'From:', placeholder: 'dd/mm/yyyy', input_html: { name: :date_from }
           .date-block
-            = label_tag :date_to, 'To:'
-            = text_field_tag :date_to, '', placeholder: 'dd/mm/yyyy'
+            = f.input :date_to, label: 'To:', placeholder:'dd/mm/yyyy', input_html: { name: :date_to }
           .date-block.format
-            = label_tag nil, class: 'radio-label' do
-              = radio_button_tag :date_format, 'ah'
-              | AH
-            = label_tag nil, class: 'radio-label selected' do
-              = radio_button_tag :date_format, 'ce', checked=true
-              | CE
+            = f.input :date_format, as: :radio_buttons, collection: [['AH', 'ah'], ['CE', 'ce']], item_wrapper_class: 'radio-label', input_html: { name: 'date_format'}, label: false
 
     .filter-language.js-same-height
       .filter-block
@@ -37,8 +30,8 @@
           ul
             - @languages.each do |language|
               li
-                = label_tag nil, class: 'check-label' do
-                  = check_box_tag :language, language.id
+                label.check-label
+                  input type='checkbox' name='language[]' value=language.id checked=(f.object.language && f.object.language.include?(language.id.to_s))
                   = language.name
 
     .filter-author.js-same-height
@@ -47,7 +40,9 @@
         a.expand-contract href='#' Expand/Contract 
         .filter-content
           = render 'searches/all'
-          = select_tag :author, options_from_collection_for_select(@authors, 'id', 'name'), multiple: true, size: 4
+          select name='author[]' multiple=true size=4
+            - @authors.each do |author|
+              option value=author.id selected=(f.object.author && f.object.author.include?(author.id.to_s)) = author.name
           span.multiple-instructions Ctrl-click to select multiple people.
 
   .filter-row.js-same-height-container
@@ -60,8 +55,8 @@
           ul
             - @topics.each do |topic|
               li
-                = label_tag nil, class: 'check-label' do
-                  = check_box_tag :topic, topic.id
+                label.check-label
+                  input type='checkbox' name='topic[]' value=topic.id checked=(f.object.topic && f.object.topic.include?(topic.id.to_s))
                   = topic.name
       
       .filter-block
@@ -72,8 +67,8 @@
           ul
             - @themes.each do |theme|
               li
-                = label_tag nil, class: 'check-label' do
-                  = check_box_tag :theme, theme.id
+                label.check-label
+                  input type='checkbox' name='theme[]' value=theme.id checked=(f.object.theme && f.object.theme.include?(theme.id.to_s))
                   = theme.name
 
     .filter-regions.js-same-height
@@ -83,7 +78,7 @@
         .filter-content
           = render 'searches/all'
           ul.filter-hierarchy
-            = render partial: 'searches/hierarchy', locals: { hash: @regions, field_name: :region }
+            = render partial: 'searches/hierarchy', locals: { hash: @regions, field_name: :region, input_name: 'region[]', f: f }
 
     .filter-eras.js-same-height
       .filter-block
@@ -92,7 +87,7 @@
         .filter-content
           = render 'searches/all'
           ul.filter-hierarchy
-            = render partial: 'searches/hierarchy', locals: { hash: @eras, field_name: :era }
+            = render partial: 'searches/hierarchy', locals: { hash: @eras, field_name: :era, input_name: 'era[]', f: f }
 
     .filter-document-types.js-same-height
       .filter-block
@@ -101,4 +96,4 @@
         .filter-content
           = render 'searches/all'
           ul.filter-hierarchy
-            = render partial: 'searches/hierarchy', locals: { hash: @document_types, field_name: :document_type }
+            = render partial: 'searches/hierarchy', locals: { hash: @document_types, field_name: :document_type, input_name: 'document_type[]', f: f }

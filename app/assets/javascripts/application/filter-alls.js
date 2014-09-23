@@ -16,6 +16,7 @@
         $all.parent().addClass('checked')
         $texts.val('')
         $multiples.find('option').prop('selected', false)
+        event.preventDefault()
       })
     }
 
@@ -88,12 +89,32 @@
       })
     }
 
-    handleAllChanges()
-    handleCheckboxChanges()
+    function checkInitialStates() {
+      var $checked = $checkboxes.filter(':checked')
+      var $children = $checked.closest('label').next().find('input')
+      var $opts = $multiples.find('option')
+      var $selOpts = $opts.filter(':selected')
+      var hasChecked = $checked.length && $checked.length !== $checkboxes.length
+      var hasSelected = $selOpts.length && $selOpts.length != $opts.length
+      var hasDates =
+
+      $checked.closest('.check-label').addClass('checked')
+      $children.parent().addClass('checked')
+
+      if (hasChecked || hasSelected) {
+        $all.prop('checked', false)
+        $all.closest('label').removeClass('checked')
+      }
+      $texts.trigger('keyup')
+    }
+
     handleMultipleSelectChanges()
     handleHierarchyParentChanges()
     handleHierarchyChildrenChanges()
     handleDateChanges()
+    handleCheckboxChanges()
+    handleAllChanges()
+    checkInitialStates()
   }
 
   $document.on('page:change', function() {
@@ -106,7 +127,9 @@
   })
 
   $document.on('click.filter', '.clear-all', function(event) {
+    var scroll = $(window).scrollTop()
     $('.filter-block .all').trigger('click')
+    $(window).scrollTop(scroll)
     event.preventDefault()
   })
 }())

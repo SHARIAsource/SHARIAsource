@@ -1,8 +1,8 @@
 - hash.map do |item, children|
   li
-    = label_tag nil, class: 'check-label' do
-      = check_box_tag field_name, item.id
+    label.check-label
+      input type='checkbox' name=input_name value=item.id checked=(f.object.public_send(field_name) && f.object.public_send(field_name).include?(item.id.to_s))
       = item.name
     - if children.size > 0
       ul
-        = render partial: 'searches/hierarchy', locals: { hash: children, field_name: field_name }
+        = render partial: 'searches/hierarchy', locals: { hash: children, field_name: field_name, input_name: input_name, f: f }
