@@ -342,3 +342,56 @@
     }
   }
 }
+
+.result {
+  @include clearfix;
+  padding:12px 0 20px 0;
+  border-top:4px solid $ss-color-borders;
+
+  &:first-child {
+    border-top:0;
+  }
+}
+
+.result-info {
+  float:left;
+  width:440px;
+
+  .breadcrumb {
+    line-height:1.33333;
+    margin:0;
+  }
+
+  h2 {
+    font-size:16px;
+    font-weight:bold;
+    line-height:1.25;
+    margin:2px 0 6px 0;
+
+    a {
+      @include underline-hover($ss-color-heading);
+    }
+  }
+
+  .byline {
+    margin:0;
+
+    &, & a {
+      color:$ss-color-bodytext;
+      font-weight:normal;
+    }
+  }
+}
+
+.result-thumbnail {
+  float:right;
+  width:160px;
+  padding-left:20px;
+
+  img {
+    display:block;
+    float:right;
+    max-height:80px;
+    max-width:140px;
+  }
+}

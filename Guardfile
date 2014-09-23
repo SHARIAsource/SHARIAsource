@@ -38,3 +38,7 @@ guard :rspec, cmd: 'spring rspec' do
   end
 end
 
+guard 'sunspot', environment: 'test' do
+  watch('Gemfile.lock')
+  watch('config/sunspot.yml')
+end

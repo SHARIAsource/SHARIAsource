@@ -11,7 +11,7 @@
     function handleAllChanges() {
       $all.on('change.filter', function(event) {
         $checkboxes.prop('checked', false)
-        $checkboxes.parent().removeClass('checked')
+        $checkboxes.parent().removeClass('checked soft')
         $all.prop('checked', true)
         $all.parent().addClass('checked')
         $texts.val('')
@@ -61,11 +61,13 @@
       var $parentInputs = $parent.prev().find('input:not(.all input)')
       var shouldBeChecked = $checked.length === $siblings.length
       var parentSoft = !shouldBeChecked && $checked.length
-      $parentInputs.prop('checked', shouldBeChecked)
-      $parentInputs.parent().toggleClass('checked', shouldBeChecked)
-      $parentInputs.parent().toggleClass('soft', !!parentSoft)
-      if (!$parent.hasClass('filter-hierarchy')) {
-        handleSingleHierarchy($parentInputs[0])
+      if ($parentInputs.length) {
+        $parentInputs.prop('checked', shouldBeChecked)
+        $parentInputs.parent().toggleClass('checked', shouldBeChecked)
+        $parentInputs.parent().toggleClass('soft', !!parentSoft)
+        if (!$parent.hasClass('filter-hierarchy')) {
+          handleSingleHierarchy($parentInputs[0])
+        }
       }
     }
 

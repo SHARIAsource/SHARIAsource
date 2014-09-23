@@ -8,6 +8,9 @@ class SearchesController < ApplicationController
     @eras = Era.hash_tree
     @document_types = DocumentType.hash_tree
     @params = permitted_params
+    @search = Document.search do
+      fulltext permitted_params[:q]
+    end
   end
 
   def permitted_params

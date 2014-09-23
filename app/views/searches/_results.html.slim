@@ -1,0 +1,28 @@
+p.result-count= "#{@search.total} #{'result'.pluralize(@search.total)} for \"#{@params[:q]}\""
+select name='sort'
+  option value='' selected=true Best Match
+  option value='recent' Recent First
+  option value='oldest' Oldest First
+  option value='author' Author Last Name
+
+.result-list
+  - @search.results.each do |result|
+    - document = DocumentPresenter.new result
+    .result
+      .result-info
+        p.breadcrumb
+          - document.document_type.self_and_ancestors.reverse.each do |dt|
+            = link_to dt.name, '#TODO'
+            span= ' :: '
+          span= document.dates
+
+        h2= link_to document.title, document_path(document.object)
+
+        p.byline
+          - if document.document_type.name === 'Commentary'
+            = link_to document.contributor.name, '#TODO'
+          - else
+            span= document.byline
+
+      .result-thumbnail
+        = image_tag document.thumb.url if document.thumb

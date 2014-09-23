@@ -78,9 +78,45 @@ class Document < ActiveRecord::Base
   belongs_to :language
   belongs_to :contributor, class_name: 'User'
 
+  # Misc
   mount_uploader :pdf, PdfUploader
   accepts_nested_attributes_for :pages, :body
   default_scope { order('created_at DESC') }
+
+  # Solr Indexing
+  searchable do
+    text :title, :source_name, :author, :translators, :editors, :publisher
+    text :page_texts do
+      pages.map {|page| page.body.text }
+    end
+    text :body_text do
+      body.text if body
+    end
+    text :themes do
+      themes.pluck :name
+    end
+    text :topics do
+      topics.pluck :name
+    end
+    text :tags do
+      tags.pluck :name
+    end
+    text :eras do
+      eras.pluck :name
+    end
+    text :regions do
+      regions.pluck :name
+    end
+    text :language do
+      language.name
+    end
+    text :contributor_name do
+      contributor.name
+    end
+    text :document_type do
+      document_type.name
+    end
+  end
 
   def self.published
     where(published: true)
@@ -88,6 +124,10 @@ class Document < ActiveRecord::Base
 
   def self.featured
     where.not(featured_position: nil).order(:featured_position)
+  end
+
+  def thumb
+    pages[0] && pages[0].image.thumb
   end
 
   private
