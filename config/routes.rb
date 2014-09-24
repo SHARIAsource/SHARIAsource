@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     ]
   end
 
-  authenticate :user, lambda {|u| u.is_admin? } do
+  authenticate :user, lambda {|u| u.is_editor? } do
     mount Sidekiq::Web => '/sidekiq'
   end
 

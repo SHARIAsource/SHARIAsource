@@ -84,35 +84,52 @@ class Document < ActiveRecord::Base
   default_scope { order('created_at DESC') }
 
   # Solr Indexing
-  searchable do
+  searchable ignore_attribute_changes_of: [:popular_count] do
     text :title, :source_name, :author, :translators, :editors, :publisher
+
     text :page_texts do
       pages.map {|page| page.body.text }
     end
+
     text :body_text do
       body.text if body
     end
+
+    integer :theme_ids, multiple: true
     text :themes do
       themes.pluck :name
     end
+
+    integer :topic_ids, multiple: true
     text :topics do
       topics.pluck :name
     end
+
     text :tags do
       tags.pluck :name
     end
+
+    integer :era_ids, multiple: true
     text :eras do
       eras.pluck :name
     end
+
+    integer :region_ids, multiple: true
     text :regions do
       regions.pluck :name
     end
+
+    integer :language_id
     text :language do
       language.name
     end
+
+    integer :contributor_id
     text :contributor_name do
       contributor.name
     end
+
+    integer :document_type_id
     text :document_type do
       document_type.name
     end

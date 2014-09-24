@@ -1,20 +1,20 @@
 class RegistrationsController < Devise::RegistrationsController
   layout 'admin'
 
-  def new
+  #def new
     # Registrations created by admin
-    raise ActionController::RoutingError.new('Not Found')
-  end
+    #raise ActionController::RoutingError.new('Not Found')
+  #end
 
-  def create
+  #def create
     # Registrations created by admin
-    raise ActionController::RoutingError.new('Not Found')
-  end
+    # raise ActionController::RoutingError.new('Not Found')
+  #end
 
-  def destroy
+  #def destroy
     # Disable account deletion until we decide how to reallocate owned items
-    redirect_to root_path
-  end
+  #  redirect_to root_path
+  #end
 
   private
 
