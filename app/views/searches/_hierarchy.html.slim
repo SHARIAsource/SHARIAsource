@@ -1,5 +1,5 @@
 - hash.map do |item, children|
-  li
+  li class=('extended' if item.attributes.fetch('extended', false))
     label.check-label
       input type='checkbox' name=input_name value=item.id checked=(f.object.public_send(field_name) && f.object.public_send(field_name).include?(item.id.to_s))
       = item.name

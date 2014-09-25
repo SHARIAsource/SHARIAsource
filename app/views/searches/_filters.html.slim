@@ -45,7 +45,7 @@
               option value=author.id selected=(f.object.author && f.object.author.include?(author.id.to_s)) = author.name
           span.multiple-instructions Ctrl-click to select multiple people.
 
-  .filter-row.js-same-height-container
+  .filter-row.js-same-height-container.last
     .filter-topics-themes.js-same-height
       .filter-block
         h3 Topics
@@ -88,6 +88,7 @@
           = render 'searches/all'
           ul.filter-hierarchy
             = render partial: 'searches/hierarchy', locals: { hash: @eras, field_name: :era, input_name: 'era[]', f: f }
+          a.filter-extend-toggle data-expandtext='Expand Full List' data-contracttext='Hide Expanded List' href='#' Expand Full List
 
     .filter-document-types.js-same-height
       .filter-block

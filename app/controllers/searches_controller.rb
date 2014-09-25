@@ -18,7 +18,6 @@ class SearchesController < ApplicationController
       with(:era_ids, filters.era) if filters.era
       with(:document_type_id, filters.document_type) if filters.document_type
     end
-    puts filters.attributes
     @filters = filters
   end
 
