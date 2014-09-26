@@ -1,9 +1,8 @@
+- f = locals[:f]
+
 p.result-count= "#{@search.total} #{'result'.pluralize(@search.total)} for \"#{@filters.q}\""
-select name='sort'
-  option value='' selected=true Best Match
-  option value='recent' Recent First
-  option value='oldest' Oldest First
-  option value='author' Author Last Name
+
+= f.input :sort, collection: [['Best Match', ''], ['Recent First', 'recent'], ['Oldest First', 'oldest'], ['Author Last Name', 'author']], include_blank: false, label: 'Sort by:', input_html: { name: 'sort' }
 
 .result-list
   - @search.results.each do |result|

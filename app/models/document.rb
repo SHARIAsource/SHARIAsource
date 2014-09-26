@@ -134,6 +134,15 @@ class Document < ActiveRecord::Base
       document_type.name
     end
 
+    string :sort_author do
+      if author.present?
+        author.split(',').first.split(' ').last
+      else
+        contributor.last_name
+      end
+    end
+
+    time :created_at
     boolean :published
   end
 

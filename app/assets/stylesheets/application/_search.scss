@@ -144,6 +144,7 @@
 
   select[multiple] {
     margin-bottom:4px;
+    font-family:$ss-font-serif;
   }
 
   ul {
@@ -437,4 +438,31 @@
     vertical-align:top;
     margin-right:4px;
   }
+}
+
+.search_filters_sort {
+  position:relative;
+
+  label {
+    position:absolute;
+    left:10px;
+    top:2px;
+    height:30px;
+    line-height:32px;
+    font-family:$ss-font-serif;
+    font-size:14px;
+  }
+}
+
+#search_filters_sort {
+  width:270px;
+  background-image:url(image-path('browse-expand.svg'));
+  background-position:96% center;
+  background-size:12px 9px;
+  background-color:#fff;
+  border-color:#ccc;
+  font-family:$ss-font-serif;
+  font-size:14px;
+  height:32px;
+  padding:2px 0 0 60px;
 }

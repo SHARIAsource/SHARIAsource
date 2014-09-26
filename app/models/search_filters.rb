@@ -12,4 +12,5 @@ class SearchFilters
   attribute :region
   attribute :era
   attribute :document_type
+  attribute :sort
 end

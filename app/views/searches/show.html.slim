@@ -3,12 +3,13 @@
 .inner-wrapper
   .inner
     h2.section-heading.search-heading Advanced Search
-    - if @filters.q
-      .search-two-columns
-        .search-sidebar
-          = render 'searches/filters'
-        .search-results
-          = render 'searches/results'
-    - else
-      .search-full-width
-        = render 'searches/filters'
+    = simple_form_for @filters, url: search_path, method: :get do |f| 
+      - if @filters.q
+        .search-two-columns
+          .search-sidebar
+            = render 'searches/filters', locals: { f: f }
+          .search-results
+            = render 'searches/results', locals: { f: f }
+      - else
+        .search-full-width
+          = render 'searches/filters', locals: { f: f }
