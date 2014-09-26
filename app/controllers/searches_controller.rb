@@ -10,6 +10,7 @@ class SearchesController < ApplicationController
     @document_types = DocumentType.hash_tree
     @search = Document.search do
       fulltext permitted_params[:q]
+      with(:published, true)
       with(:topic_ids, filters.topic) if filters.topic
       with(:theme_ids, filters.theme) if filters.theme
       with(:language_id, filters.language) if filters.language

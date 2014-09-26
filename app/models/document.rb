@@ -133,6 +133,8 @@ class Document < ActiveRecord::Base
     text :document_type do
       document_type.name
     end
+
+    boolean :published
   end
 
   def self.published
