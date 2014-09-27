@@ -53,6 +53,7 @@
     $this.toggleClass('is-expanded')
     event.preventDefault()
     updateAllState()
+    $.waypoints('refresh')
   })
 
   $document.on('click', '.js-expand-all', function(event) {

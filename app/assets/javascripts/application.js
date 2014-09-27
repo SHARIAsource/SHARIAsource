@@ -15,6 +15,7 @@
 //= require foundation
 //= require turbolinks
 //= require openseadragon
+//= require ./waypoints/waypoints
 //= require_tree ./application/
 
 $(function(){ $(document).foundation(); });

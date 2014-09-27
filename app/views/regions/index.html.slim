@@ -4,7 +4,7 @@
   .inner.browse-tables
     h2.section-heading.browse Geographic Regions
 
-    table.browse-table
+    table.browse-table.browse-table-stick
       thead
         tr.browse-headings
           th scope='col' &nbsp;
@@ -19,3 +19,11 @@
               - count = @region_table[:counts][region_index][document_type_index]
               td data-count=count
                 = link_to count, '#TODO'
+
+    .browse-headings-sticky
+      table.browse-table
+        thead
+          tr.browse-headings
+            th.tcol &nbsp;
+            - @region_table[:document_types].each do |document_type|
+              th.tcol= document_type.name

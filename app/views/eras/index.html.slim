@@ -3,8 +3,8 @@
 .inner-wrapper
   .inner.browse-tables
     h2.section-heading.browse Empires & Eras
-
-    table.browse-table
+        
+    table.browse-table.browse-table-stick
       thead
         tr.browse-headings
           th scope='col' &nbsp;
@@ -22,3 +22,11 @@
                 = link_to count, '#TODO'
 
     a.ss-button.js-expand-all.expand-all data-contract-text='Contract Full List' data-expand-text='Expand Full List' Expand Full List
+
+    .browse-headings-sticky
+      table.browse-table
+        thead
+          tr.browse-headings
+            th.tcol &nbsp;
+            - @era_table[:document_types].each do |document_type|
+              th.tcol= document_type.name

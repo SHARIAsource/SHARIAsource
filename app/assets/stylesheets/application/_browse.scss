@@ -1,5 +1,6 @@
 .browse-tables {
   padding-bottom:60px;
+  min-height:500px;
 
   .expand-all {
     margin-top:8px;
@@ -59,7 +60,7 @@
 
   th, td {
     line-height:1.14286;
-    width:96px;
+    width:99px;
 
     &:first-child {
       width:auto;
@@ -69,7 +70,7 @@
   th {
     border-bottom:1px solid #e7e9e8;
 
-    &[scope="col"] {
+    &[scope="col"], &.tcol {
       background:white;
 
       &:nth-child(even) {
@@ -77,7 +78,7 @@
       }
     }
 
-    &[scope="row"] {
+    &[scope="row"], &.trow {
       font-weight:normal;
       padding:6px 20px 4px 0;
     }
@@ -101,12 +102,6 @@
     }
   }
 
-  .browse-headings th {
-    border-bottom-width:2px;
-    vertical-align:bottom;
-    padding:8px 8px 4px 4px;
-  }
-
   .expand {
     display:inline-block;
     text-indent:-9999px;
@@ -127,5 +122,35 @@
         background-image:url(image-path('browse-contract-hover.svg'));
       }
     }
+  }
+}
+
+.browse-headings th {
+  border-bottom-width:2px;
+  vertical-align:bottom;
+  padding:8px 8px 4px 4px;
+}
+
+.browse-headings-sticky {
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+
+  &.showing {
+    display:block;
+  }
+
+  table {
+    display:block;
+    width:960px;
+    margin:0 auto;
+    padding:0;
+  }
+
+  th:first-child {
+    width:267px;
+    padding-left:0;
   }
 }
