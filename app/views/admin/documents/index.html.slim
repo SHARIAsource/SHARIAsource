@@ -1,4 +1,20 @@
 = content_for :page_title, 'Documents'
 = content_for :admin_active, 'Documents'
 
-= render partial: 'admin/table', locals: { collection: @documents }
+h2= @documents.model_name.human.pluralize
+
+table
+  thead
+    th Name
+    th.actions Actions
+  tbody
+    - @documents.each do |document|
+      tr data-processed=document.processed?
+        td= document.title
+        td.actions
+          ul.inline-list
+            li= link_to 'View', document_path(document), class: 'tiny radius pill button'
+            li= link_to t('edit'), edit_admin_document_path(document), class: 'tiny radius pill button'
+            li= link_to t('delete'), admin_document_path(document), class: 'tiny radius alert pill button', method: :delete, data: { confirm: t('helpers.delete_confirm', model: Document.model_name.human)}
+
+p= link_to t('helpers.new', model: Document.model_name.human), new_admin_document_path, class: 'round button'

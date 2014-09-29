@@ -6,7 +6,7 @@ table
     th.actions Actions
   tbody
     - collection.each do |item|
-      tr data-processed="#{item_processed?(item)}"
+      tr
         td= item.name
         td.actions
           ul.inline-list
