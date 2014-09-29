@@ -183,7 +183,7 @@
 
   p, ul, ol, {
     font-family:$ss-font-serif;
-    font-size:22px;
+    font-size:20px;
   }
 
   a {
@@ -209,13 +209,23 @@
     overflow:auto;
     padding-right:20px;
     color:$ss-color-content;
+    position:relative;
+  }
 
-    p {
-      color:$ss-color-content;
-      font-size:22px;
-      font-family:$ss-font-serif;
-      line-height:1.5;
-    }
+  p {
+    color:$ss-color-content;
+    font-size:20px;
+    font-family:$ss-font-serif;
+    line-height:1.5;
+  }
+
+  .empty-page-text {
+    color:$ss-color-emptytext;
+    position:absolute;
+    top:50%;
+    margin-top:-10px;
+    text-align:center;
+    width:100%;
   }
 
   .page-text {
@@ -399,3 +409,4 @@
     margin-bottom:5px;
   }
 }
+
