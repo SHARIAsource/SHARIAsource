@@ -3,7 +3,7 @@
 .inner-wrapper
   .inner
     h2.section-heading.search-heading Advanced Search
-    = simple_form_for @filters, url: search_path, method: :get do |f| 
+    = simple_form_for @filters, url: search_path, method: :get, remote: !@filters.q.nil? do |f| 
       - if @filters.q
         .search-two-columns
           .search-sidebar

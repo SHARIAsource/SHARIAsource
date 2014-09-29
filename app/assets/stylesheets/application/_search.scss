@@ -10,6 +10,11 @@
   float:right;
   width:640px;
   padding-left:40px;
+  transition:opacity 300ms ease-in-out;
+
+  &.loading {
+    opacity:0.1;
+  }
 }
 
 .filter-header {
