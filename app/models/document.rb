@@ -147,12 +147,16 @@ class Document < ActiveRecord::Base
     boolean :published
   end
 
+  def self.featured
+    where.not(featured_position: nil).order(:featured_position)
+  end
+
   def self.published
     where(published: true)
   end
 
-  def self.featured
-    where.not(featured_position: nil).order(:featured_position)
+  def self.unpublished
+    where(published: false)
   end
 
   def lunar_hijri_date
