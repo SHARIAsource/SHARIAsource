@@ -1,6 +1,7 @@
 class SearchesController < ApplicationController
   def show
     @filters = SearchFilters.new permitted_params
+    date_from, date_to = parse_dates
     @languages = Language.all
     @authors = User.all
     @topics = Topic.all
@@ -24,26 +25,48 @@ class SearchesController < ApplicationController
         query.order_by(order_field(@filters.sort),
                        order_direction(@filters.sort))
       end
+      if @filters.date_format == 'ce'
+        query.with(:gregorian_date).greater_than(date_from) if date_from
+        query.with(:gregorian_date).less_than(date_to) if date_to
+      elsif @filters.date_format == 'ah'
+        query.with(:lunar_hijri_date).greater_than(date_from) if date_from
+        query.with(:lunar_hijri_date).less_than(date_to) if date_to
+      end
     end
   end
 
   private
 
   def permitted_params
-    params.permit(:q, :date_from, :date_to, :date_format, :sort,
+    params.permit(:utf8, :q, :date_from, :date_to, :date_format, :sort,
                   document_type: [], language: [], author: [], topic: [],
                   theme: [], region: [], era: [])
   end
 
   def order_field(order)
     case order
-    when 'recent' then :created_at
-    when 'oldest' then :created_at
+    when 'recent' then :gregorian_date
+    when 'oldest' then :gregorian_date
     when 'author' then :sort_author
     end
   end
 
   def order_direction(order)
     order == 'recent' ? :desc : :asc
+  end
+
+  def parse_dates
+    dates = [@filters.date_from, @filters.date_to].map do |date|
+      if date.present?
+        parts = date.split '/'
+        if parts.length < 4
+          parts.reverse!.map!(&:to_i)
+          (3 - parts.length).times { parts.push(1) }
+          DateTime.new(*parts)
+        end
+      end
+    end
+    dates[1] = dates[1] + 1.day if dates[1]
+    dates
   end
 end

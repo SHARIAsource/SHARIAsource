@@ -8,7 +8,6 @@
 #  pdf                   :string(255)
 #  processed             :boolean          default(TRUE)
 #  gregorian_date        :date
-#  lunar_hijri_date      :date
 #  source_name           :string(255)
 #  source_url            :string(255)
 #  author                :string(255)
@@ -32,6 +31,7 @@
 #  alternate_editors     :string(255)
 #  alternate_translators :string(255)
 #  alternate_years       :string(255)
+#  gregorian_date_string :string(255)
 #
 
 describe Document do
@@ -46,6 +46,7 @@ describe Document do
     .with_message('Must be between 1 and 3') }
 
   it { should respond_to :pdf }
+  it { should respond_to :gregorian_date_string }
   it { should respond_to :gregorian_date }
   it { should respond_to :lunar_hijri_date }
   it { should respond_to :source_name }

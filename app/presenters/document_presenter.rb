@@ -55,7 +55,9 @@ class DocumentPresenter < BasePresenter
   def dates
     result = []
     if lunar_hijri_date.present?
-      result << I18n.l(lunar_hijri_date, format: :dd_month_yyyy, locale: :en_ar)
+      lhd = lunar_hijri_date
+      month = I18n.translate('date.month_names', locale: :en_ar)[lhd.month.to_i]
+      result << "#{lhd.day} #{month} #{lhd.year}"
     end
     if gregorian_date.present?
       result << gregorian_date.to_s(:dd_month_yyyy)

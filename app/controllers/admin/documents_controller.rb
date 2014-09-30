@@ -55,12 +55,11 @@ class Admin::DocumentsController < AdminController
 
   def permitted_params
     whitelist = [:title, :volume_count, :document_type_id, :pdf, :language_id,
-                 :gregorian_date_string, :lunar_hijri_date_string,
-                 :source_name,:source_url, :author, :translators, :editors,
-                 :publisher, :publisher_location, :alternate_titles,
-                 :alternate_authors, :featured_position, :reference_type_id,
-                 :permission_giver, :document_style, region_ids: [],
-                 theme_ids: [], topic_ids: [], tag_ids: [],
+                 :gregorian_date_string, :source_name,:source_url, :author,
+                 :translators, :editors, :publisher, :publisher_location,
+                 :alternate_titles, :alternate_authors, :featured_position,
+                 :reference_type_id, :permission_giver, :document_style,
+                 region_ids: [], theme_ids: [], topic_ids: [], tag_ids: [],
                  referenced_document_ids: [], era_ids: [], pages_attributes: [
                    :id, body_attributes: [:id, :text]
                  ], body_attributes: [:id, :text]]

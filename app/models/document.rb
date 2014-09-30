@@ -8,7 +8,6 @@
 #  pdf                   :string(255)
 #  processed             :boolean          default(TRUE)
 #  gregorian_date        :date
-#  lunar_hijri_date      :date
 #  source_name           :string(255)
 #  source_url            :string(255)
 #  author                :string(255)
@@ -32,15 +31,17 @@
 #  alternate_editors     :string(255)
 #  alternate_translators :string(255)
 #  alternate_years       :string(255)
+#  gregorian_date_string :string(255)
 #
 
 class Document < ActiveRecord::Base
-  attr_accessor :gregorian_date_string, :lunar_hijri_date_string
   alias_attribute :name, :title
 
   # Callbacks
+  before_validation :convert_dates
   before_save :set_processed
   before_save :prepend_http_to_source_url
+  after_save :use_created_at
   after_commit :generate_images
 
   # Validations
@@ -57,7 +58,6 @@ class Document < ActiveRecord::Base
     in: ['scan', 'noscan'],
     message: 'Must be scan or no-scan'
   }
-  validate :validate_dates
 
   # Associations
   has_and_belongs_to_many :themes
@@ -142,7 +142,8 @@ class Document < ActiveRecord::Base
       end
     end
 
-    time :created_at
+    time :gregorian_date
+    time :lunar_hijri_date
     boolean :published
   end
 
@@ -152,6 +153,10 @@ class Document < ActiveRecord::Base
 
   def self.featured
     where.not(featured_position: nil).order(:featured_position)
+  end
+
+  def lunar_hijri_date
+    gregorian_date.to_time.to_hijri
   end
 
   def thumb
@@ -183,19 +188,23 @@ class Document < ActiveRecord::Base
     end
   end
 
-  def validate_dates
-    ['gregorian_date', 'lunar_hijri_date'].each do |attr|
-      attr_string = attr + '_string'
-      if self.public_send(attr_string).present?
-        begin
-          date = self.public_send(attr_string).split('-')[0..2].map(&:to_i)
-          self.public_send(attr + '=', Date.new(*date).to_s)
-        rescue ArgumentError
-          self.errors[attr_string] << 'Invalid Date'
-        end
-      else
-        self.public_send(attr + '=', nil)
+  def convert_dates
+    if self.gregorian_date_string.present?
+      begin
+        date = self.gregorian_date_string.split('-')[0..2].map(&:to_i)
+        self.gregorian_date = Date.new(*date).to_s
+      rescue ArgumentError
+        self.errors['gregorian_date_string'] << 'Invalid Date'
       end
+    end
+  end
+
+  def use_created_at
+    if self.gregorian_date_string.blank?
+      self.update(
+        gregorian_date: self.created_at,
+        gregorian_date_string: self.created_at.to_formatted_s(:F)
+      )
     end
   end
 end

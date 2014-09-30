@@ -9,19 +9,18 @@
 
   .row
     .large-4.columns
-      = f.input :gregorian_date_string, as: :string, placeholder: 'YYYY-MM-DD', label: 'Gregorian Date', input_html: { value: f.object.gregorian_date }
-    .large-4.column
-      = f.input :lunar_hijri_date_string, as: :string, placeholder: 'YYYY-MM-DD', label: 'Lunar Hijri Date', input_html: { value: f.object.lunar_hijri_date }
-    .large-4.column
-      = f.input :featured_position, input_html: { max: 3 }
-
-  .row
-    .large-4.columns
       = f.input :author, label: 'Authors (short form)'
     .large-4.columns
       = f.input :editors, label: 'Editors (short form)'
     .large-4.columns
       = f.input :translators, label: 'Translators (short form)'
+
+  .row
+    .large-4.columns
+      = f.input :gregorian_date_string, placeholder: 'YYYY-MM-DD', label: 'Gregorian Date'
+    .large-4.columns
+      = f.input :featured_position, input_html: { max: 3 }
+    .large-4.columns
 
   .row
     .large-12.columns

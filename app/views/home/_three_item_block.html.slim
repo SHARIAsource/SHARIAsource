@@ -6,7 +6,7 @@
     .featured-item
       p.breadcrumb
         = link_to featured_item.document_type.name, '#TODO'
-        span= " :: #{featured_item.created_at}"
+        span= " :: #{featured_item.dates}"
       h3= link_to featured_item.title, url_for([featured_item.object])
       p.byline
         = link_to featured_item.contributor.name, '#TODO'
