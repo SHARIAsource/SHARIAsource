@@ -81,6 +81,7 @@
     &[scope="row"], &.trow {
       font-weight:normal;
       padding:6px 20px 4px 0;
+      font-size:15px;
     }
   }
 
@@ -88,6 +89,7 @@
     border-bottom:1px solid #e7e9e8;
     vertical-align:top;
     padding:6px 4px 4px 4px;
+    font-size:15px;
 
     &:nth-child(even) {
       background:$ss-color-bodybg;
@@ -152,5 +154,53 @@
   th:first-child {
     width:267px;
     padding-left:0;
+    font-size:15px;
+  }
+}
+
+.document-type-lists {
+  width:760px;
+  overflow:hidden;
+  margin-left:-60px;
+  padding-bottom:40px;
+}
+
+.document-type-column {
+  float:left;
+  width:320px;
+  margin-left:60px;
+
+  ul {
+    list-style:none;
+    margin-left:0;
+  }
+
+  li {
+    display:block;
+    font-size:15px;
+    font-family:$ss-font-serif;
+    line-height:1.14286;
+    padding:6px 0 4px 0;
+    border-bottom:1px solid $ss-color-bodybg;
+    width:100%;
+    overflow:hidden;
+    position:relative;
+
+    &.root {
+      color:$ss-color-heading;
+      font-weight:bold;
+    }
+  }
+
+  span {
+    display:block;
+    padding-right:40px;
+  }
+
+  a {
+    position:absolute;
+    right:0;
+    top:6px;
+    color:$ss-color-bodytext;
   }
 }
