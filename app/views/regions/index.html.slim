@@ -14,11 +14,11 @@
         tr
         - @region_table[:regions].each_with_index do |region, region_index|
           tr data-depth=region.depth
-            th scope='row'= link_to region.name, '#TODO'
+            th scope='row'= link_to region.name, search_path(region: region.self_and_descendant_ids, q: '')
             - @region_table[:document_types].each_with_index do |document_type, document_type_index|
               - count = @region_table[:counts][region_index][document_type_index]
               td data-count=count
-                = link_to count, '#TODO'
+                = link_to count, search_path(region: region.self_and_descendant_ids, document_type: document_type.self_and_descendant_ids, q: '')
 
     .browse-headings-sticky
       table.browse-table

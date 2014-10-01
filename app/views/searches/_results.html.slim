@@ -11,7 +11,7 @@ p.result-count= "#{@search.total} #{'result'.pluralize(@search.total)} for \"#{@
       .result-info
         p.breadcrumb
           - document.document_type.self_and_ancestors.reverse.each do |dt|
-            = link_to dt.name, '#TODO'
+            = link_to dt.name, search_path(document_type: dt.self_and_descendant_ids, q: '')
             span= ' :: '
           span= document.dates
 
@@ -19,7 +19,7 @@ p.result-count= "#{@search.total} #{'result'.pluralize(@search.total)} for \"#{@
 
         p.byline
           - if document.document_type.name === 'Commentary'
-            = link_to document.contributor.name, '#TODO'
+            = link_to document.contributor.name, author_path(document.contributor)
           - else
             span= document.byline
 

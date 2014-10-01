@@ -10,10 +10,11 @@
           - column_types.each do |document_type, children|
             ul
               li.root
-                span= document_type.name
-                = link_to document_type.self_and_descendants_document_count, '#TODO'
+                = link_to search_path(document_type: document_type.self_and_descendant_ids, q: '') do
+                  span.name= document_type.name
+                  span.count= document_type.self_and_descendants_document_count
               - children.each do |child, noop|
                 li
-                  span= child.name
-                  = link_to child.self_and_descendants_document_count, '#TODO'
-                  
+                  = link_to search_path(document_type: child.self_and_descendant_ids, q: '') do
+                    span.name= child.name
+                    span.count= child.self_and_descendants_document_count

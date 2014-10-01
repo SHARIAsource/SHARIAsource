@@ -14,14 +14,14 @@
     .collaborator-list
       - @home_presenter.collaborators.take(3).each_with_index do |collaborator, index|
         .collaborator id="collaborator-#{index}"
-          = image_tag collaborator.image.corner_cut.url
+          = link_to image_tag(collaborator.image.corner_cut.url), collaborator_path(collaborator)
           .content
-            h3= link_to collaborator.name, '#TODO'
+            h3= link_to collaborator.name, collaborator_path(collaborator)
             p.contributors
               - collaborator.users.each_with_index do |user, index|
                 - if index > 0
                   = ", "
-                = link_to user.name, '#TODO'
+                = link_to user.name, author_path(user)
             p.commentary-count= "#{collaborator.commentary_count} #{'commentary'.pluralize(collaborator.commentary_count)} posted"
     - if @home_presenter.collaborators.count > 0
       p.more-collaborators= link_to 'View All', collaborators_path, class: 'ss-button'

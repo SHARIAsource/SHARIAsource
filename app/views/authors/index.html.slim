@@ -13,9 +13,9 @@
       tbody
         tr
         - @author_table[:authors].each_with_index do |author, author_index|
-          tr
-            th scope='row'= link_to author.name, '#TODO'
+          tr data-depth=1
+            th scope='row'= link_to author.name, author_path(author)
             - @author_table[:document_types].each_with_index do |document_type, document_type_index|
               - count = @author_table[:counts][author_index][document_type_index]
               td data-count=count
-                = link_to count, '#TODO'
+                = link_to count, search_path(author: [author.id], document_type: document_type.self_and_descendant_ids, q: '')

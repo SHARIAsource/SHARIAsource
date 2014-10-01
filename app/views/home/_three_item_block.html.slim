@@ -5,11 +5,11 @@
     h2.home-block-heading= block_title
     .featured-item
       p.breadcrumb
-        = link_to featured_item.document_type.name, '#TODO'
+        = link_to featured_item.document_type.name, search_path(document_type: featured_item.document_type.self_and_descendant_ids, q: '')
         span= " :: #{featured_item.dates}"
       h3= link_to featured_item.title, url_for([featured_item.object])
       p.byline
-        = link_to featured_item.contributor.name, '#TODO'
+        = link_to featured_item.contributor.name, author_path(featured_item.contributor)
         span= featured_item.edited_by
       - if featured_item.referenced_documents.present?
         p.references
@@ -26,4 +26,4 @@
         h3= link_to item.title, url_for([item.object])
         p= item.contributor.name
       - if local_assigns.fetch(:more_link, false)
-        a.ss-button href='#TODO' More Commentary
+        a.ss-button= link_to 'More Commentary', search_path(document_type: [DocumentType.commentary_id], q: '')

@@ -35,6 +35,7 @@ class Admin::DocumentsController < AdminController
       if current_user.requires_approval?
         @document.update! published: false
       end
+      @document.index!
       redirect_to admin_documents_path
     else
       flash[:error] = @document.errors.full_messages.to_sentence

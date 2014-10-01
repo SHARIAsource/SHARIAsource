@@ -11,7 +11,7 @@
 
       p.breadcrumb
         - @document.document_type.self_and_ancestors.reverse.each do |dt|
-          = link_to dt.name, '#TODO'
+          = link_to dt.name, search_path(document_type: dt.self_and_descendant_ids, q: '')
           span= ' :: '
         span= @document.dates
 
@@ -19,7 +19,7 @@
 
       p.byline
         - if @document.document_type.name === 'Commentary'
-          = link_to @document.contributor.name, '#TODO'
+          = link_to @document.contributor.name, author_path(@document.contributor)
         - else
           span= @document.byline
 
@@ -101,7 +101,7 @@
               strong Additional Tags:
               span= @document.tags.pluck(:name).join(', ')
 
-          li.suggest-tags= link_to 'Suggest More Tags', '#TODO', class: 'js-suggest-tags'
+          li.suggest-tags= link_to 'Suggest More Tags', '#', class: 'js-suggest-tags'
 
         = form_for :tag_suggestion, url: document_tag_suggestions_url(@document.object), html: { class: 'tag-suggestion-form'} do |f|
           label Tag Suggestions
@@ -130,9 +130,10 @@
         .text
           - @document.pages.each do |page|
             - if page.body.text.present?
-              == page.body.text
+              .page-text== page.body.text
             - else
-              p.empty-page-text No text provided for this page.
+              .page-text
+                p.empty-page-text No text provided for this page.
         .image-viewer
           .zoom-controls
             a#js-zoomin-link.zoomin-link href='#' title='Zoom in' Zoom In

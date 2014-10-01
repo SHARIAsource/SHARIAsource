@@ -186,21 +186,25 @@
     overflow:hidden;
     position:relative;
 
-    &.root {
+    &.root, &.root a {
       color:$ss-color-heading;
       font-weight:bold;
     }
   }
 
-  span {
+  a {
     display:block;
     padding-right:40px;
+    @include color-hover($ss-color-bodytext, $ss-color-heading)
   }
 
-  a {
+  span {
+    display:block;
+  }
+
+  .count {
     position:absolute;
     right:0;
     top:6px;
-    color:$ss-color-bodytext;
   }
 }

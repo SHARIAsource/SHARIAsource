@@ -95,4 +95,8 @@ class DocumentType < ActiveRecord::Base
       end
     }
   end
+
+  def self.commentary_id
+    @commentary_id ||= self.find_by_name('Commentary').id
+  end
 end

@@ -2,37 +2,43 @@
 
 .inner-wrapper
   .inner.browse-tables
-    h2.section-heading.browse Topics
+    h2.section-heading.browse Topics & Themes
 
-    table.browse-table
+    table.browse-table.browse-table-stick
       thead
         tr.browse-headings
           th scope='col' &nbsp;
           - @topic_table[:document_types].each do |document_type|
             th scope='col'= document_type.name
       tbody
-        tr
+        tr data-depth=0
+          th scope='row' Topics
+          - @topic_table[:document_types].length.times do |n|
+            td &nbsp;
         - @topic_table[:topics].each_with_index do |topic, topic_index|
-          tr
-            th scope='row'= link_to topic.name, '#TODO'
+          tr data-depth=1
+            th scope='row'= link_to topic.name, search_path(topic: [topic.id], q: '')
             - @topic_table[:document_types].each_with_index do |document_type, document_type_index|
               - count = @topic_table[:counts][topic_index][document_type_index]
               td data-count=count
-                = link_to count, '#TODO'
+                = link_to count, search_path(topic: [topic.id], document_type: document_type.self_and_descendant_ids, q: '')
 
-    h2.section-heading.browse Themes
-
-    table.browse-table
-      thead
-        tr.browse-headings
-          th scope='col' &nbsp;
-          - @theme_table[:document_types].each do |document_type|
-            th scope='col'= document_type.name
-      tbody
+        tr data-depth=0
+          th scope='row' Themes
+          - @topic_table[:document_types].length.times do |n|
+            td &nbsp;
         - @theme_table[:themes].each_with_index do |theme, theme_index|
-          tr
-            th scope='row'= theme.name
+          tr data-depth=1
+            th scope='row'= link_to theme.name, search_path(theme: [theme.id], q: '')
             - @theme_table[:document_types].each_with_index do |document_type, document_type_index|
               - count = @theme_table[:counts][theme_index][document_type_index]
               td data-count=count
-                = link_to count, '#TODO'
+                = link_to count, search_path(theme: [theme.id], document_type: document_type.self_and_descendant_ids, q: '')
+
+    .browse-headings-sticky
+      table.browse-table
+        thead
+          tr.browse-headings
+            th.tcol &nbsp;
+            - @topic_table[:document_types].each do |document_type|
+              th.tcol= document_type.name
