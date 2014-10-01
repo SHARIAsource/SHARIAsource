@@ -89,6 +89,4 @@
 
   .row
     .large-6.columns.end
-      - unless current_user.requires_approval?
-        = f.input :published, boolean_style: :inline
       = f.submit class: 'round button'

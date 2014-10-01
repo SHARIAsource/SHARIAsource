@@ -20,6 +20,10 @@ h3 Unpublished
             ul.inline-list
               li= link_to 'View', document_path(document), class: 'tiny radius pill button'
               li= link_to t('edit'), edit_admin_document_path(document), class: 'tiny radius pill button'
+              - unless current_user.requires_approval?
+                li= simple_form_for document, url: admin_document_path(document) do |f|
+                  = f.input_field :published, as: :hidden, value: true
+                  = f.submit 'Publish', class: 'tiny radius success pill button'
               li= link_to t('delete'), admin_document_path(document), class: 'tiny radius alert pill button', method: :delete, data: { confirm: t('helpers.delete_confirm', model: Document.model_name.human)}
 - else
   p No unpublished documents.
@@ -33,13 +37,17 @@ h3 Unpublished
       th Name
       th.actions Actions
     tbody
-      - @documents.each do |document|
+      - @documents.published.each do |document|
         tr data-processed=document.processed?
           td= document.title
           td.actions
             ul.inline-list
               li= link_to 'View', document_path(document), class: 'tiny radius pill button'
               li= link_to t('edit'), edit_admin_document_path(document), class: 'tiny radius pill button'
+              - unless current_user.requires_approval?
+                li= simple_form_for document, url: admin_document_path(document) do |f|
+                  = f.input_field :published, as: :hidden, value: false
+                  = f.submit 'Unpublish', class: 'tiny radius warning pill button'
               li= link_to t('delete'), admin_document_path(document), class: 'tiny radius alert pill button', method: :delete, data: { confirm: t('helpers.delete_confirm', model: Document.model_name.human)}
 
 p= link_to t('helpers.new', model: Document.model_name.human), new_admin_document_path, class: 'round button'

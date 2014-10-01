@@ -35,7 +35,7 @@ class Admin::DocumentsController < AdminController
       if current_user.requires_approval?
         @document.update! published: false
       end
-      redirect_to edit_admin_document_path(@document)
+      redirect_to admin_documents_path
     else
       flash[:error] = @document.errors.full_messages.to_sentence
       render :edit

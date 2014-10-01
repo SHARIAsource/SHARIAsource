@@ -1,4 +1,11 @@
+$warning-button-bg-hover: scale-color($warning-color, $lightness: $button-function-factor) !default;
+$warning-button-border-color: $warning-button-bg-hover !default;
+
 .button.pill {
   padding:4px 8px;
   margin:0;
+}
+
+.button.warning {
+  @include button-style($bg:$warning-color, $bg-hover:$warning-button-bg-hover, $border-color:$warning-button-border-color);
 }
