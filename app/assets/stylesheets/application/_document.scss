@@ -180,6 +180,7 @@
   width:740px;
   margin:0 auto;
   padding:0 10px 10px 10px;
+  @include clearfix;
 
   p, ul, ol, {
     font-family:$ss-font-serif;
@@ -363,3 +364,20 @@
   }
 }
 
+.photo-caption {
+  float:right;
+  max-width:300px;
+  margin:10px 0 10px 20px;
+
+  &:first-child {
+    margin-top:0;
+  }
+
+  p {
+    font-size:12px;
+    color:$ss-color-bodytext;
+    font-family:$ss-font-sans;
+    margin:0;
+    padding:4px 0;
+  }
+}

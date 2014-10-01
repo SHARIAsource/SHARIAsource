@@ -1,0 +1,12 @@
+= content_for :page_title, @author.name
+
+.inner-wrapper
+  .inner
+    h2.section-heading.browse= "#{@author.name}, #{@author.collaborator.name}"
+  .inner.document-content
+    - if @author.avatar && @author.avatar.url
+      .photo-caption
+        = image_tag(@author.avatar.url, alt: @author.name)
+        p= @author.name
+    == @author.about
+
