@@ -3,6 +3,7 @@
 .inner-wrapper
   .inner
     h2.section-heading.browse= "#{@author.name}, #{@author.collaborator.name}"
+
   .inner.document-content
     - if @author.avatar && @author.avatar.url
       .photo-caption
@@ -10,3 +11,10 @@
         p= @author.name
     == @author.about
 
+  .inner
+    = simple_form_for @filters, url: search_path, method: :get, remote: true do |f| 
+      .search-two-columns.author-search
+        .search-sidebar
+          = render 'searches/filters', locals: { f: f }
+        .search-results
+          = render 'searches/results', locals: { f: f }
