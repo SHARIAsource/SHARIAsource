@@ -26,4 +26,4 @@
         h3= link_to item.title, url_for([item.object])
         p= item.contributor.name
       - if local_assigns.fetch(:more_link, false)
-        a.ss-button= link_to 'More Commentary', search_path(document_type: [DocumentType.commentary_id], q: '')
+        = link_to 'More Commentary', search_path(document_type: [DocumentType.commentary_id], q: ''), class: 'ss-button'
