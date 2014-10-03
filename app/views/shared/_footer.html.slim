@@ -42,7 +42,7 @@
       .mailing-list
         = form_tag '#TODO', method: :post do
           = label_tag :email, 'Sign up for mailing list'
-          = email_field :email, placeholder: 'email@example.org'
+          = email_field_tag :email, nil, placeholder: 'email@example.org'
           .submit
             button.ss-button type='submit' Sign Up
           
