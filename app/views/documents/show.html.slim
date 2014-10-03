@@ -79,23 +79,31 @@
           - if @document.topics.present?
             li
               strong Topics:
-              span= @document.topics.pluck(:name).join(', ')
+              - @document.topics.each_with_index do |topic, index|
+                = ', ' if index > 0
+                = link_to topic.name, search_path(topic: [topic.id], q: '')
           - if @document.themes.present?
             li
               strong Themes:
-              span= @document.themes.pluck(:name).join(', ')
+              - @document.themes.each_with_index do |theme, index|
+                = ', ' if index > 0
+                = link_to theme.name, search_path(theme: [theme.id], q: '')
           - if @document.regions.present?
             li
               strong Geographic Regions:
-              span= @document.regions.pluck(:name).join(', ')
+              - @document.regions.each_with_index do |region, index|
+                = ', ' if index > 0
+                = link_to region.name, search_path(region: region.self_and_descendant_ids, q: '')
           - if @document.eras.present?
             li
               strong Empires & Eras:
-              span= @document.eras.pluck(:name).join(', ')
+              - @document.eras.each_with_index do |era, index|
+                = ', ' if index > 0
+                = link_to era.name, search_path(era: era.self_and_descendant_ids, q: '')
           - if @document.language.present?
             li
               strong Language:
-              span= @document.language.name
+              = link_to @document.language.name, search_path(language: [@document.language.id], q: '')
           - if @document.tags.present?
             li
               strong Additional Tags:

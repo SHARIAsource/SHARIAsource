@@ -136,7 +136,11 @@
   }
 
   a {
-    @include color-hover($ss-color-secondary, $ss-color-headerfooterlink);
+    @include color-hover($ss-color-bodytext, $ss-color-heading);
+
+    &[target="_blank"] {
+      @include color-hover($ss-color-secondary, $ss-color-headerfooterlink);
+    }
   }
 
   strong {
@@ -156,7 +160,6 @@
     a {
       line-height:1;
       vertical-align:top;
-      @include color-hover($ss-color-bodytext, $ss-color-heading);
     }
   }
 
@@ -165,13 +168,17 @@
     margin-top:12px;
     -webkit-font-smoothing:antialiased;
 
-    a:before {
-      content:'»';
-      display:inline-block;
-      margin-right:5px;
-      font-size:2em;
-      line-height:.5;
-      vertical-align:top;
+    a {
+      @include color-hover($ss-color-secondary, $ss-color-headerfooterlink);
+
+      &:before {
+        content:'»';
+        display:inline-block;
+        margin-right:5px;
+        font-size:2em;
+        line-height:.5;
+        vertical-align:top;
+      }
     }
   }
 }
