@@ -131,6 +131,10 @@
   border-bottom-width:2px;
   vertical-align:bottom;
   padding:8px 8px 4px 4px;
+
+  &:first-child {
+    padding-left:0;
+  }
 }
 
 .browse-headings-sticky {
