@@ -159,16 +159,16 @@
 }
 
 .document-type-lists {
-  width:760px;
+  width:1000px;
   overflow:hidden;
-  margin-left:-60px;
+  margin-left:-40px;
   padding-bottom:40px;
 }
 
 .document-type-column {
   float:left;
-  width:320px;
-  margin-left:60px;
+  width:460px;
+  margin-left:40px;
 
   ul {
     list-style:none;
@@ -181,20 +181,24 @@
     font-family:$ss-font-serif;
     line-height:1.14286;
     padding:6px 0 4px 0;
-    border-bottom:1px solid $ss-color-bodybg;
+    border-bottom:1px solid $ss-color-borders;
     width:100%;
     overflow:hidden;
     position:relative;
 
-    &.root, &.root a {
+    &.root .name {
       color:$ss-color-heading;
       font-weight:bold;
+    }
+
+    &.root, &.root .count {
+      padding-top:32px;
     }
   }
 
   a {
     display:block;
-    padding-right:40px;
+    padding-right:100px;
     @include color-hover($ss-color-bodytext, $ss-color-heading)
   }
 
@@ -205,6 +209,10 @@
   .count {
     position:absolute;
     right:0;
-    top:6px;
+    top:0;
+    bottom:0;
+    width:100px;
+    padding:6px 0 0 4px;
+    background:$ss-color-bodybg;
   }
 }
