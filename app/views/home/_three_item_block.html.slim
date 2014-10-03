@@ -24,6 +24,6 @@
     .aside-items
       - collection.drop(1).each do |item|
         h3= link_to item.title, url_for([item.object])
-        p= item.contributor.name
+        p= link_to item.contributor.name, author_path(item.contributor)
       - if local_assigns.fetch(:more_link, false)
         = link_to 'More Commentary', search_path(document_type: [DocumentType.commentary_id], q: ''), class: 'ss-button'

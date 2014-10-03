@@ -59,6 +59,10 @@
     p {
       font-size:12px;
       margin:0 0 16px 0;
+
+      a {
+        @include underline-hover($ss-color-bodytext);
+      }
     }
   }
 }
