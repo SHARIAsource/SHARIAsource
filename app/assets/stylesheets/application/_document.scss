@@ -163,6 +163,7 @@
   .suggest-tags {
     font-weight:bold;
     margin-top:12px;
+    -webkit-font-smoothing:antialiased;
 
     a:before {
       content:'»';

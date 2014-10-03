@@ -437,6 +437,7 @@
   font-size:16px;
   font-weight:bold;
   font-family:$ss-font-serif;
+  -webkit-font-smoothing:antialiased;
   margin-top:24px;
   @include color-hover($ss-color-secondary, $ss-color-headerfooterlink);
 
