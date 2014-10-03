@@ -9,7 +9,7 @@
         tr.browse-headings
           th scope='col' &nbsp;
           - @era_table[:document_types].each do |document_type|
-            th scope='col'= document_type.name
+            th scope='col'== document_type.name.split(' ').join('<br>')
       tbody
         tr
         - @era_table[:eras].each_with_index do |era, era_index|
@@ -29,4 +29,4 @@
           tr.browse-headings
             th.tcol &nbsp;
             - @era_table[:document_types].each do |document_type|
-              th.tcol= document_type.name
+              th.tcol== document_type.name.split(' ').join('<br>')

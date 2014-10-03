@@ -9,7 +9,7 @@
         tr.browse-headings
           th scope='col' &nbsp;
           - @topic_table[:document_types].each do |document_type|
-            th scope='col'= document_type.name
+            th scope='col'== document_type.name.split(' ').join('<br>')
       tbody
         tr data-depth=0
           th scope='row' Topics
@@ -41,4 +41,4 @@
           tr.browse-headings
             th.tcol &nbsp;
             - @topic_table[:document_types].each do |document_type|
-              th.tcol= document_type.name
+              th.tcol== document_type.name.split(' ').join('<br>')

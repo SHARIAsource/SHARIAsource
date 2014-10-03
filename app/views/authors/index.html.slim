@@ -9,7 +9,7 @@
         tr.browse-headings
           th scope='col' &nbsp;
           - @author_table[:document_types].each do |document_type|
-            th scope='col'= document_type.name
+            th scope='col'== document_type.name.split(' ').join('<br>')
       tbody
         tr
         - @author_table[:authors].each_with_index do |author, author_index|
