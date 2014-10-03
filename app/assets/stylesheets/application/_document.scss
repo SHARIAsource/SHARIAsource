@@ -193,7 +193,28 @@
 
   p, ul, ol, {
     font-family:$ss-font-serif;
+    font-size:21px;
+    word-spacing:-2px;
+    line-height:1.4;
+  }
+
+  ul, ol {
+    margin-left:1em;
+
+    &[dir="rtl"], [dir="rtl"] & {
+      margin-left:0;
+      margin-right:1em;
+    }
+  }
+
+  blockquote {
     font-size:20px;
+    margin-left:1em;
+
+    &[dir="rtl"], [dir="rtl"] & {
+      margin-left:0;
+      margin-right:1em;
+    }
   }
 
   a {
