@@ -2,7 +2,7 @@
 
 .inner-wrapper
   .inner
-    h2.section-heading.browse= "#{@author.name}, #{@author.collaborator.name}"
+    h2.section-heading.browse= @author.name_with_collaborator
 
   .inner.document-content
     - if @author.avatar && @author.avatar.url

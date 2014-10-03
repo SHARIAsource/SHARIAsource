@@ -4,7 +4,7 @@ class AuthorsController < ApplicationController
   end
 
   def show
-    @author = User.find params[:id]
+    @author = UserPresenter.new(User.find(params[:id]))
     @filters = SearchFilters.new author: [params[:id]]
     @languages = Language.all
     @authors = User.all
