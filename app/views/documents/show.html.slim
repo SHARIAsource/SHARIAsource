@@ -118,18 +118,22 @@
           a.cancel.js-tag-cancel href='#' Cancel
 
       .meta-column.references.js-same-height
+        h3 Documents referenced:
         - if @document.referenced_documents.present?
-          h3 Documents referenced:
           ul 
             - @document.referenced_documents.each do |d|
               li= link_to d.title_with_author, document_path(d.object)
+        - else
+          em none
         
       .meta-column.last.references.js-same-height
+        h3 This document is referenced by:
         - if @document.referencing_documents.present?
-          h3 This document is referenced by:
           ul
             - @document.referencing_documents.each do |d|
               li= link_to d.title_with_author, document_path(d.object)
+        - else
+          em none
 
 - if @document.document_style == 'scan' && @document.pages.present?
   .inner-wrapper

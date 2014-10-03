@@ -154,6 +154,9 @@
   }
 
   &.references {
+    font-family:$ss-font-serif;
+    font-size:14px;
+
     ul {
       list-style:disc inside;
     }
