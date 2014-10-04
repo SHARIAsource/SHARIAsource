@@ -61,6 +61,7 @@
   th, td {
     line-height:1.14286;
     width:99px;
+    text-align:center;
 
     &:first-child {
       width:auto;
@@ -82,6 +83,10 @@
       font-weight:normal;
       padding:6px 20px 4px 0;
       font-size:15px;
+    }
+
+    &:first-child {
+      text-align:left;
     }
   }
 
@@ -216,7 +221,8 @@
     top:0;
     bottom:0;
     width:100px;
-    padding:6px 0 0 4px;
+    padding:6px 0 0 0;
+    text-align:center;
     background:$ss-color-bodybg;
   }
 }
