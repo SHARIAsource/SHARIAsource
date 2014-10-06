@@ -24,4 +24,4 @@ p.result-count= "#{@search.total} #{'result'.pluralize(@search.total)} for \"#{@
             span= document.byline
 
       .result-thumbnail
-        = image_tag document.thumb.url if document.thumb
+        = link_to(image_tag(document.thumb.url), document_path(document.object)) if document.thumb
