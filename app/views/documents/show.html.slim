@@ -151,16 +151,20 @@
             a#js-zoomin-link.zoomin-link href='#' title='Zoom in' Zoom In
             a#js-zoomout-link.zoomout-link href='#' title='Zoom out' Zoom Out
             a#js-fullscreen-link.fullscreen-link href='#' title='Fullscreen' Fullscreen
-          -@document.pages.each do |page|
+          - @document.pages.each do |page|
             span.image data-src=page.image.url data-width=page.width data-height=page.height
         .controls
-          a#js-prev-link.prev-link href='#' title='Previous Page' Previous
+          - if @document.pages.length > 1
+            a#js-first-link.first-link.disabled href='#' title='First Page' First
+            a#js-prev-link.prev-link href='#' title='Previous Page' Previous
           span.status
             = "Page "
             span.current 1
             = " of "
             span.total X
-          a#js-next-link.next-link href='#' title='Next Page' Next
+          - if @document.pages.length > 1
+            a#js-next-link.next-link href='#' title='Next Page' Next
+            a#js-last-link.last-link href='#' title='Last Page' Last
     hr.source-end
 
 - elsif @document.body.present?

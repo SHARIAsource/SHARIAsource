@@ -84,7 +84,7 @@ class Document < ActiveRecord::Base
   default_scope { order('created_at DESC') }
 
   # Solr Indexing
-  searchable ignore_attribute_changes_of: [:popular_count] do
+  searchable auto_index: false do
     text :title, :source_name, :author, :translators, :editors, :publisher
 
     text :page_texts do

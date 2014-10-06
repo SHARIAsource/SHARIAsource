@@ -10,7 +10,7 @@
         levels: [{
           url: $img.data('src'),
           width: parseInt($img.data('width'), 10),
-          height: parseInt($img.data('height'))
+          height: parseInt($img.data('height'), 10)
         }]
       }
     })
@@ -48,9 +48,12 @@
       $texts = $viewer.closest('.image-viewer-container').find('.page-text')
       $texts.eq(0).addClass('active')
       dragon.addHandler('page', function(info) {
+        var length = info.eventSource.tileSources.length
         $('.status .current').text(info.page + 1)
         $texts.filter('.active').removeClass('active')
         $texts.eq(info.page).addClass('active')
+        $('#js-first-link').toggleClass('disabled', !info.page)
+        $('#js-last-link').toggleClass('disabled', info.page === length - 1)
       })
       dragon.addHandler('pre-full-screen', function(info) {
         if (info.fullScreen) {
@@ -61,5 +64,18 @@
         $('.image-viewer .controls').appendTo('.image-viewer-container')
       })
     }
+  })
+
+
+  $document.on('click', '#js-first-link:not(.disabled)', function(event) {
+    $('.image-viewer').data('dragon').goToPage(0)
+    event.preventDefault()
+  })
+
+
+  $document.on('click', '#js-last-link:not(.disabled)', function(event) {
+    var dragon = $('.image-viewer').data('dragon')
+    dragon.goToPage(dragon.tileSources.length - 1)
+    event.preventDefault()
   })
 }())
