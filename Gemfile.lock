@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/jonmagic/grim.git
+  revision: 6e166faed35426b66f852b4d2a2324895de8f835
+  ref: 6e166faed35426b66f852b4d2a2324895de8f835
+  specs:
+    grim (1.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -105,7 +112,6 @@ GEM
       railties (>= 3.1.0)
       sass (>= 3.2.0)
     fssm (0.2.10)
-    grim (1.0.0)
     guard (2.6.1)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -302,7 +308,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.4.1)
   foreman (~> 0.74.0)
   foundation-rails (~> 5.3.0)
-  grim (~> 1.0.0)
+  grim!
   guard-livereload (~> 2.3.0)
   guard-rspec (~> 4.2.10)
   guard-sunspot (~> 0.0.2)
