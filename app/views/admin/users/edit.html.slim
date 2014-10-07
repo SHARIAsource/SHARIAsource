@@ -3,28 +3,4 @@
 
 h2 Edit Account
 
-= simple_form_for @user, url: admin_user_path(@user) do |f|
-  .row
-    .large-6.columns
-      = f.input :first_name
-      = f.input :last_name
-      = f.association :collaborator, collection: Collaborator.all, include_blank: 'None'
-      = f.association :parent, collection: User.where.not(id: @user.self_and_descendant_ids), include_blank: 'None', label: 'Supervisor'
-      fieldset
-        legend Roles
-        = f.input :is_editor, boolean_style: :inline, label: 'Editor'
-        = f.input :requires_approval, boolean_style: :inline
-    .large-6.columns
-      = f.input :about, input_html: { class: 'wysiwyg' }
-
-  .row
-    .large-6.columns
-      = f.input :avatar, as: :file, label: 'Photo', input_html: { accept: 'image/png,image/jpg,image/gif' }
-      = f.hidden_field :avatar_cache
-    .large-6.columns
-      - if f.object.avatar?
-        = image_tag f.object.avatar_url
-
-  .row
-    .large-12.columns
-      = f.submit class: 'round button'
+= render partial: 'admin/users/form', locals: { form_url: admin_user_path(@user) }

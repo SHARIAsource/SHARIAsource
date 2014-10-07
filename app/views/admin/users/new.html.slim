@@ -1,0 +1,6 @@
+= content_for :page_title, 'New Account'
+= content_for :admin_active, 'Accounts'
+
+h2 New Account
+
+= render partial: 'admin/users/form', locals: { form_url: admin_users_path }
