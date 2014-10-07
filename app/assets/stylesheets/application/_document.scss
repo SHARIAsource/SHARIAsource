@@ -411,6 +411,10 @@
 
   input {
     margin-bottom:8px;
+
+    &::placeholder {
+      font-weight:normal;
+    }
   }
 
   .cancel {
