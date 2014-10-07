@@ -10,7 +10,7 @@
 
 .filter-row.js-same-height-container
   .filter-date.js-same-height
-    .filter-block
+    .filter-block.is-contracted
       h3 Date
       a.expand-contract href='#' Expand/Contract 
       .filter-content
@@ -23,7 +23,7 @@
           = f.input :date_format, as: :radio_buttons, collection: [['AH', 'ah'], ['CE', 'ce']], item_wrapper_class: 'radio-label', input_html: { name: 'date_format'}, label: false
 
   .filter-language.js-same-height
-    .filter-block
+    .filter-block.is-contracted
       h3 Original Language
       a.expand-contract href='#' Expand/Contract 
       .filter-content
@@ -36,7 +36,7 @@
                 = language.name
 
   .filter-author.js-same-height
-    .filter-block
+    .filter-block.is-contracted
       h3 Author/Commentator
       a.expand-contract href='#' Expand/Contract 
       .filter-content
@@ -48,7 +48,7 @@
 
 .filter-row.js-same-height-container.last
   .filter-topics-themes.js-same-height
-    .filter-block
+    .filter-block.is-contracted
       h3 Topics
       a.expand-contract href='#' Expand/Contract 
       .filter-content
@@ -60,7 +60,7 @@
                 input type='checkbox' name='topic[]' value=topic.id checked=(f.object.topic && f.object.topic.include?(topic.id.to_s))
                 = topic.name
     
-    .filter-block
+    .filter-block.is-contracted
       h3 Themes
       a.expand-contract href='#' Expand/Contract 
       .filter-content
@@ -73,7 +73,7 @@
                 = theme.name
 
   .filter-regions.js-same-height
-    .filter-block
+    .filter-block.is-contracted
       h3 Geographic Regions
       a.expand-contract href='#' Expand/Contract 
       .filter-content
@@ -82,7 +82,7 @@
           = render partial: 'searches/hierarchy', locals: { hash: @regions, field_name: :region, input_name: 'region[]', f: f }
 
   .filter-eras.js-same-height
-    .filter-block
+    .filter-block.is-contracted
       h3 Empires & Eras
       a.expand-contract href='#' Expand/Contract 
       .filter-content
@@ -92,7 +92,7 @@
         a.filter-extend-toggle data-expandtext='Expand Full List' data-contracttext='Hide Expanded List' href='#' Expand Full List
 
   .filter-document-types.js-same-height
-    .filter-block
+    .filter-block.is-contracted
       h3 Document Types
       a.expand-contract href='#' Expand/Contract 
       .filter-content
