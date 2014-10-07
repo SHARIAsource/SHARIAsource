@@ -13,4 +13,5 @@ class SearchFilters
   attribute :era
   attribute :document_type
   attribute :sort
+  attribute :page, default: 1
 end

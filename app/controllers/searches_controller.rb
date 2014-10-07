@@ -32,13 +32,14 @@ class SearchesController < ApplicationController
         query.with(:lunar_hijri_date).greater_than(date_from) if date_from
         query.with(:lunar_hijri_date).less_than(date_to) if date_to
       end
+      query.paginate page: @filters.page
     end
   end
 
   private
 
   def permitted_params
-    params.permit(:utf8, :q, :date_from, :date_to, :date_format, :sort,
+    params.permit(:utf8, :q, :date_from, :date_to, :date_format, :sort, :page,
                   document_type: [], language: [], author: [], topic: [],
                   theme: [], region: [], era: [])
   end

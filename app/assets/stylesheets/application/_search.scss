@@ -4,6 +4,7 @@
 
 .search-two-columns {
   @include clearfix;
+  padding-bottom:48px;
 }
 
 .search-results {
@@ -382,11 +383,7 @@
 .result {
   @include clearfix;
   padding:12px 0 20px 0;
-  border-top:4px solid $ss-color-borders;
-
-  &:first-child {
-    border-top:0;
-  }
+  border-bottom:4px solid $ss-color-borders;
 }
 
 .result-info {
@@ -475,4 +472,8 @@
   font-size:14px;
   height:32px;
   padding:2px 0 0 60px;
+}
+
+.more-results {
+  margin-top:16px;
 }
