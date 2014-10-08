@@ -96,7 +96,6 @@
       var $selOpts = $opts.filter(':selected')
       var hasChecked = $checked.length && $checked.length !== $checkboxes.length
       var hasSelected = $selOpts.length && $selOpts.length != $opts.length
-      var hasDates =
 
       $checked.closest('.check-label').addClass('checked')
       $children.parent().addClass('checked')
@@ -106,6 +105,7 @@
         $all.closest('label').removeClass('checked')
       }
       $texts.trigger('keyup')
+      $checked.trigger('change')
     }
 
     handleMultipleSelectChanges()

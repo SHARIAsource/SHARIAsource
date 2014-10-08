@@ -9,9 +9,7 @@
 
     $block.toggleClass('is-contracted')
 
-    $block.find('.filter-content').slideToggle(300, function() {
-      $(document).trigger('sameheight:refresh')
-    })
+    $block.find('.filter-content').slideToggle(300)
 
     $filterHeader.removeClass('all-expanded all-contracted')
     if ($('.filter-block').length === $('.is-contracted').length) {

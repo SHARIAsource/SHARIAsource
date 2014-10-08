@@ -5,10 +5,10 @@
     h2.section-heading.search-heading Advanced Search
     = simple_form_for @filters, url: search_path, method: :get, remote: !@filters.q.nil? do |f| 
       - if @filters.q
-        .search-two-columns.js-same-height-container
-          .search-sidebar.js-same-height
+        .search-two-columns
+          .search-sidebar
             = render 'searches/filters', locals: { f: f }
-          .search-results.js-same-height
+          .search-results
             = render 'searches/results', locals: { f: f }
       - else
         .search-full-width

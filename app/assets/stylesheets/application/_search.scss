@@ -3,6 +3,7 @@
 }
 
 .search-two-columns {
+  position:relative;
   @include clearfix;
   padding-bottom:48px;
 }
@@ -216,7 +217,7 @@
 
 .expand-contract {
   display:block;
-  background:url(image-path('browse-contract.svg')) 100% 50% no-repeat;
+  background:url(image-path('browse-contract.svg')) 97% 50% no-repeat;
   background-size:12px 9px;
 
   &:hover, &:focus {
@@ -264,8 +265,17 @@
 .search-sidebar {
   float:left;
   width:320px;
-  padding-right:16px;
-  border-right:4px solid $ss-color-borders;
+  padding-right:20px;
+
+  &:before {
+    content:'';
+    width:4px;
+    background:$ss-color-borders;
+    position:absolute;
+    top:0;
+    bottom:48px;
+    left:316px;
+  }
 
   .filter-block {
     padding-bottom:12px;
@@ -314,6 +324,8 @@
 
   .filter-header {
     ul, li, a {
+      position:static;
+      float:none;
       display:inline;
       border:0;
     }
