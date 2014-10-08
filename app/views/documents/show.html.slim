@@ -19,7 +19,7 @@
 
       p.byline
         - if @document.document_type.name === 'Commentary'
-          = link_to @document.contributor.name, author_path(@document.contributor)
+          = link_to @document.contributor.name, contributor_path(@document.contributor)
         - else
           span= @document.byline
 
@@ -107,7 +107,9 @@
           - if @document.tags.present?
             li
               strong Additional Tags:
-              span= @document.tags.pluck(:name).join(', ')
+              - @document.tags.each_with_index do |tag, index|
+                = ', ' if index > 0
+                = link_to tag.name, search_path(q: tag.name)
 
           li.suggest-tags= link_to 'Suggest More Tags', '#', class: 'js-suggest-tags'
 

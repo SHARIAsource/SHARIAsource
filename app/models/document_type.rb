@@ -82,13 +82,13 @@ class DocumentType < ActiveRecord::Base
     }
   end
 
-  def self.author_counts
+  def self.contributor_counts
     roots = DocumentType.roots.select(:id, :name)
-    authors = User.joins(:documents).distinct
+    contributors = User.joins(:documents).distinct
     {
-      authors: authors,
+      contributors: contributors,
       document_types: roots,
-      counts: authors.map do |a|
+      counts: contributors.map do |a|
         roots.map do |d|
           a.documents.where(document_type: d.self_and_descendant_ids).count
         end

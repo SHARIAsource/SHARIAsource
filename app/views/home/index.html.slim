@@ -21,7 +21,7 @@
               - collaborator.users.each_with_index do |user, index|
                 - if index > 0
                   = ", "
-                = link_to user.name, author_path(user)
+                = link_to user.name, contributor_path(user)
             p.commentary-count= "#{collaborator.commentary_count} #{'commentary'.pluralize(collaborator.commentary_count)} posted"
     - if @home_presenter.collaborators.count > 0
       p.more-collaborators= link_to 'View All', collaborators_path, class: 'ss-button'

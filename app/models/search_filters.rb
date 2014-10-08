@@ -6,7 +6,7 @@ class SearchFilters
   attribute :date_to
   attribute :date_format, default: 'ce'
   attribute :language
-  attribute :author
+  attribute :contributor
   attribute :topic
   attribute :theme
   attribute :region

@@ -19,7 +19,7 @@ p.result-count= "#{@search.total} #{'result'.pluralize(@search.total)} for \"#{@
 
         p.byline
           - if document.document_type.name === 'Commentary'
-            = link_to document.contributor.name, author_path(document.contributor)
+            = link_to document.contributor.name, contributor_path(document.contributor)
           - else
             span= document.byline
 
@@ -27,4 +27,4 @@ p.result-count= "#{@search.total} #{'result'.pluralize(@search.total)} for \"#{@
         = link_to(image_tag(document.thumb.url), document_path(document.object)) if document.thumb
 
 - unless @search.results.last_page?
-  p.more-results= link_to 'Load More Results', @filters.attributes.with_indifferent_access.merge(page: @search.results.next_page), class: 'ss-button', data: { remote: true }
+  p.more-results= link_to 'Load More Results', search_path(@filters.attributes.with_indifferent_access.merge(page: @search.results.next_page)), class: 'ss-button', data: { remote: true }

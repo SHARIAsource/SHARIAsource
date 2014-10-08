@@ -1,0 +1,21 @@
+= content_for :page_title, "Contributors"
+
+.inner-wrapper
+  .inner.browse-tables
+    h2.section-heading.browse Browse Contributors
+
+    table.browse-table
+      thead
+        tr.browse-headings
+          th scope='col' &nbsp;
+          - @contributor_table[:document_types].each do |document_type|
+            th scope='col'== document_type.name.split(' ').join('<br>')
+      tbody
+        tr
+        - @contributor_table[:contributors].each_with_index do |contributor, contributor_index|
+          tr data-depth=1
+            th scope='row'= link_to contributor.name, contributor_path(contributor)
+            - @contributor_table[:document_types].each_with_index do |document_type, document_type_index|
+              - count = @contributor_table[:counts][contributor_index][document_type_index]
+              td data-count=count
+                = link_to count, search_path(contributor: [contributor.id], document_type: document_type.self_and_descendant_ids, q: '')

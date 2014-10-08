@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :documents, only: [:show] do
     resources :tag_suggestions, path: '/tag-suggestions', only: [:create]
   end
-  resources :authors, only: [:index, :show]
+  resources :contributors, only: [:index, :show]
   resources :regions, only: [:index]
   resources :document_types, path: '/document-types', only: [:index]
   resources :collaborators, only: [:index, :show]

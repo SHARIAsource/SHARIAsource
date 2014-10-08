@@ -41,15 +41,15 @@
                 input type='checkbox' name='language[]' value=language.id checked=(f.object.language && f.object.language.include?(language.id.to_s))
                 = language.name
 
-  .filter-author.js-same-height
+  .filter-contributor.js-same-height
     .filter-block.is-contracted
       h3
-        a.expand-contract href='#' Author/Commentator
+        a.expand-contract href='#' Contributors
       .filter-content
         = render 'searches/all'
-        select name='author[]' multiple=true size=4
-          - @authors.each do |author|
-            option value=author.id selected=(f.object.author && f.object.author.include?(author.id.to_s)) = author.name
+        select name='contributor[]' multiple=true size=4
+          - @contributors.each do |contributor|
+            option value=contributor.id selected=(f.object.contributor && f.object.contributor.include?(contributor.id.to_s)) = contributor.name
         span.multiple-instructions Ctrl-click to select multiple people.
 
 .filter-row.js-same-height-container.last

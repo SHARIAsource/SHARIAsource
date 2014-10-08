@@ -9,7 +9,7 @@
         span= " :: #{featured_item.dates}"
       h3= link_to featured_item.title, url_for([featured_item.object])
       p.byline
-        = link_to featured_item.contributor.name, author_path(featured_item.contributor)
+        = link_to featured_item.contributor.name, contributor_path(featured_item.contributor)
         span= featured_item.edited_by
       - if featured_item.referenced_documents.present?
         p.references
@@ -24,6 +24,6 @@
     .aside-items
       - collection.drop(1).each do |item|
         h3= link_to item.title, url_for([item.object])
-        p= link_to item.contributor.name, author_path(item.contributor)
+        p= link_to item.contributor.name, contributor_path(item.contributor)
       - if local_assigns.fetch(:more_link, false)
         = link_to 'More Commentary', search_path(document_type: [DocumentType.commentary_id], q: ''), class: 'ss-button'

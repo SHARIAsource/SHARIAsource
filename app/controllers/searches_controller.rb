@@ -3,7 +3,7 @@ class SearchesController < ApplicationController
     @filters = SearchFilters.new permitted_params
     date_from, date_to = parse_dates
     @languages = Language.all
-    @authors = User.all
+    @contributors = User.all
     @topics = Topic.all
     @themes = Theme.all
     @regions = Region.hash_tree
@@ -15,7 +15,7 @@ class SearchesController < ApplicationController
       query.with(:topic_ids, @filters.topic) if @filters.topic
       query.with(:theme_ids, @filters.theme) if @filters.theme
       query.with(:language_id, @filters.language) if @filters.language
-      query.with(:contributor_id, @filters.author) if @filters.author
+      query.with(:contributor_id, @filters.contributor) if @filters.contributor
       query.with(:region_ids, @filters.region) if @filters.region
       query.with(:era_ids, @filters.era) if @filters.era
       if @filters.document_type
@@ -40,7 +40,7 @@ class SearchesController < ApplicationController
 
   def permitted_params
     params.permit(:utf8, :q, :date_from, :date_to, :date_format, :sort, :page,
-                  document_type: [], language: [], author: [], topic: [],
+                  document_type: [], language: [], contributor: [], topic: [],
                   theme: [], region: [], era: [])
   end
 
