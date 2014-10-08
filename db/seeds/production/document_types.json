@@ -87,6 +87,16 @@
     "parent_id": "<%= sprig_record(DocumentType, 12).id %>",
     "sort_order": 1500
   }, {
+    "sprig_id": 29,
+    "name": "Report",
+    "parent_id": "<%= sprig_record(DocumentType, 12).id %>",
+    "sort_order": 1600
+  }, {
+    "sprig_id": 30,
+    "name": "Press Release",
+    "parent_id": "<%= sprig_record(DocumentType, 12).id %>",
+    "sort_order": 1700
+  }, {
     "sprig_id": 18,
     "name": "Secondary Sources",
     "sort_order": 2000
