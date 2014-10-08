@@ -109,12 +109,15 @@
   h3 {
     font-size:12px;
     font-weight:bold;
-    color:$ss-color-secondary;
     line-height:1.14286;
     margin-bottom:4px;
     text-transform:uppercase;
     margin:12px 0;
     letter-spacing:1px;
+
+    > a {
+      @include color-hover($ss-color-secondary, $ss-color-headerfooterlink);
+    }
   }
 
   label {
@@ -202,36 +205,30 @@
     }
   }
 
-  .expand-contract {
-    position:absolute;
-    top:14px;
-    right:10px;
-    text-indent:-9999px;
-    overflow:hidden;
-    width:12px;
-    height:9px;
-    background:url(image-path('browse-contract.svg')) 0 0 no-repeat;
-    background-size:12px 9px;
-
-    &:hover, &:focus {
-      background-image:url(image-path('browse-contract-hover.svg'));
-    }
-  }
-
-  &.is-contracted .expand-contract {
-    background-image:url(image-path('browse-expand.svg'));
-
-    &:hover, &:focus {
-      background-image:url(image-path('browse-expand-hover.svg'));
-    }
-  }
-
   .extended {
     display:none;
   }
 
   &.is-expanded .extended {
     display:list-item;
+  }
+}
+
+.expand-contract {
+  display:block;
+  background:url(image-path('browse-contract.svg')) 100% 50% no-repeat;
+  background-size:12px 9px;
+
+  &:hover, &:focus {
+    background-image:url(image-path('browse-contract-hover.svg'));
+  }
+
+  .is-contracted & {
+    background-image:url(image-path('browse-expand.svg'));
+
+    &:hover, &:focus {
+      background-image:url(image-path('browse-expand-hover.svg'));
+    }
   }
 }
 
@@ -316,18 +313,25 @@
   }
 
   .filter-header {
-    a {
-      position:static;
+    ul, li, a {
       display:inline;
+      border:0;
     }
 
-    .expand-contract-all {
+    .expand-all, .contract-all {
       display:none;
     }
   }
 
   .expand-contract {
-    display:none;
+    background:none;
+    cursor:default;
+    //pointer-events:none;
+    @include color-hover($ss-color-secondary, $ss-color-secondary);
+
+    &:hover, &:focus {
+      background:none;
+    }
   }
 
   .filter-date {
