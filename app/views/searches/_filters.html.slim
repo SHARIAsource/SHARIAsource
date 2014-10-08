@@ -4,9 +4,15 @@
   = f.input_field :q, id: 'q-large', name: :q
   = submit_tag 'Search', name: nil
 
-.filter-header
+.filter-header.all-contracted
   h3 Filter
-  a.clear-all href='#' clear all
+  ul
+    li.clear-all
+      a href='#' clear all
+    li.expand-all
+      a href='#' expand all
+    li.contract-all
+      a href='#' contract all
 
 .filter-row.js-same-height-container
   .filter-date.js-same-height

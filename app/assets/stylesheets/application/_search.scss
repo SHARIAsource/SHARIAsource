@@ -36,14 +36,41 @@
     letter-spacing:1px;
   }
 
-  a {
+  ul {
     position:absolute;
+    top:0;
+    right:0;
+    display:block;
+    margin:0;
+    list-style:none;
+    height:32px;
+    line-height:32px;
+    font-size:12px;
+  }
+
+  li {
+    float:right;
+    height:32px;
+    line-height:32px;
+    margin-right:10px;
+    padding-right:10px;
+    border-right:1px solid $ss-color-borders;
+
+    &:first-child {
+      border-right:0;
+      margin-right:0;
+    }
+  }
+
+  a {
     display:block;
     height:32px;
     line-height:32px;
-    right:10px;
-    top:0;
     @include color-hover($ss-color-secondary, $ss-color-headerfooterlink);
+  }
+
+  &.all-expanded .expand-all, &.all-contracted .contract-all {
+    display:none;
   }
 }
 
@@ -153,8 +180,8 @@
   }
 
   select[multiple] {
+    padding:2px;
     margin-bottom:4px;
-    font-family:$ss-font-serif;
   }
 
   ul {
@@ -292,6 +319,10 @@
     a {
       position:static;
       display:inline;
+    }
+
+    .expand-contract-all {
+      display:none;
     }
   }
 
