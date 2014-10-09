@@ -18,7 +18,11 @@
     }
   })
 
-  $document.on('ajax:success', function(event, data) {
+  $document.on('ajax:beforeSend', function(event, xhr, settings) {
+    xhr.requestURL = settings.url
+  })
+
+  $document.on('ajax:success', function(event, data, status, xhr) {
     var $results
 
     if (event.target.id === 'new_search_filters') {
@@ -30,6 +34,9 @@
       $('.more-results').remove()
       $('.search-results .result-list').append($results)
       $('.search-results').append($(data).find('.more-results'))
+    }
+    if (Modernizr.history) {
+      history.replaceState({}, '', xhr.requestURL)
     }
     $document.trigger('sameheight:refresh')
   })
