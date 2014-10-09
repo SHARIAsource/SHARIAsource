@@ -8,6 +8,14 @@
     if (event.target.id === 'new_search_filters') {
       $('.search-results').addClass('loading')
     }
+    else if ($(event.target).is('.more-results a')) {
+      var $loading = $('<span class="ss-button">Loading</span>')
+      $loading.css('opacity', 0)
+      $('.more-results a').fadeOut(150, function() {
+        $(this).after($loading)
+        $loading.animate({ opacity: 0.5 }, 150)
+      })
+    }
   })
 
   $document.on('ajax:success', function(event, data) {

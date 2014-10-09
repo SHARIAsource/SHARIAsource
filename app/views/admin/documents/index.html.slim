@@ -14,7 +14,7 @@ h3 Unpublished
       th.actions Actions
     tbody
       - @documents.unpublished.each do |document|
-        tr data-processed=document.processed?
+        tr data-processed=document.processed?.to_s
           td= document.title
           td.actions
             ul.inline-list
@@ -38,7 +38,7 @@ h3 Unpublished
       th.actions Actions
     tbody
       - @documents.published.each do |document|
-        tr data-processed=document.processed?
+        tr data-processed=document.processed?.to_s
           td= document.title
           td.actions
             ul.inline-list

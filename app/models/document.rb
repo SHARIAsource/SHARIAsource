@@ -181,6 +181,7 @@ class Document < ActiveRecord::Base
     new_with_pdf = self.new_record? && self.pdf.present?
     if pdf_updated || new_with_pdf
       self.processed = false
+      self.published = false
     end
     return true
   end

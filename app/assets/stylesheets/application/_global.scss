@@ -69,7 +69,9 @@ select[multiple] {
     background:url(image-path('ss-button-matrix.png')) 0 -64px no-repeat;
     right:-7px;
   }
+}
 
+a.ss-button, input.ss-button, button.ss-button {
   &:hover, &:focus {
     color:#fff;
     background-position:0 -96px;
@@ -83,6 +85,7 @@ select[multiple] {
       background-position: 0 -160px;
     }
   }
+
 }
 
 .section-heading {
