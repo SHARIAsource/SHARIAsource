@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140930004323) do
+ActiveRecord::Schema.define(version: 20141013214704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,6 +192,16 @@ ActiveRecord::Schema.define(version: 20140930004323) do
 
   add_index "languages", ["name"], name: "index_languages_on_name", unique: true, using: :btree
 
+  create_table "miscs", force: true do |t|
+    t.string   "slug"
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "body"
+  end
+
+  add_index "miscs", ["slug"], name: "index_miscs_on_slug", using: :btree
+
   create_table "pages", force: true do |t|
     t.string  "image"
     t.integer "document_id"
@@ -229,16 +239,6 @@ ActiveRecord::Schema.define(version: 20140930004323) do
 
   add_index "regions", ["name"], name: "index_regions_on_name", using: :btree
   add_index "regions", ["parent_id"], name: "index_regions_on_parent_id", using: :btree
-
-  create_table "statics", force: true do |t|
-    t.string   "slug"
-    t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "body"
-  end
-
-  add_index "statics", ["slug"], name: "index_statics_on_slug", using: :btree
 
   create_table "tags", force: true do |t|
     t.string   "name"

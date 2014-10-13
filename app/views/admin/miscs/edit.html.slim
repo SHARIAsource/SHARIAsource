@@ -1,0 +1,6 @@
+= content_for :page_title, 'Edit Misc. Page'
+= content_for :admin_active, 'Misc. Pages'
+
+h2 Edit Misc. Page
+
+= render partial: 'admin/miscs/form', locals: { form_url: admin_misc_url(@misc) }

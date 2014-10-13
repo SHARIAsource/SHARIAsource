@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: statics
+# Table name: miscs
 #
 #  id         :integer          not null, primary key
 #  slug       :string(255)
@@ -10,7 +10,7 @@
 #  body       :text
 #
 
-class Static < ActiveRecord::Base
+class Misc < ActiveRecord::Base
   alias_attribute :name, :title
 
   validates :slug, presence: true, uniqueness: true

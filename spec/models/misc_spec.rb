@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: statics
+# Table name: miscs
 #
 #  id         :integer          not null, primary key
 #  slug       :string(255)
@@ -10,7 +10,7 @@
 #  body       :text
 #
 
-describe Static do
+describe Misc do
   it { should validate_presence_of :slug }
   it { should validate_uniqueness_of :slug }
   it { should validate_presence_of :title }
