@@ -1,0 +1,77 @@
+.collaborator {
+  float:left;
+
+  .content {
+    width:300px;
+  }
+
+  h3 {
+    font-size:28px;
+    font-weight:bold;
+    line-height:1.14286;
+    margin:4px 0 24px 0;
+
+    a {
+      @include underline-hover($ss-color-heading);
+    }
+  }
+
+  p {
+    font-size:12px;
+    line-height:1.3333;
+    margin:0;
+  }
+
+  .contributors a {
+    @include underline-hover($ss-color-bodytext);
+  }
+
+  .commentary-count {
+    font-family:$ss-font-serif;
+    font-style:italic;
+    margin-top:4px;
+  }
+}
+
+.collaborator-row {
+  @include clearfix;
+  padding-bottom:48px;
+  width:990px;
+  margin-left:-30px;
+
+  .collaborator {
+    float:left;
+    width:300px;
+    margin-left:30px;
+  }
+}
+
+.collaborator-contributors {
+  padding-bottom:48px;
+  overflow:hidden;
+
+  h3 {
+    border-top:5px solid $ss-color-borders;
+    padding-top:16px;
+    color:$ss-color-secondary;
+    font-size:12px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    font-weight:bold;
+  }
+
+  ul {
+    font-size:16px;
+    margin:16px 0 0 0;
+    list-style:none;
+
+    ul {
+      margin-top:0;
+      margin-left:16px;
+    }
+  }
+
+  a {
+    @include color-hover($ss-color-bodytext, $ss-color-heading);
+  }
+}

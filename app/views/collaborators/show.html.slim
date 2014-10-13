@@ -1,0 +1,17 @@
+= content_for :page_title, @collaborator.name
+
+.inner-wrapper
+  .inner
+    h2.section-heading.browse= @collaborator.name
+
+  .inner.document-content
+    - if @collaborator.image && @collaborator.image.url
+      .photo-caption
+        = image_tag(@collaborator.image.url, alt: @collaborator.name)
+        p= @collaborator.name
+    == @collaborator.description
+
+    .collaborator-contributors
+      h3 Contributors
+      = render partial: 'collaborators/contributor_list', locals: { contributors: @collaborator.users.hash_tree }
+        

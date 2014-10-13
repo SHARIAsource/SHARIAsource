@@ -4,5 +4,6 @@ class CollaboratorsController < ApplicationController
   end
 
   def show
+    @collaborator = Collaborator.find params[:id]
   end
 end

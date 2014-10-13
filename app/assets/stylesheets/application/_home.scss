@@ -99,40 +99,8 @@
   }
 
   .collaborator {
-    float:left;
     width:320px;
     margin-left:20px;
-  }
-
-  .content {
-    width:300px;
-  }
-
-  h3 {
-    font-size:28px;
-    font-weight:bold;
-    line-height:1.14286;
-    margin:4px 0 24px 0;
-
-    a {
-      @include underline-hover($ss-color-heading);
-    }
-  }
-
-  p {
-    font-size:12px;
-    line-height:1.3333;
-    margin:0;
-  }
-
-  .contributors a {
-    @include underline-hover($ss-color-bodytext);
-  }
-
-  .commentary-count {
-    font-family:$ss-font-serif;
-    font-style:italic;
-    margin-top:4px;
   }
 
   .more-collaborators {
