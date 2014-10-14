@@ -8,9 +8,7 @@
         = link_to featured_item.document_type.name, search_path(document_type: featured_item.document_type.self_and_descendant_ids, q: '')
         span= " :: #{featured_item.dates}"
       h3= link_to featured_item.title, url_for([featured_item.object])
-      p.byline
-        = link_to featured_item.contributor.name, contributor_path(featured_item.contributor)
-        span= featured_item.edited_by
+      = render partial: 'documents/byline', locals: { document: featured_item }
       - if featured_item.referenced_documents.present?
         p.references
           span.documents= "#{'Document'.pluralize(featured_item.referenced_documents.count)} referenced:"

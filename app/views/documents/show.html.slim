@@ -17,11 +17,15 @@
 
       h2= @document.title
 
+      = render partial: 'documents/byline', locals: { document: @document }
+
       p.byline
         - if @document.document_type.name === 'Commentary'
           = link_to @document.contributor.name, contributor_path(@document.contributor)
         - else
           span= @document.byline
+          span= ', Contributed by '
+          = link_to @document.contributor.name, contributor_path(@document.contributor)
 
   .metadata-inner
     .metadata.js-same-height-container

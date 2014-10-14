@@ -16,12 +16,7 @@ p.result-count= "#{@search.total} #{'result'.pluralize(@search.total)} for \"#{@
           span= document.dates
 
         h2= link_to document.title, document_path(document.object)
-
-        p.byline
-          - if document.document_type.name === 'Commentary'
-            = link_to document.contributor.name, contributor_path(document.contributor)
-          - else
-            span= document.byline
+        = render partial: 'documents/byline', locals: { document: document }
 
       .result-thumbnail
         = link_to(image_tag(document.thumb.url), document_path(document.object)) if document.thumb

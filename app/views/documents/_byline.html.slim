@@ -1,0 +1,6 @@
+p.byline
+  - if document.author.present?
+    span= document.byline
+    span= ', Contributed by '
+  = link_to document.contributor.name, contributor_path(document.contributor)
+
