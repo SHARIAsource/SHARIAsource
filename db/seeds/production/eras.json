@@ -17,11 +17,12 @@
     "end_year_hijri": -13,
     "start_year_gregorian": 570,
     "end_year_gregorian": 632,
-    "hijri_display": null,
+    "hijri_display": "d. 11",
+    "gregorian_display": "632",
     "parent_id": "<%= sprig_record(Era, 1).id %>"
   }, {
     "sprig_id": 3,
-    "name": "Rightly Guided Caliphs (al-Khulafāʾ al-Rāshidūn)",
+    "name": "The Sunnī Rightly Guided 4 Caliphs (al-Khulafāʾ al-Rāshidūn)",
     "start_year_hijri": 11,
     "end_year_hijri": 40,
     "start_year_gregorian": 632,
@@ -62,7 +63,7 @@
     "sprig_id": 8,
     "name": "ʿAbbāsids",
     "start_year_hijri": 132,
-    "start_year_gregorian": 750,
+    "start_year_gregorian": 749,
     "end_year_hijri": 923,
     "end_year_gregorian": 1517
   }, {
@@ -83,7 +84,7 @@
     "parent_id": "<%= sprig_record(Era, 8).id %>"
   }, {
     "sprig_id": 11,
-    "name": "Sultans in Egypt and Syria",
+    "name": "Sultans in Egypt & Syria",
     "start_year_hijri": 254,
     "start_year_gregorian": 868,
     "end_year_hijri": 692,
@@ -117,7 +118,7 @@
     "parent_id": "<%= sprig_record(Era, 11).id %>"
   }, {
     "sprig_id": 15,
-    "name": "Mirdasids (N and Central Syria)",
+    "name": "Mirdasids (N & Central Syria)",
     "start_year_hijri": 415,
     "start_year_gregorian": 1024,
     "end_year_hijri": 472,
@@ -145,7 +146,7 @@
     "parent_id": "<%= sprig_record(Era, 11).id %>"
   }, {
     "sprig_id": 18,
-    "name": "Mamlūks (Egypt and Syria)",
+    "name": "Mamlūks (Egypt, Syria)",
     "start_year_hijri": 648,
     "start_year_gregorian": 1250,
     "end_year_hijri": 692,
@@ -211,7 +212,7 @@
     "extended": true
   }, {
     "sprig_id": 26,
-    "name": "Zirids and Hammādids (Tunisia, E Algeria)",
+    "name": "Zirids & Hammādids (Tunisia, E Algeria)",
     "start_year_hijri": 361,
     "end_year_hijri": 547,
     "start_year_gregorian": 972,
@@ -228,7 +229,7 @@
     "parent_id": "<%= sprig_record(Era, 20).id %>"
   }, {
     "sprig_id": 28,
-    "name": "Almohads or al-Muwaḥiddūn (N Africa and Spain)",
+    "name": "Almohads or al-Muwaḥiddūn (N Africa, Spain)",
     "start_year_hijri": 524,
     "end_year_hijri": 668,
     "start_year_gregorian": 1130,
@@ -236,13 +237,12 @@
     "parent_id": "<%= sprig_record(Era, 20).id %>"
   }, {
     "sprig_id": 29,
-    "name": "Mulūk al-Ṭawāʾif/Reyes de Taifas (Central and Southern Spain)",
+    "name": "Mulūk al-Ṭawāʾif/Reyes de Taifas (Central & Southern Spain)",
     "start_year_hijri": 600,
     "start_year_gregorian": 1000,
     "hijri_display": "early 7th-early 9th c.",
     "gregorian_display": "early 11th-early 13th c.",
-    "parent_id": "<%= sprig_record(Era, 20).id %>",
-    "extended": true
+    "parent_id": "<%= sprig_record(Era, 20).id %>"
   }, {
     "sprig_id": 30,
     "name": "Banū Ghāniya (Balearic Islands)",
@@ -353,7 +353,7 @@
     "extended": false
   }, {
     "sprig_id": 42,
-    "name": "Hamdānids (Jazīra and N. Syria)",
+    "name": "Hamdānids (Jazīra, N. Syria)",
     "start_year_hijri": 293,
     "end_year_hijri": 394,
     "start_year_gregorian": 906,
@@ -362,7 +362,7 @@
     "extended": true
   }, {
     "sprig_id": 43,
-    "name": "Mazyadids (Ḥilla and Central Iraq)",
+    "name": "Mazyadids (Ḥilla, Central Iraq)",
     "start_year_hijri": 350,
     "end_year_hijri": 545,
     "start_year_gregorian": 961,
@@ -626,7 +626,7 @@
     "parent_id": "<%= sprig_record(Era, 68).id %>"
   }, {
     "sprig_id": 71,
-    "name": "Rulers of Kanem and Bornu (E-Central Sudan)",
+    "name": "Rulers of Kanem & Bornu (E-Central Sudan)",
     "start_year_hijri": 202,
     "start_year_gregorian": 802,
     "hijri_display": "ca. 3rd c-",
@@ -682,7 +682,7 @@
     "extended": true
   }, {
     "sprig_id": 77,
-    "name": "Āl Bū Saʿīd (Zanzibar and E Africa coastland)",
+    "name": "Āl Bū Saʿīd (Zanzibar & E Africa coastland)",
     "start_year_hijri": 1256,
     "end_year_hijri": 1383,
     "start_year_gregorian": 1840,
@@ -700,7 +700,7 @@
     "extended": true
   }, {
     "sprig_id": 79,
-    "name": "Persia & Central Asia I: Western Persia, Central Asia, Iraq, Syria",
+    "name": "Western Persia, Central Asia & the Fertile Crescent",
     "start_year_hijri": 19,
     "end_year_hijri": 1001,
     "start_year_gregorian": 640,
@@ -824,7 +824,7 @@
     "extended": true
   }, {
     "sprig_id": 91,
-    "name": "Kākūyids or Kākawayhids (Jibāl and Kurdistan)",
+    "name": "Kākūyids or Kākawayhids (Jibāl & Kurdistan)",
     "start_year_hijri": 398,
     "end_year_hijri": 443,
     "start_year_gregorian": 1008,
@@ -883,7 +883,7 @@
     "extended": true
   }, {
     "sprig_id": 97,
-    "name": "Zangids (Jazīra and Syria)",
+    "name": "Zangids (Jazīra & Syria)",
     "start_year_hijri": 521,
     "end_year_hijri": 649,
     "start_year_gregorian": 1127,
@@ -903,7 +903,7 @@
     "extended": true
   }, {
     "sprig_id": 99,
-    "name": "Luʾluʾids (Mosul and Jazīra)",
+    "name": "Luʾluʾids (Mosul & Jazīra)",
     "start_year_hijri": 631,
     "end_year_hijri": 660,
     "start_year_gregorian": 1234,
@@ -1023,7 +1023,7 @@
     "extended": true
   }, {
     "sprig_id": 111,
-    "name": "Persia & Central Asia II: Eastern Persia, Central Asia, Iraq",
+    "name": "Eastern Persia, Central Asia & the Fertile Crescent",
     "start_year_hijri": 204,
     "end_year_hijri": 609,
     "start_year_gregorian": 819,
@@ -1374,7 +1374,7 @@
     "extended": true
   }, {
     "sprig_id": 148,
-    "name": "Ḥamīd Oghullarï and Tekke Oghullarï (W-Central Anatolia, SW coastland)",
+    "name": "Ḥamīd Oghullarï & Tekke Oghullarï (W-Central Anatolia, SW coastland)",
     "start_year_hijri": 700,
     "end_year_hijri": 826,
     "start_year_gregorian": 1301,
@@ -1494,7 +1494,7 @@
     "extended": true
   }, {
     "sprig_id": 160,
-    "name": "Ottomans (NW Anatolia, Balkans, Arab lands from Iraq to Algeria and Eritrea)",
+    "name": "Ottomans (NW Anatolia, Balkans, MENA, Eritrea)",
     "start_year_hijri": 699,
     "end_year_hijri": 1342,
     "start_year_gregorian": 1299,
@@ -1504,7 +1504,7 @@
     "parent_id": "<%= sprig_record(Era, 136).id %>"
   }, {
     "sprig_id": 161,
-    "name": "Central Asia & Far East: Mongols and Successors in Mongolia, Central Asia, Eastern Europe",
+    "name": "Central Asia, Far East & Eastern Europe",
     "start_year_hijri": 602,
     "end_year_hijri": 1208,
     "start_year_gregorian": 1206,
@@ -1512,7 +1512,7 @@
     "parent_id": "<%= sprig_record(Era, 19).id %>"
   }, {
     "sprig_id": 162,
-    "name": "Mongols and later Yüan Dynasty of China (Mongolia, China)",
+    "name": "Mongols & the later Yüan Dynasty of China (Mongolia, China)",
     "start_year_hijri": 602,
     "end_year_hijri": 1043,
     "start_year_gregorian": 1206,
@@ -1529,7 +1529,7 @@
     "extended": true
   }, {
     "sprig_id": 164,
-    "name": "Il Khānids (Persia, Iraq, E and Central Anatolia)",
+    "name": "Il Khānids (Persia, Iraq, E & Central Anatolia)",
     "start_year_hijri": 654,
     "end_year_hijri": 754,
     "start_year_gregorian": 1256,
@@ -1542,8 +1542,7 @@
     "end_year_hijri": 907,
     "start_year_gregorian": 1227,
     "end_year_gregorian": 1502,
-    "parent_id": "<%= sprig_record(Era, 161).id %>",
-    "extended": true
+    "parent_id": "<%= sprig_record(Era, 161).id %>"
   }, {
     "sprig_id": 166,
     "name": "Giray Khāns (Crimea, S Ukraine)",
@@ -1555,7 +1554,7 @@
     "extended": true
   }, {
     "sprig_id": 167,
-    "name": "Khāns of Astrakhān (Lower Volga and adjacent steppelands)",
+    "name": "Khāns of Astrakhān (Lower Volga & adjacent steppelands)",
     "start_year_hijri": 871,
     "end_year_hijri": 964,
     "start_year_gregorian": 1466,
@@ -1711,7 +1710,7 @@
     "extended": true
   }, {
     "sprig_id": 184,
-    "name": "Sultans and Rulers of Mālwa (Central India)",
+    "name": "Sultans & Rulers of Mālwa (Central India)",
     "start_year_hijri": 804,
     "end_year_hijri": 969,
     "start_year_gregorian": 1402,
@@ -1796,7 +1795,7 @@
     "extended": true
   }, {
     "sprig_id": 193,
-    "name": "Arghūns (Multan and Sind)",
+    "name": "Arghūns (Multan & Sind)",
     "start_year_hijri": 926,
     "end_year_hijri": 999,
     "start_year_gregorian": 1520,
@@ -1813,7 +1812,7 @@
     "parent_id": "<%= sprig_record(Era, 176).id %>"
   }, {
     "sprig_id": 195,
-    "name": "Nawwāb-Viziers and Nawwāb-Nāẓims (Bengal)",
+    "name": "Nawwāb-Viziers & Nawwāb-Nāẓims (Bengal)",
     "start_year_hijri": 1116,
     "end_year_hijri": 1274,
     "start_year_gregorian": 1704,
@@ -1822,7 +1821,7 @@
     "extended": true
   }, {
     "sprig_id": 196,
-    "name": "Nawwāb-Viziers and Kings of Qudh (Awadh) (N India)",
+    "name": "Nawwāb-Viziers & Kings of Qudh (Awadh) (N India)",
     "start_year_hijri": 1134,
     "end_year_hijri": 1272,
     "start_year_gregorian": 1722,
@@ -1849,7 +1848,7 @@
     "extended": true
   }, {
     "sprig_id": 199,
-    "name": "Abdālī or Durrānī Rulers and Kings (Afghanistan)",
+    "name": "Abdālī or Durrānī Rulers & Kings (Afghanistan)",
     "start_year_hijri": 1160,
     "end_year_hijri": 1393,
     "start_year_gregorian": 1747,
@@ -1858,7 +1857,7 @@
     "extended": true
   }, {
     "sprig_id": 200,
-    "name": "SE Asia and Indonesia",
+    "name": "SE Asia & Indonesia",
     "start_year_hijri": 650,
     "start_year_gregorian": 1250,
     "hijri_display": "7th c.-",
