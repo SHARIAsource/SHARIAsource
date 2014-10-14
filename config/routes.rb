@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resource :search, only: [:show]
-  resources :documents, only: [:show] do
+  resources :documents, only: [:index, :show] do
     resources :tag_suggestions, path: '/tag-suggestions', only: [:create]
   end
   resources :contributors, only: [:index, :show]

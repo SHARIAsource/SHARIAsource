@@ -5,5 +5,4 @@ ul.social-links
     a.facebook href='#TODO' Facebook
   li
     a.linkedin href='#TODO' LinkedIn
-  li
-    a.rss href='#TODO' RSS
+  li= link_to 'RSS', documents_path(format: :rss), class: 'rss'

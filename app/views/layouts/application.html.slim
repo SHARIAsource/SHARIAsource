@@ -8,6 +8,8 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = yield(:head)
     = csrf_meta_tags
+    = auto_discovery_link_tag :rss, documents_url
+
 
   body
     .container
