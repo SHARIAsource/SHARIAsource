@@ -18,20 +18,9 @@ class PdfToImagesWorker
       source_page = source.pages.build(image: File.open(path),
                                        number: page.number)
       source_page.build_body
-      text = strip_control_characters(page.text || '')
-      source_page.body.text = Kramdown::Document.new(text).to_html
+      source_page.body.text = Kramdown::Document.new(page.text || '').to_html
       source_page.save!
       File.delete path
-    end
-  end
-
-  def strip_control_characters(value)
-    return value unless value.is_a? String
-    value.chars.inject("") do |str, char|
-      unless char.ascii_only? and (char.ord < 32 or char.ord == 127)
-        str << char
-      end
-      str
     end
   end
 end

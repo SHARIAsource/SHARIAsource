@@ -88,7 +88,7 @@ class Document < ActiveRecord::Base
     text :title, :source_name, :author, :translators, :editors, :publisher
 
     text :page_texts do
-      pages.map {|page| page.body.text }
+      pages.map {|page| strip_control_characters page.body.text }
     end
 
     text :body_text do
@@ -210,6 +210,16 @@ class Document < ActiveRecord::Base
         gregorian_date: self.created_at,
         gregorian_date_string: self.created_at.to_formatted_s(:F)
       )
+    end
+  end
+
+  def strip_control_characters(value)
+    return value unless value.is_a? String
+    value.chars.inject("") do |str, char|
+      unless char.ascii_only? and (char.ord < 32 or char.ord == 127)
+        str << char
+      end
+      str
     end
   end
 end

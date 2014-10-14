@@ -21,7 +21,7 @@ table {
   tr[data-processed="false"] {
     .actions {
       &:before {
-        content:'Processing...'
+        content:'Extracting Page Images...'
       }
 
       ul {
