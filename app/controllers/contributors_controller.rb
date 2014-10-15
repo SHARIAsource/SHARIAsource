@@ -8,7 +8,7 @@ class ContributorsController < ApplicationController
     @filters = SearchFilters.new contributor: [params[:id]]
     @filters.q = ''
     @languages = Language.all
-    @contributors = User.all
+    @contributors = User.joins(:documents).distinct
     @topics = Topic.all
     @themes = Theme.all
     @regions = Region.hash_tree

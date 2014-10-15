@@ -3,7 +3,7 @@ class SearchesController < ApplicationController
     @filters = SearchFilters.new permitted_params
     date_from, date_to = parse_dates
     @languages = Language.all
-    @contributors = User.all
+    @contributors = User.joins(:documents).distinct
     @topics = Topic.all
     @themes = Theme.all
     @regions = Region.hash_tree
