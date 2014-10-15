@@ -1,4 +1,9 @@
 class DocumentPresenter < BasePresenter
+  include Rails.application.routes.url_helpers
+  include ActionView::Helpers::SanitizeHelper
+  default_url_options[:host] = Rails.application.config.action_mailer.
+    default_url_options[:host]
+
   REFERENCE_LIMIT = 3
 
   def author_or_contributor
@@ -77,6 +82,30 @@ class DocumentPresenter < BasePresenter
     document_type.self_and_ancestors.pluck(:name).reverse
   end
 
+  def email_share_url
+    [
+      'mailto:?subject=SHARIAsource.com: ',
+      CGI.escape("#{title} by #{author_or_contributor}"),
+      '&body=',
+      CGI.escape("#{title} by #{author_or_contributor}"),
+      CGI.escape("\n\n"),
+      CGI.escape(document_url(@object))
+    ].join('')
+  end
+
+  def facebook_description
+    if @object.pages.present?
+      strip_tags(pages[0].body.text).slice(0, 200)
+    elsif @object.body.present?
+      strip_tags(body.text).slice(0, 200)
+    end
+  end
+
+  def facebook_share_url
+    url = CGI.escape document_url(@object)
+    "http://www.facebook.com/sharer.php?s=100;p[url]=#{url}"
+  end
+
   def other_documents
     pluralized = 'document'.pluralize(other_documents_count)
     "+ #{other_documents_count} other #{pluralized}"
@@ -100,6 +129,28 @@ class DocumentPresenter < BasePresenter
 
   def title_with_author
     [title, contributor.name].reject(&:empty?).join ' by '
+  end
+
+  def twitter_share_url
+    url = CGI.escape(document_url(@object))
+    title_length_max = 120 - author_or_contributor.length - url.length
+    shortened_title = title
+    if title.length > title_length_max
+      shortened_title = title.slice(0, title_length_max)
+      if shortened_title.slice(-1) == " "
+        shortened_title = shortened_title.trim
+      else
+        shortened_title = shortened_title.split(' ')
+        shortened_title.pop
+        shortened_title = shortened_title.join(' ')
+      end
+      shortened_title += '…'
+    end
+    [
+      "https://twitter.com/share?url=#{url}",
+      '&via=SHARIAsource&text=',
+      CGI.escape("#{shortened_title} by #{author_or_contributor}")
+    ].join('')
   end
 
   def years
