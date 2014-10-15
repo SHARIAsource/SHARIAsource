@@ -15,7 +15,6 @@ class Collaborator < ActiveRecord::Base
   include RankedModel
 
   validates :name, presence: true
-  validates :sort_order, numericality: true
   ranks :sort_order
   has_many :users, dependent: :nullify
   mount_uploader :image, CollaboratorImageUploader

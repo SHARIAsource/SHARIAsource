@@ -15,6 +15,7 @@ class Admin::CollaboratorsController < AdminController
 
   def create
     @collaborator = Collaborator.new permitted_params
+    @collaborator.sort_order_position = :last
     if @collaborator.save
       flash[:notice] = 'New collaborator created successfully'
       redirect_to admin_collaborators_path
