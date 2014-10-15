@@ -1,0 +1,28 @@
+@media print {
+  .site-nav, .banner, .footer, nav.top-bar, .image-viewer {
+    display:none !important;
+  }
+
+  .image-viewer-container {
+    height:auto !important;
+
+    .controls {
+      display:none !important;
+    }
+
+    .text {
+      width:100% !important;
+    }
+  }
+
+  .page-text {
+    display:block !important;
+    padding-bottom:1em;
+    margin-bottom:1em;
+    border-bottom:5px solid black;
+  }
+
+  a[href]:after {
+    content:'' !important;
+  }
+}
