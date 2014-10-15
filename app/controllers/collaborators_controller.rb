@@ -1,6 +1,6 @@
 class CollaboratorsController < ApplicationController
   def index
-    @collaborators = Collaborator.all
+    @collaborators = Collaborator.rank(:sort_order).all
   end
 
   def show

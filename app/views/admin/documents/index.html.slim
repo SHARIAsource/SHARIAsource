@@ -10,8 +10,9 @@ h3 Unpublished
 - if @documents.unpublished.present?
   table
     thead
-      th Name
-      th.actions Actions
+      tr
+        th Name
+        th.actions Actions
     tbody
       - @documents.unpublished.each do |document|
         tr data-processed=document.processed?.to_s

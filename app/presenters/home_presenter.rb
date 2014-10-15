@@ -7,6 +7,6 @@ class HomePresenter
       DocumentPresenter.new d
     end
     @featured = Document.published.featured.map {|d| DocumentPresenter.new d }
-    @collaborators = Collaborator.all
+    @collaborators = Collaborator.rank(:sort_order).all
   end
 end

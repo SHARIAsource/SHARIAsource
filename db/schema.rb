@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141013214704) do
+ActiveRecord::Schema.define(version: 20141015180020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,9 +34,11 @@ ActiveRecord::Schema.define(version: 20141013214704) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image"
+    t.integer  "sort_order"
   end
 
   add_index "collaborators", ["name"], name: "index_collaborators_on_name", using: :btree
+  add_index "collaborators", ["sort_order"], name: "index_collaborators_on_sort_order", using: :btree
 
   create_table "document_documents", id: false, force: true do |t|
     t.integer "document_id"

@@ -17,6 +17,7 @@ gem 'kramdown', '~> 1.4.1'
 gem 'pg', '~> 0.17.1'
 gem 'rack-timeout', '~> 0.0.4'
 gem 'rails', '4.1.6'
+gem 'ranked-model', '~> 0.4.0'
 gem 'rmagick', '~> 2.13.3', require: false
 gem 'sass-rails', '~> 4.0.3'
 gem 'sidekiq', '~> 3.2.1'

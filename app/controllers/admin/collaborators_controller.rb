@@ -3,7 +3,7 @@ class Admin::CollaboratorsController < AdminController
   before_filter :fetch_collaborator, only: [:edit, :update, :destroy]
 
   def index
-    @collaborators = Collaborator.all
+    @collaborators = Collaborator.rank(:sort_order).all
   end
 
   def new
@@ -41,6 +41,13 @@ class Admin::CollaboratorsController < AdminController
       flash[:error] = 'An error occured while trying to delete that collaborator'
     end
     redirect_to admin_collaborators_path
+  end
+
+  def sort
+    collaborator = Collaborator.find params[:collaborator_id]
+    direction = params[:sort_order_position].to_sym
+    collaborator.update_attribute :sort_order_position, direction
+    head :ok
   end
 
   protected

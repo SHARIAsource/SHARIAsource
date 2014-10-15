@@ -186,6 +186,8 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
     rake (10.3.2)
+    ranked-model (0.4.0)
+      activerecord (>= 3.1.12)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
@@ -320,6 +322,7 @@ DEPENDENCIES
   rack-livereload (~> 0.3.15)
   rack-timeout (~> 0.0.4)
   rails (= 4.1.6)
+  ranked-model (~> 0.4.0)
   rb-fsevent
   rmagick (~> 2.13.3)
   rspec-rails (~> 3.0.1)

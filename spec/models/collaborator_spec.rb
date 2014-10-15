@@ -13,6 +13,7 @@
 
 describe Collaborator do
   it { should validate_presence_of :name }
+  it { should validate_numericality_of :sort_order }
   it { should respond_to :url }
   it { should respond_to :description }
   it { should respond_to :image }

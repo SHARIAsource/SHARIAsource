@@ -2,8 +2,9 @@ h2= collection.model_name.human.pluralize
 
 table
   thead
-    th Name
-    th.actions Actions
+    tr
+      th Name
+      th.actions Actions
   tbody
     - collection.each do |item|
       tr
@@ -12,5 +13,8 @@ table
           ul.inline-list
             li= link_to t('edit'), url_for([:admin, item, action: :edit]), class: 'tiny radius pill button'
             li= link_to t('delete'), url_for([:admin, item]), class: 'tiny radius alert pill button', method: :delete, data: { confirm: t('helpers.delete_confirm', model: item.class.model_name.human)}
+            - if item.respond_to? :sort_order
+              li= link_to '▲', url_for([:admin, item, :sort]), class: 'sort-up', title: 'Move Up', data: { remote: true, method: :put, params: { sort_order_position: :up }}
+              li= link_to '▼', url_for([:admin, item, :sort]), class: 'sort-down', title: 'Move Down', data: { remote: true, method: :put, params: { sort_order_position: :down }}
 
 p= link_to t('helpers.new', model: collection.model_name.human), url_for([:admin, collection.model, action: :new]), class: 'round button'

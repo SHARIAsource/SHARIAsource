@@ -36,3 +36,7 @@ table {
     }
   }
 }
+
+tbody tr:first-child .sort-up, tbody tr:last-child .sort-down {
+  visibility:hidden;
+}
