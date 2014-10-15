@@ -1,6 +1,10 @@
 class DocumentPresenter < BasePresenter
   REFERENCE_LIMIT = 3
 
+  def author_or_contributor
+    author.present? ? author : contributor.name
+  end
+
   def alternate_authors
     if @object.alternate_authors.present?
       @object.alternate_authors
