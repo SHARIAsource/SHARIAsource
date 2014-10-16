@@ -32,6 +32,7 @@
 #  alternate_translators :string(255)
 #  alternate_years       :string(255)
 #  gregorian_date_string :string(255)
+#  summary               :text
 #
 
 class Document < ActiveRecord::Base

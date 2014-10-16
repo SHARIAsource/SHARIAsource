@@ -38,6 +38,12 @@
         @include color-hover($ss-color-bodytext, $ss-color-heading);
       }
     }
+
+    .summary {
+      margin:16px 0 0 0;
+      font-size:14px;
+      line-height:1.14286;
+    }
   }
 
   .aside-items {

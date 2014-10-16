@@ -32,6 +32,7 @@
 #  alternate_translators :string(255)
 #  alternate_years       :string(255)
 #  gregorian_date_string :string(255)
+#  summary               :text
 #
 
 describe Document do
@@ -65,6 +66,7 @@ describe Document do
   it { should respond_to :alternate_editors }
   it { should respond_to :alternate_translators }
   it { should respond_to :alternate_years }
+  it { should respond_to :summary }
 
   it { should have_and_belong_to_many :themes }
   it { should have_and_belong_to_many :topics }
