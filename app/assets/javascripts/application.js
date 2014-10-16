@@ -19,4 +19,6 @@
 //= require ./waypoints/waypoints
 //= require_tree ./application/
 
-$(function(){ $(document).foundation(); });
+$(document).on('page:change', function() {
+  $(document).foundation()
+})
