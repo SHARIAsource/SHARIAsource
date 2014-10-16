@@ -130,7 +130,7 @@ class DocumentPresenter < BasePresenter
 
   def twitter_share_url(document_url)
     url = CGI.escape(document_url)
-    title_length_max = 120 - author_or_contributor.length - url.length
+    title_length_max = 90 - author_or_contributor.length
     shortened_title = title
     if title.length > title_length_max
       shortened_title = title.slice(0, title_length_max)
