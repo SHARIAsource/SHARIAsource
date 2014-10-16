@@ -1,8 +1,5 @@
 class DocumentPresenter < BasePresenter
-  include Rails.application.routes.url_helpers
   include ActionView::Helpers::SanitizeHelper
-  default_url_options[:host] = Rails.application.config.action_mailer.
-    default_url_options[:host]
 
   REFERENCE_LIMIT = 3
 
@@ -82,14 +79,14 @@ class DocumentPresenter < BasePresenter
     document_type.self_and_ancestors.pluck(:name).reverse
   end
 
-  def email_share_url
+  def email_share_url(document_url)
     [
       'mailto:?subject=SHARIAsource.com: ',
       CGI.escape("#{title} by #{author_or_contributor}"),
       '&body=',
       CGI.escape("#{title} by #{author_or_contributor}"),
       CGI.escape("\n\n"),
-      CGI.escape(document_url(@object))
+      CGI.escape(document_url)
     ].join('')
   end
 
@@ -101,8 +98,8 @@ class DocumentPresenter < BasePresenter
     end
   end
 
-  def facebook_share_url
-    url = CGI.escape document_url(@object)
+  def facebook_share_url(document_url)
+    url = CGI.escape document_url
     "http://www.facebook.com/sharer.php?s=100;p[url]=#{url}"
   end
 
@@ -131,8 +128,8 @@ class DocumentPresenter < BasePresenter
     [title, contributor.name].reject(&:empty?).join ' by '
   end
 
-  def twitter_share_url
-    url = CGI.escape(document_url(@object))
+  def twitter_share_url(document_url)
+    url = CGI.escape(document_url)
     title_length_max = 120 - author_or_contributor.length - url.length
     shortened_title = title
     if title.length > title_length_max
