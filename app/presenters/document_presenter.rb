@@ -91,16 +91,22 @@ class DocumentPresenter < BasePresenter
   end
 
   def facebook_description
-    if @object.pages.present?
-      strip_tags(pages[0].body.text).slice(0, 200)
-    elsif @object.body.present?
-      strip_tags(body.text).slice(0, 200)
+    if pages.present?
+      strip_tags(pages[0].body.text).slice(0, 200) + '…'
+    elsif body.present?
+      strip_tags(body.text).slice(0, 200) + '…'
+    end
+  end
+
+  def facebook_image
+    if pages.present?
+      pages[0].image.thumb.url
     end
   end
 
   def facebook_share_url(document_url)
     url = CGI.escape document_url
-    "http://www.facebook.com/sharer.php?s=100;p[url]=#{url}"
+    "http://www.facebook.com/sharer/sharer.php?u=#{url}"
   end
 
   def other_documents
