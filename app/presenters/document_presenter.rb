@@ -135,7 +135,7 @@ class DocumentPresenter < BasePresenter
     if title.length > title_length_max
       shortened_title = title.slice(0, title_length_max)
       if shortened_title.slice(-1) == " "
-        shortened_title = shortened_title.trim
+        shortened_title = shortened_title.strip
       else
         shortened_title = shortened_title.split(' ')
         shortened_title.pop
