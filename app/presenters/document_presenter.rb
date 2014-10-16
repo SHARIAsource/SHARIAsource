@@ -98,12 +98,6 @@ class DocumentPresenter < BasePresenter
     end
   end
 
-  def facebook_image
-    if pages.present?
-      pages[0].image.thumb.url
-    end
-  end
-
   def facebook_share_url(document_url)
     url = CGI.escape document_url
     "http://www.facebook.com/sharer/sharer.php?u=#{url}"

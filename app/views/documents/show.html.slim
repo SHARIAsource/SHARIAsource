@@ -2,7 +2,8 @@
 - content_for :head do
   meta property='og:description' content=@document.facebook_description
   meta property='og:site_name' content='SHARIAsource'
-  meta property='og:image' content=@document.facebook_image
+  - if @document.pages.present?
+    meta property='og:image' content=image_url(@document.pages[0].image.thumb.url)
 
 .inner-wrapper.document
   .inner
