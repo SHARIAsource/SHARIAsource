@@ -1,0 +1,32 @@
+{
+  "options": {
+    "find_existing_by": ["name"]
+  },
+
+  "records": [{
+    "sprig_id": 1,
+    "name": "Book"
+  }, {
+    "sprig_id": 2,
+    "name": "Journal"
+  }, {
+    "sprig_id": 3,
+    "name": "Case"
+  }, {
+    "sprig_id": 4,
+    "name": "Fatwā"
+  }, {
+    "sprig_id": 5,
+    "name": "Manuscript"
+  }, {
+    "sprig_id": 6,
+    "name": "Bill"
+  }, {
+    "sprig_id": 7,
+    "name": "Constitution"
+  }, {
+    "sprig_id": 8,
+    "name": "Electronic Source"
+  }]
+}
+

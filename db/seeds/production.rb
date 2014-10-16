@@ -1,3 +1,3 @@
 include Sprig::Helpers
 
-sprig [Language, Topic, Theme, Region, Era, DocumentType]
+sprig [Language, Topic, Theme, Region, Era, DocumentType, ReferenceType]
