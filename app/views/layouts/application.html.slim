@@ -3,13 +3,13 @@ html
   head
     meta charset='utf-8'
     title== head_title yield(:page_title)
+    meta name='robots' content='noindex, nofollow'
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'vendor/modernizr', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = yield(:head)
     = csrf_meta_tags
     = auto_discovery_link_tag :rss, documents_url
-
 
   body
     .container
