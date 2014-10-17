@@ -43,3 +43,24 @@ label {
     font-size:.8em;
   }
 }
+
+form[data-docstyle="scan"], form[data-docstyle="scannotext"] {
+  .noscan-only {
+    display:none;
+  }
+}
+
+form[data-docstyle="scannotext"] .page-preview {
+  .page-text-preview {
+    display:none;
+  }
+  .page-image-preview {
+    float:left;
+  }
+}
+
+form[data-docstyle="noscan"] {
+  .scan-only {
+    display:none;
+  }
+}

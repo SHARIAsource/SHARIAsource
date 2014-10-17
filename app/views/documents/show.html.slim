@@ -138,37 +138,9 @@
           em none
 
 - if @document.document_style == 'scan' && @document.pages.present?
-  .inner-wrapper
-    .inner
-      .image-viewer-container
-        .text
-          - @document.pages.each do |page|
-            - if page.body.text.present?
-              .page-text== page.body.text
-            - else
-              .page-text
-                p.empty-page-text No text provided for this page.
-        .image-viewer
-          .zoom-controls
-            a#js-zoomin-link.zoomin-link href='#' title='Zoom in' Zoom In
-            a#js-zoomout-link.zoomout-link href='#' title='Zoom out' Zoom Out
-            a#js-fullscreen-link.fullscreen-link href='#' title='Fullscreen' Fullscreen
-          - @document.pages.each do |page|
-            span.image data-src=page.image.url data-width=page.width data-height=page.height
-        .controls
-          - if @document.pages.length > 1
-            a#js-first-link.first-link.disabled href='#' title='First Page' First
-            a#js-prev-link.prev-link href='#' title='Previous Page' Previous
-          span.status
-            = "Page "
-            span.current 1
-            = " of "
-            span.total X
-          - if @document.pages.length > 1
-            a#js-next-link.next-link href='#' title='Next Page' Next
-            a#js-last-link.last-link href='#' title='Last Page' Last
-    hr.source-end
-
+  = render 'documents/scan_with_text'
+- elsif @document.document_style == 'scannotext' && @document.pages.present?
+  = render 'documents/scan_no_text'
 - elsif @document.body.present?
   .inner-wrapper
     .inner.document-content

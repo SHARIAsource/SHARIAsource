@@ -278,6 +278,11 @@
   height:100%;
   border:1px solid $ss-color-secondary;
   background:#000;
+
+  &.full-width {
+    float:none;
+    width:100%;
+  }
 }
 
 .controls {

@@ -40,7 +40,9 @@ describe Document do
   it { should validate_presence_of :contributor_id }
   it { should validate_presence_of :document_type_id }
   it { should validate_presence_of :language_id }
-  it { should ensure_inclusion_of(:document_style).in_array(%w(scan noscan)) }
+  it { should ensure_inclusion_of(:document_style).in_array(
+    %w(scan noscan scannotext)
+  )}
   it { should validate_numericality_of :popular_count }
   it { should ensure_inclusion_of(:featured_position)
     .in_range(1..3)

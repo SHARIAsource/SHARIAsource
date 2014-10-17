@@ -2,9 +2,8 @@ $(document).on('page:change', function() {
   var $docStyle= $('#document_document_style')
 
   function showOrHidePanels() {
-    var isScan = $docStyle.find(':selected').val() === 'scan'
-    $('.js-scan-only').toggle(isScan)
-    $('.js-noscan-only').toggle(!isScan)
+    var style = $docStyle.find(':selected').val()
+    $('.new_document, .edit_document').attr('data-docstyle', style)
   }
 
   showOrHidePanels()

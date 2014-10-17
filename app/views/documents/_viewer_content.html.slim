@@ -1,0 +1,7 @@
+.zoom-controls
+  a#js-zoomin-link.zoomin-link href='#' title='Zoom in' Zoom In
+  a#js-zoomout-link.zoomout-link href='#' title='Zoom out' Zoom Out
+  a#js-fullscreen-link.fullscreen-link href='#' title='Fullscreen' Fullscreen
+- @document.pages.each do |page|
+  span.image data-src=page.image.url data-width=page.width data-height=page.height
+
