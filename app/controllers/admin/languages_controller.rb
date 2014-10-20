@@ -3,7 +3,7 @@ class Admin::LanguagesController < AdminController
   before_filter :fetch_language, only: [:edit, :update, :destroy]
 
   def index
-    @languages = Language.all
+    @languages = Language.rank(:sort_order)
   end
 
   def new

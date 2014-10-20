@@ -2,7 +2,7 @@ class SearchesController < ApplicationController
   def show
     @filters = SearchFilters.new permitted_params
     date_from, date_to = parse_dates
-    @languages = Language.all
+    @languages = Language.rank(:sort_order)
     @contributors = User.joins(:documents).distinct
     @topics = Topic.all
     @themes = Theme.all

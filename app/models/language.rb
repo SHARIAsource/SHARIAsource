@@ -10,7 +10,9 @@
 #
 
 class Language < ActiveRecord::Base
+  include RankedModel
+
   validates :name, presence: true, uniqueness: true
   has_many :documents
-  default_scope { order('name') }
+  ranks :sort_order
 end

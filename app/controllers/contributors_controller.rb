@@ -7,7 +7,7 @@ class ContributorsController < ApplicationController
     @contributor = UserPresenter.new(User.find(params[:id]))
     @filters = SearchFilters.new contributor: [params[:id]]
     @filters.q = ''
-    @languages = Language.all
+    @languages = Language.rank(:sort_order)
     @contributors = User.joins(:documents).distinct
     @topics = Topic.all
     @themes = Theme.all
