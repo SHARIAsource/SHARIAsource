@@ -39,7 +39,7 @@ class DocumentType < ActiveRecord::Base
 
   def self.theme_counts
     roots = DocumentType.roots.select(:id, :name)
-    themes = Theme.select(:id, :name)
+    themes = Theme.select(:id, :name, :archived)
     {
       themes: themes,
       document_types: roots,

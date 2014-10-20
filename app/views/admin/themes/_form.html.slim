@@ -2,4 +2,5 @@
   .large-6.columns
     = simple_form_for @theme, url: form_url do |f|
       = f.input :name, autofocus: true
+      = f.input :archived, boolean_style: :inline
       = f.submit class: 'round button'

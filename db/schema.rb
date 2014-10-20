@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141020184310) do
+ActiveRecord::Schema.define(version: 20141020191609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -257,8 +257,10 @@ ActiveRecord::Schema.define(version: 20141020184310) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "archived",   default: false
   end
 
+  add_index "themes", ["archived"], name: "index_themes_on_archived", using: :btree
   add_index "themes", ["name"], name: "index_themes_on_name", using: :btree
 
   create_table "topics", force: true do |t|

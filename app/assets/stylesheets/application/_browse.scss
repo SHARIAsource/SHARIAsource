@@ -53,8 +53,12 @@
       padding-left:40px;
     }
 
-    &[data-extended] {
+    &[data-extended], &[data-archived] {
       display:none;
+    }
+
+    &[data-archived].is-expanded {
+      display:table-row;
     }
   }
 

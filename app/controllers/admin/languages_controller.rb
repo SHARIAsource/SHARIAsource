@@ -15,6 +15,7 @@ class Admin::LanguagesController < AdminController
 
   def create
     @language = Language.new permitted_params
+    @language.sort_order_position = :last
     if @language.save
       flash[:notice] = 'Language created successfully'
       redirect_to admin_languages_path

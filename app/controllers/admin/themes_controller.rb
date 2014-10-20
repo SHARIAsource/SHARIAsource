@@ -46,7 +46,7 @@ class Admin::ThemesController < AdminController
   protected
 
   def permitted_params
-    params.require(:theme).permit(:name)
+    params.require(:theme).permit(:name, :archived)
   end
 
   def fetch_theme

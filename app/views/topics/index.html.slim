@@ -24,9 +24,12 @@
           - @topic_table[:document_types].length.times do |n|
             td &nbsp;
         - @theme_table[:themes].each_with_index do |theme, theme_index|
-          tr data-depth=1
+          tr data-depth=1 data-archived=theme.archived
             th scope='row'= link_to theme.name, search_path(theme: [theme.id], q: '')
             - @theme_table[:document_types].each_with_index do |document_type, document_type_index|
               - count = @theme_table[:counts][theme_index][document_type_index]
               td data-count=count
                 = link_to count, search_path(theme: [theme.id], document_type: document_type.self_and_descendant_ids, q: '')
+
+    - if @theme_table[:themes].find{|t| t.archived }
+      p= link_to 'Expand Archived Themes', '#', class: 'expand-all ss-button js-expand-themes', data: { expandtext: 'Expand Archived Themes', contracttext: 'Contract Archived Themes' }

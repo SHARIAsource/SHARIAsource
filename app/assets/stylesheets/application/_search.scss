@@ -488,6 +488,7 @@
   font-family:$ss-font-serif;
   -webkit-font-smoothing:antialiased;
   margin-top:24px;
+  padding-left:20px;
   @include color-hover($ss-color-secondary, $ss-color-headerfooterlink);
 
   &:before {
@@ -496,6 +497,7 @@
     line-height:0.625;
     vertical-align:top;
     margin-right:4px;
+    margin-left:-20px;
   }
 }
 

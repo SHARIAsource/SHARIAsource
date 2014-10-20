@@ -73,10 +73,12 @@
         = render 'searches/all'
         ul
           - @themes.each do |theme|
-            li
+            li class=('extended' if theme.archived)
               label.check-label
                 input type='checkbox' name='theme[]' value=theme.id checked=(f.object.theme && f.object.theme.include?(theme.id.to_s))
                 = theme.name
+        - if @themes.find{|t| t.archived }
+          a.filter-extend-toggle data-expandtext='Expand Archived Themes' data-contracttext='Contract Archived Themes' href='#' Expand Archived Themes
 
   .filter-regions.js-same-height
     .filter-block.is-contracted
