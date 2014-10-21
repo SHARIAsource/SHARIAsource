@@ -223,6 +223,10 @@
   a {
     @include color-hover($ss-color-secondary, $ss-color-headerfooterlink);
   }
+
+  .ss-footnote {
+    font-size:14px;
+  }
 }
 
 .image-viewer-container {
@@ -269,6 +273,10 @@
     &.active {
       display:block;
     }
+  }
+
+  .ss-footnote {
+    font-size:12px;
   }
 }
 

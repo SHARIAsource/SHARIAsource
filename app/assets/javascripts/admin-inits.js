@@ -5,11 +5,17 @@ $document.on('page:change', function() {
   $('select[multiple]').chosen()
   tinymce.init({
     selector: 'textarea.wysiwyg',
-    toolbar: 'formatselect | bold italic underline strikethrough | bullist numlist blockquote | link unlink | media table | undo redo | ltr rtl',
+    toolbar: 'formatselect styleselect | bold italic underline strikethrough superscript | bullist numlist blockquote | link unlink | media table | undo redo | ltr rtl',
     plugins: 'link table paste directionality media',
+    style_formats: [{
+      title: 'Footnote',
+      block: 'p',
+      classes: 'ss-footnote'
+    }],
     menubar: false,
     statusbar: false,
     paste_remove_styles: true,
-    height: 250
+    height: 250,
+    content_css: $('meta[name="tinymce-content-css"]').attr('content')
   })
 })
