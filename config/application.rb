@@ -21,5 +21,6 @@ module Shariasource
     # config.i18n.default_locale = :de
 
     config.autoload_paths << Rails.root.join('lib')
+    config.cache_store = :mem_cache_store
   end
 end

@@ -23,77 +23,33 @@ class DocumentType < ActiveRecord::Base
   end
 
   def self.topic_counts
-    roots = DocumentType.roots.select(:id, :name)
-    topics = Topic.select(:id, :name)
-    {
-      topics: topics,
-      document_types: roots,
-      counts: topics.map do |t|
-        roots.map do |d|
-          t.documents.published
-            .where(document_type: d.self_and_descendant_ids).count
-        end
-      end
-    }
+    Rails.cache.fetch 'document_type_topic_counts' do
+      DocumentTypeCounter.topic_counts
+    end
   end
 
   def self.theme_counts
-    roots = DocumentType.roots.select(:id, :name)
-    themes = Theme.select(:id, :name, :archived)
-    {
-      themes: themes,
-      document_types: roots,
-      counts: themes.map do |t|
-        roots.map do |d|
-          t.documents.published
-            .where(document_type: d.self_and_descendant_ids).count
-        end
-      end
-    }
+    Rails.cache.fetch 'document_type_theme_counts' do
+      DocumentTypeCounter.theme_counts
+    end
   end
 
   def self.region_counts
-    roots = DocumentType.roots.select(:id, :name)
-    regions = hash_flatten(Region.hash_tree)
-    {
-      regions: regions,
-      document_types: roots,
-      counts: regions.map do |region|
-        roots.map do |d|
-          region.documents.published
-            .where(document_type: d.self_and_descendant_ids).count
-        end
-      end
-    }
+    Rails.cache.fetch 'document_type_region_counts' do
+      DocumentTypeCounter.region_counts
+    end
   end
 
   def self.era_counts
-    roots = DocumentType.roots.select(:id, :name)
-    eras = hash_flatten(Era.hash_tree)
-    {
-      eras: eras,
-      document_types: roots,
-      counts: eras.map do |era|
-        roots.map do |d|
-          era.documents.published
-            .where(document_type: d.self_and_descendant_ids).count
-        end
-      end
-    }
+    Rails.cache.fetch 'document_type_era_counts' do
+      DocumentTypeCounter.era_counts
+    end
   end
 
   def self.contributor_counts
-    roots = DocumentType.roots.select(:id, :name)
-    contributors = User.joins(:documents).distinct
-    {
-      contributors: contributors,
-      document_types: roots,
-      counts: contributors.map do |a|
-        roots.map do |d|
-          a.documents.where(document_type: d.self_and_descendant_ids).count
-        end
-      end
-    }
+    Rails.cache.fetch 'document_type_contributor_counts' do
+      DocumentTypeCounter.contributor_counts
+    end
   end
 
   def self.commentary_id

@@ -36,6 +36,7 @@ class Admin::DocumentsController < AdminController
         @document.update! published: false
       end
       @document.index!
+      DocumentTypeCountWorker.perform_async
       redirect_to admin_documents_path
     else
       flash[:error] = @document.errors.full_messages.to_sentence
