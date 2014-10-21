@@ -1,29 +1,30 @@
 = content_for :page_title, 'Geographic Regions'
 
-.inner-wrapper
-  .inner.browse-tables
-    h2.section-heading.browse Browse Geographic Regions
+- cache 'region_count_view', skip_digest: true do
+  .inner-wrapper
+    .inner.browse-tables
+      h2.section-heading.browse Browse Geographic Regions
 
-    table.browse-table.browse-table-stick
-      thead
-        tr.browse-headings
-          th scope='col' &nbsp;
-          - @region_table[:document_types].each do |document_type|
-            th scope='col'== document_type.name.split(' ').join('<br>')
-      tbody
-        tr
-        - @region_table[:regions].each_with_index do |region, region_index|
-          tr data-depth=region.depth
-            th scope='row'= link_to region.name, search_path(region: region.self_and_descendant_ids, q: '')
-            - @region_table[:document_types].each_with_index do |document_type, document_type_index|
-              - count = @region_table[:counts][region_index][document_type_index]
-              td data-count=count
-                = link_to count, search_path(region: region.self_and_descendant_ids, document_type: document_type.self_and_descendant_ids, q: '')
-
-    .browse-headings-sticky
-      table.browse-table
+      table.browse-table.browse-table-stick
         thead
           tr.browse-headings
-            th.tcol &nbsp;
+            th scope='col' &nbsp;
             - @region_table[:document_types].each do |document_type|
-              th.tcol== document_type.name.split(' ').join('<br>')
+              th scope='col'== document_type.name.split(' ').join('<br>')
+        tbody
+          tr
+          - @region_table[:regions].each_with_index do |region, region_index|
+            tr data-depth=region.depth
+              th scope='row'= link_to region.name, search_path(region: region.self_and_descendant_ids, q: '')
+              - @region_table[:document_types].each_with_index do |document_type, document_type_index|
+                - count = @region_table[:counts][region_index][document_type_index]
+                td data-count=count
+                  = link_to count, search_path(region: region.self_and_descendant_ids, document_type: document_type.self_and_descendant_ids, q: '')
+
+      .browse-headings-sticky
+        table.browse-table
+          thead
+            tr.browse-headings
+              th.tcol &nbsp;
+              - @region_table[:document_types].each do |document_type|
+                th.tcol== document_type.name.split(' ').join('<br>')
