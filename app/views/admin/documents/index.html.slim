@@ -1,7 +1,9 @@
 = content_for :page_title, 'Documents'
 = content_for :admin_active, 'Documents'
 
-h2= @documents.model_name.human.pluralize
+header
+  h2.left= @documents.model_name.human.pluralize
+  = link_to t('helpers.new', model: Document.model_name.human), new_admin_document_path, class: 'left small round button'
 
 hr
 
@@ -51,4 +53,3 @@ h3 Unpublished
                   = f.submit 'Unpublish', class: 'tiny radius warning pill button'
               li= link_to t('delete'), admin_document_path(document), class: 'tiny radius alert pill button', method: :delete, data: { confirm: t('helpers.delete_confirm', model: Document.model_name.human)}
 
-p= link_to t('helpers.new', model: Document.model_name.human), new_admin_document_path, class: 'round button'
