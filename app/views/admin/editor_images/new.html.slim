@@ -1,0 +1,11 @@
+= content_for :page_title, 'New Image'
+= content_for :admin_active, 'Images'
+
+h2 New Image
+
+= simple_form_for [:admin, @editor_image] do |f|
+  .row
+    .large-6.columns.end
+      = f.input :name, autofocus: true
+      = f.input :image, as: :file, input_html: { accept: 'image/png,image/jpg,image/gif' }
+      = f.submit class: 'round button'

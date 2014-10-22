@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141020191609) do
+ActiveRecord::Schema.define(version: 20141021232139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,6 +156,15 @@ ActiveRecord::Schema.define(version: 20141020191609) do
   add_index "documents_topics", ["document_id", "topic_id"], name: "index_documents_topics_on_document_id_and_topic_id", unique: true, using: :btree
   add_index "documents_topics", ["document_id"], name: "index_documents_topics_on_document_id", using: :btree
   add_index "documents_topics", ["topic_id"], name: "index_documents_topics_on_topic_id", using: :btree
+
+  create_table "editor_images", force: true do |t|
+    t.string   "image"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "editor_images", ["created_at"], name: "index_editor_images_on_created_at", using: :btree
 
   create_table "era_hierarchies", id: false, force: true do |t|
     t.integer "ancestor_id",   null: false

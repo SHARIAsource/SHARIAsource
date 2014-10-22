@@ -5,3 +5,19 @@ body {
 .ss-footnote {
   font-size:10px;
 }
+
+.ss-image-right {
+  float:right;
+}
+
+.ss-image-right img {
+  margin:0 0 10px 10px;
+}
+
+.ss-image-left {
+  float:left;
+}
+
+.ss-image-left img {
+  margin:0 10px 10px 0;
+}

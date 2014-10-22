@@ -1,0 +1,13 @@
+= content_for :page_title, 'Images'
+= content_for :page_title, 'Images'
+
+header.clearfix.index-controls
+  h2.left Text Editor Images
+  = link_to 'New Image', new_admin_editor_image_path, class: 'round button right'
+
+ul.small-block-grid-6
+  - @editor_images.each do |image|
+    li.editor-image
+      = image_tag image.image.thumb.url
+      div= image.name
+      = link_to 'Delete', admin_editor_image_path(image), class: 'tiny radius alert pill button', method: :delete, data: { confirm: 'Are you sure you want to delete this image?' }

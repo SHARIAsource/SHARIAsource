@@ -1,0 +1,18 @@
+.editor-image {
+  position:relative;
+
+  div {
+    text-align:center;
+  }
+
+  .alert {
+    position:absolute;
+    right:rem-calc(12);
+    top:2px;
+    display:none;
+  }
+
+  &:hover .alert {
+    display:block;
+  }
+}

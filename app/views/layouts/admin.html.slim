@@ -6,6 +6,7 @@ html
     meta name="viewport" content="width=device-width, initial-scale=1.0"
     meta name='robots' content='noindex, nofollow'
     meta name='tinymce-content-css' content=asset_path('mce_custom.css')
+    meta name='tinymce-image-list' content=admin_editor_images_path(format: :json)
     = stylesheet_link_tag 'admin', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'vendor/modernizr', 'data-turbolinks-track' => true
     = javascript_include_tag 'admin', 'data-turbolinks-track' => true

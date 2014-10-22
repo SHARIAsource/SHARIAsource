@@ -460,3 +460,21 @@
     padding:4px 0;
   }
 }
+
+
+.ss-image-right {
+  float:right;
+
+  img {
+    margin:0 0 10px 10px;
+  }
+}
+
+
+.ss-image-left {
+  float:left;
+
+  img {
+    margin:0 10px 10px 0;
+  }
+}

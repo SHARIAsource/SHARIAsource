@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     resources :documents, only: [
       :index, :new, :edit, :create, :update, :destroy
     ]
+    resources :editor_images, only: [:index, :new, :create, :destroy]
   end
 
   authenticate :user, lambda {|u| u.is_editor? } do

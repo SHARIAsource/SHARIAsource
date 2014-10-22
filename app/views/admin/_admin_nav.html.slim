@@ -27,6 +27,8 @@ nav.top-bar data-topbar='true'
           = link_to 'Collaborators', admin_collaborators_path
         li class=('active' if admin_active == 'Misc. Pages')
           = link_to 'Misc. Pages', admin_miscs_path
+        li class=('active' if admin_active == 'Images')
+          = link_to 'Images', admin_editor_images_path
       li class=('active' if admin_active == 'Documents')
         = link_to 'Documents', admin_documents_path
     ul.right
