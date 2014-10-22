@@ -88,7 +88,7 @@
     "sort_order": 1500
   }, {
     "sprig_id": 29,
-    "name": "Report",
+    "name": "Nongovernmental Report",
     "parent_id": "<%= sprig_record(DocumentType, 12).id %>",
     "sort_order": 1600
   }, {
@@ -96,6 +96,21 @@
     "name": "Press Release",
     "parent_id": "<%= sprig_record(DocumentType, 12).id %>",
     "sort_order": 1700
+  }, {
+    "sprig_id": 31,
+    "name": "Government or Committee Report",
+    "parent_id": "<%= sprig_record(DocumentType, 12).id %>",
+    "sort_order": 1800
+  }, {
+    "sprig_id": 32,
+    "name": "Open Letter",
+    "parent_id": "<%= sprig_record(DocumentType, 12).id %>",
+    "sort_order": 1900
+  }, {
+    "sprig_id": 33,
+    "name": "Leadership Council Document",
+    "parent_id": "<%= sprig_record(DocumentType, 12).id %>",
+    "sort_order": 1950
   }, {
     "sprig_id": 18,
     "name": "Secondary Sources",
