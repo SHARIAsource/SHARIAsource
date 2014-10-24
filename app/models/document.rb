@@ -82,7 +82,6 @@ class Document < ActiveRecord::Base
   # Misc
   mount_uploader :pdf, PdfUploader
   accepts_nested_attributes_for :pages, :body
-  default_scope { order('created_at DESC') }
 
   # Solr Indexing
   searchable auto_index: false do
@@ -150,6 +149,14 @@ class Document < ActiveRecord::Base
 
   def self.featured
     where.not(featured_position: nil).order(:featured_position)
+  end
+
+  def self.latest
+    order('created_at DESC')
+  end
+
+  def self.popular
+    order('popular_count DESC')
   end
 
   def self.published
