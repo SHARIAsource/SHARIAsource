@@ -32,7 +32,7 @@
       .panel
         = f.association :reference_type, collection: ReferenceType.all
         = f.input :alternate_authors, label: 'Authors (long form)'
-        = f.input :alternate_titles
+        = f.input :alternate_titles, label: 'Title (long form)'
         = f.input :alternate_editors, label: 'Editors (long form)'
         = f.input :alternate_translators, label: 'Translators (long form)'
         = f.input :publisher_location, label: 'City of Publication'
