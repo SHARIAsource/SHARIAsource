@@ -2,7 +2,7 @@ class Admin::DocumentsController < AdminController
   before_filter :fetch_document, only: [:edit, :update, :destroy]
 
   def index
-    @documents = Document.where(
+    @documents = Document.latest.where(
       contributor_id: current_user.self_and_descendant_ids
     )
   end
