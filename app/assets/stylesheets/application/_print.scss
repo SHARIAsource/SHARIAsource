@@ -1,6 +1,36 @@
 @media print {
-  .site-nav, .banner, .footer, nav.top-bar, .image-viewer {
+  .site-nav, .footer, nav.top-bar, .image-viewer {
     display:none !important;
+  }
+
+  .banner {
+    border:none !important;
+
+    form {
+      display:none !important;
+    }
+
+    .banner-logo {
+      width:auto !important;
+      height:auto !important;
+      overflow:visible !important;
+      text-indent:0 !important;
+      margin:0 !important;
+      text-decoration:none !important;
+    }
+
+    .inner-wrapper {
+      height:auto !important;
+    }
+
+    .inner {
+      padding-top:0 !important;
+    }
+
+    h1, h2 {
+      font-family:$ss-font-sans !important;
+      font-weight:bold !important;
+    }
   }
 
   .image-viewer-container {
