@@ -1,6 +1,4 @@
 class EditorMailer < ActionMailer::Base
-  default from: ENV['SS_DEFAULT_FROM'] || 'noreply@shariasource.com'
-
   def tag_suggestion_email(document, suggestions)
     @document = document
     @suggestions = suggestions
