@@ -21,7 +21,7 @@
     .large-4.columns
       = f.input :gregorian_date_string, placeholder: 'YYYY-MM-DD', label: 'Gregorian Date'
     .large-4.columns
-      = f.input :featured_position, input_html: { max: 3 }
+      = f.input :featured_position, input_html: { min:1, max: 3 }
 
   .row
     .large-12.columns
