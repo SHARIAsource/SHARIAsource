@@ -27,6 +27,18 @@
   }, {
     "sprig_id": 8,
     "name": "Electronic Source"
+  }, {
+    "sprig_id": 9,
+    "name": "Literary Source"
+  }, {
+    "sprig_id": 10,
+    "name": "Incident/Episode"
+  }, {
+    "sprig_id": 11,
+    "name": "Chronicle"
+  }, {
+    "sprig_id": 12,
+    "name": "Biographical Dictionary"
   }]
 }
 
