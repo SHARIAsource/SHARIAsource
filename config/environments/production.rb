@@ -87,7 +87,7 @@ Rails.application.configure do
   config.action_mailer.smtp_options = {
     address: ENV['SS_SMTP_ADDRESS'],
     port: ENV['SS_SMTP_PORT'],
-    user_name: ENV['SS_SMTP_USERNAME']
+    user_name: ENV['SS_SMTP_USERNAME'],
     password: ENV['SS_SMTP_PASSWORD']
   }
   config.action_mailer.default_options = {
