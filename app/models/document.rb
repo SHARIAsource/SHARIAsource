@@ -148,7 +148,7 @@ class Document < ActiveRecord::Base
   end
 
   def self.featured
-    where.not(featured_position: nil).order(:featured_position)
+    where.not(featured_position: nil).order(:featured_position).limit(3)
   end
 
   def self.latest
