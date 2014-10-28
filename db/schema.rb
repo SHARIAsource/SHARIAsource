@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141028200854) do
+ActiveRecord::Schema.define(version: 20141028222750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20141028200854) do
     t.string   "gregorian_date_string"
     t.text     "summary"
     t.datetime "published_at"
+    t.text     "citation"
   end
 
   add_index "documents", ["contributor_id"], name: "index_documents_on_contributor_id", using: :btree

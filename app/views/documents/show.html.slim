@@ -73,6 +73,10 @@
             li
               strong Permission Granted By:
               span= @document.permission_giver
+          - if @document.citation.present?
+            li
+              strong Citation:
+              span= @document.citation
 
       .meta-column.js-same-height
         ul

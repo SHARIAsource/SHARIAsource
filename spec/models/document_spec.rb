@@ -70,6 +70,7 @@ describe Document do
   it { should respond_to :alternate_translators }
   it { should respond_to :alternate_years }
   it { should respond_to :summary }
+  it { should respond_to :citation }
 
   it { should have_and_belong_to_many :themes }
   it { should have_and_belong_to_many :topics }
