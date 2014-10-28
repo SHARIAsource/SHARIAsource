@@ -2,9 +2,13 @@ class Admin::DocumentsController < AdminController
   before_filter :fetch_document, only: [:edit, :update, :destroy]
 
   def index
-    @documents = Document.latest.where(
-      contributor_id: current_user.self_and_descendant_ids
-    )
+    if current_user.is_editor
+      @documents = Document.latest
+    else
+      @documents = Document.latest.where(
+        contributor_id: current_user.self_and_descendant_ids
+      )
+    end
   end
 
   def new
@@ -67,6 +71,9 @@ class Admin::DocumentsController < AdminController
                  pages_attributes: [
                    :id, body_attributes: [:id, :text]
                  ]]
+    if current_user.is_editor
+      whitelist << :contributor_id
+    end
     unless current_user.requires_approval?
       whitelist << :published
     end
@@ -76,7 +83,7 @@ class Admin::DocumentsController < AdminController
   def fetch_document
     @document = Document.find params[:id]
     ids = current_user.self_and_descendant_ids
-    unless ids.include? @document.contributor.id
+    unless current_user.is_editor || ids.include?(@document.contributor.id)
       redirect_to admin_documents_path
     end
   end
