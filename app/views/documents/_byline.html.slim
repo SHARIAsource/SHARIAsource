@@ -1,6 +1,7 @@
 p.byline
-  - if document.author.present? && document.author != document.contributor.name
+  - if !document.posted_by_author?
     span= document.byline
     span= ', Posted by '
   = link_to document.contributor.name, contributor_path(document.contributor)
-
+  - if !document.posted_by_author?
+    span= ", #{document.published_at.to_formatted_s(:dd_month_yyyy)}"

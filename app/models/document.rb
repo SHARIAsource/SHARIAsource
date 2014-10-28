@@ -42,6 +42,7 @@ class Document < ActiveRecord::Base
   before_validation :convert_dates
   before_save :set_processed
   before_save :prepend_http_to_source_url
+  before_save :set_published_at
   after_save :use_created_at
   after_commit :generate_images
 
@@ -152,7 +153,7 @@ class Document < ActiveRecord::Base
   end
 
   def self.latest
-    order('created_at DESC')
+    order('published_at DESC')
   end
 
   def self.popular
@@ -228,6 +229,12 @@ class Document < ActiveRecord::Base
         str << char
       end
       str
+    end
+  end
+
+  def set_published_at
+    if self.published && self.published_changed?
+      self.published_at = Time.now
     end
   end
 end

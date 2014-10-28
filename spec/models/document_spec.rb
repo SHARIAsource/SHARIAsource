@@ -65,6 +65,7 @@ describe Document do
   it { should respond_to :popular_count }
   it { should respond_to :permission_giver }
   it { should respond_to :published }
+  it { should respond_to :published_at }
   it { should respond_to :alternate_editors }
   it { should respond_to :alternate_translators }
   it { should respond_to :alternate_years }

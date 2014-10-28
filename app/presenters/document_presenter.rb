@@ -114,6 +114,10 @@ class DocumentPresenter < BasePresenter
     @object.referenced_documents.count - REFERENCE_LIMIT
   end
 
+  def posted_by_author?
+    author.blank? || author == contributor.name
+  end
+
   def referenced_documents
     @object.referenced_documents.map do |document|
       DocumentPresenter.new document
