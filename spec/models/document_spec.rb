@@ -46,14 +46,19 @@ describe Document do
     %w(scan noscan scannotext)
   )}
   it { should validate_numericality_of :popular_count }
+  it { should validate_numericality_of(:gregorian_year).allow_nil }
+  it { should validate_numericality_of(:gregorian_month).allow_nil }
+  it { should validate_numericality_of(:gregorian_day).allow_nil }
   it { should ensure_inclusion_of(:featured_position)
     .in_range(1..3)
     .with_message('Must be between 1 and 3') }
 
   it { should respond_to :pdf }
-  it { should respond_to :gregorian_date_string }
   it { should respond_to :gregorian_date }
   it { should respond_to :lunar_hijri_date }
+  it { should respond_to :lunar_hijri_year }
+  it { should respond_to :lunar_hijri_month }
+  it { should respond_to :lunar_hijri_day }
   it { should respond_to :source_name }
   it { should respond_to :source_url }
   it { should respond_to :author }

@@ -59,19 +59,29 @@ class DocumentPresenter < BasePresenter
   end
 
   def dates
-    result = []
-    if lunar_hijri_date.present?
-      lhd = lunar_hijri_date
-      month = I18n.translate('date.month_names', locale: :en_ar)[lhd.month.to_i]
-      result << "#{lhd.day} #{month} #{lhd.year}"
-    end
-    if gregorian_date.present?
-      result << gregorian_date.to_s(:dd_month_yyyy)
-    end
-    if result.present?
-      result.join(' / ')
+    gregorian = []
+    lunar_hijri = []
+    if gregorian_year.present?
+      gregorian << gregorian_year
+      lunar_hijri << lunar_hijri_year
+      if gregorian_month.present?
+        gregorian.unshift(I18n.translate('date.month_names',
+                                    locale: :en)[gregorian_month])
+        lunar_hijri.unshift(I18n.translate('date.month_names',
+                                      locale: :en_ar)[lunar_hijri_month])
+        if gregorian_day.present?
+          gregorian.unshift(gregorian_day)
+          lunar_hijri.unshift(lunar_hijri_day)
+        end
+      end
+      "#{lunar_hijri.join(' ')} / #{gregorian.join(' ')}"
     else
-      created_at
+      month = I18n.translate('date.month_names',
+                             locale: :en_ar)[lunar_hijri_month]
+      [
+        "#{lunar_hijri_year} #{month} #{lunar_hijri_year}",
+        gregorian_date.to_s(:dd_month_yyyy)
+      ].join(' / ')
     end
   end
 

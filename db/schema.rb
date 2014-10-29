@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141028222750) do
+ActiveRecord::Schema.define(version: 20141029222239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,7 +75,6 @@ ActiveRecord::Schema.define(version: 20141028222750) do
     t.integer  "document_type_id"
     t.string   "pdf"
     t.boolean  "processed",             default: true
-    t.date     "gregorian_date"
     t.string   "source_name"
     t.string   "source_url"
     t.string   "author"
@@ -99,10 +98,12 @@ ActiveRecord::Schema.define(version: 20141028222750) do
     t.string   "alternate_editors"
     t.string   "alternate_translators"
     t.string   "alternate_years"
-    t.string   "gregorian_date_string"
     t.text     "summary"
     t.datetime "published_at"
     t.text     "citation"
+    t.integer  "gregorian_year"
+    t.integer  "gregorian_month"
+    t.integer  "gregorian_day"
   end
 
   add_index "documents", ["contributor_id"], name: "index_documents_on_contributor_id", using: :btree

@@ -41,11 +41,9 @@ class Document < ActiveRecord::Base
   alias_attribute :name, :title
 
   # Callbacks
-  before_validation :convert_dates
   before_save :set_processed
   before_save :prepend_http_to_source_url
   before_save :set_published_at
-  after_save :use_created_at
   after_commit :generate_images
 
   # Validations
@@ -54,6 +52,9 @@ class Document < ActiveRecord::Base
   validates :document_type_id, presence: true
   validates :language_id, presence: true
   validates :popular_count, numericality: true
+  validates :gregorian_year, numericality: true, allow_nil: true
+  validates :gregorian_month, numericality: true, allow_nil: true
+  validates :gregorian_day, numericality: true, allow_nil: true
   validates :featured_position, allow_blank: true, inclusion: {
     in: 1..3,
     message: 'Must be between 1 and 3'
@@ -170,8 +171,28 @@ class Document < ActiveRecord::Base
     where(published: false)
   end
 
+  def gregorian_date
+    if gregorian_year
+      Date.new(gregorian_year, gregorian_month || 1, gregorian_day || 1)
+    else
+      created_at
+    end
+  end
+
   def lunar_hijri_date
     gregorian_date.to_time.to_hijri
+  end
+
+  def lunar_hijri_day
+    lunar_hijri_date.day
+  end
+
+  def lunar_hijri_month
+    lunar_hijri_date.month
+  end
+
+  def lunar_hijri_year
+    lunar_hijri_date.year
   end
 
   def thumb
@@ -201,26 +222,6 @@ class Document < ActiveRecord::Base
     return if self.source_url.blank?
     unless self.source_url =~ /^https?:\/\//
       self.source_url = "http://#{self.source_url}"
-    end
-  end
-
-  def convert_dates
-    if self.gregorian_date_string.present?
-      begin
-        date = self.gregorian_date_string.split('-')[0..2].map(&:to_i)
-        self.gregorian_date = Date.new(*date).to_s
-      rescue ArgumentError
-        self.errors['gregorian_date_string'] << 'Invalid Date'
-      end
-    end
-  end
-
-  def use_created_at
-    if self.gregorian_date_string.blank?
-      self.update(
-        gregorian_date: self.created_at,
-        gregorian_date_string: self.created_at.to_formatted_s(:F)
-      )
     end
   end
 
