@@ -7,6 +7,7 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  is_rtl     :boolean
+#  sort_order :integer
 #
 
 describe Language do

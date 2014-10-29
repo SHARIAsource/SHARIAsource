@@ -33,6 +33,8 @@
 #  alternate_years       :string(255)
 #  gregorian_date_string :string(255)
 #  summary               :text
+#  published_at          :datetime
+#  citation              :text
 #
 
 class Document < ActiveRecord::Base

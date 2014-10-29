@@ -6,6 +6,7 @@
 #  name       :string(255)
 #  created_at :datetime
 #  updated_at :datetime
+#  archived   :boolean          default(FALSE)
 #
 
 class Theme < ActiveRecord::Base
