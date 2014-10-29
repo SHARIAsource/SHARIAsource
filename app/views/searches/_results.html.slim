@@ -1,6 +1,7 @@
 - f = locals[:f]
 
-p.result-count= "#{@search.total} #{'result'.pluralize(@search.total)} for \"#{@filters.q}\""
+p.result-count
+  span.count= "#{@search.total} #{'result'.pluralize(@search.total)} for \"#{@filters.q}\""
 
 = f.input :sort, collection: [['Best Match', ''], ['Recent First', 'recent'], ['Oldest First', 'oldest'], ['Author Last Name', 'author']], include_blank: false, label: 'Sort by:', input_html: { name: 'sort' }
 

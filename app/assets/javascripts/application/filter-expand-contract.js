@@ -1,4 +1,5 @@
 (function() {
+  var $document = $(document)
   var $filterHeader
 
   function checkExpandContractAll() {
@@ -11,7 +12,7 @@
     }
   }
 
-  $(document).on('click', '.filter-block .expand-contract', function(event) {
+  $document.on('click', '.filter-block .expand-contract', function(event) {
     var $block = $(this).closest('.filter-block')
 
     if ($('.search-full-width').length) {
@@ -48,5 +49,6 @@
     $expand.removeClass('is-contracted')
     $expand.find('.filter-content').slideToggle(300)
     checkExpandContractAll()
+    $document.trigger('filtersummary:refresh')
   })
 }())

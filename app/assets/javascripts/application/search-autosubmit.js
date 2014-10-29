@@ -38,6 +38,7 @@
     if (Modernizr.history) {
       history.replaceState({}, '', xhr.requestURL)
     }
+    $document.trigger('filtersummary:refresh')
     $document.trigger('sameheight:refresh')
   })
 
