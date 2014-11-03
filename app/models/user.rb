@@ -41,7 +41,8 @@ class User < ActiveRecord::Base
   validates :last_name, presence: true
 
   belongs_to :collaborator
-  has_many :documents, foreign_key: 'contributor_id'
+  has_many :documents, foreign_key: 'contributor_id',
+    dependent: :restrict_with_error
 
   mount_uploader :avatar, ImageUploader
   default_scope { order('last_name_without_articles') }

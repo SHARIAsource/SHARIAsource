@@ -1,6 +1,6 @@
 class Admin::UsersController < AdminController
   before_filter :ensure_editor!
-  before_filter :fetch_user, only: [:edit, :update]
+  before_filter :fetch_user, only: [:edit, :update, :destroy]
 
   def index
     @users = User.order(:last_name_without_articles)
@@ -31,6 +31,18 @@ class Admin::UsersController < AdminController
     @user.update permitted_params
     flash[:notice] = 'Account updated successfully'
     redirect_to admin_users_path
+  end
+
+  def destroy
+    if @user.destroy
+      redirect_to admin_users_path, flash: {
+        notice: 'Account deleted successfully'
+      }
+    else
+      redirect_to admin_users_path, flash: {
+        alert: @user.errors.full_messages.to_sentence
+      }
+    end
   end
 
   protected
