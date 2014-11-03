@@ -28,6 +28,9 @@ class Admin::UsersController < AdminController
   end
 
   def update
+    if params[:force_password_reset]
+      @user.send_reset_password_instructions
+    end
     @user.update permitted_params
     flash[:notice] = 'Account updated successfully'
     redirect_to admin_users_path
