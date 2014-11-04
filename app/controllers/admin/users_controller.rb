@@ -31,9 +31,13 @@ class Admin::UsersController < AdminController
     if params[:force_password_reset]
       @user.send_reset_password_instructions
     end
-    @user.update permitted_params
-    flash[:notice] = 'Account updated successfully'
-    redirect_to admin_users_path
+    if @user.update permitted_params
+      flash[:notice] = 'Account updated successfully'
+      redirect_to admin_users_path
+    else
+      flash[:error] = @user.errors.full_messages.to_sentence
+      render :edit
+    end
   end
 
   def destroy
