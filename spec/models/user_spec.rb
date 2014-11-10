@@ -31,6 +31,7 @@ describe User do
   it { should respond_to :requires_approval? }
   it { should respond_to :about }
   it { should respond_to :avatar }
+  it { should respond_to :disabled? }
   it { should validate_presence_of :first_name }
   it { should validate_presence_of :last_name }
   it { should belong_to :collaborator }

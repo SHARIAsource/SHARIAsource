@@ -47,6 +47,12 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, ImageUploader
   default_scope { order('last_name_without_articles') }
 
+  # This overrides Devise default implementation to disable accounts with
+  # out custom disabled flag
+  def active_for_authentication?
+    super && !disabled?
+  end
+
   def name
     "#{first_name} #{last_name}"
   end

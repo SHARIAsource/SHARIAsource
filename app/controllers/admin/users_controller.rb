@@ -57,7 +57,7 @@ class Admin::UsersController < AdminController
   def permitted_params
     params.require(:user).permit(:is_editor, :requires_approval, :first_name,
                                  :last_name, :about, :avatar, :email,
-                                 :collaborator_id, :parent_id)
+                                 :collaborator_id, :parent_id, :disabled)
   end
 
   def fetch_user
