@@ -5,7 +5,7 @@
       = f.input :first_name
       = f.input :last_name
       = f.association :collaborator, collection: Collaborator.all, include_blank: 'None'
-      = f.association :parent, collection: User.where.not(id: @user.self_and_descendant_ids), include_blank: 'None', label: 'Supervisor'
+      = f.association :parent, collection: User.where.not(id: @user.self_and_descendant_ids), include_blank: false, label: 'Supervisor'
       fieldset
         legend Permissions
         = f.input :is_editor, boolean_style: :inline, label: 'Editor'
