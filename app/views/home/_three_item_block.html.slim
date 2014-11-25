@@ -10,8 +10,8 @@
       h3= link_to featured_item.title, url_for([featured_item.object])
       = render partial: 'documents/byline', locals: { document: featured_item }
       - if featured_item.summary.present?
-        p.summary= featured_item.summary
-      - if featured_item.referenced_documents.present?
+        .summary== featured_item.summary
+      - elsif featured_item.referenced_documents.present?
         p.references
           span.documents= "#{'Document'.pluralize(featured_item.referenced_documents.count)} referenced:"
           - featured_item.referenced_documents.each_with_index do |document, i|

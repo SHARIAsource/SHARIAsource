@@ -87,6 +87,55 @@
   h2, .byline {
     max-width:720px;
   }
+
+  .summary {
+    margin-bottom:24px;
+    position:relative;
+
+    &[title] {
+      padding-bottom:28px;
+    }
+
+    p {
+      font-family:$ss-font-serif;
+      font-size:14px;
+      line-height:1.14286;
+      margin:16px 0 0 0;
+
+      a {
+        @include color-hover($ss-color-heading, $ss-color-heading);
+      }
+    }
+
+    .expand, .collapse a {
+      position:absolute;
+      left:0;
+      bottom:0;
+      font-family:$ss-font-serif;
+      margin-top:16px;
+      font-size:14px;
+      font-weight:bold;
+      -webkit-font-smoothing:antialiased;
+      padding-left:20px;
+      @include color-hover($ss-color-secondary, $ss-color-headerfooterlink);
+
+      &:before {
+        content:'»';
+        font-size:2em;
+        line-height:0.5;
+        vertical-align:top;
+        margin-right:4px;
+        margin-left:-20px;
+      }
+    }
+
+    .collapse {
+      margin:0;
+      a {
+        @include color-hover($ss-color-bodytext, $ss-color-heading);
+      }
+    }
+  }
 }
 
 .metadata-inner {

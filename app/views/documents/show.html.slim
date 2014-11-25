@@ -23,6 +23,9 @@
       h2= @document.title
       = render partial: 'documents/byline', locals: { document: @document }
 
+      - if @document.summary.present?
+        .summary== @document.summary
+
   .metadata-inner
     .metadata.js-same-height-container
       .meta-column.first.js-same-height

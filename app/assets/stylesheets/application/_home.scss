@@ -25,9 +25,9 @@
 
     .references {
       margin:4px 0 0 0;
-      font-size:12px;
+      font-size:14px;
       font-family:$ss-font-serif;
-      line-height:1.33333;
+      line-height:1.14286;
 
       .documents {
         font-style:italic;
@@ -39,10 +39,19 @@
       }
     }
 
-    .summary {
-      margin:16px 0 0 0;
+    .summary p {
+      margin:4px 0 0 0;
+      font-family:$ss-font-serif;
       font-size:14px;
       line-height:1.14286;
+
+      & + p {
+        display:none;
+      }
+
+      a {
+        @include color-hover($ss-color-heading, $ss-color-heading);
+      }
     }
   }
 

@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require openseadragon
 //= require ./jquery.ba-throttle-debounce
+//= require ./trunk8
 //= require ./waypoints/waypoints
 //= require_tree ./application/
 
