@@ -24,6 +24,7 @@
 #  about                      :text
 #  avatar                     :string(255)
 #  requires_approval          :boolean          default(FALSE)
+#  disabled                   :boolean
 #
 
 describe User do

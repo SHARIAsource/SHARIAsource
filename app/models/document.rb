@@ -7,7 +7,6 @@
 #  document_type_id      :integer
 #  pdf                   :string(255)
 #  processed             :boolean          default(TRUE)
-#  gregorian_date        :date
 #  source_name           :string(255)
 #  source_url            :string(255)
 #  author                :string(255)
@@ -31,10 +30,12 @@
 #  alternate_editors     :string(255)
 #  alternate_translators :string(255)
 #  alternate_years       :string(255)
-#  gregorian_date_string :string(255)
 #  summary               :text
 #  published_at          :datetime
 #  citation              :text
+#  gregorian_year        :integer
+#  gregorian_month       :integer
+#  gregorian_day         :integer
 #
 
 class Document < ActiveRecord::Base
