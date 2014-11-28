@@ -1,3 +1,6 @@
+# This is not being used currently to get around workers
+# not reading ENV variables used to set host option in
+# mailer template renderings.
 class TagSuggestionMailWorker
   include Sidekiq::Worker
 
