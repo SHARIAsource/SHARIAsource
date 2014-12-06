@@ -1,80 +1,1493 @@
 {
   "options": {
-    "find_existing_by": ["name"]
+    "find_existing_by": [
+      "name"
+    ]
   },
-
-  "records": [{
-    "sprig_id": 1,
-    "name": "Africa"
-  }, {
-    "sprig_id": 2,
-    "name": "Americas"
-  }, {
-    "sprig_id": 3,
-    "name": "Asia"
-  }, {
-    "sprig_id": 4,
-    "name": "Australia & New Zealand"
-  }, {
-    "sprig_id": 5,
-    "name": "Europe"
-  }, {
-    "sprig_id": 6,
-    "name": "Middle East & North Africa"
-  }, {
-    "sprig_id": 7,
-    "name": "Turkey"
-  }, {
-    "sprig_id": 8,
-    "name": "East Africa",
-    "parent_id": "<%= sprig_record(Region, 1).id %>"
-  }, {
-    "sprig_id": 9,
-    "name": "North Africa",
-    "parent_id": "<%= sprig_record(Region, 1).id %>"
-  }, {
-    "sprig_id": 10,
-    "name": "Southern Africa",
-    "parent_id": "<%= sprig_record(Region, 1).id %>"
-  }, {
-    "sprig_id": 11,
-    "name": "Subsaharan West Africa",
-    "parent_id": "<%= sprig_record(Region, 1).id %>"
-  }, {
-    "sprig_id": 12,
-    "name": "North America",
-    "parent_id": "<%= sprig_record(Region, 2).id %>"
-  }, {
-    "sprig_id": 13,
-    "name": "Central America & Caribbean",
-    "parent_id": "<%= sprig_record(Region, 2).id %>"
-  }, {
-    "sprig_id": 14,
-    "name": "South America",
-    "parent_id": "<%= sprig_record(Region, 2).id %>"
-  }, {
-    "sprig_id": 15,
-    "name": "Central Asia & Russia",
-    "parent_id": "<%= sprig_record(Region, 3).id %>"
-  }, {
-    "sprig_id": 16,
-    "name": "East Asia: China, Japan, etc.",
-    "parent_id": "<%= sprig_record(Region, 3).id %>"
-  }, {
-    "sprig_id": 17,
-    "name": "South Asia: India, Pakistan, etc.",
-    "parent_id": "<%= sprig_record(Region, 3).id %>"
-  }, {
-    "sprig_id": 18,
-    "name": "Southeast Asia: Indonesia, Malaysia, etc.",
-    "parent_id": "<%= sprig_record(Region, 3).id %>"
-  }, {
-    "sprig_id": 19,
-    "name": "Eastern Europe (Balkans, etc.)",
-    "parent_id": "<%= sprig_record(Region, 5).id %>"
-  }, {
-    "sprig_id": 20,
-    "name": "Western Europe (EU)",
-    "parent_id": "<%= sprig_record(Region, 5).id %>"
-  }]
+  "records": [
+    {
+      "sprig_id": 1,
+      "name": "America"
+    },
+    {
+      "sprig_id": 2,
+      "name": "Europe"
+    },
+    {
+      "sprig_id": 3,
+      "name": "Africa"
+    },
+    {
+      "sprig_id": 4,
+      "name": "Asia"
+    },
+    {
+      "sprig_id": 5,
+      "name": "North America",
+      "parent_id": "<%= sprig_record(Region, 1).id %>"
+    },
+    {
+      "sprig_id": 6,
+      "name": "Central America & Caribbean",
+      "parent_id": "<%= sprig_record(Region, 1).id %>"
+    },
+    {
+      "sprig_id": 7,
+      "name": "South America",
+      "parent_id": "<%= sprig_record(Region, 1).id %>"
+    },
+    {
+      "sprig_id": 8,
+      "name": "Western Europe",
+      "parent_id": "<%= sprig_record(Region, 2).id %>"
+    },
+    {
+      "sprig_id": 9,
+      "name": "Central & Eastern Europe",
+      "parent_id": "<%= sprig_record(Region, 2).id %>"
+    },
+    {
+      "sprig_id": 10,
+      "name": "North Africa",
+      "parent_id": "<%= sprig_record(Region, 3).id %>"
+    },
+    {
+      "sprig_id": 11,
+      "name": "West Africa",
+      "parent_id": "<%= sprig_record(Region, 3).id %>"
+    },
+    {
+      "sprig_id": 12,
+      "name": "Central Africa",
+      "parent_id": "<%= sprig_record(Region, 3).id %>"
+    },
+    {
+      "sprig_id": 13,
+      "name": "East Africa",
+      "parent_id": "<%= sprig_record(Region, 3).id %>"
+    },
+    {
+      "sprig_id": 14,
+      "name": "Southern Africa",
+      "parent_id": "<%= sprig_record(Region, 3).id %>"
+    },
+    {
+      "sprig_id": 15,
+      "name": "Middle East"
+    },
+    {
+      "sprig_id": 16,
+      "name": "Central & Western Asia",
+      "parent_id": "<%= sprig_record(Region, 4).id %>"
+    },
+    {
+      "sprig_id": 17,
+      "name": "East Asia",
+      "parent_id": "<%= sprig_record(Region, 4).id %>"
+    },
+    {
+      "sprig_id": 18,
+      "name": "South Asia",
+      "parent_id": "<%= sprig_record(Region, 4).id %>"
+    },
+    {
+      "sprig_id": 19,
+      "name": "Southeast Asia",
+      "parent_id": "<%= sprig_record(Region, 4).id %>"
+    },
+    {
+      "sprig_id": 20,
+      "name": "The Pacific",
+      "parent_id": "<%= sprig_record(Region, 4).id %>"
+    },
+    {
+      "sprig_id": 21,
+      "name": "IGOs"
+    },
+    {
+      "sprig_id": 22,
+      "name": "Canada",
+      "parent_id": "<%= sprig_record(Region, 5).id %>"
+    },
+    {
+      "sprig_id": 23,
+      "name": "United States",
+      "parent_id": "<%= sprig_record(Region, 5).id %>"
+    },
+    {
+      "sprig_id": 24,
+      "name": "Mexico",
+      "parent_id": "<%= sprig_record(Region, 5).id %>"
+    },
+    {
+      "sprig_id": 25,
+      "name": "Anguilla",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 26,
+      "name": "Antigua and Barbuda",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 27,
+      "name": "Aruba",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 28,
+      "name": "Bahamas",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 29,
+      "name": "Barbados",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 30,
+      "name": "Belize",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 31,
+      "name": "Bermuda",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 32,
+      "name": "Cayman Islands",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 33,
+      "name": "Costa Rica",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 34,
+      "name": "Cuba",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 35,
+      "name": "Curaçao",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 36,
+      "name": "Dominica",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 37,
+      "name": "Dominican Republic",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 38,
+      "name": "El Salvador",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 39,
+      "name": "Grenada",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 40,
+      "name": "Guadeloupe",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 41,
+      "name": "Guatemala",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 42,
+      "name": "Haiti",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 43,
+      "name": "Honduras",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 44,
+      "name": "Jamaica",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 45,
+      "name": "Martinique",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 46,
+      "name": "Montserrat",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 47,
+      "name": "Netherlands Antilles",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 48,
+      "name": "Nicaragua",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 49,
+      "name": "Panama",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 50,
+      "name": "Puerto Rico",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 51,
+      "name": "Saint Kitts and Nevis",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 52,
+      "name": "Saint Lucia",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 53,
+      "name": "Saint Maarten",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 54,
+      "name": "Saint Vincent and the Grenadines",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 55,
+      "name": "Trinidad and Tobago",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 56,
+      "name": "Turks and Caicos Islands",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 57,
+      "name": "Virgin Islands (British)",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 58,
+      "name": "Virgin Islands (U.S.)",
+      "parent_id": "<%= sprig_record(Region, 6).id %>"
+    },
+    {
+      "sprig_id": 59,
+      "name": "Argentina",
+      "parent_id": "<%= sprig_record(Region, 7).id %>"
+    },
+    {
+      "sprig_id": 60,
+      "name": "Bolivia",
+      "parent_id": "<%= sprig_record(Region, 7).id %>"
+    },
+    {
+      "sprig_id": 61,
+      "name": "Brazil",
+      "parent_id": "<%= sprig_record(Region, 7).id %>"
+    },
+    {
+      "sprig_id": 62,
+      "name": "Chile",
+      "parent_id": "<%= sprig_record(Region, 7).id %>"
+    },
+    {
+      "sprig_id": 63,
+      "name": "Colombia",
+      "parent_id": "<%= sprig_record(Region, 7).id %>"
+    },
+    {
+      "sprig_id": 64,
+      "name": "Ecuador",
+      "parent_id": "<%= sprig_record(Region, 7).id %>"
+    },
+    {
+      "sprig_id": 65,
+      "name": "French Guiana",
+      "parent_id": "<%= sprig_record(Region, 7).id %>"
+    },
+    {
+      "sprig_id": 66,
+      "name": "Guyana",
+      "parent_id": "<%= sprig_record(Region, 7).id %>"
+    },
+    {
+      "sprig_id": 67,
+      "name": "Paraguay",
+      "parent_id": "<%= sprig_record(Region, 7).id %>"
+    },
+    {
+      "sprig_id": 68,
+      "name": "Peru",
+      "parent_id": "<%= sprig_record(Region, 7).id %>"
+    },
+    {
+      "sprig_id": 69,
+      "name": "Suriname",
+      "parent_id": "<%= sprig_record(Region, 7).id %>"
+    },
+    {
+      "sprig_id": 70,
+      "name": "Uruguay",
+      "parent_id": "<%= sprig_record(Region, 7).id %>"
+    },
+    {
+      "sprig_id": 71,
+      "name": "Venezuela",
+      "parent_id": "<%= sprig_record(Region, 7).id %>"
+    },
+    {
+      "sprig_id": 72,
+      "name": "Andorra",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 73,
+      "name": "Austria",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 74,
+      "name": "Belgium",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 75,
+      "name": "Denmark",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 76,
+      "name": "Finland",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 77,
+      "name": "France",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 78,
+      "name": "Germany",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 79,
+      "name": "Greece",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 80,
+      "name": "Iceland",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 81,
+      "name": "Ireland",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 82,
+      "name": "Italy",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 83,
+      "name": "Liechtenstein",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 84,
+      "name": "Luxembourg",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 85,
+      "name": "Malta",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 86,
+      "name": "Monaco",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 87,
+      "name": "Netherlands",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 88,
+      "name": "Norway",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 89,
+      "name": "Portugal",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 90,
+      "name": "San Marino",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 91,
+      "name": "Scotland",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 92,
+      "name": "Spain",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 93,
+      "name": "Sweden",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 94,
+      "name": "Switzerland",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 95,
+      "name": "United Kingdom",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 96,
+      "name": "Vatican",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 97,
+      "name": "Wales",
+      "parent_id": "<%= sprig_record(Region, 8).id %>"
+    },
+    {
+      "sprig_id": 98,
+      "name": "Albania",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 99,
+      "name": "Belarus",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 100,
+      "name": "Bosnia and Herzegovina",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 101,
+      "name": "Bulgaria",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 102,
+      "name": "Croatia",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 103,
+      "name": "Cyprus",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 104,
+      "name": "Cyprus (North)",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 105,
+      "name": "Czech Republic",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 106,
+      "name": "Estonia",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 107,
+      "name": "Hungary",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 108,
+      "name": "Latvia",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 109,
+      "name": "Lithuania",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 110,
+      "name": "Macedonia",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 111,
+      "name": "Moldova",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 112,
+      "name": "Montenegro",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 113,
+      "name": "Poland",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 114,
+      "name": "Romania",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 115,
+      "name": "Russia",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 116,
+      "name": "Serbia",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 117,
+      "name": "Slovakia",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 118,
+      "name": "Slovenia",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 119,
+      "name": "Ukraine",
+      "parent_id": "<%= sprig_record(Region, 9).id %>"
+    },
+    {
+      "sprig_id": 120,
+      "name": "Algeria",
+      "parent_id": "<%= sprig_record(Region, 10).id %>"
+    },
+    {
+      "sprig_id": 121,
+      "name": "Libya",
+      "parent_id": "<%= sprig_record(Region, 10).id %>"
+    },
+    {
+      "sprig_id": 122,
+      "name": "Morocco",
+      "parent_id": "<%= sprig_record(Region, 10).id %>"
+    },
+    {
+      "sprig_id": 123,
+      "name": "South Sudan",
+      "parent_id": "<%= sprig_record(Region, 10).id %>"
+    },
+    {
+      "sprig_id": 124,
+      "name": "Sudan",
+      "parent_id": "<%= sprig_record(Region, 10).id %>"
+    },
+    {
+      "sprig_id": 125,
+      "name": "Tunisia",
+      "parent_id": "<%= sprig_record(Region, 10).id %>"
+    },
+    {
+      "sprig_id": 126,
+      "name": "Western Sahara",
+      "parent_id": "<%= sprig_record(Region, 10).id %>"
+    },
+    {
+      "sprig_id": 127,
+      "name": "Benin",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 128,
+      "name": "Burkina Faso",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 129,
+      "name": "Cape Verde",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 130,
+      "name": "Côte D'ivoire",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 131,
+      "name": "Gambia",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 132,
+      "name": "Ghana",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 133,
+      "name": "Guinea",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 134,
+      "name": "Guinea-Bissau",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 135,
+      "name": "Liberia",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 136,
+      "name": "Mali",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 137,
+      "name": "Mauritania",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 138,
+      "name": "Niger",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 139,
+      "name": "Nigeria",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 140,
+      "name": "Saint Helena",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 141,
+      "name": "Senegal",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 142,
+      "name": "Sierra Leone",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 143,
+      "name": "Togo",
+      "parent_id": "<%= sprig_record(Region, 11).id %>"
+    },
+    {
+      "sprig_id": 144,
+      "name": "Angola",
+      "parent_id": "<%= sprig_record(Region, 12).id %>"
+    },
+    {
+      "sprig_id": 145,
+      "name": "Cameroon",
+      "parent_id": "<%= sprig_record(Region, 12).id %>"
+    },
+    {
+      "sprig_id": 146,
+      "name": "Central African Republic",
+      "parent_id": "<%= sprig_record(Region, 12).id %>"
+    },
+    {
+      "sprig_id": 147,
+      "name": "Chad",
+      "parent_id": "<%= sprig_record(Region, 12).id %>"
+    },
+    {
+      "sprig_id": 148,
+      "name": "Congo (Brazzaville)",
+      "parent_id": "<%= sprig_record(Region, 12).id %>"
+    },
+    {
+      "sprig_id": 149,
+      "name": "Congo Democratic Republic (Kinshasa)",
+      "parent_id": "<%= sprig_record(Region, 12).id %>"
+    },
+    {
+      "sprig_id": 150,
+      "name": "Equatorial Guinea",
+      "parent_id": "<%= sprig_record(Region, 12).id %>"
+    },
+    {
+      "sprig_id": 151,
+      "name": "Gabon",
+      "parent_id": "<%= sprig_record(Region, 12).id %>"
+    },
+    {
+      "sprig_id": 152,
+      "name": "Sao Tome and Principe",
+      "parent_id": "<%= sprig_record(Region, 12).id %>"
+    },
+    {
+      "sprig_id": 153,
+      "name": "Burundi",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 154,
+      "name": "Comoros",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 155,
+      "name": "Djibouti",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 156,
+      "name": "Eritrea",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 157,
+      "name": "Ethiopia",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 158,
+      "name": "Kenya",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 159,
+      "name": "Madagascar",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 160,
+      "name": "Malawi",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 161,
+      "name": "Mauritius",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 162,
+      "name": "Mozambique",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 163,
+      "name": "Reunion",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 164,
+      "name": "Rwanda",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 165,
+      "name": "Seychelles",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 166,
+      "name": "Somalia",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 167,
+      "name": "Somaliland",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 168,
+      "name": "Tanzania",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 169,
+      "name": "Uganda",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 170,
+      "name": "Zambia",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 171,
+      "name": "Zimbabwe",
+      "parent_id": "<%= sprig_record(Region, 13).id %>"
+    },
+    {
+      "sprig_id": 172,
+      "name": "Botswana",
+      "parent_id": "<%= sprig_record(Region, 14).id %>"
+    },
+    {
+      "sprig_id": 173,
+      "name": "Lesotho",
+      "parent_id": "<%= sprig_record(Region, 14).id %>"
+    },
+    {
+      "sprig_id": 174,
+      "name": "Namibia",
+      "parent_id": "<%= sprig_record(Region, 14).id %>"
+    },
+    {
+      "sprig_id": 175,
+      "name": "South Africa",
+      "parent_id": "<%= sprig_record(Region, 14).id %>"
+    },
+    {
+      "sprig_id": 176,
+      "name": "Swaziland",
+      "parent_id": "<%= sprig_record(Region, 14).id %>"
+    },
+    {
+      "sprig_id": 177,
+      "name": "Bahrain",
+      "parent_id": "<%= sprig_record(Region, 15).id %>"
+    },
+    {
+      "sprig_id": 178,
+      "name": "Egypt",
+      "parent_id": "<%= sprig_record(Region, 15).id %>"
+    },
+    {
+      "sprig_id": 179,
+      "name": "Iran",
+      "parent_id": "<%= sprig_record(Region, 15).id %>"
+    },
+    {
+      "sprig_id": 180,
+      "name": "Iraq",
+      "parent_id": "<%= sprig_record(Region, 15).id %>"
+    },
+    {
+      "sprig_id": 181,
+      "name": "Israel",
+      "parent_id": "<%= sprig_record(Region, 15).id %>"
+    },
+    {
+      "sprig_id": 182,
+      "name": "Jordan",
+      "parent_id": "<%= sprig_record(Region, 15).id %>"
+    },
+    {
+      "sprig_id": 183,
+      "name": "Kuwait",
+      "parent_id": "<%= sprig_record(Region, 15).id %>"
+    },
+    {
+      "sprig_id": 184,
+      "name": "Lebanon",
+      "parent_id": "<%= sprig_record(Region, 15).id %>"
+    },
+    {
+      "sprig_id": 185,
+      "name": "Oman",
+      "parent_id": "<%= sprig_record(Region, 15).id %>"
+    },
+    {
+      "sprig_id": 186,
+      "name": "Palestine",
+      "parent_id": "<%= sprig_record(Region, 15).id %>"
+    },
+    {
+      "sprig_id": 187,
+      "name": "Qatar",
+      "parent_id": "<%= sprig_record(Region, 15).id %>"
+    },
+    {
+      "sprig_id": 188,
+      "name": "Saudi Arabia",
+      "parent_id": "<%= sprig_record(Region, 15).id %>"
+    },
+    {
+      "sprig_id": 189,
+      "name": "Syria",
+      "parent_id": "<%= sprig_record(Region, 15).id %>"
+    },
+    {
+      "sprig_id": 190,
+      "name": "Turkey",
+      "parent_id": "<%= sprig_record(Region, 15).id %>"
+    },
+    {
+      "sprig_id": 191,
+      "name": "United Arab Emirates",
+      "parent_id": "<%= sprig_record(Region, 15).id %>"
+    },
+    {
+      "sprig_id": 192,
+      "name": "Yemen",
+      "parent_id": "<%= sprig_record(Region, 15).id %>"
+    },
+    {
+      "sprig_id": 193,
+      "name": "Afghanistan",
+      "parent_id": "<%= sprig_record(Region, 16).id %>"
+    },
+    {
+      "sprig_id": 194,
+      "name": "Armenia",
+      "parent_id": "<%= sprig_record(Region, 16).id %>"
+    },
+    {
+      "sprig_id": 195,
+      "name": "Azerbaijan",
+      "parent_id": "<%= sprig_record(Region, 16).id %>"
+    },
+    {
+      "sprig_id": 196,
+      "name": "Georgia",
+      "parent_id": "<%= sprig_record(Region, 16).id %>"
+    },
+    {
+      "sprig_id": 197,
+      "name": "Kazakhstan",
+      "parent_id": "<%= sprig_record(Region, 16).id %>"
+    },
+    {
+      "sprig_id": 198,
+      "name": "Kyrgyzstan",
+      "parent_id": "<%= sprig_record(Region, 16).id %>"
+    },
+    {
+      "sprig_id": 199,
+      "name": "Mongolia",
+      "parent_id": "<%= sprig_record(Region, 16).id %>"
+    },
+    {
+      "sprig_id": 200,
+      "name": "Tajikistan",
+      "parent_id": "<%= sprig_record(Region, 16).id %>"
+    },
+    {
+      "sprig_id": 201,
+      "name": "Turkmenistan",
+      "parent_id": "<%= sprig_record(Region, 16).id %>"
+    },
+    {
+      "sprig_id": 202,
+      "name": "Uzbekistan",
+      "parent_id": "<%= sprig_record(Region, 16).id %>"
+    },
+    {
+      "sprig_id": 203,
+      "name": "China",
+      "parent_id": "<%= sprig_record(Region, 17).id %>"
+    },
+    {
+      "sprig_id": 204,
+      "name": "Hong Kong",
+      "parent_id": "<%= sprig_record(Region, 17).id %>"
+    },
+    {
+      "sprig_id": 205,
+      "name": "Japan",
+      "parent_id": "<%= sprig_record(Region, 17).id %>"
+    },
+    {
+      "sprig_id": 206,
+      "name": "Macau",
+      "parent_id": "<%= sprig_record(Region, 17).id %>"
+    },
+    {
+      "sprig_id": 207,
+      "name": "North Korea",
+      "parent_id": "<%= sprig_record(Region, 17).id %>"
+    },
+    {
+      "sprig_id": 208,
+      "name": "South Korea",
+      "parent_id": "<%= sprig_record(Region, 17).id %>"
+    },
+    {
+      "sprig_id": 209,
+      "name": "Taiwan",
+      "parent_id": "<%= sprig_record(Region, 17).id %>"
+    },
+    {
+      "sprig_id": 210,
+      "name": "Tibet",
+      "parent_id": "<%= sprig_record(Region, 17).id %>"
+    },
+    {
+      "sprig_id": 211,
+      "name": "Bangladesh",
+      "parent_id": "<%= sprig_record(Region, 18).id %>"
+    },
+    {
+      "sprig_id": 212,
+      "name": "Bhutan",
+      "parent_id": "<%= sprig_record(Region, 18).id %>"
+    },
+    {
+      "sprig_id": 213,
+      "name": "India",
+      "parent_id": "<%= sprig_record(Region, 18).id %>"
+    },
+    {
+      "sprig_id": 214,
+      "name": "Maldives",
+      "parent_id": "<%= sprig_record(Region, 18).id %>"
+    },
+    {
+      "sprig_id": 215,
+      "name": "Nepal",
+      "parent_id": "<%= sprig_record(Region, 18).id %>"
+    },
+    {
+      "sprig_id": 216,
+      "name": "Pakistan",
+      "parent_id": "<%= sprig_record(Region, 18).id %>"
+    },
+    {
+      "sprig_id": 217,
+      "name": "Sri Lanka",
+      "parent_id": "<%= sprig_record(Region, 18).id %>"
+    },
+    {
+      "sprig_id": 218,
+      "name": "Brunei",
+      "parent_id": "<%= sprig_record(Region, 19).id %>"
+    },
+    {
+      "sprig_id": 219,
+      "name": "Cambodia",
+      "parent_id": "<%= sprig_record(Region, 19).id %>"
+    },
+    {
+      "sprig_id": 220,
+      "name": "East Timor",
+      "parent_id": "<%= sprig_record(Region, 19).id %>"
+    },
+    {
+      "sprig_id": 221,
+      "name": "Indonesia",
+      "parent_id": "<%= sprig_record(Region, 19).id %>"
+    },
+    {
+      "sprig_id": 222,
+      "name": "Laos",
+      "parent_id": "<%= sprig_record(Region, 19).id %>"
+    },
+    {
+      "sprig_id": 223,
+      "name": "Malaysia",
+      "parent_id": "<%= sprig_record(Region, 19).id %>"
+    },
+    {
+      "sprig_id": 224,
+      "name": "Myanmar (Burma)",
+      "parent_id": "<%= sprig_record(Region, 19).id %>"
+    },
+    {
+      "sprig_id": 225,
+      "name": "Philippines",
+      "parent_id": "<%= sprig_record(Region, 19).id %>"
+    },
+    {
+      "sprig_id": 226,
+      "name": "Singapore",
+      "parent_id": "<%= sprig_record(Region, 19).id %>"
+    },
+    {
+      "sprig_id": 227,
+      "name": "Thailand",
+      "parent_id": "<%= sprig_record(Region, 19).id %>"
+    },
+    {
+      "sprig_id": 228,
+      "name": "Vietnam",
+      "parent_id": "<%= sprig_record(Region, 19).id %>"
+    },
+    {
+      "sprig_id": 229,
+      "name": "Australia",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 230,
+      "name": "Cook Islands",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 231,
+      "name": "Fiji",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 232,
+      "name": "Guam",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 233,
+      "name": "Kiribati",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 234,
+      "name": "Marshall Islands",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 235,
+      "name": "Micronesia",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 236,
+      "name": "Nauru",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 237,
+      "name": "New Caledonia",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 238,
+      "name": "New Zealand",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 239,
+      "name": "Niue",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 240,
+      "name": "Northern Mariana Islands",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 241,
+      "name": "Palau",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 242,
+      "name": "Papua New Guinea",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 243,
+      "name": "Pitcairn",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 244,
+      "name": "Samoa",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 245,
+      "name": "Solomon Islands",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 246,
+      "name": "Tahiti",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 247,
+      "name": "Tonga",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 248,
+      "name": "Tuvalu",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 249,
+      "name": "Vanuatu",
+      "parent_id": "<%= sprig_record(Region, 20).id %>"
+    },
+    {
+      "sprig_id": 250,
+      "name": "African Union (AU)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 251,
+      "name": "Arab League",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 252,
+      "name": "Asia-Pacific Economic Cooperation (APEC)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 253,
+      "name": "Association of Southeast Asian Nations (ASEAN)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 254,
+      "name": "Caribbean Community and Common Market (CARICOM)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 255,
+      "name": "Common Market for Eastern and Southern Africa (COMESA)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 256,
+      "name": "The Commonwealth",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 257,
+      "name": "Commonwealth of Independent States (CIS)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 258,
+      "name": "Council of Europe",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 259,
+      "name": "Economic Community of West African States (ECOWAS)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 260,
+      "name": "European Free Trade Association (EFTA)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 261,
+      "name": "The European Union (EU)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 262,
+      "name": "Group of Seven/Group of Eight",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 263,
+      "name": "Group of Twenty",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 264,
+      "name": "Gulf Cooperation Council (GCC)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 265,
+      "name": "International Criminal Court (ICC)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 266,
+      "name": "International Energy Agency (IEA)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 267,
+      "name": "International Organization for Migration (IOM)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 268,
+      "name": "Nonaligned Movement",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 269,
+      "name": "North Atlantic Treaty Organization (NATO)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 270,
+      "name": "Organization for Economic Cooperation and Development (OECD)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 271,
+      "name": "Organization for Security and Cooperation in Europe (OSCE)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 272,
+      "name": "Organization of American States (OAS)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 273,
+      "name": "Organization of the Islamic Conference (OIC)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 274,
+      "name": "Organization of the Petroleum Exporting Countries (OPEC)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 275,
+      "name": "Pacific Islands Forum (PIF)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 276,
+      "name": "Regional Development Banks",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 277,
+      "name": "Shanghai Cooperation Organization (SCO)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 278,
+      "name": "South Asian Association for Regional Cooperation (SAARC)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 279,
+      "name": "Southern African Development Community (SADC)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 280,
+      "name": "Southern Cone Common Market (Mercosur/Mercosul)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 281,
+      "name": "United Nations (UN)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 282,
+      "name": "Food and Agriculture Organization of the United Nations (FAO)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 283,
+      "name": "International Bank for Reconstrution and Development (IBRD)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 284,
+      "name": "International Civil Aviation Organization (ICAO)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 285,
+      "name": "International Development Association (IDA)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 286,
+      "name": "International Finance Corporation (IFC)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 287,
+      "name": "International Fund for Agricultural Development (IFAD)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 288,
+      "name": "International Labour Organization (ILO)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 289,
+      "name": "International Maritime Organization (IMO)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 290,
+      "name": "International Monetary Fund (IMF)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 291,
+      "name": "International Telecommunication Union (ITU)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 292,
+      "name": "United Nations Eductional, Scientific, and Cultural Organization (UNESCO)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 293,
+      "name": "United Nations Industrial Development Organization (UNIDO)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 294,
+      "name": "World Health Organization (WHO)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 295,
+      "name": "World Intellectual Property Organization (WIPO)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 296,
+      "name": "International Atomic Energy Agency",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 297,
+      "name": "Western European Union (WEU)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    },
+    {
+      "sprig_id": 298,
+      "name": "World Trade Organization (WTO)",
+      "parent_id": "<%= sprig_record(Region, 21).id %>"
+    }
+  ]
 }
