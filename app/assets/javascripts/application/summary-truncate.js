@@ -1,23 +1,47 @@
 (function() {
-  $(document).on('page:change', function() {
-    $('.home-block .summary p').first().trunk8({
-      lines: 3,
-      fill: '&nbsp;&hellip;'
-    })
+  var documentOptions = {
+    lines: 3,
+    fill: '&nbsp;&hellip;',
+    tooltip: false
+  }
 
-    $('.document .summary').trunk8({
-      lines: 2,
-      fill: '&nbsp;&hellip; <a href="#" class="expand">Expand Summary</a>'
+  function truncateHomepage() {
+    $('.home-block .summary').each(function() {
+      $(this).find('p').first().trunk8({
+        lines: 3,
+        fill: '&nbsp;&hellip;'
+      })
     })
-  }).on('click', '.document .summary .expand', function(event) {
-    var collapse = '<p class="collapse"><a href="#">Collapse Summary</a></p>'
-    $(this).closest('.summary').trunk8('revert').append(collapse)
+  }
+
+  function truncateDocument() {
+    var $summary = $('.document .summary')
+    var $paragraphs = $summary.find('p')
+    var $first = $paragraphs.first()
+    var wasTruncated
+
+    $first.trunk8(documentOptions)
+    wasTruncated = $first.data('trunk8').original_text !== $first.html()
+
+    if ($paragraphs.length > 2 || wasTruncated) {
+      $summary.addClass('truncated')
+    }
+    else {
+      $summary.addClass('no-truncation')
+    }
+  }
+
+  $(document).on('page:change', function() {
+    truncateHomepage()
+    truncateDocument()
+
+  }).on('click', '.document .summary .expand a', function(event) {
+    $('.document .summary p').first().trunk8('revert')
+    $('.document .summary').removeClass('truncated')
     event.preventDefault()
+
   }).on('click', '.document .summary .collapse a', function(event) {
-    var $this = $(this)
-    var $summary = $this.closest('.summary')
-    $this.closest('p').remove()
-    $summary.removeAttr('title').trunk8()
+    truncateDocument()
     event.preventDefault()
   })
 }())

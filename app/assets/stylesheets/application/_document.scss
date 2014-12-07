@@ -89,6 +89,7 @@
   }
 
   .summary {
+    max-width:720px;
     margin-bottom:24px;
     position:relative;
 
@@ -107,12 +108,18 @@
       }
     }
 
-    .expand, .collapse a {
-      position:absolute;
-      left:0;
-      bottom:0;
+    .expand {
+      display:none;
+    }
+
+    .expand, .collapse {
+      margin:16px 0 0 0;
       font-family:$ss-font-serif;
-      margin-top:16px;
+      line-height:1.14286;
+    }
+
+    .expand a, .collapse a {
+      font-family:$ss-font-serif;
       font-size:14px;
       font-weight:bold;
       -webkit-font-smoothing:antialiased;
@@ -129,10 +136,23 @@
       }
     }
 
-    .collapse {
-      margin:0;
-      a {
-        @include color-hover($ss-color-bodytext, $ss-color-heading);
+    .collapse a {
+      @include color-hover($ss-color-bodytext, $ss-color-heading);
+    }
+
+    &.truncated {
+      p + p, .collapse {
+        display:none;
+      }
+
+      .expand {
+        display:block;
+      }
+    }
+
+    &.no-truncation {
+      .collapse {
+        display:none;
       }
     }
   }

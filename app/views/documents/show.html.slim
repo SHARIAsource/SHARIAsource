@@ -24,7 +24,12 @@
       = render partial: 'documents/byline', locals: { document: @document }
 
       - if @document.summary.present?
-        .summary== @document.summary
+        .summary
+          == @document.summary
+          .expand
+            a href="#" Expand Summary
+          .collapse
+            a href="#" Collapse Summary
 
   .metadata-inner
     .metadata.js-same-height-container
