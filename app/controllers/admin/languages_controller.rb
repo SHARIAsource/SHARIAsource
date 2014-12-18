@@ -44,6 +44,13 @@ class Admin::LanguagesController < AdminController
     redirect_to admin_languages_path
   end
 
+  def sort
+    language = Language.find params[:language_id]
+    direction = params[:sort_order_position].to_sym
+    language.update_attribute :sort_order_position, direction
+    head :ok
+  end
+
   protected
 
   def permitted_params
