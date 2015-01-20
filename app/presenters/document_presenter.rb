@@ -128,6 +128,10 @@ class DocumentPresenter < BasePresenter
     author.blank? || author == contributor.name
   end
 
+  def published_at
+    @object.published_at || Time.now
+  end
+
   def referenced_documents
     @object.referenced_documents.map do |document|
       DocumentPresenter.new document
