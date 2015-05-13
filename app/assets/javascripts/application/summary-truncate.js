@@ -20,6 +20,10 @@
     var $first = $paragraphs.first()
     var wasTruncated
 
+    if (!$summary.length) {
+      return
+    }
+
     $first.trunk8(documentOptions)
     wasTruncated = $first.data('trunk8').original_text !== $first.html()
 
