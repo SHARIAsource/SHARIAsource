@@ -19,7 +19,8 @@ class DocumentType < ActiveRecord::Base
   has_many :documents
 
   def self_and_descendants_document_count
-    self.self_and_descendants.joins(:documents).count
+    self.self_and_descendants.joins(:documents)
+      .where(documents: { published: true}).count
   end
 
   def self.topic_counts

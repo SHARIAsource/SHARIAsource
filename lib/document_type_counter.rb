@@ -69,7 +69,8 @@ class DocumentTypeCounter
       document_types: roots,
       counts: contributors.map do |a|
         roots.map do |d|
-          a.documents.where(document_type: d.self_and_descendant_ids).count
+          a.documents.published
+            .where(document_type: d.self_and_descendant_ids).count
         end
       end
     }
