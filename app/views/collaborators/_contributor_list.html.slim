@@ -1,6 +1,4 @@
 - if contributors.length
   ul
-    - contributors.each do |contributor, children|
-      li
-        = link_to contributor.name, contributor_path(contributor)
-        = render partial: 'collaborators/contributor_list', locals: { contributors: children }
+    - contributors.each do |contributor|
+      li= link_to contributor.name, contributor_path(contributor)
