@@ -90,7 +90,8 @@ class Document < ActiveRecord::Base
 
   # Solr Indexing
   searchable auto_index: false do
-    text :title, :source_name, :author, :translators, :editors, :publisher
+    text :title, :source_name, :author, :translators, :editors, :publisher,
+         :summary
 
     text :page_texts do
       pages.map {|page| strip_control_characters page.body.text }
