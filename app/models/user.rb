@@ -62,6 +62,10 @@ class User < ActiveRecord::Base
     where(is_editor: true)
   end
 
+  def self.enabled
+    where(disabled: false)
+  end
+
   private
 
   def remove_articles
