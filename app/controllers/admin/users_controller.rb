@@ -1,5 +1,5 @@
 class Admin::UsersController < AdminController
-  before_filter :ensure_editor!
+  before_filter :ensure_elevated!
   before_filter :fetch_user, only: [:edit, :update, :destroy]
 
   def index
@@ -57,7 +57,8 @@ class Admin::UsersController < AdminController
   def permitted_params
     params.require(:user).permit(:is_editor, :requires_approval, :first_name,
                                  :last_name, :about, :avatar, :email,
-                                 :collaborator_id, :parent_id, :disabled)
+                                 :collaborator_id, :parent_id, :disabled,
+                                 :is_admin)
   end
 
   def fetch_user

@@ -1,6 +1,6 @@
 class Admin::DocumentsController < AdminController
   before_filter :fetch_document, only: [:edit, :update, :destroy]
-  before_filter :ensure_editor!, only: [:destroy]
+  before_filter :ensure_editor!
 
   def index
     if current_user.is_editor

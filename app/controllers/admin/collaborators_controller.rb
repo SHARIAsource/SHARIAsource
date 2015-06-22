@@ -1,5 +1,5 @@
 class Admin::CollaboratorsController < AdminController
-  before_filter :ensure_editor!
+  before_filter :ensure_elevated!
   before_filter :fetch_collaborator, only: [:edit, :update, :destroy]
 
   def index
