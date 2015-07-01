@@ -23,7 +23,7 @@ $document.on('page:change', function() {
 
   tinymce.init({
     selector: 'textarea.wysiwyg-summary',
-    toolbar: 'italic link unlink | undo redo',
+    toolbar: 'italic link unlink | bold italic underline strikethrough superscript | bullist numlist blockquote | undo redo',
     plugins: 'link paste',
     menubar: false,
     statusbar: false,
