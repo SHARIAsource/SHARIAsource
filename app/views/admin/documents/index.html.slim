@@ -6,51 +6,9 @@ header
   = link_to t('helpers.new', model: Document.model_name.human), new_admin_document_path, class: 'left small round button'
 
 hr
-
 h3 Unpublished
+= smart_listing_render(:unpublished_documents)
 
-- if @documents.unpublished.present?
-  table
-    thead
-      tr
-        th Name
-        th.actions Actions
-    tbody
-      - @documents.unpublished.each do |document|
-        tr data-processed=document.processed?.to_s
-          td= document.title
-          td.actions
-            ul.inline-list
-              li= link_to 'View', document_path(document), class: 'tiny radius pill button'
-              li= link_to t('edit'), edit_admin_document_path(document), class: 'tiny radius pill button'
-              - unless current_user.requires_approval?
-                li= simple_form_for document, url: admin_document_path(document) do |f|
-                  = f.input_field :published, as: :hidden, value: true
-                  = f.submit 'Publish', class: 'tiny radius success pill button'
-              - if current_user.is_editor
-                li= link_to t('delete'), admin_document_path(document), class: 'tiny radius alert pill button', method: :delete, data: { confirm: t('helpers.delete_confirm', model: Document.model_name.human)}
-- else
-  p No unpublished documents.
-
-- if @documents.published.present?
-  hr
-  h3 Published
-
-  table
-    thead
-      th Name
-      th.actions Actions
-    tbody
-      - @documents.published.each do |document|
-        tr data-processed=document.processed?.to_s
-          td= document.title
-          td.actions
-            ul.inline-list
-              li= link_to 'View', document_path(document), class: 'tiny radius pill button'
-              li= link_to t('edit'), edit_admin_document_path(document), class: 'tiny radius pill button'
-              - unless current_user.requires_approval?
-                li= simple_form_for document, url: admin_document_path(document) do |f|
-                  = f.input_field :published, as: :hidden, value: false
-                  = f.submit 'Unpublish', class: 'tiny radius warning pill button'
-              li= link_to t('delete'), admin_document_path(document), class: 'tiny radius alert pill button', method: :delete, data: { confirm: t('helpers.delete_confirm', model: Document.model_name.human)}
-
+hr
+h3 Published
+= smart_listing_render(:published_documents)

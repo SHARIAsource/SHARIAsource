@@ -2,14 +2,33 @@ class Admin::DocumentsController < AdminController
   before_filter :fetch_document, only: [:edit, :update, :destroy]
   before_filter :ensure_editor!, only: [:destroy]
 
+  include SmartListing::Helper::ControllerExtensions
+  helper  SmartListing::Helper
+
   def index
     if current_user.is_editor
-      @documents = Document.latest
+      @documents = Document.all
     else
-      @documents = Document.latest.where(
+      @documents = Document.where(
         contributor_id: current_user.self_and_descendant_ids
       )
     end
+
+    @unpublished_documents = @documents.where(published: 'false')
+    @published_documents = @documents.where(published: 'true')
+
+    smart_listing_create(
+      :unpublished_documents,
+      Document.filter_by_params(@unpublished_documents.joins(:language), params[:filter]),
+      partial: 'admin/documents/unpublished_listing',
+      sort_attributes: [[:title, 'title'], [:publisher, 'publisher'], [:language, 'name'], [:contributor, 'name']]
+    )
+    smart_listing_create(
+      :published_documents,
+      Document.filter_by_params(@published_documents.joins(:language), params[:filter]),
+      partial: 'admin/documents/published_listing',
+      sort_attributes: [[:title, 'title'], [:publisher, 'publisher'], [:language, 'name'], [:contributor, 'name']]
+    )
   end
 
   def new
