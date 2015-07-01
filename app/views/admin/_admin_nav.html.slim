@@ -21,14 +21,15 @@ nav.top-bar data-topbar='true'
             li= link_to 'Tags', admin_tags_path
             li= link_to 'Topics', admin_topics_path
             li= link_to 'Themes', admin_themes_path
-        li class=('active' if admin_active == 'Accounts')
-          = link_to 'Accounts', admin_users_path
-        li class=('active' if admin_active == 'Collaborators')
-          = link_to 'Collaborators', admin_collaborators_path
-        li class=('active' if admin_active == 'Misc. Pages')
-          = link_to 'Misc. Pages', admin_miscs_path
-      li class=('active' if admin_active == 'Documents')
-        = link_to 'Documents', admin_documents_path
+        li class=('active' if admin_active == 'Documents')
+          = link_to 'Documents', admin_documents_path
+      - if admin_signed_in?
+          li class=('active' if admin_active == 'Accounts')
+            = link_to 'Accounts', admin_users_path
+          li class=('active' if admin_active == 'Collaborators')
+            = link_to 'Collaborators', admin_collaborators_path
+          li class=('active' if admin_active == 'Misc. Pages')
+            = link_to 'Misc. Pages', admin_miscs_path
     ul.right
       li class=('active' if admin_active == 'My Account')
         = link_to 'My Account', edit_user_registration_path

@@ -8,6 +8,7 @@
       = f.association :parent, collection: User.where.not(id: @user.self_and_descendant_ids), include_blank: false, label: 'Supervisor'
       fieldset
         legend Permissions
+        = f.input :is_admin, boolean_style: :inline, label: 'Admin'
         = f.input :is_editor, boolean_style: :inline, label: 'Editor'
         = f.input :requires_approval, boolean_style: :inline
         = f.input :disabled, boolean_style: :inline
