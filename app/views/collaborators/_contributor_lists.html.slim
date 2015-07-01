@@ -1,0 +1,8 @@
+- if collaborator.users.enabled.count > 0
+  - collaborator.users.enabled.where.not(parent_id: collaborator.users.enabled.select(:id).map { |u| u.id }).each do |rm|
+    ul
+      li
+        = link_to contributor_path(rm)
+          = rm.name
+          - unless rm.children.empty?
+            = render partial: 'collaborators/contributor_list', locals: { users: rm.children }
