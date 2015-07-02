@@ -153,6 +153,23 @@ class Document < ActiveRecord::Base
     boolean :published
   end
 
+  def self.filter_by_params(collection, params)
+    return collection if params.nil?
+    array = []
+    collection.each do |doc|
+      array << doc if !!doc.title.match(/#{params}/i)
+      array << doc if !!doc.publisher.match(/#{params}/i)
+      array << doc if doc.tags.pluck(:name).include?(params)
+      array << doc if %W[#{doc.topics.pluck(:name).join(', ')}].any? { |w| w[/#{params}/i] }
+      array << doc if doc.contributor.name.match(/#{params}/i)
+      array << doc if doc.language.name.match(/#{params}/i)
+      array << doc if %W[#{doc.regions.pluck(:name).join(', ')}].any? { |w| w[/#{params}/i] }
+    end
+    array.uniq!
+    # smart listing needs an AR relation
+    self.where(id: array.map(&:id))
+  end
+
   def self.featured
     where.not(featured_position: nil).order(:featured_position).limit(3)
   end

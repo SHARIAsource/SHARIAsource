@@ -31,6 +31,9 @@ gem 'tinymce-rails', '~> 4.1.2'
 gem 'turbolinks', '~> 2.2.2'
 gem 'uglifier', '>= 1.3.0'
 gem 'unicorn', '~> 4.8.0'
+gem 'smart_listing', '~> 1.1.2'
+gem 'font-awesome-sass', '~> 4.3.2.1'
+gem 'seed_dump', '~> 3.2.2'
 
 group :development do
   gem 'annotate', '~> 2.6.5'
