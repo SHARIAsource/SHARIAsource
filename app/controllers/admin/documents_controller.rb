@@ -31,6 +31,8 @@ class Admin::DocumentsController < AdminController
       sort_attributes: [[:title, 'title'], [:publisher, 'publisher'], [:language, 'name'], [:contributor, 'name']],
       default_sort: { published_at: 'desc' }
     )
+
+    @filter = params[:filter] || ''
   end
 
   def new
