@@ -17,4 +17,5 @@
 //= require turbolinks
 //= require admin-inits
 //= require tinymce
+//= require smart_listing
 //= require_tree ./admin

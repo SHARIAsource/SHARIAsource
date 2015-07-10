@@ -1,5 +1,5 @@
 class Admin::MiscsController < AdminController
-  before_filter :ensure_editor!
+  before_filter :ensure_elevated!
   before_filter :fetch_misc, only: [:edit, :update, :destroy]
 
   def index

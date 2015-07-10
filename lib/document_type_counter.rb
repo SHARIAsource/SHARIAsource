@@ -63,7 +63,7 @@ class DocumentTypeCounter
 
   def self.contributor_counts
     roots = DocumentType.roots.select(:id, :name)
-    contributors = User.joins(:documents).distinct
+    contributors = User.where("disabled = FALSE OR disabled IS NULL").joins(:documents).distinct
     {
       contributors: contributors,
       document_types: roots,

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141110215830) do
+ActiveRecord::Schema.define(version: 20150618140407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -316,6 +316,7 @@ ActiveRecord::Schema.define(version: 20141110215830) do
     t.string   "avatar"
     t.boolean  "requires_approval",          default: false
     t.boolean  "disabled"
+    t.boolean  "is_admin"
   end
 
   add_index "users", ["collaborator_id"], name: "index_users_on_collaborator_id", using: :btree
