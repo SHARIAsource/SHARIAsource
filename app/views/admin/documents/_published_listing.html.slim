@@ -37,5 +37,7 @@
                   = f.input_field :published, as: :hidden, value: false
                   = f.submit 'Unpublish', class: 'tiny radius warning pill button'
               li= link_to t('delete'), admin_document_path(doc), class: 'tiny radius alert pill button', method: :delete, data: { confirm: t('helpers.delete_confirm', model: Document.model_name.human)}
+  = smart_listing.paginate
+  = smart_listing.pagination_per_page_links
 - else
   p.warning No records!
