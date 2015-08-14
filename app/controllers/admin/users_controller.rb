@@ -3,7 +3,11 @@ class Admin::UsersController < AdminController
   before_filter :fetch_user, only: [:edit, :update, :destroy]
 
   def index
-    @users = current_user.descendants.order(:last_name_without_articles)
+    if current_user.is_admin
+      @users = User.all.order(:last_name_without_articles)
+    else
+      @users = current_user.descendants.order(:last_name_without_articles)
+    end
   end
 
   def new
@@ -63,7 +67,7 @@ class Admin::UsersController < AdminController
 
   def fetch_user
     @user = User.find params[:id]
-    unless @user.ancestors.include?(current_user)
+    unless @user.ancestors.include?(current_user) || current_user.is_admin
       redirect_to admin_users_path
     end
   end
