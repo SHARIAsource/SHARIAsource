@@ -1,5 +1,5 @@
 - if collaborator.users.enabled.count > 0
-  - collaborator.users.enabled.where.not(parent_id: collaborator.users.enabled.select(:id).map { |u| u.id }).each do |rm|
+  - collaborator.users.enabled.where(parent_id: 1).each do |rm|
     ul
       li
         = link_to contributor_path(rm)
