@@ -53,6 +53,14 @@
         @include color-hover($ss-color-heading, $ss-color-heading);
       }
     }
+ 
+    .summary ul, ol, dl {
+      font-family:$ss-font-serif;
+      font-size:14px;
+      line-height:1.14286;
+      margin-left: 1.4rem;
+      margin-bottom: 0;
+    }
   }
 
   .aside-items {
