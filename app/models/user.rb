@@ -25,6 +25,7 @@
 #  avatar                     :string(255)
 #  requires_approval          :boolean          default(FALSE)
 #  disabled                   :boolean
+#  is_admin                   :boolean          default(FALSE)
 #
 
 class User < ActiveRecord::Base

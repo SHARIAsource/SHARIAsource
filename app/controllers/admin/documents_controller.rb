@@ -1,12 +1,12 @@
 class Admin::DocumentsController < AdminController
   before_filter :fetch_document, only: [:edit, :update, :destroy]
-  before_filter :ensure_editor!
+  before_filter :ensure_editor!, only: [:destroy]
 
   include SmartListing::Helper::ControllerExtensions
   helper  SmartListing::Helper
 
   def index
-    if current_user.is_editor
+    if ( current_user.is_editor && current_user.is_admin )
       @documents = Document.all
     else
       @documents = Document.where(

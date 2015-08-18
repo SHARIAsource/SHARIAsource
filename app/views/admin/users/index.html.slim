@@ -18,6 +18,8 @@ table
         td= user.email
         td
           ul.inline-list
+            - if user.is_admin?
+              li.label.radius.secondary Admin
             - if user.is_editor?
               li.label.radius.secondary Editor
             - if user.requires_approval?

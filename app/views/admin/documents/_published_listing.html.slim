@@ -32,7 +32,7 @@
             ul.inline-list
               li= link_to 'View', document_path(doc), class: 'tiny radius pill button'
               li= link_to t('edit'), edit_admin_document_path(doc), class: 'tiny radius pill button'
-              - unless current_user.requires_approval?
+              - if current_user.is_editor
                 li= simple_form_for doc, url: admin_document_path(doc) do |f|
                   = f.input_field :published, as: :hidden, value: false
                   = f.submit 'Unpublish', class: 'tiny radius warning pill button'
