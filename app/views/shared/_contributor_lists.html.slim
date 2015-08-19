@@ -5,4 +5,4 @@
         = link_to contributor_path(rm)
           = rm.name
         - unless rm.children.empty?
-          = render partial: 'collaborators/contributor_list', locals: { users: rm.children.enabled }
+          = render partial: 'shared/contributor_list', locals: { users: rm.children.enabled }
