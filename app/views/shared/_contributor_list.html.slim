@@ -2,7 +2,10 @@ ul
   - users.each do |u|
     - if u.collaborator == @collaborator
       li
-        = link_to contributor_path(u)
-          = u.name
+        - if in_admin
+            = link_to u.name, url_for([:admin, u, action: :edit]), class: 'tiny radius pill'
+        - else
+          = link_to contributor_path(u)
+            = u.name
         - unless u.children.empty?
-          = render partial: 'shared/contributor_list', locals: { users: u.children.enabled }
+          = render partial: 'shared/contributor_list', locals: { users: u.children.enabled, in_admin: in_admin }

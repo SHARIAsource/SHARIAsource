@@ -18,4 +18,4 @@
     - if local_assigns.fetch :include_users, false
       .large-6.columns
         h3 Accounts
-        .hierarchy= render partial: 'shared/contributor_lists', locals: { collaborator: @collaborator }
+        .hierarchy= render partial: 'shared/contributor_lists', locals: { collaborator: @collaborator, in_admin: true }
