@@ -1,7 +1,0 @@
-ul
-  - users.each do |u|
-    li
-      = link_to contributor_path(u)
-        = u.name
-      - unless u.children.empty?
-        = render partial: 'collaborators/contributor_list', locals: { users: u.children }

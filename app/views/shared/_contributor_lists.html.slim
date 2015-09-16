@@ -1,0 +1,11 @@
+- if collaborator.users.enabled.count > 0
+  - collaborator.users.enabled.where(parent_id: 1).each do |rm|
+    ul
+      li
+        - if in_admin
+          = link_to rm.name, url_for([:admin, rm, action: :edit]), class: 'tiny radius pill'
+        - else
+          = link_to contributor_path(rm)
+            = rm.name
+        - unless rm.children.empty?
+          = render partial: 'shared/contributor_list', locals: { users: rm.children.enabled, in_admin: in_admin }
