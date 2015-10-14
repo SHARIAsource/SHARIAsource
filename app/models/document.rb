@@ -155,31 +155,7 @@ class Document < ActiveRecord::Base
 
   def self.filter_by_params(collection, params)
     return collection if params.nil?
-    # This is supposed to search the index and check for the term passed in based on
-    # all of the configured search fields for this model.  If you look up above here it looks
-    # like it is setup to index across all of the related things that we are checking below.
-
-    # One thing is that we might have to pass an additional parameter or something into this
-    # to return only the published or unpublished documents. We could pass the type of documents
-    # we want in instead of the collection to sort through and add it as a parameter below.
-    # More info here: https://github.com/sunspot/sunspot
     docs = collection.search { fulltext params }
-    # array = []
-    # collection.each do |doc|
-    #   array << doc if !!doc.title.match(/#{params}/i)
-    #   array << doc if !!doc.publisher.match(/#{params}/i)
-    #   array << doc if doc.tags.pluck(:name).include?(params)
-    #   array << doc if %W[#{doc.topics.pluck(:name).join(', ')}].any? { |w| w[/#{params}/i] }
-    #   array << doc if doc.contributor.name.match(/#{params}/i)
-    #   array << doc if doc.language.name.match(/#{params}/i)
-    #   array << doc if %W[#{doc.regions.pluck(:name).join(', ')}].any? { |w| w[/#{params}/i] }
-    # end
-    # array.uniq!
-    # # smart listing needs an AR relation
-    # self.where(id: array.map(&:id))
-
-    # This call to results should return the actual AR models that are associated with
-    # the search results we got back above.
     docs.results
   end
 
