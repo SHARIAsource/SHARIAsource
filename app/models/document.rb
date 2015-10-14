@@ -180,7 +180,7 @@ class Document < ActiveRecord::Base
 
     # This call to results should return the actual AR models that are associated with
     # the search results we got back above.
-    docs.results.to_a
+    docs.results
   end
 
   def self.featured
