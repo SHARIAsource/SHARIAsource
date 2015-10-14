@@ -163,7 +163,7 @@ class Document < ActiveRecord::Base
     # to return only the published or unpublished documents. We could pass the type of documents
     # we want in instead of the collection to sort through and add it as a parameter below.
     # More info here: https://github.com/sunspot/sunspot
-    docs = Document.search { fulltext params }
+    docs = collection.search { fulltext params }
     # array = []
     # collection.each do |doc|
     #   array << doc if !!doc.title.match(/#{params}/i)
@@ -180,7 +180,7 @@ class Document < ActiveRecord::Base
 
     # This call to results should return the actual AR models that are associated with
     # the search results we got back above.
-    docs.results
+    docs.results.to_a
   end
 
   def self.featured
