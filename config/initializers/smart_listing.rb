@@ -5,7 +5,7 @@ SmartListing.configure do |config|
       #:per_page                     => :per_page,
       #:sort                         => :sort,
     #},
-    #:array                          => false,                       # controls whether smart list should be using arrays or AR collections
+    :array                          => true,                       # controls whether smart list should be using arrays or AR collections
     #:max_count                      => nil,                         # limit number of rows
     #:unlimited_per_page             => false,                       # allow infinite page size
     #:paginate                       => true,                        # allow pagination

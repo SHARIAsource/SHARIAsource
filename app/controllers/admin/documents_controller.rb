@@ -22,14 +22,12 @@ class Admin::DocumentsController < AdminController
       Document.filter_by_params(@unpublished_documents.joins(:language), params[:filter]),
       partial: 'admin/documents/unpublished_listing',
       sort_attributes: [[:title, 'title'], [:publisher, 'publisher'], [:language, 'name'], [:contributor, 'name']],
-      default_sort: { published_at: 'desc' }
     )
     smart_listing_create(
       :published_documents,
       Document.filter_by_params(@published_documents.joins(:language), params[:filter]),
       partial: 'admin/documents/published_listing',
       sort_attributes: [[:title, 'title'], [:publisher, 'publisher'], [:language, 'name'], [:contributor, 'name']],
-      default_sort: { published_at: 'desc' }
     )
 
     @filter = params[:filter] || ''
