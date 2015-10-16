@@ -1,6 +1,12 @@
 # Bundler config.
 /.bundle
 
+# RubyMine Files
+/.idea
+
+# Mac File Stuff
+.DS_Store
+
 # All logfiles and tempfiles.
 /log/*.log
 /log/*.lck
