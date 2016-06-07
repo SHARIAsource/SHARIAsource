@@ -11,10 +11,20 @@ class PdfToImagesWorker
   private
 
   def extract_pages(source)
-    pages = Grim.reap source.pdf.current_path
-    pages.each do |page|
+    images = Magick::ImageList.new(source.pdf.current_path).to_a
+    reader = PDF::Reader.new(source.pdf.current_path)
+    pages = [images, reader.pages].transpose
+    pages.each do |image, page|
       path = "#{Rails.root}/tmp/pdf-#{source.id}-#{page.number}.jpg"
-      page.save path, width: 1024, quality: 70, density: 150, extra: ['-flatten', '-background white']
+      image.alpha = Magick::DeactivateAlphaChannel if image.alpha?
+      image.write(path) do
+        self.antialias = true
+        self.colorspace = Magick::RGBColorspace
+        self.interlace = Magick::NoInterlace
+        self.size = 1024
+        self.quality = 70
+        self.density = 150
+      end
       source_page = source.pages.build(image: File.open(path),
                                        number: page.number)
       source_page.build_body
