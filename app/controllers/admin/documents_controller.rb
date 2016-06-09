@@ -48,7 +48,13 @@ class Admin::DocumentsController < AdminController
     @document = current_user.documents.build permitted_params
     if @document.save
       flash[:notice] = 'Document created successfully'
-      redirect_to admin_documents_path
+      if params[:create_and_continue]
+        render :new
+      elsif params[:create_and_edit]
+        render :edit
+      else
+        redirect_to admin_documents_path
+      end
     else
       flash[:error] = @document.errors.full_messages.to_sentence
       render :new
