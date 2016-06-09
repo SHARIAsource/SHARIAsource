@@ -76,7 +76,7 @@
         = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
         - if @document.pdf.file
           p= @document.pdf.file.identifier
-    
+
     - if @document.pages.present?
       .clearfix
         h3 Pages
@@ -101,5 +101,7 @@
           = b.input :text, label: 'Content', input_html: { class: 'wysiwyg' }
 
   .row
-    .large-6.columns.end
-      = f.submit class: 'round button'
+    .button-group
+      = f.submit "Save and return to menu", class: 'dark_gray button'
+      = f.submit "Save and continue", class: 'light_blue button', name: "create_and_continue"
+      = f.submit "Save and edit", class: 'med_blue button', name: "create_and_edit"
