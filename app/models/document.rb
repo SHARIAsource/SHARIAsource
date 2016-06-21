@@ -208,7 +208,7 @@ class Document < ActiveRecord::Base
     pages[0] && pages[0].image.thumb
   end
 
-  def extract_pages method
+  def extract_pages
     pdf = File.open(self.pdf.current_path, 'rb').read
     images = Magick::Image.from_blob(pdf) do
       self.format = 'PDF'
@@ -233,18 +233,9 @@ class Document < ActiveRecord::Base
       source_page = self.pages.build(image: File.open(img_path),
                                        number: page.number)
       source_page.build_body
-      if method == :hybrid
-        parsed_text = build_text_by_hybrid(page.text, img_path)
-      else
-        parsed_text = page.text
-      end
-      result_text = Kramdown::Document.new(parsed_text || "").to_html
-      processed = Nokogiri::HTML::DocumentFragment.parse(result_text)
-      processed.css("p").each do |node|
-        # right-to-left if text is Arabic
-        node["class"] = "rtl" if !!(node.text =~ /\p{Arabic}/)
-      end
-      source_page.body.text = processed.to_html
+      hybrid_text = build_text_by_hybrid(page.text, img_path)
+      source_page.body.text = txt_to_html(page.text)          # standard method text
+      source_page.body.hybrid_text = txt_to_html(hybrid_text) # hybrid method text
       source_page.save!
       Rails.logger.info "Page #{page.number} of #{images.size} processed"
     end
@@ -292,5 +283,14 @@ class Document < ActiveRecord::Base
     end
   end
 
+  def txt_to_html text
+    krmd = Kramdown::Document.new(text || "").to_html
+    processed = Nokogiri::HTML::DocumentFragment.parse(krmd)
+    processed.css("p").each do |node|
+      # right-to-left if text is Arabic
+      node["class"] = "rtl" if !!(node.text =~ /\p{Arabic}/)
+    end
+    return processed.to_html
+  end
 
 end

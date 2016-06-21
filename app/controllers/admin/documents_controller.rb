@@ -103,7 +103,7 @@ class Admin::DocumentsController < AdminController
                  region_ids: [], theme_ids: [], topic_ids: [], tag_ids: [],
                  referenced_document_ids: [], era_ids: [],
                  body_attributes: [:id, :text], pages_attributes: [
-                   :id, body_attributes: [:id, :text]
+                   :id, body_attributes: [:id, :text, :hybrid_text]
                  ]]
     if current_user.is_editor
       whitelist << :contributor_id
