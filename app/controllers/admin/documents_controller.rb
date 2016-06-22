@@ -49,9 +49,9 @@ class Admin::DocumentsController < AdminController
     if @document.save
       flash[:notice] = 'Document created successfully'
       if params[:create_and_continue]
-        render :new
+        redirect_to new_admin_document_path
       elsif params[:create_and_edit]
-        render :edit
+        redirect_to edit_admin_document_path @document
       else
         redirect_to admin_documents_path
       end
@@ -69,7 +69,13 @@ class Admin::DocumentsController < AdminController
       end
       @document.index!
       DocumentTypeCountWorker.perform_async
-      redirect_to admin_documents_path
+      if params[:create_and_continue]
+        redirect_to new_admin_document_path
+      elsif params[:create_and_edit]
+        redirect_to edit_admin_document_path @document
+      else
+        redirect_to admin_documents_path
+      end
     else
       flash[:error] = @document.errors.full_messages.to_sentence
       render :edit
@@ -97,7 +103,7 @@ class Admin::DocumentsController < AdminController
                  region_ids: [], theme_ids: [], topic_ids: [], tag_ids: [],
                  referenced_document_ids: [], era_ids: [],
                  body_attributes: [:id, :text], pages_attributes: [
-                   :id, body_attributes: [:id, :text]
+                   :id, body_attributes: [:id, :text, :hybrid_text]
                  ]]
     if current_user.is_editor
       whitelist << :contributor_id

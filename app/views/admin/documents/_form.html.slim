@@ -90,7 +90,7 @@
               .row.page-preview
                 .large-8.columns.page-text-preview
                   = p.fields_for :body do |b|
-                    = b.input :text, label: "Page #{p.index+1} Text", input_html: { class: 'wysiwyg' }
+                    = b.input :hybrid_text, label: "Page #{p.index+1} Text", input_html: { class: 'wysiwyg' }
                 .large-4.columns.page-image-preview
                   img src=p.object.image.url
 
