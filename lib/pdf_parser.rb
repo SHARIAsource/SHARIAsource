@@ -3,12 +3,10 @@ require 'grim'
 require 'whatlanguage'
 require 'similar_text'
 
-
 module PdfParser
-
-  def build_text_by_hybrid page_text, img_path
+  def build_text_by_hybrid(page_text, img_path)
     page_map = RTesseract::Box.new(img_path, lang: 'en')
-    return parse_text(page_text, page_map, img_path)
+    parse_text(page_text, page_map, img_path)
   end
 
   def parse_text(page_text, page_map, img_path)
@@ -41,22 +39,21 @@ module PdfParser
   def block_text_by_non_latin(page_text)
     chars = page_text.split('')
     # aggregate all of the latin text
-    result = chars.reduce([[]]) do |total, c|
-      if c.is_non_latin?
-        total.push [] unless total.last.empty?
+    result = chars.reduce([[]]) do |total, character|
+      if character.is_non_latin?
+        total.push([]) unless total.last.empty?
       elsif total.last.empty? && !c.is_whitespace?
         # just out of non-latin
-        total.last.push c
-      elsif !total.last.empty?
+        total.last.push(character)
+      elsif total.last.any?
         # in latin
-        total.last.push c
+        total.last.push(character)
       end
       total
     end
     result.map! &:join
     result.reject! { |block| !block.strip.is_word? || block.nil? } # filtering
     return result
-
   end
 
   # get the last word of the block

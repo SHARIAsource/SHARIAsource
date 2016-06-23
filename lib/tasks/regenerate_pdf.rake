@@ -2,10 +2,29 @@ namespace :pdf do
   desc 'Regenerate JPG images for PDFs'
   task regenerate: :environment do
     doc_count = Document.count
-    query = "document_style = ? OR document_style = ?", "scan", "scannotext"
+    query = 'document_style = ? OR document_style = ?', 'scan', 'scannotext'
     doc_ids = Document.where(query).select do |doc|
       !doc.pdf.current_path.nil?
     end.map(&:id)
-    RegenerateImageWorker.perform_async(doc_ids)
+
+    documents = Document.find(doc_ids)
+    documents.each { |doc| doc.update! processed: false } unless documents.blank?
+    processing = false
+    current = doc_ids.pop
+    while doc_ids.any?
+      if processing
+        if Document.find(current).processed
+          Rails.logger.info "Regenerated images for document with id #{current},
+                             #{doc_ids.size} documents to go!"
+          processing = false
+          current = doc_ids.pop
+        else
+          sleep(5)
+        end
+      else
+        PdfToImagesWorker.perform_async(current)
+        processing = true
+      end
+    end
   end
 end

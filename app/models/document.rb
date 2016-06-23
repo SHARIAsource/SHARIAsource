@@ -39,7 +39,6 @@
 #
 
 class Document < ActiveRecord::Base
-  include PdfParser
   alias_attribute :name, :title
 
   # Callbacks
