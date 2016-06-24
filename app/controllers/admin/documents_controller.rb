@@ -49,7 +49,7 @@ class Admin::DocumentsController < AdminController
 
   def edit
     unless @document.processed
-      redirect_to admin_documents_path
+      redirect_to unpublished_admin_documents_path
     end
   end
 
@@ -62,7 +62,7 @@ class Admin::DocumentsController < AdminController
       elsif params[:create_and_edit]
         redirect_to edit_admin_document_path @document
       else
-        redirect_to admin_documents_path
+        redirect_to unpublished_admin_documents_path
       end
     else
       flash[:error] = @document.errors.full_messages.to_sentence
@@ -71,6 +71,7 @@ class Admin::DocumentsController < AdminController
   end
 
   def update
+    prev_state = @document.published
     if @document.update permitted_params
       flash[:notice] = 'Document updated successfully'
       if current_user.requires_approval?
@@ -83,7 +84,17 @@ class Admin::DocumentsController < AdminController
       elsif params[:create_and_edit]
         redirect_to edit_admin_document_path @document
       else
-        redirect_to admin_documents_path
+        # if we unpublish a document, we want to stay on the
+        # unpublished view so that we can unpublish another if needed
+        if @document.published != prev_state
+          if @document.published
+            redirect_to unpublished_admin_documents_path
+          else
+            redirect_to published_admin_documents_path
+          end
+        else
+          redirect_to published_admin_documents_path
+        end
       end
     else
       flash[:error] = @document.errors.full_messages.to_sentence
@@ -127,7 +138,11 @@ class Admin::DocumentsController < AdminController
     @document = Document.find params[:id]
     ids = current_user.self_and_descendant_ids
     unless current_user.is_editor || ids.include?(@document.contributor.id)
-      redirect_to admin_documents_path
+      if @document.published
+        redirect_to published_admin_documents_path
+      else
+        redirect_to unpublished_admin_documents_path
+      end
     end
   end
 end
