@@ -5,7 +5,7 @@ class Admin::DocumentsController < AdminController
   include SmartListing::Helper::ControllerExtensions
   helper  SmartListing::Helper
 
-  def index
+  def unpublished
     if ( current_user.is_editor && current_user.is_admin )
       @documents = Document.all
     else
@@ -15,14 +15,21 @@ class Admin::DocumentsController < AdminController
     end
 
     @unpublished_documents = @documents.where(published: 'false')
+  end
+
+  def published
+
+    if ( current_user.is_editor && current_user.is_admin )
+      @documents = Document.all
+    else
+      @documents = Document.where(
+        contributor_id: current_user.self_and_descendant_ids
+      )
+    end
+
     @published_documents = @documents.where(published: 'true')
 
-    smart_listing_create(
-      :unpublished_documents,
-      Document.filter_by_params(@unpublished_documents.joins(:language), params[:filter]),
-      partial: 'admin/documents/unpublished_listing',
-      sort_attributes: [[:title, 'title'], [:publisher, 'publisher'], [:language, 'name'], [:contributor, 'name']],
-    )
+
     smart_listing_create(
       :published_documents,
       Document.filter_by_params(@published_documents.joins(:language), params[:filter]),
@@ -31,6 +38,8 @@ class Admin::DocumentsController < AdminController
     )
 
     @filter = params[:filter] || ''
+
+
   end
 
   def new

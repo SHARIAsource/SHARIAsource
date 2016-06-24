@@ -39,6 +39,7 @@ gem 'rtesseract', '~> 2.0', '>= 2.0.1'
 gem 'similar_text', '~> 0.0.4'
 gem 'grim', '~> 1.3'
 gem 'whatlanguage', '~> 1.0', '>= 1.0.6'
+gem 'jquery-datatables-rails', '~> 3.3.0'
 
 group :development do
   gem 'annotate', '~> 2.6.5'
