@@ -3,8 +3,8 @@
     .image-viewer-container
       .text
         - @document.pages.each do |page|
-          - if page.body.text.present?
-            .page-text== page.body.text
+          - if page.body.hybrid_text.present?
+            .page-text== page.body.hybrid_text
           - else
             .page-text
               p.empty-page-text No text provided for this page.
@@ -12,4 +12,3 @@
         = render 'documents/viewer_content'
       = render 'documents/viewer_controls'
   hr.source-end
-

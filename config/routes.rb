@@ -42,8 +42,13 @@ Rails.application.routes.draw do
     resources :eras, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :miscs, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :documents, only: [
-      :index, :new, :edit, :create, :update, :destroy
-    ]
+       :new, :edit, :create, :update, :destroy
+    ] do
+      collection do
+        get 'published'
+        get 'unpublished'
+      end
+    end
   end
 
   authenticate :user, lambda {|u| u.is_editor? } do

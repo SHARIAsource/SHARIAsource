@@ -5,7 +5,7 @@ class Admin::DocumentsController < AdminController
   include SmartListing::Helper::ControllerExtensions
   helper  SmartListing::Helper
 
-  def index
+  def unpublished
     if ( current_user.is_editor && current_user.is_admin )
       @documents = Document.all
     else
@@ -15,14 +15,21 @@ class Admin::DocumentsController < AdminController
     end
 
     @unpublished_documents = @documents.where(published: 'false')
+  end
+
+  def published
+
+    if ( current_user.is_editor && current_user.is_admin )
+      @documents = Document.all
+    else
+      @documents = Document.where(
+        contributor_id: current_user.self_and_descendant_ids
+      )
+    end
+
     @published_documents = @documents.where(published: 'true')
 
-    smart_listing_create(
-      :unpublished_documents,
-      Document.filter_by_params(@unpublished_documents.joins(:language), params[:filter]),
-      partial: 'admin/documents/unpublished_listing',
-      sort_attributes: [[:title, 'title'], [:publisher, 'publisher'], [:language, 'name'], [:contributor, 'name']],
-    )
+
     smart_listing_create(
       :published_documents,
       Document.filter_by_params(@published_documents.joins(:language), params[:filter]),
@@ -31,6 +38,8 @@ class Admin::DocumentsController < AdminController
     )
 
     @filter = params[:filter] || ''
+
+
   end
 
   def new
@@ -49,9 +58,9 @@ class Admin::DocumentsController < AdminController
     if @document.save
       flash[:notice] = 'Document created successfully'
       if params[:create_and_continue]
-        render :new
+        redirect_to new_admin_document_path
       elsif params[:create_and_edit]
-        render :edit
+        redirect_to edit_admin_document_path @document
       else
         redirect_to admin_documents_path
       end
@@ -69,7 +78,13 @@ class Admin::DocumentsController < AdminController
       end
       @document.index!
       DocumentTypeCountWorker.perform_async
-      redirect_to admin_documents_path
+      if params[:create_and_continue]
+        redirect_to new_admin_document_path
+      elsif params[:create_and_edit]
+        redirect_to edit_admin_document_path @document
+      else
+        redirect_to admin_documents_path
+      end
     else
       flash[:error] = @document.errors.full_messages.to_sentence
       render :edit
@@ -97,7 +112,7 @@ class Admin::DocumentsController < AdminController
                  region_ids: [], theme_ids: [], topic_ids: [], tag_ids: [],
                  referenced_document_ids: [], era_ids: [],
                  body_attributes: [:id, :text], pages_attributes: [
-                   :id, body_attributes: [:id, :text]
+                   :id, body_attributes: [:id, :text, :hybrid_text]
                  ]]
     if current_user.is_editor
       whitelist << :contributor_id
