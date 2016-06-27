@@ -108,7 +108,7 @@ class Admin::DocumentsController < AdminController
     else
       flash[:error] = 'An error occurred while trying to delete that Document'
     end
-    redirect_to admin_documents_path
+    redirect_to published_admin_documents_path
   end
 
   protected
