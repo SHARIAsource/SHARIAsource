@@ -7,10 +7,10 @@ header
 
 hr
 h3
-  span Published | 
+  span Published |
   = link_to "Unpublished", unpublished_admin_documents_path
 
-table#published
+table#document-datatable
   thead
     tr
       th Title
@@ -23,13 +23,3 @@ table#published
       th.actions Actions
   tbody
     = render @published_documents
-
-
-
-javascript:
-  $(document).ready(
-  	function() {
-  		$('#published').DataTable({
-  			paginationType: 'full_numbers'
-  		});
-  	})
