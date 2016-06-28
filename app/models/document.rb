@@ -84,6 +84,9 @@ class Document < ActiveRecord::Base
   belongs_to :language
   belongs_to :contributor, class_name: 'User'
 
+  # Scopes
+  scope :published, -> { where(published: true) }
+
   # Misc
   mount_uploader :pdf, PdfUploader
   accepts_nested_attributes_for :pages, :body

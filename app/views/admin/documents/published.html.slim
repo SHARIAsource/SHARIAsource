@@ -10,7 +10,7 @@ h3
   span Published |
   = link_to "Unpublished", unpublished_admin_documents_path
 
-table#document-datatable
+table.display#document-datatable data-source="#{ published_admin_documents_url(format: "json") }"
   thead
     tr
       th Title
@@ -20,6 +20,6 @@ table#document-datatable
       th Contributor
       th Language
       th Regions
+      th Last Updated
       th.actions Actions
   tbody
-    = render @published_documents

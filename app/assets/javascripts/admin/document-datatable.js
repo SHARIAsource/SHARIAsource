@@ -1,7 +1,17 @@
 var ready;
 ready = function() {
     $('#document-datatable').DataTable({
-        paginationType: 'full_numbers'
+        sPaginationType: 'full_numbers',
+        bJQueryUI: true,
+        bProcessing: true,
+        bServerSide: true,
+        sAjaxSource: $('#document-datatable').data('source'),
+        "columnDefs": [ {
+          "targets": -1,
+          "className": 'details-control',
+          "orderable": false,
+          "searchable":false
+        } ]
     });
 }
 

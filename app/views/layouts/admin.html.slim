@@ -14,7 +14,7 @@ html
   body
     .container
       = render 'admin/admin_nav' if user_signed_in?
-      .row
-        .small-12.columns
+      .row.admin
+        .large-12.columns
           = render 'admin/flash'
           == yield

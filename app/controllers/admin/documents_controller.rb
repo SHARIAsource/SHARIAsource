@@ -2,9 +2,6 @@ class Admin::DocumentsController < AdminController
   before_filter :fetch_document, only: [:edit, :update, :destroy]
   before_filter :ensure_editor!, only: [:destroy]
 
-  include SmartListing::Helper::ControllerExtensions
-  helper  SmartListing::Helper
-
   def unpublished
     if ( current_user.is_editor && current_user.is_admin )
       @documents = Document.all
@@ -15,6 +12,10 @@ class Admin::DocumentsController < AdminController
     end
 
     @unpublished_documents = @documents.where(published: 'false')
+    respond_to do |format|
+      format.html
+      format.json { render json: DocumentsDatatable.new(view_context, false) }
+    end
   end
 
   def published
@@ -28,18 +29,10 @@ class Admin::DocumentsController < AdminController
     end
 
     @published_documents = @documents.where(published: 'true')
-
-
-    smart_listing_create(
-      :published_documents,
-      Document.filter_by_params(@published_documents.joins(:language), params[:filter]),
-      partial: 'admin/documents/published_listing',
-      sort_attributes: [[:title, 'title'], [:publisher, 'publisher'], [:language, 'name'], [:contributor, 'name']],
-    )
-
-    @filter = params[:filter] || ''
-
-
+    respond_to do |format|
+      format.html
+      format.json { render json: DocumentsDatatable.new(view_context, true) }
+    end
   end
 
   def new
