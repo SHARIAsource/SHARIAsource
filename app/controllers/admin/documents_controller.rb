@@ -198,7 +198,6 @@ class Admin::DocumentsController < AdminController
     when "language" then docs.joins(:language).order("languages.name #{sort_direction}")
     when "regions" then docs.joins(:regions).order("regions.name #{sort_direction}")
     end
-    return docs
   end
 
   def sort_direction
