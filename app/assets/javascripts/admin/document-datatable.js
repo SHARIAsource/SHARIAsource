@@ -1,17 +1,23 @@
 var ready;
 ready = function() {
-    $('#document-datatable').DataTable({
+    var oTable = $('#document-datatable').dataTable({
         sPaginationType: 'full_numbers',
         bJQueryUI: true,
         bProcessing: true,
         bServerSide: true,
         sAjaxSource: $('#document-datatable').data('source'),
-        "columnDefs": [ {
-          "targets": -1,
-          "className": 'details-control',
-          "orderable": false,
-          "searchable":false
-        } ]
+        "columnDefs": [{
+            "targets": -1,
+            "className": 'details-control',
+            "orderable": false,
+            "searchable": false
+        }]
+    });
+    $('#document-datatable_filter input').unbind();
+    $('#document-datatable_filter input').bind('keyup', function(e) {
+        if (e.keyCode == 13) {
+            oTable.fnFilter(this.value);
+        }
     });
 }
 
