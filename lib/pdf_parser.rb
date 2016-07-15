@@ -42,7 +42,7 @@ module PdfParser
     result = chars.reduce([[]]) do |total, character|
       if character.is_non_latin?
         total.push([]) unless total.last.empty?
-      elsif total.last.empty? && !c.is_whitespace?
+      elsif total.last.empty? && !character.is_whitespace?
         # just out of non-latin
         total.last.push(character)
       elsif total.last.any?

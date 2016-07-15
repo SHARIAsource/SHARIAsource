@@ -39,6 +39,7 @@
 #
 
 class Document < ActiveRecord::Base
+  include PdfParser
   alias_attribute :name, :title
 
   # Callbacks
@@ -219,6 +220,9 @@ class Document < ActiveRecord::Base
     end
     pages = Grim.reap(self.pdf.current_path).to_a
     pages = [images, pages].transpose
+    message = "Images successfully generated for document #{self.id}.
+                  Now parsing all #{pages.length} pages of text"
+    Rails.logger.info(message)
     pages.each do |image, page|
       img_path = "#{Rails.root}/tmp/pdf-#{self.id}-#{page.number}.jpg"
       image.alpha = Magick::DeactivateAlphaChannel if image.alpha?
@@ -239,8 +243,8 @@ class Document < ActiveRecord::Base
       source_page.body.text = txt_to_html(page.text)          # standard method text
       source_page.body.hybrid_text = txt_to_html(hybrid_text) # hybrid method text
       source_page.save!
-      Rails.logger.info "Page #{page.number} of #{images.size} processed"
     end
+    Rails.logger.info("Image generation and text parsing successful for document #{self.id}")
   end
 
   private
