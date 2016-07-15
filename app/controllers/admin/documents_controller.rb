@@ -172,6 +172,7 @@ class Admin::DocumentsController < AdminController
     if params[:sSearch].present?
         documents = Document.where(published:pstatus).search do
           fulltext params[:sSearch]
+          paginate(:page => page, :per_page => per_page)
         end.results
     end
     documents
