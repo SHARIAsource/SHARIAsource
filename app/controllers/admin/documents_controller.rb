@@ -14,7 +14,7 @@ class Admin::DocumentsController < AdminController
     @unpublished_documents = @documents.where(published: 'false')
     respond_to do |format|
       format.html
-      format.json { render json: DocumentsDatatable.new(view_context, false) }
+      format.json { render json: response_as_json(false) }
     end
   end
 
@@ -31,7 +31,7 @@ class Admin::DocumentsController < AdminController
     @published_documents = @documents.where(published: 'true')
     respond_to do |format|
       format.html
-      format.json { render json: DocumentsDatatable.new(view_context, true) }
+      format.json { render json: response_as_json(true) }
     end
   end
 
@@ -137,5 +137,69 @@ class Admin::DocumentsController < AdminController
         redirect_to unpublished_admin_documents_path
       end
     end
+  end
+
+  def response_as_json(pstatus)
+    {
+      sEcho: params[:sEcho].to_i,
+      iTotalRecords: Document.where(published:pstatus).count,
+      iTotalDisplayRecords: fetch_documents(pstatus).count,
+      aaData: data(pstatus)
+    }
+  end
+
+  def data(pstatus)
+    fetch_documents(pstatus).map do |document|
+      row = [
+        document.title,
+        document.publisher,
+        document.tags.pluck(:name).join(', '),
+        document.topics.pluck(:name).join(', '),
+        document.contributor.name,
+        document.language.name,
+        document.regions.pluck(:name).join(', '),
+        document.updated_at.strftime("%b %e, %l:%M %p"),
+        render_to_string(partial:"/admin/documents/datatable_controls.html.slim", :locals => {document:document}, layout: false )
+      ]
+      row
+    end
+  end
+
+
+  def fetch_documents(pstatus)
+    documents = ordered_docs(pstatus)
+    documents = documents.page(page).per_page(per_page)
+    if params[:sSearch].present?
+        documents = Document.where(published:pstatus).search do
+          fulltext params[:sSearch]
+        end.results
+    end
+    documents
+  end
+
+  def page
+    params[:iDisplayStart].to_i/per_page + 1
+  end
+
+  def per_page
+    params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 10
+  end
+
+  def ordered_docs(pstatus)
+    columns = %w[title publisher tags topics contributor language regions updated_at]
+    col = columns[params[:iSortCol_0].to_i]
+    docs = Document.where(published:pstatus)
+    case col
+    when "title","publisher", "updated_at" then docs.order("#{col} #{sort_direction}")
+    when "topics" then docs.joins(:topics).order("topics.name #{sort_direction}")
+    when "tags" then docs.includes(:tags).order("tags.name #{sort_direction}")
+    when "contributor" then docs.joins(:contributor).order("users.last_name #{sort_direction}")
+    when "language" then docs.joins(:language).order("languages.name #{sort_direction}")
+    when "regions" then docs.joins(:regions).order("regions.name #{sort_direction}")
+    end
+  end
+
+  def sort_direction
+    params[:sSortDir_0] == "desc" ? "desc" : "asc"
   end
 end
