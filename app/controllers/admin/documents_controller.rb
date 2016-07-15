@@ -167,15 +167,16 @@ class Admin::DocumentsController < AdminController
 
 
   def fetch_documents(pstatus)
-    documents = ordered_docs(pstatus)
-    documents = documents.page(page).per_page(per_page)
+    documents = Document.where(published:pstatus)
     if params[:sSearch].present?
-        documents = Document.where(published:pstatus).search do
+        ids = documents.search do
           fulltext params[:sSearch]
-          paginate(:page => page, :per_page => per_page)
-        end.results
+        end.results.map(&:id)
+        documents = Document.where(published:pstatus, id: ids)
     end
-    documents
+    documents = documents.page(page).per_page(per_page)
+
+    return order_documents(documents)
   end
 
   def page
@@ -186,10 +187,9 @@ class Admin::DocumentsController < AdminController
     params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 10
   end
 
-  def ordered_docs(pstatus)
+  def order_documents(docs)
     columns = %w[title publisher tags topics contributor language regions updated_at]
     col = columns[params[:iSortCol_0].to_i]
-    docs = Document.where(published:pstatus)
     case col
     when "title","publisher", "updated_at" then docs.order("#{col} #{sort_direction}")
     when "topics" then docs.joins(:topics).order("topics.name #{sort_direction}")
@@ -198,6 +198,7 @@ class Admin::DocumentsController < AdminController
     when "language" then docs.joins(:language).order("languages.name #{sort_direction}")
     when "regions" then docs.joins(:regions).order("regions.name #{sort_direction}")
     end
+    return docs
   end
 
   def sort_direction
