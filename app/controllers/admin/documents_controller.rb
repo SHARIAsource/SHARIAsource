@@ -158,7 +158,7 @@ class Admin::DocumentsController < AdminController
         document.contributor.name,
         document.language.name,
         document.regions.pluck(:name).join(', '),
-        document.updated_at.strftime("%b %e, %l:%M %p"),
+        document.updated_at.strftime("%b %e, %Y"),
         render_to_string(partial:"/admin/documents/datatable_controls.html.slim", :locals => {document:document}, layout: false )
       ]
       row
