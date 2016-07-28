@@ -1,5 +1,4 @@
 require 'RMagick'
-require 'grim'
 require 'whatlanguage'
 require 'similar_text'
 
