@@ -211,20 +211,21 @@ class Document < ActiveRecord::Base
     pages[0] && pages[0].image.thumb
   end
 
-  def extract_pages
+  def extract_pages(with_text=false)
     pdf = File.open(self.pdf.current_path, 'rb').read
     images = Magick::Image.from_blob(pdf) do
       self.format = 'PDF'
       self.quality = 100
       self.density = 300
     end
-    pages = Grim.reap(self.pdf.current_path).to_a
+    pages = PDF::Reader.new(self.pdf.current_path).pages
     pages = [images, pages].transpose
-    message = "Images successfully generated for document #{self.id}.
-                  Now parsing all #{pages.length} pages of text"
+    message = "Images successfully generated for document #{self.id}."
+    message += " Now parsing all #{pages.length} pages of text." if with_text
     Rails.logger.info(message)
-    pages.each do |image, page|
-      img_path = "#{Rails.root}/tmp/pdf-#{self.id}-#{page.number}.jpg"
+    pages.each_with_index do |group, idx|
+      image, page = group
+      img_path = "#{Rails.root}/tmp/pdf-#{self.id}-#{idx+1}.jpg"
       image.alpha = Magick::DeactivateAlphaChannel if image.alpha?
       image.to_blob
       image.write(img_path) do
@@ -237,14 +238,30 @@ class Document < ActiveRecord::Base
         self.density = 300
       end
       source_page = self.pages.build(image: File.open(img_path),
-                                       number: page.number)
+                                       number: idx + 1)
       source_page.build_body
-      hybrid_text = build_text_by_hybrid(page.text, img_path)
-      source_page.body.text = txt_to_html(page.text)          # standard method text
-      source_page.body.hybrid_text = txt_to_html(hybrid_text) # hybrid method text
+      if with_text
+        # don't trust PDF::Reader
+        begin
+          hybrid_text = build_text_by_hybrid(page.text, img_path)
+          source_page.body.text = txt_to_html(page.text)          # standard method text
+          source_page.body.hybrid_text = txt_to_html(hybrid_text) # hybrid method text
+        rescue ArgumentError => e
+          source_page.body.text = ""
+          source_page.body.hybrid_text = ""
+        end
+      else
+        source_page.body.text = "No text to show"          # standard method text
+        source_page.body.hybrid_text = "No text to show"   # hybrid method text
+      end
       source_page.save!
     end
-    Rails.logger.info("Image generation and text parsing successful for document #{self.id}")
+    if with_text
+      Rails.logger.info("Image generation and text parsing successful for document #{self.id}")
+    else
+      Rails.logger.info("Image generation successful for document #{self.id}")
+    end
+
   end
 
   private
@@ -252,7 +269,7 @@ class Document < ActiveRecord::Base
   def generate_images
     changes = self.previous_changes
     if changes.include?(:pdf) && changes[:pdf].first != changes[:pdf].last
-      PdfToImagesWorker.perform_async self.id
+      PdfToImagesWorker.perform_async(self.id)
     end
   end
 
