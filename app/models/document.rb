@@ -39,6 +39,7 @@
 #
 
 class Document < ActiveRecord::Base
+  include PdfParser
   alias_attribute :name, :title
 
   # Callbacks
@@ -83,6 +84,9 @@ class Document < ActiveRecord::Base
   belongs_to :reference_type
   belongs_to :language
   belongs_to :contributor, class_name: 'User'
+
+  # Scopes
+  scope :published, -> { where(published: true) }
 
   # Misc
   mount_uploader :pdf, PdfUploader
@@ -207,12 +211,65 @@ class Document < ActiveRecord::Base
     pages[0] && pages[0].image.thumb
   end
 
+  def extract_pages(with_text=false)
+    pdf = File.open(self.pdf.current_path, 'rb').read
+    images = Magick::Image.from_blob(pdf) do
+      self.format = 'PDF'
+      self.quality = 100
+      self.density = 300
+    end
+    pages = PDF::Reader.new(self.pdf.current_path).pages
+    pages = [images, pages].transpose
+    message = "Images successfully generated for document #{self.id}."
+    message += " Now parsing all #{pages.length} pages of text." if with_text
+    Rails.logger.info(message)
+    pages.each_with_index do |group, idx|
+      image, page = group
+      img_path = "#{Rails.root}/tmp/pdf-#{self.id}-#{idx+1}.jpg"
+      image.alpha = Magick::DeactivateAlphaChannel if image.alpha?
+      image.to_blob
+      image.write(img_path) do
+        self.format = 'JPG'
+        self.antialias = true
+        self.colorspace = Magick::RGBColorspace
+        self.interlace = Magick::NoInterlace
+        self.size = 1024
+        self.quality = 100
+        self.density = 300
+      end
+      source_page = self.pages.build(image: File.open(img_path),
+                                       number: idx + 1)
+      source_page.build_body
+      if with_text
+        # don't trust PDF::Reader
+        begin
+          hybrid_text = build_text_by_hybrid(page.text, img_path)
+          source_page.body.text = txt_to_html(page.text)          # standard method text
+          source_page.body.hybrid_text = txt_to_html(hybrid_text) # hybrid method text
+        rescue ArgumentError => e
+          source_page.body.text = ""
+          source_page.body.hybrid_text = ""
+        end
+      else
+        source_page.body.text = "No text to show"          # standard method text
+        source_page.body.hybrid_text = "No text to show"   # hybrid method text
+      end
+      source_page.save!
+    end
+    if with_text
+      Rails.logger.info("Image generation and text parsing successful for document #{self.id}")
+    else
+      Rails.logger.info("Image generation successful for document #{self.id}")
+    end
+
+  end
+
   private
 
   def generate_images
     changes = self.previous_changes
     if changes.include?(:pdf) && changes[:pdf].first != changes[:pdf].last
-      PdfToImagesWorker.perform_async self.id
+      PdfToImagesWorker.perform_async(self.id)
     end
   end
 
@@ -248,4 +305,15 @@ class Document < ActiveRecord::Base
       self.published_at = Time.now
     end
   end
+
+  def txt_to_html text
+    krmd = Kramdown::Document.new(text || "").to_html
+    processed = Nokogiri::HTML::DocumentFragment.parse(krmd)
+    processed.css("p").each do |node|
+      # right-to-left if text is Arabic
+      node["class"] = "rtl" if !!(node.text =~ /\p{Arabic}/)
+    end
+    return processed.to_html
+  end
+
 end

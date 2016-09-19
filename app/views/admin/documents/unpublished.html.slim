@@ -1,0 +1,25 @@
+= content_for :page_title, 'Documents'
+= content_for :admin_active, 'Documents'
+
+header
+  h2.left= @documents.model_name.human.pluralize
+  = link_to t('helpers.new', model: Document.model_name.human), new_admin_document_path, class: 'left small round button'
+
+hr
+h3
+  = link_to "Published", published_admin_documents_path
+  span   | Unpublished
+
+table.display#document-datatable data-source="#{ unpublished_admin_documents_url(format: "json") }"
+  thead
+    tr
+      th Title
+      th Publisher
+      th Tags
+      th Topics
+      th Contributor
+      th Language
+      th Regions
+      th Last Updated
+      th.actions Actions
+  tbody

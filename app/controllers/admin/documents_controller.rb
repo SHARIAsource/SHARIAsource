@@ -2,10 +2,7 @@ class Admin::DocumentsController < AdminController
   before_filter :fetch_document, only: [:edit, :update, :destroy]
   before_filter :ensure_editor!, only: [:destroy]
 
-  include SmartListing::Helper::ControllerExtensions
-  helper  SmartListing::Helper
-
-  def index
+  def unpublished
     if ( current_user.is_editor && current_user.is_admin )
       @documents = Document.all
     else
@@ -15,22 +12,27 @@ class Admin::DocumentsController < AdminController
     end
 
     @unpublished_documents = @documents.where(published: 'false')
+    respond_to do |format|
+      format.html
+      format.json { render json: response_as_json(false) }
+    end
+  end
+
+  def published
+
+    if ( current_user.is_editor && current_user.is_admin )
+      @documents = Document.all
+    else
+      @documents = Document.where(
+        contributor_id: current_user.self_and_descendant_ids
+      )
+    end
+
     @published_documents = @documents.where(published: 'true')
-
-    smart_listing_create(
-      :unpublished_documents,
-      Document.filter_by_params(@unpublished_documents.joins(:language), params[:filter]),
-      partial: 'admin/documents/unpublished_listing',
-      sort_attributes: [[:title, 'title'], [:publisher, 'publisher'], [:language, 'name'], [:contributor, 'name']],
-    )
-    smart_listing_create(
-      :published_documents,
-      Document.filter_by_params(@published_documents.joins(:language), params[:filter]),
-      partial: 'admin/documents/published_listing',
-      sort_attributes: [[:title, 'title'], [:publisher, 'publisher'], [:language, 'name'], [:contributor, 'name']],
-    )
-
-    @filter = params[:filter] || ''
+    respond_to do |format|
+      format.html
+      format.json { render json: response_as_json(true) }
+    end
   end
 
   def new
@@ -40,7 +42,7 @@ class Admin::DocumentsController < AdminController
 
   def edit
     unless @document.processed
-      redirect_to admin_documents_path
+      redirect_to unpublished_admin_documents_path
     end
   end
 
@@ -49,11 +51,11 @@ class Admin::DocumentsController < AdminController
     if @document.save
       flash[:notice] = 'Document created successfully'
       if params[:create_and_continue]
-        render :new
+        redirect_to new_admin_document_path
       elsif params[:create_and_edit]
-        render :edit
+        redirect_to edit_admin_document_path @document
       else
-        redirect_to admin_documents_path
+        redirect_to unpublished_admin_documents_path
       end
     else
       flash[:error] = @document.errors.full_messages.to_sentence
@@ -62,6 +64,7 @@ class Admin::DocumentsController < AdminController
   end
 
   def update
+    prev_state = @document.published
     if @document.update permitted_params
       flash[:notice] = 'Document updated successfully'
       if current_user.requires_approval?
@@ -69,7 +72,23 @@ class Admin::DocumentsController < AdminController
       end
       @document.index!
       DocumentTypeCountWorker.perform_async
-      redirect_to admin_documents_path
+      if params[:create_and_continue]
+        redirect_to new_admin_document_path
+      elsif params[:create_and_edit]
+        redirect_to edit_admin_document_path @document
+      else
+        # if we unpublish a document, we want to stay on the
+        # unpublished view so that we can unpublish another if needed
+        if @document.published != prev_state
+          if @document.published
+            redirect_to unpublished_admin_documents_path
+          else
+            redirect_to published_admin_documents_path
+          end
+        else
+          redirect_to published_admin_documents_path
+        end
+      end
     else
       flash[:error] = @document.errors.full_messages.to_sentence
       render :edit
@@ -82,7 +101,7 @@ class Admin::DocumentsController < AdminController
     else
       flash[:error] = 'An error occurred while trying to delete that Document'
     end
-    redirect_to admin_documents_path
+    redirect_to published_admin_documents_path
   end
 
   protected
@@ -97,7 +116,7 @@ class Admin::DocumentsController < AdminController
                  region_ids: [], theme_ids: [], topic_ids: [], tag_ids: [],
                  referenced_document_ids: [], era_ids: [],
                  body_attributes: [:id, :text], pages_attributes: [
-                   :id, body_attributes: [:id, :text]
+                   :id, body_attributes: [:id, :text, :hybrid_text]
                  ]]
     if current_user.is_editor
       whitelist << :contributor_id
@@ -112,7 +131,76 @@ class Admin::DocumentsController < AdminController
     @document = Document.find params[:id]
     ids = current_user.self_and_descendant_ids
     unless current_user.is_editor || ids.include?(@document.contributor.id)
-      redirect_to admin_documents_path
+      if @document.published
+        redirect_to published_admin_documents_path
+      else
+        redirect_to unpublished_admin_documents_path
+      end
     end
+  end
+
+  def response_as_json(pstatus)
+    {
+      sEcho: params[:sEcho].to_i,
+      iTotalRecords: Document.where(published:pstatus).count,
+      iTotalDisplayRecords: fetch_documents(pstatus).count,
+      aaData: data(pstatus)
+    }
+  end
+
+  def data(pstatus)
+    fetch_documents(pstatus).map do |document|
+      row = [
+        document.title,
+        document.publisher,
+        document.tags.pluck(:name).join(', '),
+        document.topics.pluck(:name).join(', '),
+        document.contributor.name,
+        document.language.name,
+        document.regions.pluck(:name).join(', '),
+        document.updated_at.strftime("%b %e, %Y"),
+        render_to_string(partial:"/admin/documents/datatable_controls.html.slim", :locals => {document:document}, layout: false )
+      ]
+      row
+    end
+  end
+
+
+  def fetch_documents(pstatus)
+    documents = Document.where(published:pstatus)
+    if params[:sSearch].present?
+        ids = documents.search do
+          fulltext params[:sSearch]
+        end.results.map(&:id)
+        documents = Document.where(published:pstatus, id: ids)
+    end
+    documents = documents.page(page).per_page(per_page)
+
+    return order_documents(documents)
+  end
+
+  def page
+    params[:iDisplayStart].to_i/per_page + 1
+  end
+
+  def per_page
+    params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 10
+  end
+
+  def order_documents(docs)
+    columns = %w[title publisher tags topics contributor language regions updated_at]
+    col = columns[params[:iSortCol_0].to_i]
+    case col
+    when "title","publisher", "updated_at" then docs.order("#{col} #{sort_direction}")
+    when "topics" then docs.joins(:topics).order("topics.name #{sort_direction}")
+    when "tags" then docs.includes(:tags).order("tags.name #{sort_direction}")
+    when "contributor" then docs.joins(:contributor).order("users.last_name #{sort_direction}")
+    when "language" then docs.joins(:language).order("languages.name #{sort_direction}")
+    when "regions" then docs.joins(:regions).order("regions.name #{sort_direction}")
+    end
+  end
+
+  def sort_direction
+    params[:sSortDir_0] == "desc" ? "desc" : "asc"
   end
 end
