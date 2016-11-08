@@ -1,3 +1,4 @@
+require File.expand_path("../../config/environment", __FILE__)
 require 'capybara/rspec'
 require 'rspec/rails'
 require 'closure_tree/test/matcher'
