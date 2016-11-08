@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe Era do
   it { should validate_numericality_of :start_year_gregorian }
   it { should validate_numericality_of :end_year_gregorian }
