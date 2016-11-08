@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+ruby '2.2.2'
 
+gem 'eventmachine', '~>1.0.4'
 gem 'active_attr', '~> 0.8.4'
 gem 'autoprefixer-rails', '~> 2.1.0'
 gem 'carrierwave', '~> 0.10.0'
@@ -40,6 +41,7 @@ gem 'similar_text', '~> 0.0.4'
 gem 'grim', '~> 1.3'
 gem 'whatlanguage', '~> 1.0', '>= 1.0.6'
 gem 'jquery-datatables-rails', '~> 3.3.0'
+gem 'therubyracer', platforms: :ruby
 
 group :development do
   gem 'annotate', '~> 2.6.5'
