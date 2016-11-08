@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+ruby '2.2.2'
 
 gem 'active_attr', '~> 0.8.4'
 gem 'autoprefixer-rails', '~> 2.1.0'
@@ -41,6 +41,7 @@ gem 'whatlanguage', '~> 1.0', '>= 1.0.6'
 gem 'jquery-datatables-rails', '~> 3.3.0'
 gem 'therubyracer', '~> 0.12.2'
 gem 'will_paginate', '~> 3.1'
+gem 'eventmachine', '~> 1.0.4'
 
 group :development do
   gem 'annotate', '~> 2.6.5'
