@@ -42,6 +42,7 @@ gem 'jquery-datatables-rails', '~> 3.3.0'
 gem 'therubyracer', '~> 0.12.2'
 gem 'will_paginate', '~> 3.1'
 gem 'eventmachine', '~> 1.0.4'
+gem 'awesome_print'
 
 group :development do
   gem 'annotate', '~> 2.6.5'
