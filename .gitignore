@@ -1,31 +1,13 @@
-# Bundler config.
-/.bundle
-
-# RubyMine Files
-/.idea
-
-# Mac File Stuff
+.bundle/
+.idea/
 .DS_Store
-
-# All logfiles and tempfiles.
-/log/*.log
-/log/*.lck
-/tmp
-
-# Foreman loaded environment variables
+log/
+tmp/
 .env
-
-# Solr
-/solr
-
-# Database credentials
+solr/
 config/database.yml
-
-# Secrets
 config/secrets.yml
-
-# Uploaded files
-public/uploads
-
-# Precompile on server
-public/assets
+public/uploads/
+public/assets/
+pgsql/
+apache2/
