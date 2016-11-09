@@ -1,5 +1,5 @@
 class HomePresenter
-  attr_reader :recent, :popular, :featured, :collaborators
+  attr_reader :recent, :popular, :featured
 
   def initialize
     @recent = Document.published.latest.limit(3).map do |d|
@@ -9,6 +9,5 @@ class HomePresenter
       DocumentPresenter.new d
     end
     @featured = Document.published.featured.map {|d| DocumentPresenter.new d }
-    @collaborators = Collaborator.rank(:sort_order).all
   end
 end
