@@ -54,23 +54,14 @@
     }
   }
 
-  .linkedin {
-    width:18px;
-    background:url(image-path('header-linkedin.svg')) 0 0 no-repeat;
-    background-size:18px 16px;
-
-    &:hover, &:focus {
-      background-image:url(image-path('linkedin-hover.svg'));
-    }
-  }
-
-  .rss {
-    width:16px;
-    background:url(image-path('header-rss.svg')) 0 0 no-repeat;
+  .wordpress {
+    width:24px;
+    background:url(image-path('header-wordpress.svg')) 0 0 no-repeat;
     background-size:16px 16px;
 
     &:hover, &:focus {
-      background-image:url(image-path('rss-hover.svg'));
+      background-image:url(image-path('wordpress-hover.svg'));
     }
   }
+
 }
