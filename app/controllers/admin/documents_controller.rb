@@ -42,6 +42,7 @@ class Admin::DocumentsController < AdminController
 
   def edit
     unless @document.processed
+      flash[:error] = "Sorry, that document cannot be edited until after it has been processed by the system"
       redirect_to unpublished_admin_documents_path
     end
   end
@@ -129,13 +130,9 @@ class Admin::DocumentsController < AdminController
 
   def fetch_document
     @document = Document.find params[:id]
-    ids = current_user.self_and_descendant_ids
-    unless current_user.is_editor || ids.include?(@document.contributor.id)
-      if @document.published
-        redirect_to published_admin_documents_path
-      else
-        redirect_to unpublished_admin_documents_path
-      end
+    unless current_user.is_editor || current_user.self_and_descendant_ids.include?(@document.contributor.id)
+      flash[:alert] = "Sorry, but you must be an editor or the owner of that document to do this"
+      redirect_to :back
     end
   end
 
