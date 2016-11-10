@@ -19,7 +19,6 @@ class Admin::DocumentsController < AdminController
   end
 
   def published
-
     if ( current_user.is_editor && current_user.is_admin )
       @documents = Document.all
     else
@@ -43,12 +42,19 @@ class Admin::DocumentsController < AdminController
   def edit
     unless @document.processed
       flash[:error] = "Sorry, that document cannot be edited until after it has been processed by the system"
-      redirect_to unpublished_admin_documents_path
+      redirect_to :back
     end
   end
 
   def create
-    @document = current_user.documents.build permitted_params
+    if permitted_params[:contributor_id]
+      contributor = User.find(permitted_params[:contributor_id])
+    else
+      contributor = current_user
+    end
+
+    @document = contributor.documents.build permitted_params
+
     if @document.save
       flash[:notice] = 'Document created successfully'
       if params[:create_and_continue]
