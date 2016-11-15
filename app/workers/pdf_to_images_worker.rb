@@ -1,5 +1,5 @@
 class PdfToImagesWorker
-#  include Sidekiq::Worker
+  include Sidekiq::Worker
 
   def perform(document_id, with_text=false)
     document = Document.find document_id
