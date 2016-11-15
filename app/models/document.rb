@@ -95,8 +95,11 @@ class Document < ActiveRecord::Base
   # Solr Indexing
   searchable auto_index: false do
     # TODO: I think we need to strip summary too
-    text :title, :source_name, :author, :translators, :editors, :publisher,
-         :summary
+    text :title, :source_name, :author, :translators, :editors, :publisher
+
+    text :summary do
+      strip_control_characters summary
+    end
 
     text :page_texts do
       pages.map {|page| strip_control_characters page.body.text }
