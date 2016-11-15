@@ -54,14 +54,11 @@ class Admin::DocumentsController < AdminController
     end
 
     @document = contributor.documents.build permitted_params
-    @document.valid?
-    logger.ap "BOOP1"
-    logger.ap @document.errors.full_messages
 
     if @document.save
+      @document.index!
       flash[:notice] = 'Document created successfully'
       if params[:create_and_continue]
-        logger.ap "BOOP:create_and_continue"
         redirect_to new_admin_document_path
       elsif params[:create_and_edit]
         # BUG: I don't think this will ever work for a PDF upload because the PDF
@@ -69,10 +66,8 @@ class Admin::DocumentsController < AdminController
         #   but the edit page will display an error message to the user that they
         #   cannot edit it until it's been processed. That means this will only
         #   work if document_style == 'noscan'.
-        logger.ap "BOOP:create_and_edit"
         redirect_to edit_admin_document_path @document
       else
-        logger.ap "BOOP:last option"
         redirect_to unpublished_admin_documents_path
       end
     else
@@ -182,16 +177,16 @@ class Admin::DocumentsController < AdminController
 
 
   def fetch_documents(pstatus)
-    documents = Document.where(published:pstatus)
+    documents = Document.where(published: pstatus)
     if params[:sSearch].present?
-        ids = documents.search do
-          fulltext params[:sSearch]
-        end.results.map(&:id)
-        documents = Document.where(published:pstatus, id: ids)
+      ids = documents.search do
+        fulltext params[:sSearch]
+      end.results.map(&:id)
+      documents = Document.where(published: pstatus, id: ids)
     end
     documents = documents.page(page).per_page(per_page)
 
-    return order_documents(documents)
+    order_documents(documents)
   end
 
   def page
