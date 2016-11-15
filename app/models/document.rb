@@ -237,37 +237,37 @@ class Document < ActiveRecord::Base
     puts message
     Rails.logger.info(message)
 
+    source_pages = []
+    images.each_with_index do |image, idx|
+      source_page = Page.new(image: File.open(image), number: idx + 1)
+      source_page.build_body
+
+      if with_text
+        # don't trust PDF::Reader
+        begin
+          page = pages[idx]
+          ap "Firing build_text_by_hybrid for page #{idx}..."
+          hybrid_text = build_text_by_hybrid(page.text, image)
+          source_page.body.text = txt_to_html(page.text)          # standard method text
+          source_page.body.hybrid_text = txt_to_html(hybrid_text) # hybrid method text
+        rescue ArgumentError => e
+          source_page.body.text = ""
+          source_page.body.hybrid_text = ""
+        end
+      else
+        source_page.body.text = "No text to show"          # standard method text
+        source_page.body.hybrid_text = "No text to show"   # hybrid method text
+      end
+
+      source_pages << source_page
+    end      
+
     self.class.transaction do 
       self.processed = false
       puts "Destroying pages..."
       self.pages.destroy_all
-      puts "Extracting pages..."
-
-      images.each_with_index do |image, idx|
-        source_page = self.pages.build(image: File.open(image), number: idx + 1)
-        #ap source_page
-        source_page.build_body
-
-        if with_text
-          # don't trust PDF::Reader
-          begin
-            page = pages[idx]
-            ap "Firing build_text_by_hybrid for page #{idx}..."
-            hybrid_text = build_text_by_hybrid(page.text, image)
-            source_page.body.text = txt_to_html(page.text)          # standard method text
-            source_page.body.hybrid_text = txt_to_html(hybrid_text) # hybrid method text
-          rescue ArgumentError => e
-            source_page.body.text = ""
-            source_page.body.hybrid_text = ""
-          end
-        else
-          source_page.body.text = "No text to show"          # standard method text
-          source_page.body.hybrid_text = "No text to show"   # hybrid method text
-        end
-        source_page.save!
-        source_page = nil
-      end
-
+      puts "Assigning pages..."
+      self.pages << source_pages
       puts "Marking as processed and saving"
       self.processed = true
       self.save!
@@ -283,7 +283,7 @@ class Document < ActiveRecord::Base
     puts "Extracting to #{base_dir}"
     FileUtils.mkdir_p(base_dir) unless Dir.exists?(base_dir)
 
-    # NOTE: Larger block sizes will use a lot more memory inside the each_slice loop.
+    # NOTE: Larger batch sizes will use a lot more memory inside the each_slice loop.
     page_batch_size = 20
     images = []
     (0..page_count-1).each_slice(page_batch_size) do |endpoints|
