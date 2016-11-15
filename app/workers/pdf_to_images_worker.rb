@@ -1,10 +1,8 @@
 class PdfToImagesWorker
-  include Sidekiq::Worker
+#  include Sidekiq::Worker
 
-  def perform(source_id, with_text=false)
-    source = Document.find source_id
-    source.pages.destroy_all
-    source.extract_pages(with_text)
-    source.update! processed: true
+  def perform(document_id, with_text=false)
+    document = Document.find document_id
+    document.regenerate_pdf(with_text)
   end
 end

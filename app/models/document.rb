@@ -211,39 +211,41 @@ class Document < ActiveRecord::Base
     pages[0] && pages[0].image.thumb
   end
 
+  def boop(x)
+    puts "boop #{x}: #{Time.now.to_i}"
+  end
+
+  BASE_PAGE_DIRECTORY = Rails.root.join('tmp', 'pdf-pages').to_s.freeze
+
+  def pdf_pages
+    PDF::Reader.new(pdf.current_path).pages
+  end
+
   def extract_pages(with_text=false)
-    pdf = File.open(self.pdf.current_path, 'rb').read
-    images = Magick::Image.from_blob(pdf) do
-      self.format = 'PDF'
-      self.quality = 100
-      self.density = 300
-    end
-    pages = PDF::Reader.new(self.pdf.current_path).pages
-    pages = [images, pages].transpose
-    message = "Images successfully generated for document #{self.id}."
-    message += " Now parsing all #{pages.length} pages of text." if with_text
+    # NOTE: for doc 1121, this block takes 80 seconds with default qual or density info
+    # other note: with qual and dens, it definitely uses 30+GB of memory inside that loop
+    # with qual:90 and density:300, it takes 450 seconds, so 5 times longer with with no qual or dens attrs.
+    pages = pdf_pages
+    page_count = pages.count
+
+    images = pdf_to_images(page_count: page_count)
+
+    message = "Images successfully generated for document #{id}."
+    message += " Now parsing all #{page_count} pages of text." if with_text
+    puts message
     Rails.logger.info(message)
-    pages.each_with_index do |group, idx|
-      image, page = group
-      img_path = "#{Rails.root}/tmp/pdf-#{self.id}-#{idx+1}.jpg"
-      image.alpha = Magick::DeactivateAlphaChannel if image.alpha?
-      image.to_blob
-      image.write(img_path) do
-        self.format = 'JPG'
-        self.antialias = true
-        self.colorspace = Magick::RGBColorspace
-        self.interlace = Magick::NoInterlace
-        self.size = 1024
-        self.quality = 100
-        self.density = 300
-      end
-      source_page = self.pages.build(image: File.open(img_path),
-                                       number: idx + 1)
+
+    # TODO: handle failures in pdf_to_images by adding a nil image and detecting it here
+    #   Ideally, we would use a stock "this page is unavailable" image instead
+    images.each_with_index do |image, idx|
+      source_page = self.pages.build(image: File.open(image), number: idx + 1)
       source_page.build_body
+
       if with_text
         # don't trust PDF::Reader
         begin
-          hybrid_text = build_text_by_hybrid(page.text, img_path)
+          page = pages[idx]
+          hybrid_text = build_text_by_hybrid(page.text, image)
           source_page.body.text = txt_to_html(page.text)          # standard method text
           source_page.body.hybrid_text = txt_to_html(hybrid_text) # hybrid method text
         rescue ArgumentError => e
@@ -255,11 +257,102 @@ class Document < ActiveRecord::Base
         source_page.body.hybrid_text = "No text to show"   # hybrid method text
       end
       source_page.save!
+      source_page = nil
     end
-    if with_text
-      Rails.logger.info("Image generation and text parsing successful for document #{self.id}")
-    else
-      Rails.logger.info("Image generation successful for document #{self.id}")
+
+    log_message = "Image generation #{'and text parsing ' if with_text} successful for document #{self.id}"
+    Rails.logger.info log_message
+  end
+
+  def pdf_to_images(options)
+    page_count = options[:page_count]
+    base_dir = BASE_PAGE_DIRECTORY + "/#{id}"
+    puts "Extracting to #{base_dir}"
+    FileUtils.mkdir_p(base_dir) unless Dir.exists?(base_dir)
+
+    # NOTE: Larger block sizes will use a lot more memory inside the each_slice loop.
+    page_batch_size = 10
+    images = []
+    (0..page_count-1).each_slice(page_batch_size) do |endpoints|
+      start_index = endpoints.first
+      end_index = endpoints.last
+      new_images = extract_page_range(start_index: start_index, end_index: end_index)
+      
+      new_images.each_with_index do |image, idx|
+        global_page_number = start_index + idx
+        img_path = BASE_PAGE_DIRECTORY + "/#{id}/pdf-#{id}-#{global_page_number}.jpg"
+        images << img_path
+        puts "Writing image file #{img_path}"
+
+        image.alpha = Magick::DeactivateAlphaChannel if image.alpha?
+        image.to_blob
+        image.write(img_path) do
+          self.format = 'JPG'
+          self.antialias = true
+          self.colorspace = Magick::RGBColorspace
+          self.interlace = Magick::NoInterlace
+          self.size = 1024
+          self.quality = 100
+          self.density = 300
+        end
+        image = nil
+      end
+      new_images = nil
+
+      # NOTE: Ruby garbage collection doesn't keep up and memory use can hit 60MB per page easily
+      GC.start
+    end
+    images
+  end
+
+  def extract_page_range(options)
+    # Extracts a range of pages from a PDF. ImageMagick's `convert` lets you specify
+    #   page ranges. We use that here to minimize our memory footprint.
+    start_index = options[:start_index]
+    end_index = options[:end_index]
+
+    convert_string = "#{pdf.current_path}[#{start_index}-#{end_index}]"
+    puts "Extracting: #{convert_string}"
+
+    Magick::Image.read(convert_string) do
+      self.format = 'PDF'
+      self.quality = 100  # has no significant effect on memory usage
+      # NOTE: Using '300' here makes it use 300x more memory than the default (72)
+      #   which we handle by explicitly calling Ruby garbage collection in extract_pages()
+      self.density = 300
+    end
+  end
+
+  def regenerate_pdf(with_text)
+    self.class.transaction do 
+      self.processed = false
+      puts "Destroying pages..."
+      self.pages.destroy_all
+      puts "Extracting pages..."
+
+      extract_pages(with_text)
+
+      puts "Marking as processed and saving"
+      self.processed = true
+      self.save!
+    end
+  end
+
+  def self.regenerate_all(with_text)
+    query = {document_style: ['scan', 'scannotext'], id: 1119}  #460 page pdf is  id: 1121
+    # doc_ids = Document.where(query).select do |doc|
+    #   !!doc.pdf.current_path
+    # end.map(&:id)
+
+    doc_ids = Document.where(query).select(:id, :pdf) do |doc|
+      !!doc.pdf.current_path
+    end.map(&:id)
+
+    # documents = Document.find(doc_ids)
+    #   documents.each { |doc| doc.update! processed: false }
+    doc_ids.each do |doc_id|
+      puts "Firing id: #{doc_id}"
+      PdfToImagesWorker.new.perform(doc_id, with_text)
     end
 
   end
