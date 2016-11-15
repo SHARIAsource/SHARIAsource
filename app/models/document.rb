@@ -222,7 +222,14 @@ class Document < ActiveRecord::Base
   BASE_PAGE_DIRECTORY = Rails.root.join('tmp', 'pdf-pages').to_s.freeze
 
   def pdf_pages
-    PDF::Reader.new(pdf.current_path).pages
+    begin
+      PDF::Reader.new(pdf.current_path).pages
+    rescue PDF::Reader::MalformedPDFError => e
+      # TODO: save this error in self.processing_error
+      Rails.logger.warn e.to_s
+      puts e.to_s
+      return []
+    end
   end
 
   def extract_pages(with_text=false)
@@ -231,6 +238,13 @@ class Document < ActiveRecord::Base
     # with qual:90 and density:300, it takes 450 seconds, so 5 times longer with with no qual or dens attrs.
     pages = pdf_pages
     page_count = pages.count
+
+    if page_count == 0
+      msg = "Fatal: Failed to parse pages from document id #{id}"
+      puts msg
+      Rails.logger.info msg
+      return
+    end
 
     # TODO: handle failures in extract_pdf_images_to_disk by adding a nil image and detecting it here
     #   Ideally, we would use a stock "this page is unavailable" image instead
@@ -350,18 +364,18 @@ class Document < ActiveRecord::Base
     query = {document_style: ['scan', 'scannotext']}  #460 page pdf is id: 1121, 4-pager is 1119
     query.merge!(id: single_id) if single_id
 
-    doc_ids = Document.where(query).select(:id, :pdf) do |doc|
+    doc_ids = Document.where(query).order("random()").select(:id, :pdf) do |doc|
       !!doc.pdf.current_path
     end.map(&:id)
 
     if doc_ids.empty?
-      puts "Notice: Did not find any documents for the following query:"
+      puts "Notice: Did not find any documents for the following query params:"
       ap query
       return
     end
 
     doc_ids.each do |doc_id|
-      puts "Firing id: #{doc_id}"
+      puts "#{Time.now} - Firing id: #{doc_id}"
       PdfToImagesWorker.new.perform(doc_id, with_text)
     end
   end
@@ -371,8 +385,9 @@ class Document < ActiveRecord::Base
   def generate_images
     changes = self.previous_changes
     if changes.include?(:pdf) && changes[:pdf].first != changes[:pdf].last
-      # PdfToImagesWorker.perform_async(self.id)
-      PdfToImagesWorker.new.perform(self.id)
+      # Rails.logger.warn "Skipping PdfToImagesWorker call"
+      # PdfToImagesWorker.new.perform(id)
+      PdfToImagesWorker.perform_async(id)
     end
   end
 
