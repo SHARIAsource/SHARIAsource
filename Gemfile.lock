@@ -128,6 +128,7 @@ GEM
       guard
       sunspot_solr
     hashery (2.1.2)
+    highline (1.7.8)
     hijri_gem (0.4.2)
     hike (1.2.3)
     http_parser.rb (0.6.0)
@@ -162,6 +163,7 @@ GEM
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
+    options (2.3.2)
     orm_adapter (0.5.0)
     pdf-reader (1.4.0)
       Ascii85 (~> 1.0.0)
@@ -172,6 +174,9 @@ GEM
     pg (0.17.1)
     pkg-config (1.1.7)
     pr_geohash (1.0.0)
+    progress_bar (1.0.5)
+      highline (~> 1.6)
+      options (~> 2.3.0)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -360,6 +365,7 @@ DEPENDENCIES
   nokogiri (~> 1.6.8)
   pdf-reader (~> 1.4.0)
   pg (~> 0.17.1)
+  progress_bar
   quiet_assets (~> 1.0.3)
   rack-livereload (~> 0.3.15)
   rack-timeout (~> 0.0.4)

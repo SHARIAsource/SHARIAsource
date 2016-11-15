@@ -51,6 +51,7 @@ group :development do
   gem 'rack-livereload', '~> 0.3.15'
   gem 'spring', '~> 1.1.3'
   gem 'sunspot_solr', '~> 2.1.1'
+  gem 'progress_bar'
 end
 
 group :development, :test do
