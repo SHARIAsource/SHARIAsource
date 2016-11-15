@@ -228,50 +228,63 @@ class Document < ActiveRecord::Base
     pages = pdf_pages
     page_count = pages.count
 
-    images = pdf_to_images(page_count: page_count)
+    # TODO: handle failures in extract_pdf_images_to_disk by adding a nil image and detecting it here
+    #   Ideally, we would use a stock "this page is unavailable" image instead
+    images = extract_pdf_images_to_disk(page_count: page_count)
 
     message = "Images successfully generated for document #{id}."
     message += " Now parsing all #{page_count} pages of text." if with_text
     puts message
     Rails.logger.info(message)
 
-    # TODO: handle failures in pdf_to_images by adding a nil image and detecting it here
-    #   Ideally, we would use a stock "this page is unavailable" image instead
-    images.each_with_index do |image, idx|
-      source_page = self.pages.build(image: File.open(image), number: idx + 1)
-      source_page.build_body
+    self.class.transaction do 
+      self.processed = false
+      puts "Destroying pages..."
+      self.pages.destroy_all
+      puts "Extracting pages..."
 
-      if with_text
-        # don't trust PDF::Reader
-        begin
-          page = pages[idx]
-          hybrid_text = build_text_by_hybrid(page.text, image)
-          source_page.body.text = txt_to_html(page.text)          # standard method text
-          source_page.body.hybrid_text = txt_to_html(hybrid_text) # hybrid method text
-        rescue ArgumentError => e
-          source_page.body.text = ""
-          source_page.body.hybrid_text = ""
+      images.each_with_index do |image, idx|
+        source_page = self.pages.build(image: File.open(image), number: idx + 1)
+        #ap source_page
+        source_page.build_body
+
+        if with_text
+          # don't trust PDF::Reader
+          begin
+            page = pages[idx]
+            ap "Firing build_text_by_hybrid for page #{idx}..."
+            hybrid_text = build_text_by_hybrid(page.text, image)
+            source_page.body.text = txt_to_html(page.text)          # standard method text
+            source_page.body.hybrid_text = txt_to_html(hybrid_text) # hybrid method text
+          rescue ArgumentError => e
+            source_page.body.text = ""
+            source_page.body.hybrid_text = ""
+          end
+        else
+          source_page.body.text = "No text to show"          # standard method text
+          source_page.body.hybrid_text = "No text to show"   # hybrid method text
         end
-      else
-        source_page.body.text = "No text to show"          # standard method text
-        source_page.body.hybrid_text = "No text to show"   # hybrid method text
+        source_page.save!
+        source_page = nil
       end
-      source_page.save!
-      source_page = nil
+
+      puts "Marking as processed and saving"
+      self.processed = true
+      self.save!
     end
 
     log_message = "Image generation #{'and text parsing ' if with_text} successful for document #{self.id}"
     Rails.logger.info log_message
   end
 
-  def pdf_to_images(options)
+  def extract_pdf_images_to_disk(options)
     page_count = options[:page_count]
     base_dir = BASE_PAGE_DIRECTORY + "/#{id}"
     puts "Extracting to #{base_dir}"
     FileUtils.mkdir_p(base_dir) unless Dir.exists?(base_dir)
 
     # NOTE: Larger block sizes will use a lot more memory inside the each_slice loop.
-    page_batch_size = 10
+    page_batch_size = 20
     images = []
     (0..page_count-1).each_slice(page_batch_size) do |endpoints|
       start_index = endpoints.first
@@ -316,30 +329,19 @@ class Document < ActiveRecord::Base
 
     Magick::Image.read(convert_string) do
       self.format = 'PDF'
-      self.quality = 100  # has no significant effect on memory usage
+ #     self.quality = 100  # has no significant effect on memory usage
       # NOTE: Using '300' here makes it use 300x more memory than the default (72)
       #   which we handle by explicitly calling Ruby garbage collection in extract_pages()
-      self.density = 300
+#      self.density = 300
     end
   end
 
   def regenerate_pdf(with_text)
-    self.class.transaction do 
-      self.processed = false
-      puts "Destroying pages..."
-      self.pages.destroy_all
-      puts "Extracting pages..."
-
-      extract_pages(with_text)
-
-      puts "Marking as processed and saving"
-      self.processed = true
-      self.save!
-    end
+    extract_pages(with_text)
   end
 
   def self.regenerate_all(with_text)
-    query = {document_style: ['scan', 'scannotext'], id: 1119}  #460 page pdf is  id: 1121
+    query = {document_style: ['scan', 'scannotext'], id: 1121}  #460 page pdf is id: 1121, 4-pager is 1119
     # doc_ids = Document.where(query).select do |doc|
     #   !!doc.pdf.current_path
     # end.map(&:id)

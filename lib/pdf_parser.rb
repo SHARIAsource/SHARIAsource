@@ -57,6 +57,7 @@ module PdfParser
 
   # get the last word of the block
   def block_bottom_bound(block, page_map)
+    # TODO: rescue RTesseract::ConversionError: No such file or directory @ rb_sysopen - /tmp/...hocr
     block = block.split(' ')
     matches = page_map.words.each_with_index.select do |word, _idx|
       word[:word].downcase.include?(find_first_word(block.reverse).downcase)
