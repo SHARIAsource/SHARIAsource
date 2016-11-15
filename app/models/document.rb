@@ -94,6 +94,7 @@ class Document < ActiveRecord::Base
 
   # Solr Indexing
   searchable auto_index: false do
+    # TODO: I think we need to strip summary too
     text :title, :source_name, :author, :translators, :editors, :publisher,
          :summary
 
@@ -340,23 +341,26 @@ class Document < ActiveRecord::Base
     extract_pages(with_text)
   end
 
-  def self.regenerate_all(with_text)
-    query = {document_style: ['scan', 'scannotext'], id: 1121}  #460 page pdf is id: 1121, 4-pager is 1119
-    # doc_ids = Document.where(query).select do |doc|
-    #   !!doc.pdf.current_path
-    # end.map(&:id)
+  def self.regenerate_all(options={})
+    with_text = options[:with_text]
+    single_id = options[:id]
+    query = {document_style: ['scan', 'scannotext']}  #460 page pdf is id: 1121, 4-pager is 1119
+    query.merge!(id: single_id) if single_id
 
     doc_ids = Document.where(query).select(:id, :pdf) do |doc|
       !!doc.pdf.current_path
     end.map(&:id)
 
-    # documents = Document.find(doc_ids)
-    #   documents.each { |doc| doc.update! processed: false }
+    if doc_ids.empty?
+      puts "Notice: Did not find any documents for the following query:"
+      ap query
+      return
+    end
+
     doc_ids.each do |doc_id|
       puts "Firing id: #{doc_id}"
       PdfToImagesWorker.new.perform(doc_id, with_text)
     end
-
   end
 
   private
