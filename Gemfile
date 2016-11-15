@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.2'
+ruby '2.0.0'
 
 gem 'active_attr', '~> 0.8.4'
 gem 'autoprefixer-rails', '~> 2.1.0'
