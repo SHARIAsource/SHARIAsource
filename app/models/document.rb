@@ -364,7 +364,8 @@ class Document < ActiveRecord::Base
   def generate_images
     changes = self.previous_changes
     if changes.include?(:pdf) && changes[:pdf].first != changes[:pdf].last
-      PdfToImagesWorker.perform_async(self.id)
+      # PdfToImagesWorker.perform_async(self.id)
+      PdfToImagesWorker.new.perform(self.id)
     end
   end
 
