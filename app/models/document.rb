@@ -264,7 +264,7 @@ class Document < ActiveRecord::Base
         # don't trust PDF::Reader
         begin
           page = pages[idx]
-          ap "Firing build_text_by_hybrid for page #{idx}..."
+          puts "Firing build_text_by_hybrid for page #{idx}..."
           hybrid_text = build_text_by_hybrid(page.text, image)
           source_page.body.text = txt_to_html(page.text)          # standard method text
           source_page.body.hybrid_text = txt_to_html(hybrid_text) # hybrid method text
@@ -290,7 +290,7 @@ class Document < ActiveRecord::Base
       self.processed = true
       self.save!
     end
-
+GC.start
     log_message = "Image generation #{'and text parsing ' if with_text} successful for document #{self.id}"
     Rails.logger.info log_message
   end
@@ -298,16 +298,16 @@ class Document < ActiveRecord::Base
   def extract_pdf_images_to_disk(options)
     page_count = options[:page_count]
     base_dir = BASE_PAGE_DIRECTORY + "/#{id}"
-    puts "Extracting to #{base_dir}"
+    puts "Extracting to #{base_dir} (#{page_count} pages)"
     FileUtils.mkdir_p(base_dir) unless Dir.exists?(base_dir)
 
     # NOTE: Larger batch sizes will use a lot more memory inside the each_slice loop.
-    page_batch_size = 20
+    page_batch_size = 5
     images = []
     (0..page_count-1).each_slice(page_batch_size) do |endpoints|
       start_index = endpoints.first
       end_index = endpoints.last
-      new_images = extract_page_range(start_index: start_index, end_index: end_index)
+      new_images = extract_page_range(start_index: start_index, end_index: end_index, page_count: page_count)
       
       new_images.each_with_index do |image, idx|
         global_page_number = start_index + idx
@@ -341,16 +341,17 @@ class Document < ActiveRecord::Base
     #   page ranges. We use that here to minimize our memory footprint.
     start_index = options[:start_index]
     end_index = options[:end_index]
+    page_count = options[:page_count]
 
     convert_string = "#{pdf.current_path}[#{start_index}-#{end_index}]"
-    puts "Extracting: #{convert_string}"
+    puts "Extracting: #{convert_string}  # #{page_count} total pages"
 
     Magick::Image.read(convert_string) do
       self.format = 'PDF'
- #     self.quality = 100  # has no significant effect on memory usage
+      # self.quality = 100  # has no significant effect on memory usage
       # NOTE: Using '300' here makes it use 300x more memory than the default (72)
       #   which we handle by explicitly calling Ruby garbage collection in extract_pages()
-#      self.density = 300
+      # self.density = 300
     end
   end
 
