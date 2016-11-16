@@ -348,10 +348,10 @@ GC.start
 
     Magick::Image.read(convert_string) do
       self.format = 'PDF'
-      # self.quality = 100  # has no significant effect on memory usage
+      self.quality = 100  # has no significant effect on memory usage
       # NOTE: Using '300' here makes it use 300x more memory than the default (72)
       #   which we handle by explicitly calling Ruby garbage collection in extract_pages()
-      # self.density = 300
+      self.density = 300
     end
   end
 
