@@ -257,6 +257,7 @@ class Document < ActiveRecord::Base
 
     source_pages = []
     images.each_with_index do |image, idx|
+      puts "Analyzing image: #{image}"
       source_page = Page.new(image: File.open(image), number: idx + 1)
       source_page.build_body
 
@@ -282,17 +283,36 @@ class Document < ActiveRecord::Base
 
     self.class.transaction do 
       self.processed = false
-      puts "Destroying pages..."
       self.pages.destroy_all
-      puts "Assigning pages..."
+      puts "Assigning new pages..."
       self.pages << source_pages
       puts "Marking as processed and saving"
       self.processed = true
       self.save!
     end
-GC.start
-    log_message = "Image generation #{'and text parsing ' if with_text} successful for document #{self.id}"
+    
+    GC.start
+    clean_up_temp_images(images)
+
+    log_message = "Image generation #{'and text parsing ' if with_text}complete for document #{self.id}"
     Rails.logger.info log_message
+  end
+
+  def clean_up_temp_images(images)
+    return if images.empty?
+
+    image = images.first
+    image_dir = File.dirname(image)
+    msg = "Cleaning up temp images in #{image_dir}"
+    puts msg
+    logger.info msg
+
+    images.each {|filename| File.delete(filename) if File.exists?(filename)}
+
+    # Only try to delete the temp directory for *this* doc, if it's empty
+    if id.to_s == File.basename(image_dir) && (Dir.entries(image_dir) - %w{ . .. }).empty?
+      FileUtils.remove_dir(image_dir)
+    end
   end
 
   def extract_pdf_images_to_disk(options)
@@ -307,13 +327,13 @@ GC.start
     (0..page_count-1).each_slice(page_batch_size) do |endpoints|
       start_index = endpoints.first
       end_index = endpoints.last
-      new_images = extract_page_range(start_index: start_index, end_index: end_index, page_count: page_count)
+      new_images = extract_page_range(start_index: start_index, end_index: end_index)
       
       new_images.each_with_index do |image, idx|
         global_page_number = start_index + idx
         img_path = BASE_PAGE_DIRECTORY + "/#{id}/pdf-#{id}-#{global_page_number}.jpg"
         images << img_path
-        puts "Writing image file #{img_path}"
+        puts "Creating image: #{img_path}"
 
         image.alpha = Magick::DeactivateAlphaChannel if image.alpha?
         image.to_blob
@@ -333,6 +353,7 @@ GC.start
       # NOTE: Ruby garbage collection doesn't keep up and memory use can hit 60MB per page easily
       GC.start
     end
+
     images
   end
 
@@ -341,10 +362,9 @@ GC.start
     #   page ranges. We use that here to minimize our memory footprint.
     start_index = options[:start_index]
     end_index = options[:end_index]
-    page_count = options[:page_count]
 
     convert_string = "#{pdf.current_path}[#{start_index}-#{end_index}]"
-    puts "Extracting: #{convert_string}  # #{page_count} total pages"
+    puts "Extracting: #{convert_string}"
 
     Magick::Image.read(convert_string) do
       self.format = 'PDF'
@@ -386,8 +406,6 @@ GC.start
   def generate_images
     changes = self.previous_changes
     if changes.include?(:pdf) && changes[:pdf].first != changes[:pdf].last
-      # Rails.logger.warn "Skipping PdfToImagesWorker call"
-      # PdfToImagesWorker.new.perform(id)
       PdfToImagesWorker.perform_async(id)
     end
   end
