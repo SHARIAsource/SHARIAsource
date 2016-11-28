@@ -371,7 +371,7 @@ class Document < ActiveRecord::Base
           self.colorspace = Magick::RGBColorspace
           self.interlace = Magick::NoInterlace
           self.size = 1024
-          self.quality = 100
+          self.quality = 85
           self.density = 300
         end
         image = nil
