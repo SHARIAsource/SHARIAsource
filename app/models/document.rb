@@ -42,6 +42,8 @@ class Document < ActiveRecord::Base
   include PdfParser
   alias_attribute :name, :title
 
+  BASE_PAGE_DIRECTORY = Rails.root.join('tmp', 'pdf-pages').to_s.freeze
+
   # Callbacks
   before_save :set_processed
   before_save :prepend_http_to_source_url
@@ -219,8 +221,6 @@ class Document < ActiveRecord::Base
     puts "boop #{x}: #{Time.now.to_i}"
   end
 
-  BASE_PAGE_DIRECTORY = Rails.root.join('tmp', 'pdf-pages').to_s.freeze
-
   def pdf_pages
     begin
       PDF::Reader.new(pdf.current_path).pages
@@ -232,10 +232,33 @@ class Document < ActiveRecord::Base
     end
   end
 
+  def self.repair_pages_days_older_than(days)
+    # if this has old pages on disk, repair_pdf(...)
+    Document.all.map { |doc| doc.repair_pdf days }
+  end
+
+  def repair_pdf(days)
+    return unless pdf?
+
+    unless File.exists?(pdf.file.path)
+      puts "WARNING: #{self.class.name} id #{id} missing expected PDF on disk: #{pdf.file.path}"
+      return
+    end
+
+    has_old_pages = pages.any? do |page|
+      # puts (Time.now - File.stat(page.image.file.path).mtime) / 1.hour / 24
+      page.image? && ((Time.now - File.stat(page.image.file.path).mtime) / 1.hour / 24) > days
+    end
+
+    regenerate_pdf(false) if has_old_pages
+  end
+
   def extract_pages(with_text=false)
     # NOTE: for doc 1121, this block takes 80 seconds with default qual or density info
     # other note: with qual and dens, it definitely uses 30+GB of memory inside that loop
     # with qual:90 and density:300, it takes 450 seconds, so 5 times longer with with no qual or dens attrs.
+    return unless pdf.file
+
     pages = pdf_pages
     page_count = pages.count
 
@@ -281,12 +304,17 @@ class Document < ActiveRecord::Base
       source_pages << source_page
     end      
 
+    # NOTE: the source_pages array is what ends up taking up a lot of memory. What if we built that up
+    # like we do now (but w/o the image attr), then used a loop inside the xaction to add the image to the 
+    # page, then save! the page object and set it to nil. If that didn't cut it, we could even GC.start
+    # inside that loop if page_count was > 10 or something.
+
     self.class.transaction do 
       self.processed = false
       self.pages.destroy_all
       puts "Assigning new pages..."
       self.pages << source_pages
-      puts "Marking as processed and saving"
+      puts "Marking as processed and saving pages: #{self.pages.map(&:id).join(', ')}"
       self.processed = true
       self.save!
     end
