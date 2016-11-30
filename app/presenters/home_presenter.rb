@@ -1,5 +1,5 @@
 class HomePresenter
-  attr_reader :popular, :featured, :collaborators
+  attr_reader :recent, :popular, :featured, :collaborators
 
   def initialize
     @recent = Document.published.latest.limit(3).map do |d|
