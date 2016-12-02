@@ -281,7 +281,8 @@ class Document < ActiveRecord::Base
     source_pages = []
     images.each_with_index do |image, idx|
       puts "Analyzing image: #{image}"
-      source_page = Page.new(image: File.open(image), number: idx + 1)
+      # source_page = Page.new(image: File.open(image), number: idx + 1)
+      source_page = Page.new(number: idx + 1)
       source_page.build_body
 
       if with_text
@@ -312,17 +313,27 @@ class Document < ActiveRecord::Base
     self.class.transaction do 
       self.processed = false
       self.pages.destroy_all
-      puts "Assigning new pages..."
-      self.pages << source_pages
+      puts "Assigning images to pages, and pages to this document..."
+
+      source_pages.each_with_index do |page, idx|
+        page.image = File.open(images[idx])
+        self.pages << page  #This saves the page
+        page = nil
+        GC.start
+      end
+
+      # image: File.open(image), 
+      # self.pages << source_pages
       puts "Marking as processed and saving pages: #{self.pages.map(&:id).join(', ')}"
       self.processed = true
       self.save!
     end
     
-    GC.start
+    # GC.start
     clean_up_temp_images(images)
 
     log_message = "Image generation #{'and text parsing ' if with_text}complete for document #{self.id}"
+    puts log_message
     Rails.logger.info log_message
   end
 
@@ -349,8 +360,10 @@ class Document < ActiveRecord::Base
     puts "Extracting to #{base_dir} (#{page_count} pages)"
     FileUtils.mkdir_p(base_dir) unless Dir.exists?(base_dir)
 
-    # NOTE: Larger batch sizes will use a lot more memory inside the each_slice loop.
+    # NOTE: A larger batch size will use more memory inside the each_slice loop and
+    #   they don't reduce total processing time like you'd think. Keep it small.
     page_batch_size = 5
+
     images = []
     (0..page_count-1).each_slice(page_batch_size) do |endpoints|
       start_index = endpoints.first
