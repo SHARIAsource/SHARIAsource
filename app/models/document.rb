@@ -43,6 +43,7 @@ class Document < ActiveRecord::Base
   alias_attribute :name, :title
 
   BASE_PAGE_DIRECTORY = Rails.root.join('tmp', 'pdf-pages').to_s.freeze
+  NO_TEXT_MESSAGE = "No text to show"
 
   # Callbacks
   before_save :set_processed
@@ -276,60 +277,46 @@ class Document < ActiveRecord::Base
     message = "Images successfully generated for document #{id}."
     message += " Now parsing all #{page_count} pages of text." if with_text
     puts message
-    Rails.logger.info(message)
+    Rails.logger.info message
 
-    source_pages = []
+    self.processed = false
+    self.pages.destroy_all
+
     images.each_with_index do |image, idx|
       puts "Analyzing image: #{image}"
-      # source_page = Page.new(image: File.open(image), number: idx + 1)
-      source_page = Page.new(number: idx + 1)
+      source_page = Page.new(image: File.open(image), number: idx + 1)
       source_page.build_body
 
       if with_text
-        # don't trust PDF::Reader
+        # There was a problem with PDF::Reader back in the day, so don't use it here.
         begin
           page = pages[idx]
           puts "Firing build_text_by_hybrid for page #{idx}..."
+          source_page.body.text = txt_to_html(page.text)
+
           hybrid_text = build_text_by_hybrid(page.text, image)
-          source_page.body.text = txt_to_html(page.text)          # standard method text
-          source_page.body.hybrid_text = txt_to_html(hybrid_text) # hybrid method text
+          source_page.body.hybrid_text = txt_to_html(hybrid_text)
         rescue ArgumentError => e
           source_page.body.text = ""
           source_page.body.hybrid_text = ""
         end
       else
-        source_page.body.text = "No text to show"          # standard method text
-        source_page.body.hybrid_text = "No text to show"   # hybrid method text
+        source_page.body.text = NO_TEXT_MESSAGE
+        source_page.body.hybrid_text = NO_TEXT_MESSAGE
       end
 
-      source_pages << source_page
-    end      
+      puts "Saving page #{source_page.number} of #{page_count}" 
+      self.pages << source_page  #This saves the source_page
+      source_page = nil
 
-    # NOTE: the source_pages array is what ends up taking up a lot of memory. What if we built that up
-    # like we do now (but w/o the image attr), then used a loop inside the xaction to add the image to the 
-    # page, then save! the page object and set it to nil. If that didn't cut it, we could even GC.start
-    # inside that loop if page_count was > 10 or something.
-
-    self.class.transaction do 
-      self.processed = false
-      self.pages.destroy_all
-      puts "Assigning images to pages, and pages to this document..."
-
-      source_pages.each_with_index do |page, idx|
-        page.image = File.open(images[idx])
-        self.pages << page  #This saves the page
-        page = nil
-        GC.start
-      end
-
-      # image: File.open(image), 
-      # self.pages << source_pages
-      puts "Marking as processed and saving pages: #{self.pages.map(&:id).join(', ')}"
-      self.processed = true
-      self.save!
+      # NOTE: Force garbage collection to try and prevent unreasonably heavy memory use
+      GC.start
     end
-    
-    # GC.start
+
+    self.processed = true
+    self.save!
+
+    GC.start
     clean_up_temp_images(images)
 
     log_message = "Image generation #{'and text parsing ' if with_text}complete for document #{self.id}"
@@ -374,7 +361,7 @@ class Document < ActiveRecord::Base
         global_page_number = start_index + idx
         img_path = BASE_PAGE_DIRECTORY + "/#{id}/pdf-#{id}-#{global_page_number}.jpg"
         images << img_path
-        puts "Creating image: #{img_path}"
+        # puts "Creating image: #{img_path}"
 
         image.alpha = Magick::DeactivateAlphaChannel if image.alpha?
         image.to_blob
