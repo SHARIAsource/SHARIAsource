@@ -2,7 +2,7 @@ xml.instruct! :xml, version: '1.0'
 xml.rss version: '2.0' do
   xml.channel do
     xml.title 'SHARIASource'
-    xml.description 'The online portal of credible resources and informed commentary on Islamic law.'
+    xml.description 'The online portal for academic content and context on Islamic law'
     xml.link root_url
 
     for document in @documents
