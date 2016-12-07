@@ -12,4 +12,6 @@
       = f.input :password, autocomplete: 'off'
       = f.input :password_confirmation, autocomplete: 'off'
       = f.input :current_password, autocomplete: 'off', required: true
+      - link = link_to  "the contributor terms", '/terms-of-use', target: "_blank"
+      = f.input :accepted_terms, label: "&nbsp;I have read and agree to #{link}".html_safe
       = f.submit 'Update', class: 'round button'

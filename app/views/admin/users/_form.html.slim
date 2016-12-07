@@ -11,6 +11,7 @@
         = f.input :is_admin, boolean_style: :inline, label: 'Admin'
         = f.input :is_editor, boolean_style: :inline, label: 'Editor'
         = f.input :requires_approval, boolean_style: :inline
+        = f.input :accepted_terms, boolean_style: :inline, label: 'Accepted TOS', disabled: true
         = f.input :disabled, boolean_style: :inline
     .large-6.columns
       = f.input :about, input_html: { class: 'wysiwyg' }
