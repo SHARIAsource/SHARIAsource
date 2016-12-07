@@ -35,7 +35,7 @@ ready = function() {
         var link = $(this).attr('href');
         var q = search_box.val();
         if (!!q) {
-            link + '?sSearch=' + encodeURIComponent(q);
+            link += '?sSearch=' + encodeURIComponent(q);
         }
         window.location.href = link;
     });
