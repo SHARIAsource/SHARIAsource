@@ -3,6 +3,7 @@ class Admin::DocumentsController < AdminController
   before_filter :ensure_editor!, only: [:destroy]
 
   def unpublished
+    logger.ap params
     if ( current_user.is_editor && current_user.is_admin )
       @documents = Document.all
     else
@@ -11,7 +12,8 @@ class Admin::DocumentsController < AdminController
       )
     end
 
-    @unpublished_documents = @documents.where(published: 'false')
+    # This doesn't look like it's used anywhere
+    # @unpublished_documents = @documents.where(published: 'false')
     respond_to do |format|
       format.html
       format.json { render json: response_as_json(false) }
@@ -27,7 +29,8 @@ class Admin::DocumentsController < AdminController
       )
     end
 
-    @published_documents = @documents.where(published: 'true')
+    # This doesn't look like it's used anywhere
+    # @published_documents = @documents.where(published: 'true')
     respond_to do |format|
       format.html
       format.json { render json: response_as_json(true) }
@@ -152,7 +155,7 @@ class Admin::DocumentsController < AdminController
   def response_as_json(pstatus)
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Document.where(published:pstatus).count,
+      iTotalRecords: Document.where(published: pstatus).count,
       iTotalDisplayRecords: fetch_documents(pstatus).count,
       aaData: data(pstatus)
     }
@@ -175,9 +178,9 @@ class Admin::DocumentsController < AdminController
     end
   end
 
-
   def fetch_documents(pstatus)
     documents = Document.where(published: pstatus)
+
     if params[:sSearch].present?
       ids = documents.search do
         fulltext params[:sSearch]

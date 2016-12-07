@@ -2,13 +2,13 @@
 = content_for :admin_active, 'Documents'
 
 header
-  h2.left= @documents.model_name.human.pluralize
+  h2.left= 'Documents'
   = link_to t('helpers.new', model: Document.model_name.human), new_admin_document_path, class: 'left small round button'
 
 hr
 h3
   span Published | 
-  = link_to "Unpublished", unpublished_admin_documents_path
+  = link_to "Unpublished", unpublished_admin_documents_path, class: 'document-status-nav-link'
 
 table.display#document-datatable data-source="#{ published_admin_documents_url(format: "json") }"
   thead
