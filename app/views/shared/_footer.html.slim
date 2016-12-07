@@ -34,14 +34,12 @@
           li= link_to 'Document Types', document_types_path
           li= link_to 'Contributors', contributors_path
           li= link_to 'Resources', '/resources'
+
+      .footer-nav
+        ul
           li= link_to 'About SHARIAsource', '/about'
           li= link_to 'Advanced Search', search_path
           li= link_to 'Contributor Login', new_user_session_path
-
-      .mailing-list
-        = form_tag '#TODO', method: :post do
-          = label_tag :email, 'Sign up for mailing list'
-          = email_field_tag :email, nil, placeholder: 'email@example.org'
-          .submit
-            button.ss-button type='submit' Sign Up
+          li= link_to 'Privacy Policy', '/privacy-policy'
+          li= link_to 'Terms of Use', '/terms-of-use'
 

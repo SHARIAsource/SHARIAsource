@@ -1,5 +1,5 @@
-.bundle
-.idea
+.bundle/
+.idea/
 .DS_Store
 log/
 tmp/
@@ -9,5 +9,6 @@ config/database.yml
 config/secrets.yml
 public/uploads/
 public/assets/
-apache2/
 pgsql/
+apache2/
+

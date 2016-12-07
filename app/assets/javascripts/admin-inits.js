@@ -9,6 +9,7 @@ $document.on('page:change', function() {
     selector: 'textarea.wysiwyg',
     toolbar: 'formatselect styleselect | bold italic underline strikethrough superscript | bullist numlist blockquote | link unlink | media table | undo redo | ltr rtl',
     plugins: 'link table paste directionality media',
+    browser_spellcheck: true,
     style_formats: [{
       title: 'Footnote',
       block: 'p',
@@ -25,6 +26,7 @@ $document.on('page:change', function() {
     selector: 'textarea.wysiwyg-summary',
     toolbar: 'italic link unlink | bold italic underline strikethrough superscript | bullist numlist blockquote | undo redo',
     plugins: 'link paste',
+    browser_spellcheck: true,
     menubar: false,
     statusbar: false,
     paste_remove_styles: true,

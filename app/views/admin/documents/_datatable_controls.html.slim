@@ -1,17 +1,10 @@
-
-
-tr
-  td= document.title
-  td= document.publisher
-  td= document.tags.pluck(:name).join(', ')
-  td= document.topics.pluck(:name).join(', ')
-  td= document.contributor.name
-  td= document.language.name
-  td= document.regions.pluck(:name).join(', ')
   td.actions
     ul.inline-list
       li= link_to 'View', document_path(document), class: 'tiny radius pill button'
-      li= link_to t('edit'), edit_admin_document_path(document), class: 'tiny radius pill button'
+      - if document.processed?
+        li= link_to t('edit'), edit_admin_document_path(document), class: 'tiny radius pill button'
+      -else
+        li= content_tag(:span, t('edit'), class: 'tiny radius pill button secondary disabled', title: "This document cannot be edited until the system has processed it.")
       - if current_user.is_editor
         - if document.published
           li= simple_form_for document, url: admin_document_path(document) do |f|

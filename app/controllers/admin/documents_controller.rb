@@ -2,10 +2,8 @@ class Admin::DocumentsController < AdminController
   before_filter :fetch_document, only: [:edit, :update, :destroy]
   before_filter :ensure_editor!, only: [:destroy]
 
-  include SmartListing::Helper::ControllerExtensions
-  helper  SmartListing::Helper
-
   def unpublished
+    logger.ap params
     if ( current_user.is_editor && current_user.is_admin )
       @documents = Document.all
     else
@@ -14,11 +12,15 @@ class Admin::DocumentsController < AdminController
       )
     end
 
-    @unpublished_documents = @documents.where(published: 'false')
+    # This doesn't look like it's used anywhere
+    # @unpublished_documents = @documents.where(published: 'false')
+    respond_to do |format|
+      format.html
+      format.json { render json: response_as_json(false) }
+    end
   end
 
   def published
-
     if ( current_user.is_editor && current_user.is_admin )
       @documents = Document.all
     else
@@ -27,19 +29,12 @@ class Admin::DocumentsController < AdminController
       )
     end
 
-    @published_documents = @documents.where(published: 'true')
-
-
-    smart_listing_create(
-      :published_documents,
-      Document.filter_by_params(@published_documents.joins(:language), params[:filter]),
-      partial: 'admin/documents/published_listing',
-      sort_attributes: [[:title, 'title'], [:publisher, 'publisher'], [:language, 'name'], [:contributor, 'name']],
-    )
-
-    @filter = params[:filter] || ''
-
-
+    # This doesn't look like it's used anywhere
+    # @published_documents = @documents.where(published: 'true')
+    respond_to do |format|
+      format.html
+      format.json { render json: response_as_json(true) }
+    end
   end
 
   def new
@@ -49,17 +44,31 @@ class Admin::DocumentsController < AdminController
 
   def edit
     unless @document.processed
+      flash[:error] = "Sorry, that document cannot be edited until after it has been processed by the system"
       redirect_to unpublished_admin_documents_path
     end
   end
 
   def create
-    @document = current_user.documents.build permitted_params
+    if permitted_params[:contributor_id]
+      contributor = User.find(permitted_params[:contributor_id])
+    else
+      contributor = current_user
+    end
+
+    @document = contributor.documents.build permitted_params
+
     if @document.save
+      @document.index!
       flash[:notice] = 'Document created successfully'
       if params[:create_and_continue]
         redirect_to new_admin_document_path
       elsif params[:create_and_edit]
+        # BUG: I don't think this will ever work for a PDF upload because the PDF
+        #   is guaranteed to *not* be processed when we redirect to the edit page,
+        #   but the edit page will display an error message to the user that they
+        #   cannot edit it until it's been processed. That means this will only
+        #   work if document_style == 'noscan'.
         redirect_to edit_admin_document_path @document
       else
         redirect_to unpublished_admin_documents_path
@@ -108,12 +117,13 @@ class Admin::DocumentsController < AdminController
     else
       flash[:error] = 'An error occurred while trying to delete that Document'
     end
-    redirect_to admin_documents_path
+    redirect_to published_admin_documents_path
   end
 
   protected
 
   def permitted_params
+    # TODO: Unpermitted parameters: alternate_editors, alternate_translators, alternate_years
     whitelist = [:title, :volume_count, :document_type_id, :pdf, :language_id,
                  :gregorian_year, :gregorian_month, :gregorian_day,
                  :source_name, :source_url, :author, :translators, :editors,
@@ -136,13 +146,74 @@ class Admin::DocumentsController < AdminController
 
   def fetch_document
     @document = Document.find params[:id]
-    ids = current_user.self_and_descendant_ids
-    unless current_user.is_editor || ids.include?(@document.contributor.id)
-      if @document.published
-        redirect_to published_admin_documents_path
-      else
-        redirect_to unpublished_admin_documents_path
-      end
+    unless current_user.is_editor || current_user.self_and_descendant_ids.include?(@document.contributor.id)
+      flash[:alert] = "Sorry, but you must be an editor or the owner of that document to do this"
+      redirect_to :back
     end
+  end
+
+  def response_as_json(pstatus)
+    {
+      sEcho: params[:sEcho].to_i,
+      iTotalRecords: Document.where(published: pstatus).count,
+      iTotalDisplayRecords: fetch_documents(pstatus).count,
+      aaData: data(pstatus)
+    }
+  end
+
+  def data(pstatus)
+    fetch_documents(pstatus).map do |document|
+      row = [
+        document.title,
+        document.publisher,
+        document.tags.pluck(:name).join(', '),
+        document.topics.pluck(:name).join(', '),
+        document.contributor.name,
+        document.language.name,
+        document.regions.pluck(:name).join(', '),
+        document.updated_at.strftime("%b %e, %Y"),
+        render_to_string(partial:"/admin/documents/datatable_controls.html.slim", :locals => {document:document}, layout: false )
+      ]
+      row
+    end
+  end
+
+  def fetch_documents(pstatus)
+    documents = Document.where(published: pstatus)
+
+    if params[:sSearch].present?
+      ids = documents.search do
+        fulltext params[:sSearch]
+      end.results.map(&:id)
+      documents = Document.where(published: pstatus, id: ids)
+    end
+    documents = documents.page(page).per_page(per_page)
+
+    order_documents(documents)
+  end
+
+  def page
+    params[:iDisplayStart].to_i/per_page + 1
+  end
+
+  def per_page
+    params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 10
+  end
+
+  def order_documents(docs)
+    columns = %w[title publisher tags topics contributor language regions updated_at]
+    col = columns[params[:iSortCol_0].to_i]
+    case col
+    when "title","publisher", "updated_at" then docs.order("#{col} #{sort_direction}")
+    when "topics" then docs.joins(:topics).order("topics.name #{sort_direction}")
+    when "tags" then docs.includes(:tags).order("tags.name #{sort_direction}")
+    when "contributor" then docs.joins(:contributor).order("users.last_name #{sort_direction}")
+    when "language" then docs.joins(:language).order("languages.name #{sort_direction}")
+    when "regions" then docs.joins(:regions).order("regions.name #{sort_direction}")
+    end
+  end
+
+  def sort_direction
+    params[:sSortDir_0] == "desc" ? "desc" : "asc"
   end
 end

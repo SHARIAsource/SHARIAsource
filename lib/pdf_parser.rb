@@ -1,5 +1,4 @@
 require 'RMagick'
-require 'grim'
 require 'whatlanguage'
 require 'similar_text'
 
@@ -42,7 +41,7 @@ module PdfParser
     result = chars.reduce([[]]) do |total, character|
       if character.is_non_latin?
         total.push([]) unless total.last.empty?
-      elsif total.last.empty? && !c.is_whitespace?
+      elsif total.last.empty? && !character.is_whitespace?
         # just out of non-latin
         total.last.push(character)
       elsif total.last.any?
@@ -58,6 +57,7 @@ module PdfParser
 
   # get the last word of the block
   def block_bottom_bound(block, page_map)
+    # TODO: rescue RTesseract::ConversionError: No such file or directory @ rb_sysopen - /tmp/...hocr
     block = block.split(' ')
     matches = page_map.words.each_with_index.select do |word, _idx|
       word[:word].downcase.include?(find_first_word(block.reverse).downcase)

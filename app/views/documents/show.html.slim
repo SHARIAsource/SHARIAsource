@@ -134,12 +134,12 @@
       .meta-column.references.js-same-height
         h3 Documents referenced:
         - if @document.referenced_documents.present?
-          ul 
+          ul
             - @document.referenced_documents.each do |d|
               li= link_to d.title_with_author, document_path(d.object)
         - else
           em none
-        
+
       .meta-column.last.references.js-same-height
         h3 This document is referenced by:
         - if @document.referencing_documents.present?
@@ -149,9 +149,7 @@
         - else
           em none
 
-- if @document.document_style == 'scan' && @document.pages.present?
-  = render 'documents/scan_with_text'
-- elsif @document.document_style == 'scannotext' && @document.pages.present?
+- if @document.pages.present?
   = render 'documents/scan_no_text'
 - elsif @document.body.present?
   .inner-wrapper

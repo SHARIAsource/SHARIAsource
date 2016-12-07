@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
-ruby '2.2.2'
+ruby '2.0.0'
 
-gem 'eventmachine', '~>1.0.4'
 gem 'active_attr', '~> 0.8.4'
 gem 'autoprefixer-rails', '~> 2.1.0'
 gem 'carrierwave', '~> 0.10.0'
@@ -38,10 +37,13 @@ gem 'seed_dump', '~> 3.2.2'
 gem 'nokogiri', '~> 1.6.8'
 gem 'rtesseract', '~> 2.0', '>= 2.0.1'
 gem 'similar_text', '~> 0.0.4'
-gem 'grim', '~> 1.3'
 gem 'whatlanguage', '~> 1.0', '>= 1.0.6'
 gem 'jquery-datatables-rails', '~> 3.3.0'
 gem 'therubyracer', platforms: :ruby
+# gem 'therubyracer', '~> 0.12.2'  #from camp13
+gem 'will_paginate', '~> 3.1'
+gem 'eventmachine', '~> 1.0.4'
+gem 'awesome_print'
 
 group :development do
   gem 'annotate', '~> 2.6.5'
@@ -50,6 +52,7 @@ group :development do
   gem 'rack-livereload', '~> 0.3.15'
   gem 'spring', '~> 1.1.3'
   gem 'sunspot_solr', '~> 2.1.1'
+  gem 'progress_bar'
 end
 
 group :development, :test do

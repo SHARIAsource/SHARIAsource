@@ -39,7 +39,11 @@
 #
 
 class Document < ActiveRecord::Base
+  include PdfParser
   alias_attribute :name, :title
+
+  BASE_PAGE_DIRECTORY = Rails.root.join('tmp', 'pdf-pages').to_s.freeze
+  NO_TEXT_MESSAGE = "No text to show"
 
   # Callbacks
   before_save :set_processed
@@ -84,14 +88,21 @@ class Document < ActiveRecord::Base
   belongs_to :language
   belongs_to :contributor, class_name: 'User'
 
+  # Scopes
+  scope :published, -> { where(published: true) }
+
   # Misc
   mount_uploader :pdf, PdfUploader
   accepts_nested_attributes_for :pages, :body
 
   # Solr Indexing
   searchable auto_index: false do
-    text :title, :source_name, :author, :translators, :editors, :publisher,
-         :summary
+    # TODO: I think we need to strip summary too
+    text :title, :source_name, :author, :translators, :editors, :publisher
+
+    text :summary do
+      strip_control_characters summary
+    end
 
     text :page_texts do
       pages.map {|page| strip_control_characters page.body.text }
@@ -207,36 +218,214 @@ class Document < ActiveRecord::Base
     pages[0] && pages[0].image.thumb
   end
 
-  def extract_pages
-    pdf = File.open(self.pdf.current_path, 'rb').read
-    images = Magick::Image.from_blob(pdf) do
+  def boop(x)
+    puts "boop #{x}: #{Time.now.to_i}"
+  end
+
+  def pdf_pages
+    begin
+      PDF::Reader.new(pdf.current_path).pages
+    rescue PDF::Reader::MalformedPDFError => e
+      # TODO: save this error in self.processing_error
+      Rails.logger.warn e.to_s
+      puts e.to_s
+      return []
+    end
+  end
+
+  def self.repair_pages_days_older_than(days)
+    # if this has old pages on disk, repair_pdf(...)
+    Document.all.map { |doc| doc.repair_pdf days }
+  end
+
+  def repair_pdf(days)
+    return unless pdf?
+
+    unless File.exists?(pdf.file.path)
+      puts "WARNING: #{self.class.name} id #{id} missing expected PDF on disk: #{pdf.file.path}"
+      return
+    end
+
+    has_old_pages = pages.any? do |page|
+      # puts (Time.now - File.stat(page.image.file.path).mtime) / 1.hour / 24
+      page.image? && ((Time.now - File.stat(page.image.file.path).mtime) / 1.hour / 24) > days
+    end
+
+    regenerate_pdf(false) if has_old_pages
+  end
+
+  def extract_pages(with_text=false)
+    # NOTE: for doc 1121, this block takes 80 seconds with default qual or density info
+    # other note: with qual and dens, it definitely uses 30+GB of memory inside that loop
+    # with qual:90 and density:300, it takes 450 seconds, so 5 times longer with with no qual or dens attrs.
+    return unless pdf.file
+
+    pages = pdf_pages
+    page_count = pages.count
+
+    if page_count == 0
+      msg = "Fatal: Failed to parse pages from document id #{id}"
+      puts msg
+      Rails.logger.info msg
+      return
+    end
+
+    # TODO: handle failures in extract_pdf_images_to_disk by adding a nil image and detecting it here
+    #   Ideally, we would use a stock "this page is unavailable" image instead
+    images = extract_pdf_images_to_disk(page_count: page_count)
+
+    message = "Images successfully generated for document #{id}."
+    message += " Now parsing all #{page_count} pages of text." if with_text
+    puts message
+    Rails.logger.info message
+
+    self.processed = false
+    self.pages.destroy_all
+
+    images.each_with_index do |image, idx|
+      puts "Analyzing image: #{image}"
+      source_page = Page.new(image: File.open(image), number: idx + 1)
+      source_page.build_body
+
+      if with_text
+        # There was a problem with PDF::Reader back in the day, so don't use it here.
+        begin
+          page = pages[idx]
+          puts "Firing build_text_by_hybrid for page #{idx}..."
+          source_page.body.text = txt_to_html(page.text)
+
+          hybrid_text = build_text_by_hybrid(page.text, image)
+          source_page.body.hybrid_text = txt_to_html(hybrid_text)
+        rescue ArgumentError => e
+          source_page.body.text = ""
+          source_page.body.hybrid_text = ""
+        end
+      else
+        source_page.body.text = NO_TEXT_MESSAGE
+        source_page.body.hybrid_text = NO_TEXT_MESSAGE
+      end
+
+      puts "Saving page #{source_page.number} of #{page_count}" 
+      self.pages << source_page  #This saves the source_page
+      source_page = nil
+
+      # NOTE: Force garbage collection to try and prevent unreasonably heavy memory use
+      GC.start
+    end
+
+    self.processed = true
+    self.save!
+
+    GC.start
+    clean_up_temp_images(images)
+
+    log_message = "Image generation #{'and text parsing ' if with_text}complete for document #{self.id}"
+    puts log_message
+    Rails.logger.info log_message
+  end
+
+  def clean_up_temp_images(images)
+    return if images.empty?
+
+    image = images.first
+    image_dir = File.dirname(image)
+    msg = "Cleaning up temp images in #{image_dir}"
+    puts msg
+    logger.info msg
+
+    images.each {|filename| File.delete(filename) if File.exists?(filename)}
+
+    # Only try to delete the temp directory for *this* doc, if it's empty
+    if id.to_s == File.basename(image_dir) && (Dir.entries(image_dir) - %w{ . .. }).empty?
+      FileUtils.remove_dir(image_dir)
+    end
+  end
+
+  def extract_pdf_images_to_disk(options)
+    page_count = options[:page_count]
+    base_dir = BASE_PAGE_DIRECTORY + "/#{id}"
+    puts "Extracting to #{base_dir} (#{page_count} pages)"
+    FileUtils.mkdir_p(base_dir) unless Dir.exists?(base_dir)
+
+    # NOTE: A larger batch size will use more memory inside the each_slice loop and
+    #   they don't reduce total processing time like you'd think. Keep it small.
+    page_batch_size = 5
+
+    images = []
+    (0..page_count-1).each_slice(page_batch_size) do |endpoints|
+      start_index = endpoints.first
+      end_index = endpoints.last
+      new_images = extract_page_range(start_index: start_index, end_index: end_index)
+      
+      new_images.each_with_index do |image, idx|
+        global_page_number = start_index + idx
+        img_path = BASE_PAGE_DIRECTORY + "/#{id}/pdf-#{id}-#{global_page_number}.jpg"
+        images << img_path
+        # puts "Creating image: #{img_path}"
+
+        image.alpha = Magick::DeactivateAlphaChannel if image.alpha?
+        image.to_blob
+        image.write(img_path) do
+          self.format = 'JPG'
+          self.antialias = true
+          self.colorspace = Magick::RGBColorspace
+          self.interlace = Magick::NoInterlace
+          self.size = 1024
+          self.quality = 85
+          self.density = 300
+        end
+        image = nil
+      end
+      new_images = nil
+
+      # NOTE: Ruby garbage collection doesn't keep up and memory use can hit 60MB per page easily
+      GC.start
+    end
+
+    images
+  end
+
+  def extract_page_range(options)
+    # Extracts a range of pages from a PDF. ImageMagick's `convert` lets you specify
+    #   page ranges. We use that here to minimize our memory footprint.
+    start_index = options[:start_index]
+    end_index = options[:end_index]
+
+    convert_string = "#{pdf.current_path}[#{start_index}-#{end_index}]"
+    puts "Extracting: #{convert_string}"
+
+    Magick::Image.read(convert_string) do
       self.format = 'PDF'
-      self.quality = 100
+      self.quality = 100  # has no significant effect on memory usage
+      # NOTE: Using '300' here makes it use 300x more memory than the default (72)
+      #   which we handle by explicitly calling Ruby garbage collection in extract_pages()
       self.density = 300
     end
-    pages = Grim.reap(self.pdf.current_path).to_a
-    pages = [images, pages].transpose
-    pages.each do |image, page|
-      img_path = "#{Rails.root}/tmp/pdf-#{self.id}-#{page.number}.jpg"
-      image.alpha = Magick::DeactivateAlphaChannel if image.alpha?
-      image.to_blob
-      image.write(img_path) do
-        self.format = 'JPG'
-        self.antialias = true
-        self.colorspace = Magick::RGBColorspace
-        self.interlace = Magick::NoInterlace
-        self.size = 1024
-        self.quality = 100
-        self.density = 300
-      end
-      source_page = self.pages.build(image: File.open(img_path),
-                                       number: page.number)
-      source_page.build_body
-      hybrid_text = build_text_by_hybrid(page.text, img_path)
-      source_page.body.text = txt_to_html(page.text)          # standard method text
-      source_page.body.hybrid_text = txt_to_html(hybrid_text) # hybrid method text
-      source_page.save!
-      Rails.logger.info "Page #{page.number} of #{images.size} processed"
+  end
+
+  def regenerate_pdf(with_text)
+    extract_pages(with_text)
+  end
+
+  def self.regenerate_all(options={})
+    with_text = options[:with_text]
+    single_id = options[:id]
+    query = {document_style: ['scan', 'scannotext']}  #460 page pdf is id: 1121, 4-pager is 1119
+    query.merge!(id: single_id) if single_id
+
+    doc_ids = Document.where(query).order("random()").select(:id, :pdf) do |doc|
+      !!doc.pdf.current_path
+    end.map(&:id)
+
+    if doc_ids.empty?
+      puts "Notice: Did not find any documents for the following query params:"
+      ap query
+      return
+    end
+
+    doc_ids.each do |doc_id|
+      puts "#{Time.now} - Firing id: #{doc_id}"
+      PdfToImagesWorker.new.perform(doc_id, with_text)
     end
   end
 
@@ -245,7 +434,7 @@ class Document < ActiveRecord::Base
   def generate_images
     changes = self.previous_changes
     if changes.include?(:pdf) && changes[:pdf].first != changes[:pdf].last
-      PdfToImagesWorker.perform_async self.id
+      PdfToImagesWorker.perform_async(id)
     end
   end
 

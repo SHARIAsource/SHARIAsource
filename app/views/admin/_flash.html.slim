@@ -10,3 +10,10 @@
       .alert-box.alert data-alert='true'
         = alert
         a.close href='#' &times;
+
+- if flash[:error]
+  .row
+    .small-12.columns
+      .alert-box.alert data-alert='true'
+        = flash[:error]
+        a.close href='#' &times;
