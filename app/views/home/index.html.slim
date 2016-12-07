@@ -1,8 +1,5 @@
 .inner-wrapper
   .inner
-    = render partial: 'home/about_blurb', locals: { block_title: 'About', content: @home_presenter.about }
-.inner-wrapper
-  .inner
     = render partial: 'home/three_item_block', locals: { block_title: 'Recent', collection: @home_presenter.recent, more_link: true }
 .inner-wrapper
   .inner
