@@ -32,7 +32,7 @@ class DocumentTypeCounter
   end
 
   def self.region_counts
-    roots = DocumentType.roots.select(:id, :name)
+    roots = DocumentType.roots.where.not(name: 'Historical Primary Sources').select(:id, :name)
     regions = hash_flatten(Region.hash_tree)
     {
       regions: regions,
@@ -47,7 +47,7 @@ class DocumentTypeCounter
   end
 
   def self.era_counts
-    roots = DocumentType.roots.select(:id, :name)
+    roots = DocumentType.roots.where.not(name: 'Contemporary Primary Sources').select(:id, :name)
     eras = hash_flatten(Era.hash_tree)
     {
       eras: eras,

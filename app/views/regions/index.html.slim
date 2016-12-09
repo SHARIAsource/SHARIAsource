@@ -3,7 +3,9 @@
 - cache 'region_count_view', skip_digest: true do
   .inner-wrapper
     .inner.browse-tables
-      h2.section-heading.browse Browse Geographic Regions
+      h2.section-heading.browse
+        span Browse Geographic Regions | 
+        = link_to("Browse Empires & Eras", eras_path)
 
       table.browse-table.browse-table-stick
         thead
