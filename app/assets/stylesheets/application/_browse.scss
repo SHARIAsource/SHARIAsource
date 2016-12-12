@@ -10,6 +10,10 @@
 .section-heading.browse {
   border-bottom:5px solid $ss-color-borders;
   margin-bottom:16px;
+
+  a {
+    color:$ss-color-secondary;
+  }
 }
 
 .browse-table {

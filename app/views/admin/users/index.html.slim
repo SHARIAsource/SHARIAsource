@@ -24,6 +24,8 @@ table
               li.label.radius.secondary Editor
             - if user.requires_approval?
               li.label.radius.secondary Requires Approval
+            - if user.accepted_terms?
+              li.label.radius.secondary Accepted TOS
             - if user.disabled?
               li.label.radius.secondary Disabled
         td.actions

@@ -39,7 +39,8 @@ gem 'rtesseract', '~> 2.0', '>= 2.0.1'
 gem 'similar_text', '~> 0.0.4'
 gem 'whatlanguage', '~> 1.0', '>= 1.0.6'
 gem 'jquery-datatables-rails', '~> 3.3.0'
-gem 'therubyracer', '~> 0.12.2'
+gem 'therubyracer', platforms: :ruby
+# gem 'therubyracer', '~> 0.12.2'  #from camp13
 gem 'will_paginate', '~> 3.1'
 gem 'eventmachine', '~> 1.0.4'
 gem 'awesome_print'

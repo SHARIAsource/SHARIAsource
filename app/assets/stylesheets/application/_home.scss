@@ -99,9 +99,7 @@
   margin:8px 0 16px 0;
   letter-spacing:1px;
 }
-.about-short a {
-  @include color-hover($ss-color-secondary, $ss-color-headerfooterlink);
-}
+
 .home-collaborators {
   padding-top:4px;
   padding-bottom:56px;
