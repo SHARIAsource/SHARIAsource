@@ -32,7 +32,7 @@ class SearchesController < ApplicationController
         query.with(:lunar_hijri_date).greater_than(date_from) if date_from
         query.with(:lunar_hijri_date).less_than(date_to) if date_to
       end
-      query.paginate page: @filters.page
+      query.paginate page: @filters.page, per_page: 20
     end
   end
 
