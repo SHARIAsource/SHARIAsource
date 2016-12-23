@@ -241,7 +241,7 @@ class Document < ActiveRecord::Base
   def repair_pdf(days)
     return unless pdf?
 
-    unless File.exists?(pdf.file.path)
+    unless pdf.file.try(:exists?)
       puts "WARNING: #{self.class.name} id #{id} missing expected PDF on disk: #{pdf.file.path}"
       return
     end
@@ -258,7 +258,7 @@ class Document < ActiveRecord::Base
     # NOTE: for doc 1121, this block takes 80 seconds with default qual or density info
     # other note: with qual and dens, it definitely uses 30+GB of memory inside that loop
     # with qual:90 and density:300, it takes 450 seconds, so 5 times longer with with no qual or dens attrs.
-    return unless pdf.file
+    return unless pdf.file.try(:exists?)
 
     pages = pdf_pages
     page_count = pages.count
