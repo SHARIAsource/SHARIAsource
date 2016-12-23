@@ -8,7 +8,7 @@
 @import 'admin/tables';
 @import 'admin/datatables';
 
-label.password.optional::after {
+.edit_user label.password.optional::after {
   content: " (Required only if changing password)";
   font-size: 0.8em;
   font-weight: normal;
