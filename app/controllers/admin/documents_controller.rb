@@ -165,22 +165,18 @@ class Admin::DocumentsController < AdminController
     if !(current_user.is_editor && current_user.is_admin)
       attrs[:contributor_id] = current_user.self_and_descendant_ids
     end
-    documents = Document.where(attrs)
 
-    #    What's next? restrict search results to the documents the user can see. Should we be calling
-    # Document.search here because "documents.search" is a misleading no-op? Is published status indexed?
-    #   If it is, we can add it to the search query here.
-
-    # TODO: does the front-end search status respect published status? YES. I TESTED!
-
+    # TODO: Consolidate sort/pagination code between here and front-end search
     if params[:sSearch].present?
-      # Does calling search() on documents restrict to the docs in the document AR query?
-      # BUG:TODO: this does not restrict to what docs the user can see.
-      ids = documents.search do
-        fulltext params[:sSearch]
+      ids = Document.search do |query|
+        query.fulltext params[:sSearch]
+        query.with(:published, attrs[:published])
+        query.with(:contributor_id, attrs[:contributor_id]) if attrs[:contributor_id]
       end.results.map(&:id)
 
-      documents = Document.where(published: pstatus, id: ids)
+      documents = Document.where(id: ids)
+    else
+      documents = Document.where(attrs)
     end
 
     # TODO: does it really work to paginate before sorting like this?
