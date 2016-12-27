@@ -143,10 +143,18 @@
 
       .meta-column.last.references.js-same-height
         h3 This document is referenced by:
-        - if @document.referencing_documents.present?
-          ul
-            - @document.referencing_documents.each do |d|
-              li= link_to d.title_with_author, document_path(d.object)
+        - referencing = @document.referencing_documents
+        - display_limit = 10
+        - if referencing.present?
+          ul.hidden-ref-list
+            - referencing.each_with_index do |d, idx|
+              - link = link_to d.title_with_author, document_path(d.object)
+              - if idx > display_limit
+                li.hidden-ref= link
+              - else
+                li= link
+          - if referencing.count > display_limit
+            .suggest-tags= link_to 'See More', '#', id: 'js-expand-referencing'
         - else
           em none
 

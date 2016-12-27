@@ -78,4 +78,13 @@
     dragon.goToPage(dragon.tileSources.length - 1)
     event.preventDefault()
   })
+
+  $document.on('click', '#js-expand-referencing', function(event) {
+    event.preventDefault()
+    $('.hidden-ref').show()
+    $(this).hide()
+    $(document).trigger('sameheight:refresh')
+  })
+
+
 }())
