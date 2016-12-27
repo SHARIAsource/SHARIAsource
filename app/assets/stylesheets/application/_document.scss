@@ -19,6 +19,18 @@
   }
 }
 
+.share-edit {
+  float:right;
+  .edit-container {
+    text-align:center;
+    #edit-this {
+      font-size: medium;
+      margin-top:10px;
+      font-weight:bold;
+    }
+  }
+}
+
 .share-links {
   float:right;
   margin:0;

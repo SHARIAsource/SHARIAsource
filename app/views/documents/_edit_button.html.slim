@@ -1,0 +1,5 @@
+- if current_user.try(:can_edit?, document)
+  .edit-container
+    = link_to "Edit This Document", edit_admin_document_path(document), class: 'tiny radius pill button', id: 'edit-this'
+
+
