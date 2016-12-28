@@ -11,6 +11,15 @@
       $filterHeader.addClass('all-expanded')
     }
   }
+  $document.on('click', '.summary-expand-contract', function(event) {
+    var $block = $(this).closest('.summary-block')
+    $block.toggleClass('is-contracted')
+    $block.find('.summary-content').slideToggle(300)
+    var new_text = $block.hasClass('is-contracted') ? 'Show Summary' : 'Hide Summary'
+    $(this).find('a.summary-link').text(new_text)
+
+    event.preventDefault()
+  })
 
   $document.on('click', '.filter-block .expand-contract', function(event) {
     var $block = $(this).closest('.filter-block')

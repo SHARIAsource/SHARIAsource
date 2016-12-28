@@ -19,6 +19,7 @@ p.result-count
 
         h2= link_to document.title, document_path(document.object)
         = render partial: 'documents/byline', locals: { document: document }
+        = render partial: 'searches/summary', locals: { document: document }
 
       .result-thumbnail
         = link_to(image_tag(document.thumb.url), document_path(document.object)) if document.thumb
