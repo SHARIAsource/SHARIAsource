@@ -19,18 +19,6 @@
   }
 }
 
-.share-edit {
-  float:right;
-  .edit-container {
-    text-align:center;
-    #edit-this {
-      font-size: medium;
-      margin-top:10px;
-      font-weight:bold;
-    }
-  }
-}
-
 .share-links {
   float:right;
   margin:0;
@@ -108,6 +96,13 @@
     &[title] {
       padding-bottom:28px;
     }
+
+#edit-this {
+  font-size:medium;
+  margin-top:10px;
+  margin-bottom:0;
+  font-weight:bold;
+}
 
     p {
       font-family:$ss-font-serif;

@@ -1,4 +1,4 @@
-= simple_form_for @document, url: form_url do |f|
+= simple_form_for @document, url: form_url, html: { class: 'edit_document' } do |f|
   .row
     .large-4.columns
       = f.input :title, autofocus: true

@@ -14,7 +14,6 @@
           li= link_to 'Email', @document.email_share_url(document_url(@document.object)), class: 'email', title: 'Email a link to this page', target: '_blank'
           li= link_to 'Twitter', @document.twitter_share_url(document_url(@document.object)), class: 'twitter', title: 'Share this page on Twitter', target: '_blank'
           li= link_to 'Facebook', @document.facebook_share_url(document_url(@document.object)), class: 'facebook', title: 'Share this page on Facebook', target: '_blank'
-        = render partial: 'documents/edit_button', locals: { document: @document.object }
       p.breadcrumb
         - @document.document_type.self_and_ancestors.reverse.each do |dt|
           = link_to dt.name, search_path(document_type: dt.self_and_descendant_ids, q: '')
@@ -24,13 +23,14 @@
       h2= @document.title
       = render partial: 'documents/byline', locals: { document: @document }
 
-      - if @document.summary.present?
-        .summary
+      .summary
+        - if @document.summary.present?
           == @document.summary
           .expand
             a href="#" Expand Summary
           .collapse
             a href="#" Collapse Summary
+        = render partial: 'documents/edit_button', locals: { document: @document.object }
 
   .metadata-inner
     .metadata.js-same-height-container
