@@ -138,24 +138,24 @@ class Document < ActiveRecord::Base
 
     integer :language_id
     text :language do
-      language.name
+      language.try(:name)
     end
 
     integer :contributor_id
     text :contributor_name do
-      contributor.name
+      contributor.try(:name)
     end
 
     integer :document_type_id
     text :document_type do
-      document_type.name
+      document_type.try(:name)
     end
 
     string :sort_author do
       if author.present?
         author.split(',').first.split(' ').last
       else
-        contributor.last_name
+        contributor.try(:last_name)
       end
     end
 
