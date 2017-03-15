@@ -15,4 +15,4 @@ QuestionTool is licensed under the GPL
 
 ## Copyright
 
-2015 President and Fellows of Harvard College
+2017 President and Fellows of Harvard College
