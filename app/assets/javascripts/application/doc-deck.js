@@ -39,6 +39,9 @@
 
   function createDragon($viewer, pages) {
     return new OpenSeadragon({
+      showRotationControl: true,
+      // Enable touch rotation on tactile devices
+      gestureSettingsTouch: {pinchRotate: true},
       element: $viewer[0],
       hash: 'viewer' + viewerCount++,
       tileSources: pages,
@@ -46,6 +49,8 @@
       prefixUrl: '/assets/',
       zoomInButton: 'js-zoomin-link',
       zoomOutButton: 'js-zoomout-link',
+      rotateLeftButton: 'js-rotate-left-link',
+      rotateRightButton: 'js-rotate-right-link',
       fullPageButton: 'js-fullscreen-link',
       previousButton: 'js-prev-link',
       nextButton: 'js-next-link',

@@ -503,6 +503,18 @@
   background-size:41px 41px;
 }
 
+.rotate-left-link {
+  background:url(image-path('osg-rotate-right.svg')) 0 0 no-repeat;
+  background-size:41px 41px;
+  transform-origin: 50% 50%;
+  transform: scale(-1,1);
+}
+
+.rotate-right-link {
+  background:url(image-path('osg-rotate-right.svg')) 0 0 no-repeat;
+  background-size:41px 41px;
+}
+
 .fullscreen-link {
   background:url(image-path('osg-fullscreen.svg')) 0 0 no-repeat;
   background-size:41px 41px;
