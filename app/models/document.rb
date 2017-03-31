@@ -1,3 +1,5 @@
+require 'securerandom'
+
 # == Schema Information
 #
 # Table name: documents
@@ -41,6 +43,8 @@
 class Document < ActiveRecord::Base
   include PdfParser
   alias_attribute :name, :title
+
+  attr_accessor :new_content_password
 
   BASE_PAGE_DIRECTORY = Rails.root.join('tmp', 'pdf-pages').to_s.freeze
   NO_TEXT_MESSAGE = "No text to show"
@@ -222,6 +226,18 @@ class Document < ActiveRecord::Base
     puts "boop #{x}: #{Time.now.to_i}"
   end
 
+  def set_new_content_password
+    # NOTE: This lets us lazily just set content_password = new_content_password
+    # (in the view) as a no-op when the pre-existing content_password isn't changing
+    self.new_content_password = self.content_password.presence || SecureRandom.hex.first(8)
+    # Rails.logger.debug "BOOPcur: '#{self.content_password}'"
+    # Rails.logger.debug "BOOPNew: '#{self.new_content_password}'"
+  end
+
+  def authenticate_content_password(password)
+    password == content_password
+  end
+
   def pdf_pages
     begin
       PDF::Reader.new(pdf.current_path).pages
@@ -234,6 +250,7 @@ class Document < ActiveRecord::Base
   end
 
   def self.repair_pages_days_older_than(days)
+    # TODO: do this in batches with: Document.in_batches(50).each_record ...
     # if this has old pages on disk, repair_pdf(...)
     Document.all.map { |doc| doc.repair_pdf days }
   end

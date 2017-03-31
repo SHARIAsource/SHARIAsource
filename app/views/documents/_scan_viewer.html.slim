@@ -1,0 +1,3 @@
+.image-viewer.full-width
+  = render 'documents/viewer_content' if @show_secure_content || !@document.use_content_password?
+= render 'documents/viewer_controls' if @show_secure_content || !@document.use_content_password?

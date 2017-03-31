@@ -16,4 +16,21 @@ class DocumentsController < ApplicationController
       format.rss { render layout: false }
     end
   end
+
+  def secure_content
+    @document = Document.find params[:document_id]
+
+    password = params[:password][:content_password]
+    correct_password = @document.authenticate_content_password(password)
+
+    respond_to do |format|
+      if correct_password
+        @show_secure_content = true
+        format.html { render partial: 'scan_viewer', layout: false }
+      else
+        format.html { render html: '', layout: false, status: :error }
+      end
+    end
+  end
+
 end

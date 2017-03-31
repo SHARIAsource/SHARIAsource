@@ -40,6 +40,12 @@ GEM
       execjs
     awesome_print (1.7.0)
     bcrypt (3.1.7)
+    better_errors (2.1.1)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+      rack (>= 0.9.0)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     builder (3.2.2)
     capybara (2.3.0)
       mime-types (>= 1.16)
@@ -79,6 +85,7 @@ GEM
       compass (>= 0.12.2)
     connection_pool (2.0.0)
     dalli (2.7.2)
+    debug_inspector (0.0.2)
     devise (3.2.4)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -343,6 +350,8 @@ DEPENDENCIES
   annotate (~> 2.6.5)
   autoprefixer-rails (~> 2.1.0)
   awesome_print
+  better_errors
+  binding_of_caller
   capybara (~> 2.3.0)
   carrierwave (~> 0.10.0)
   chosen-rails (~> 1.1.0)

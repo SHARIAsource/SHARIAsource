@@ -5,6 +5,7 @@
   })
 
   $document.on('ajax:send', function(event) {
+    console.log('ajax:send')
     if (event.target.id === 'new_search_filters') {
       $('.search-results').addClass('loading')
     }
@@ -36,7 +37,8 @@
       $('.search-results').append($(data).find('.more-results'))
     }
     if (Modernizr.history) {
-      history.replaceState({}, '', xhr.requestURL)
+      console.log('skipping history re-write...')
+      //history.replaceState({}, '', xhr.requestURL)
     }
     $document.trigger('filtersummary:refresh')
     $document.trigger('sameheight:refresh')

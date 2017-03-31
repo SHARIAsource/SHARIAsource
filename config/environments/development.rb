@@ -32,9 +32,20 @@ Rails.application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
+  BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  config.middleware.use Rack::LiveReload
+  # config.middleware.use Rack::LiveReload
+  config.middleware.insert_before Rack::Lock, Rack::LiveReload
+
+  # Specifying Rack::LiveReload options.
+  config.middleware.use(Rack::LiveReload,
+    min_delay:        500,    # default 1000
+    max_delay:        10_000, # default 60_000
+    live_reload_port: 9010,  # default 35729
+  )
+
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 end

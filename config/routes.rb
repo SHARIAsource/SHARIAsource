@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   resource :search, only: [:show]
   resources :documents, only: [:index, :show] do
     resources :tag_suggestions, path: '/tag-suggestions', only: [:create]
+    post :secure_content
+    get :secure_content
   end
   resources :contributors, only: [:index, :show]
   resources :regions, only: [:index]

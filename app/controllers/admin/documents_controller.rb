@@ -1,6 +1,8 @@
 class Admin::DocumentsController < AdminController
   before_filter :fetch_document, only: [:edit, :update, :destroy]
   before_filter :ensure_editor!, only: [:destroy]
+  # before_filter :set_new_content_password, only: [:edit]
+  # after_filter :set_new_content_password, only: [:new]
 
   def unpublished
     respond_to do |format|
@@ -19,6 +21,7 @@ class Admin::DocumentsController < AdminController
   def new
     @document = current_user.documents.build
     @document.build_body
+    @document.set_new_content_password
   end
 
   def edit
@@ -26,6 +29,7 @@ class Admin::DocumentsController < AdminController
       flash[:error] = "Sorry, that document cannot be edited until after it has been processed by the system"
       redirect_to unpublished_admin_documents_path
     end
+    @document.set_new_content_password
   end
 
   def create
@@ -63,7 +67,8 @@ class Admin::DocumentsController < AdminController
       @document.index!
       DocumentTypeCountWorker.perform_async
       if params[:create_and_continue]
-        redirect_to new_admin_document_path
+        # redirect_to new_admin_document_path
+        redirect_to edit_admin_document_path @document
       elsif params[:create_and_edit]
         redirect_to edit_admin_document_path @document
       else
@@ -99,23 +104,36 @@ class Admin::DocumentsController < AdminController
   def permitted_params
     # TODO: Unpermitted parameters: alternate_editors, alternate_translators, alternate_years
     # TODO: only include :featured_position if the current_user is allowed to manage it
-    whitelist = [:title, :volume_count, :document_type_id, :pdf, :language_id,
+    whitelist = [
+                 :title, :volume_count, :document_type_id, :pdf, :language_id,
                  :gregorian_year, :gregorian_month, :gregorian_day,
                  :source_name, :source_url, :author, :translators, :editors,
                  :publisher, :publisher_location, :alternate_titles,
                  :alternate_authors, :featured_position, :reference_type_id,
                  :permission_giver, :document_style, :summary, :citation,
+                 :use_content_password,
+                 :content_password,
                  region_ids: [], theme_ids: [], topic_ids: [], tag_ids: [],
                  referenced_document_ids: [], era_ids: [],
                  body_attributes: [:id, :text], pages_attributes: [
                    :id, body_attributes: [:id, :text, :hybrid_text]
-                 ]]
+                 ]
+                ]
     if current_user.is_editor
       whitelist << :contributor_id
     end
     unless current_user.requires_approval?
       whitelist << :published
     end
+
+    # logger.ap "BLIP"
+    # logger.ap params[:document][:use_content_password]
+    # logger.ap params[:document][:content_password]
+
+    # This overcomes the duplicated :use_content_password checkbox data caused by
+    # the funky partials and show()|hide() trickery used in the UI
+    params[:document][:use_content_password] = params[:document][:content_password].present?
+
     params.require(:document).permit(*whitelist)
   end
 
@@ -126,6 +144,12 @@ class Admin::DocumentsController < AdminController
       redirect_to :back
     end
   end
+
+  # def set_new_content_password
+  #   @document.set_new_content_password
+  #   Rails.logger.debug "BOOPcur: '#{@document.content_password}'"
+  #   Rails.logger.debug "BOOPNew: '#{@document.new_content_password}'"
+  # end
 
   def response_as_json(pstatus)
     {

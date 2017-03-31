@@ -161,7 +161,4 @@
 - if @document.pages.present?
   = render 'documents/scan_no_text'
 - elsif @document.body.present?
-  .inner-wrapper
-    .inner.document-content
-      div class="#{@document.language ? @document.language.name.downcase : 'english'}"
-        == @document.body.text
+  = render 'documents/body_text', locals: {document: @document}

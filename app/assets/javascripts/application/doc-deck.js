@@ -2,6 +2,27 @@
   var $document = $(document)
   var viewerCount = 0;
 
+  $document.on('click', '#view-content', function(event) {
+      event.preventDefault()
+      $('#view-content-error').hide();
+      $(this).closest('form').submit()
+  })
+
+    $document.on('ajax:success', '#view-content-form', function(event, data, status, xhr) {
+        console.log('success')
+        // Remove .image-viewer because it will be duplicated due to how our
+        // views are rendered server-side
+        $('.image-viewer').remove()
+        $('.image-viewer-container').append($(data))
+        $('#view-content-form-container').hide()
+        initSeadragon()
+    })
+
+    $document.on('ajax:error', '#view-content-form', function(event, data, status, xhr) {
+        $('#view-content-error').html("Password incorrect").show();
+    })
+
+
   function extractPageImages($viewer) {
     return $.map($viewer.find('.image').get(), function(img) {
       var $img = $(img)
@@ -35,11 +56,16 @@
   }
 
   $document.on('page:change', function() {
+      initSeadragon();
+  })
+
+  function initSeadragon() {
     var $viewer = $('.image-viewer')
     var dragon = $viewer.data('dragon')
     var pages, width, height, $texts
 
-    if (!dragon && $viewer.length) {
+    // Only fire if the controls also exist under $viewer
+    if (!dragon && $viewer.length && $viewer.children('.zoom-controls').length) {
       pages = extractPageImages($viewer)
       dragon = createDragon($viewer, pages)
       $viewer.data('dragon', dragon)
@@ -64,8 +90,7 @@
         $('.image-viewer .controls').appendTo('.image-viewer-container')
       })
     }
-  })
-
+  }
 
   $document.on('click', '#js-first-link:not(.disabled)', function(event) {
     $('.image-viewer').data('dragon').goToPage(0)
@@ -85,6 +110,5 @@
     $(this).hide()
     $(document).trigger('sameheight:refresh')
   })
-
 
 }())

@@ -70,14 +70,16 @@
   .row
     .large-12.columns
       h3 Content
+      = f.input :content_password, as: :hidden, input_html: {'data-password' => @document.new_content_password}
 
   .scan-only.panel
     .row
-      .large-6.columns.end
+      .large-9.columns.end
         = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
         - if @document.pdf.file
           p= @document.pdf.file.identifier
 
+    = render partial: 'content_password', locals: {document: @document, f: f}
     - if @document.pages.present?
       .clearfix
         h3 Pages
@@ -92,10 +94,11 @@
                 .large-8.columns.page-text-preview
                   = p.fields_for :body do |b|
                     = b.input :hybrid_text, label: "Page #{p.index+1} Text", input_html: { class: 'wysiwyg' }
-                .large-4.columns.page-image-preview
+                .large-4.columns.page-image-preview#page-image-preview
                   img src=p.object.image.url
 
   .noscan-only.panel
+    = render partial: 'content_password', locals: {document: @document, f: f}
     .row
       .large-12.columns
         = f.fields_for :body do |b|
