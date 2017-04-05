@@ -1,0 +1,4 @@
+- if current_user.try(:can_edit?, document)
+  = link_to "Edit This Document", edit_admin_document_path(document), class: 'tiny radius pill button', id: 'edit-this'
+
+

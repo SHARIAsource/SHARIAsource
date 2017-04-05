@@ -8,12 +8,12 @@
 .inner-wrapper.document
   .inner
     .clearfix
-      ul.share-links
-        li= link_to 'Print', 'javascript:window.print()', class: 'print', title: 'Print this page'
-        li= link_to 'Email', @document.email_share_url(document_url(@document.object)), class: 'email', title: 'Email a link to this page', target: '_blank'
-        li= link_to 'Twitter', @document.twitter_share_url(document_url(@document.object)), class: 'twitter', title: 'Share this page on Twitter', target: '_blank'
-        li= link_to 'Facebook', @document.facebook_share_url(document_url(@document.object)), class: 'facebook', title: 'Share this page on Facebook', target: '_blank'
-
+      .share-edit
+        ul.share-links
+          li= link_to 'Print', 'javascript:window.print()', class: 'print', title: 'Print this page'
+          li= link_to 'Email', @document.email_share_url(document_url(@document.object)), class: 'email', title: 'Email a link to this page', target: '_blank'
+          li= link_to 'Twitter', @document.twitter_share_url(document_url(@document.object)), class: 'twitter', title: 'Share this page on Twitter', target: '_blank'
+          li= link_to 'Facebook', @document.facebook_share_url(document_url(@document.object)), class: 'facebook', title: 'Share this page on Facebook', target: '_blank'
       p.breadcrumb
         - @document.document_type.self_and_ancestors.reverse.each do |dt|
           = link_to dt.name, search_path(document_type: dt.self_and_descendant_ids, q: '')
@@ -23,13 +23,14 @@
       h2= @document.title
       = render partial: 'documents/byline', locals: { document: @document }
 
-      - if @document.summary.present?
-        .summary
+      .summary
+        - if @document.summary.present?
           == @document.summary
           .expand
             a href="#" Expand Summary
           .collapse
             a href="#" Collapse Summary
+        = render partial: 'documents/edit_button', locals: { document: @document.object }
 
   .metadata-inner
     .metadata.js-same-height-container
@@ -142,10 +143,18 @@
 
       .meta-column.last.references.js-same-height
         h3 This document is referenced by:
-        - if @document.referencing_documents.present?
-          ul
-            - @document.referencing_documents.each do |d|
-              li= link_to d.title_with_author, document_path(d.object)
+        - referencing = @document.referencing_documents
+        - display_limit = 10
+        - if referencing.present?
+          ul.hidden-ref-list
+            - referencing.each_with_index do |d, idx|
+              - link = link_to d.title_with_author, document_path(d.object)
+              - if idx > display_limit
+                li.hidden-ref= link
+              - else
+                li= link
+          - if referencing.count > display_limit
+            .suggest-tags= link_to 'See More', '#', id: 'js-expand-referencing'
         - else
           em none
 

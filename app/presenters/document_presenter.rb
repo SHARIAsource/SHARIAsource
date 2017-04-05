@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class DocumentPresenter < BasePresenter
   include ActionView::Helpers::SanitizeHelper
 
@@ -65,10 +66,8 @@ class DocumentPresenter < BasePresenter
       gregorian << gregorian_year
       lunar_hijri << lunar_hijri_year
       if gregorian_month.present?
-        gregorian.unshift(I18n.translate('date.month_names',
-                                    locale: :en)[gregorian_month])
-        lunar_hijri.unshift(I18n.translate('date.month_names',
-                                      locale: :en_ar)[lunar_hijri_month])
+        gregorian.unshift(I18n.translate('date.month_names', locale: :en)[gregorian_month])
+        lunar_hijri.unshift(I18n.translate('date.month_names', locale: :en_ar)[lunar_hijri_month])
         if gregorian_day.present?
           gregorian.unshift(gregorian_day)
           lunar_hijri.unshift(lunar_hijri_day)

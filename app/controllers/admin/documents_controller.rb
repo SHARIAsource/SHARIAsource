@@ -3,17 +3,6 @@ class Admin::DocumentsController < AdminController
   before_filter :ensure_editor!, only: [:destroy]
 
   def unpublished
-    logger.ap params
-    if ( current_user.is_editor && current_user.is_admin )
-      @documents = Document.all
-    else
-      @documents = Document.where(
-        contributor_id: current_user.self_and_descendant_ids
-      )
-    end
-
-    # This doesn't look like it's used anywhere
-    # @unpublished_documents = @documents.where(published: 'false')
     respond_to do |format|
       format.html
       format.json { render json: response_as_json(false) }
@@ -21,16 +10,6 @@ class Admin::DocumentsController < AdminController
   end
 
   def published
-    if ( current_user.is_editor && current_user.is_admin )
-      @documents = Document.all
-    else
-      @documents = Document.where(
-        contributor_id: current_user.self_and_descendant_ids
-      )
-    end
-
-    # This doesn't look like it's used anywhere
-    # @published_documents = @documents.where(published: 'true')
     respond_to do |format|
       format.html
       format.json { render json: response_as_json(true) }
@@ -64,11 +43,6 @@ class Admin::DocumentsController < AdminController
       if params[:create_and_continue]
         redirect_to new_admin_document_path
       elsif params[:create_and_edit]
-        # BUG: I don't think this will ever work for a PDF upload because the PDF
-        #   is guaranteed to *not* be processed when we redirect to the edit page,
-        #   but the edit page will display an error message to the user that they
-        #   cannot edit it until it's been processed. That means this will only
-        #   work if document_style == 'noscan'.
         redirect_to edit_admin_document_path @document
       else
         redirect_to unpublished_admin_documents_path
@@ -124,6 +98,7 @@ class Admin::DocumentsController < AdminController
 
   def permitted_params
     # TODO: Unpermitted parameters: alternate_editors, alternate_translators, alternate_years
+    # TODO: only include :featured_position if the current_user is allowed to manage it
     whitelist = [:title, :volume_count, :document_type_id, :pdf, :language_id,
                  :gregorian_year, :gregorian_month, :gregorian_day,
                  :source_name, :source_url, :author, :translators, :editors,
@@ -163,7 +138,7 @@ class Admin::DocumentsController < AdminController
 
   def data(pstatus)
     fetch_documents(pstatus).map do |document|
-      row = [
+      [
         document.title,
         document.publisher,
         document.tags.pluck(:name).join(', '),
@@ -172,24 +147,41 @@ class Admin::DocumentsController < AdminController
         document.language.name,
         document.regions.pluck(:name).join(', '),
         document.updated_at.strftime("%b %e, %Y"),
-        render_to_string(partial:"/admin/documents/datatable_controls.html.slim", :locals => {document:document}, layout: false )
+        render_to_string(
+          partial: "/admin/documents/datatable_controls.html.slim",
+          locals: {document: document},
+          layout: false
+        )
       ]
-      row
     end
   end
 
   def fetch_documents(pstatus)
-    documents = Document.where(published: pstatus)
+    # Memoize this return value because this gets called twice in response_as_json
+    #   and produces incorrect "of $x entries" values if we capture its output there.
+    return @fetched_documents if defined?(@fetched_documents)
 
-    if params[:sSearch].present?
-      ids = documents.search do
-        fulltext params[:sSearch]
-      end.results.map(&:id)
-      documents = Document.where(published: pstatus, id: ids)
+    attrs = {published: pstatus}
+    if !(current_user.is_editor && current_user.is_admin)
+      attrs[:contributor_id] = current_user.self_and_descendant_ids
     end
-    documents = documents.page(page).per_page(per_page)
 
-    order_documents(documents)
+    # TODO: Consolidate sort/pagination code between here and front-end search
+    if params[:sSearch].present?
+      ids = Document.search do |query|
+        query.fulltext params[:sSearch]
+        query.with(:published, attrs[:published])
+        query.with(:contributor_id, attrs[:contributor_id]) if attrs[:contributor_id]
+      end.results.map(&:id)
+
+      documents = Document.where(id: ids)
+    else
+      documents = Document.where(attrs)
+    end
+
+    # TODO: does it really work to paginate before sorting like this?
+    documents = documents.page(page).per_page(per_page)
+    @fetched_documents = order_documents(documents)
   end
 
   def page

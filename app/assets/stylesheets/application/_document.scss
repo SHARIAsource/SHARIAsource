@@ -97,6 +97,13 @@
       padding-bottom:28px;
     }
 
+#edit-this {
+  font-size:medium;
+  margin-top:10px;
+  margin-bottom:0;
+  font-weight:bold;
+}
+
     p {
       font-family:$ss-font-serif;
       font-size:14px;
@@ -246,26 +253,42 @@
       line-height:1;
       vertical-align:top;
     }
-  }
 
-  .suggest-tags {
-    font-weight:bold;
-    margin-top:12px;
-    -webkit-font-smoothing:antialiased;
-
-    a {
-      @include color-hover($ss-color-secondary, $ss-color-headerfooterlink);
-
-      &:before {
-        content:'»';
-        display:inline-block;
-        margin-right:5px;
-        font-size:2em;
-        line-height:.5;
-        vertical-align:top;
-      }
+    .hidden-ref {
+      display: none;
     }
   }
+
+}
+
+.summary-content > p {
+  font-family:$ss-font-serif;
+  font-size:14px;
+}
+
+.suggest-tags, .summary-expand-contract {
+  font-weight:bold;
+  margin-top:12px;
+  -webkit-font-smoothing:antialiased;
+
+  a {
+    @include color-hover($ss-color-secondary, $ss-color-headerfooterlink);
+
+    &:before {
+      content:'»';
+      display:inline-block;
+      margin-right:5px;
+      font-size:2em;
+      line-height:.5;
+      vertical-align:top;
+    }
+  }
+}
+
+.summary-expand-contract {
+  font-size: 12px;
+  font-weight: normal;
+  margin-top:6px;
 }
 
 .document-content {

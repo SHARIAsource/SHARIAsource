@@ -49,6 +49,10 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, ImageUploader
   default_scope { order('last_name_without_articles') }
 
+  def can_edit?(document)
+    is_editor? || self_and_descendant_ids.include?(document.contributor.id)
+  end
+
   # This overrides Devise default implementation to disable accounts with
   # out custom disabled flag
   def active_for_authentication?

@@ -16,6 +16,7 @@ class ContributorsController < ApplicationController
     @document_types = DocumentType.hash_tree
     @search = Document.search do |query|
       query.fulltext @filters.q
+      query.with(:published, true)
       query.with(:contributor_id, @filters.contributor)
     end
   end
