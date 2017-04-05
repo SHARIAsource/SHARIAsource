@@ -10,12 +10,18 @@
 
     $document.on('ajax:success', '#view-content-form', function(event, data, status, xhr) {
         console.log('success')
-        // Remove .image-viewer because it will be duplicated due to how our
-        // views are rendered server-side
-        $('.image-viewer').remove()
-        $('.image-viewer-container').append($(data))
+        if (!!$('.image-viewer-container').length) {
+            // Remove .image-viewer because it will be duplicated due to how our
+            // views are rendered server-side
+
+            $('.image-viewer').remove()
+            $('.image-viewer-container').append($(data))
+            initSeadragon()
+        }
+        else {
+            $('.document-content').replaceWith($(data))
+        }
         $('#view-content-form-container').hide()
-        initSeadragon()
     })
 
     $document.on('ajax:error', '#view-content-form', function(event, data, status, xhr) {

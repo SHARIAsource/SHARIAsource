@@ -31,7 +31,12 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       if correct_password
         @show_secure_content = true
-        format.html { render partial: 'scan_viewer', layout: false }
+        if @document.pages.present?
+          partial = 'scan_viewer'
+        else
+          partial = 'body_text'
+        end
+        format.html { render partial: partial, layout: false }
       else
         format.html { render html: '', layout: false, status: :error }
       end
