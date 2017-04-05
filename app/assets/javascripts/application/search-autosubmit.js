@@ -1,11 +1,11 @@
 (function() {
+  // BUG: The ajax event handlers here are too broad
   var $document = $(document)
   var autosubmit = $.debounce(100, function() {
     $(this).closest('form').trigger('submit')
   })
 
   $document.on('ajax:send', function(event) {
-    console.log('ajax:send')
     if (event.target.id === 'new_search_filters') {
       $('.search-results').addClass('loading')
     }
@@ -37,8 +37,8 @@
       $('.search-results').append($(data).find('.more-results'))
     }
     if (Modernizr.history) {
-      console.log('skipping history re-write...')
-      //history.replaceState({}, '', xhr.requestURL)
+      //console.log('skipping history re-write to: ' + xhr.requestURL)
+      history.replaceState({}, '', xhr.requestURL)
     }
     $document.trigger('filtersummary:refresh')
     $document.trigger('sameheight:refresh')
