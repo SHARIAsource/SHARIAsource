@@ -162,4 +162,4 @@
 - if @document.pages.present?
   = render 'documents/scan_no_text'
 - elsif @document.body.present?
-  = render 'documents/body_text', locals: {document: @document}
+  = render 'documents/body_text', document: @document
