@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :tag_suggestions, path: '/tag-suggestions', only: [:create]
     post :secure_content
     get :secure_content
+    get :download
   end
   resources :contributors, only: [:index, :show]
   resources :regions, only: [:index]

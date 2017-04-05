@@ -17,6 +17,11 @@ class DocumentsController < ApplicationController
     end
   end
 
+  def download
+    document = Document.find params[:document_id]
+    send_file document.pdf.file.path
+  end
+
   def secure_content
     @document = Document.find params[:document_id]
 

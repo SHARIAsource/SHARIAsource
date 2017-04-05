@@ -30,6 +30,7 @@
             a href="#" Expand Summary
           .collapse
             a href="#" Collapse Summary
+        = render partial: 'documents/download_button', locals: { document: @document.object }
         = render partial: 'documents/edit_button', locals: { document: @document.object }
 
   .metadata-inner
