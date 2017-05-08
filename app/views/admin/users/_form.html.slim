@@ -10,17 +10,15 @@
         legend Permissions
         = f.input :is_admin, boolean_style: :inline, label: 'Admin'
         = f.input :is_editor, boolean_style: :inline, label: 'Editor'
+        = f.input :is_senior_scholar, boolean_style: :inline, label: 'Senior Scholar'
+        = f.input :is_original_author, boolean_style: :inline, label: 'Original Author'
         = f.input :requires_approval, boolean_style: :inline
         = f.input :accepted_terms, boolean_style: :inline, label: 'Accepted TOS', disabled: true
         = f.input :disabled, boolean_style: :inline
     .large-6.columns
       = f.input :about, input_html: { class: 'wysiwyg' }
-
-  .row
-    .large-6.columns
       = f.input :avatar, as: :file, label: 'Photo', input_html: { accept: 'image/png,image/jpg,image/gif' }
       = f.hidden_field :avatar_cache
-    .large-6.columns
       - if f.object.avatar?
         = image_tag f.object.avatar_url
 
