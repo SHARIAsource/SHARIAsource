@@ -18,8 +18,6 @@ $(document).on('page:change', function() {
           button.prop('title', '');
           button.prop('disabled', false);
       }
-      console.log(button.size())
-
   }
 
   showOrHidePanels()

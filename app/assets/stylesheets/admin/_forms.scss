@@ -66,13 +66,19 @@ form[data-docstyle="noscan"] {
 }
 
 .button.light_blue {
-  background-color: #9ad3de;
+  Xbackground-color: #9ad3de;
+  background-color: #008CBA99;
 }
 
 .button.med_blue {
-  background-color: #89bdd3;
+  background-color: #1594c9;
 }
 
 .button.dark_gray {
-  background-color: #c9c9c9;
+  Xbackground-color: #c9c9c9;
+  background-color: #767676;
+
+  &:hover {
+    Xbackground-color: #969696;
+  }
 }
