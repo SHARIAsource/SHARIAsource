@@ -212,8 +212,6 @@ GEM
     quiet_assets (1.0.3)
       railties (>= 3.1, < 5.0)
     rack (1.5.5)
-    rack-livereload (0.3.16)
-      rack
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -399,7 +397,6 @@ DEPENDENCIES
   pg (~> 0.17.1)
   progress_bar
   quiet_assets (~> 1.0.3)
-  rack-livereload (~> 0.3.15)
   rack-timeout (~> 0.0.4)
   rails (= 4.1.6)
   ranked-model (~> 0.4.0)
