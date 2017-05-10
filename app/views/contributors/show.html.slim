@@ -4,15 +4,14 @@
   .inner
     h2.section-heading.browse= @contributor.name_with_collaborator
 
-  .inner.document-content
-    - if @contributor.avatar && @contributor.avatar.url
-      .photo-caption
-        = image_tag(@contributor.avatar.url, alt: @contributor.name)
-        p= @contributor.name
-    == @contributor.about
+  .inner
+    - if @contributor.biography_uses_tabs?
+      = render 'tabs', contributor: @contributor
+    - else
+      = render 'about', contributor: @contributor, content: @contributor.about
 
   .inner
-    = simple_form_for @filters, url: search_path, method: :get, remote: true do |f| 
+    = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|
       .search-two-columns.contributor-search
         .search-sidebar
           = render 'searches/filters', locals: { f: f }
