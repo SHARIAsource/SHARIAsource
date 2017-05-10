@@ -115,10 +115,10 @@
     event.preventDefault()
   })
 
-  $document.on('click', '#js-expand-referencing', function(event) {
+  $document.on('click', '.js-expand-referencing', function(event) {
     event.preventDefault()
-    $('.hidden-ref').show()
-    $(this).hide()
+    $('.hidden-ref').toggle()
+    $('.js-expand-referencing').toggle()
     $(document).trigger('sameheight:refresh')
   })
 
