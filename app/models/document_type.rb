@@ -1,15 +1,3 @@
-# == Schema Information
-#
-# Table name: document_types
-#
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#  parent_id  :integer
-#  sort_order :integer
-#
-
 class DocumentType < ActiveRecord::Base
   extend HashUtils
 

@@ -47,9 +47,7 @@ gem 'awesome_print'
 
 group :development do
   gem 'annotate', '~> 2.6.5'
-  gem 'guard-livereload', '~> 2.3.0'
   gem 'quiet_assets', '~> 1.0.3'
-  # gem 'rack-livereload', '~> 0.3.15'
   gem 'spring', '~> 1.1.3'
   gem 'sunspot_solr', '~> 2.1.1'
   gem 'progress_bar'
