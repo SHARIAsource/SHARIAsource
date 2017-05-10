@@ -64,7 +64,7 @@ end
 
 group :test do
   gem 'capybara', '~> 2.3.0'
-  gem 'guard-rspec', '~> 4.2.10'
-  gem 'guard-sunspot', '~> 0.0.2'
+  # gem 'guard-rspec', '~> 4.7.3'
+  # gem 'guard-sunspot', '~> 0.0.2'
   gem 'shoulda-matchers', '~> 2.6.2'
 end
