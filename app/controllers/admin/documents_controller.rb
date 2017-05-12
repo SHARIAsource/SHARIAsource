@@ -1,21 +1,13 @@
 class Admin::DocumentsController < AdminController
   before_filter :fetch_document, only: [:edit, :update, :destroy]
   before_filter :ensure_editor!, only: [:destroy]
-  # before_filter :set_new_content_password, only: [:edit]
-  # after_filter :set_new_content_password, only: [:new]
 
   def unpublished
-    respond_to do |format|
-      format.html
-      format.json { render json: response_as_json(false) }
-    end
+    datatables_response(false)
   end
 
   def published
-    respond_to do |format|
-      format.html
-      format.json { render json: response_as_json(true) }
-    end
+    datatables_response(true)
   end
 
   def new
@@ -58,32 +50,43 @@ class Admin::DocumentsController < AdminController
   end
 
   def update
+    update_params = permitted_params
+
+    if current_user.requires_approval?
+      update_params[:published] = false
+    end
+
+    # This forces any edit by a non-reviewer to set reviewed to false
+    update_params[:reviewed] ||= '0'
+
+    @document.reviewing_user = current_user if update_params[:reviewed] == '1'
+
     prev_state = @document.published
-    if @document.update permitted_params
+    if @document.update update_params
       flash[:notice] = 'Document updated successfully'
-      if current_user.requires_approval?
-        @document.update! published: false
-      end
+
       @document.index!
       DocumentTypeCountWorker.perform_async
+
       if params[:create_and_continue]
-        # redirect_to new_admin_document_path
-        redirect_to edit_admin_document_path @document
+        path = edit_admin_document_path @document
       elsif params[:create_and_edit]
-        redirect_to edit_admin_document_path @document
+        path = edit_admin_document_path @document
       else
         # if we unpublish a document, we want to stay on the
         # unpublished view so that we can unpublish another if needed
         if @document.published != prev_state
           if @document.published
-            redirect_to unpublished_admin_documents_path
+            path = unpublished_admin_documents_path
           else
-            redirect_to published_admin_documents_path
+            path = published_admin_documents_path
           end
         else
-          redirect_to published_admin_documents_path
+          path = published_admin_documents_path
         end
       end
+
+      redirect_to path
     else
       flash[:error] = @document.errors.full_messages.to_sentence
       render :edit
@@ -102,7 +105,6 @@ class Admin::DocumentsController < AdminController
   protected
 
   def permitted_params
-    # TODO: Unpermitted parameters: alternate_editors, alternate_translators, alternate_years
     # TODO: only include :featured_position if the current_user is allowed to manage it
     whitelist = [
                  :title, :volume_count, :document_type_id, :pdf, :language_id,
@@ -111,6 +113,8 @@ class Admin::DocumentsController < AdminController
                  :publisher, :publisher_location, :alternate_titles,
                  :alternate_authors, :featured_position, :reference_type_id,
                  :permission_giver, :document_style, :summary, :citation,
+                 :alternate_editors, :alternate_translators, :alternate_years,
+                 :reviewed,
                  :use_content_password,
                  :content_password,
                  region_ids: [], theme_ids: [], topic_ids: [], tag_ids: [],
@@ -126,10 +130,6 @@ class Admin::DocumentsController < AdminController
       whitelist << :published
     end
 
-    # logger.ap "BLIP"
-    # logger.ap params[:document][:use_content_password]
-    # logger.ap params[:document][:content_password]
-
     # This overcomes the duplicated :use_content_password checkbox data caused by
     # the funky partials and show()|hide() trickery used in the UI
     params[:document][:use_content_password] = params[:document][:content_password].present?
@@ -139,17 +139,18 @@ class Admin::DocumentsController < AdminController
 
   def fetch_document
     @document = Document.find params[:id]
-    unless current_user.is_editor || current_user.self_and_descendant_ids.include?(@document.contributor.id)
+    if !current_user.can_edit?(@document)
       flash[:alert] = "Sorry, but you must be an editor or the owner of that document to do this"
       redirect_to :back
     end
   end
 
-  # def set_new_content_password
-  #   @document.set_new_content_password
-  #   Rails.logger.debug "BOOPcur: '#{@document.content_password}'"
-  #   Rails.logger.debug "BOOPNew: '#{@document.new_content_password}'"
-  # end
+  def datatables_response(is_published)
+    respond_to do |format|
+      format.html
+      format.json { render json: response_as_json(is_published) }
+    end
+  end
 
   def response_as_json(pstatus)
     {
@@ -170,6 +171,7 @@ class Admin::DocumentsController < AdminController
         document.contributor.name,
         document.language.name,
         document.regions.pluck(:name).join(', '),
+       "<i class='fa fa-#{document.reviewed? ? 'check' : 'close'}' aria-hidden='true'></i>",
         document.updated_at.strftime("%b %e, %Y"),
         render_to_string(
           partial: "/admin/documents/datatable_controls.html.slim",

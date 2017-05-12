@@ -4,18 +4,17 @@ class Document < ActiveRecord::Base
   include PdfParser
   alias_attribute :name, :title
 
-  attr_accessor :new_content_password
+  attr_accessor :new_content_password, :reviewing_user
 
   BASE_PAGE_DIRECTORY = Rails.root.join('tmp', 'pdf-pages').to_s.freeze
   NO_TEXT_MESSAGE = "No text to show"
 
-  # Callbacks
   before_save :set_processed
   before_save :prepend_http_to_source_url
   before_save :set_published_at
+  after_save :log_review
   after_commit :generate_images
 
-  # Validations
   validates :title, presence: true
   validates :contributor_id, presence: true
   validates :document_type_id, presence: true
@@ -33,7 +32,6 @@ class Document < ActiveRecord::Base
     message: 'Must be scan w/ text, scan w/o text, or no-scan'
   }
 
-  # Associations
   has_and_belongs_to_many :themes
   has_and_belongs_to_many :topics
   has_and_belongs_to_many :tags
@@ -46,20 +44,34 @@ class Document < ActiveRecord::Base
     join_table: :document_documents, foreign_key: :referenced_id,
     association_foreign_key: :document_id
   has_many :pages, dependent: :destroy
+  has_many :document_reviews, -> { order(:created_at) }, dependent: :destroy
+
+  def current_review  #TODO: private
+    document_reviews.last if reviewed?
+  end
+
+  def reviewed_by_name
+    return nil unless reviewed?
+
+    reviewer = current_review.try(:user)
+    reviewer.try(:name)
+  end
+
+  def reviewed_at
+    current_review.try(:created_at)
+  end
+
   has_one :body
   belongs_to :document_type
   belongs_to :reference_type
   belongs_to :language
   belongs_to :contributor, class_name: 'User'
 
-  # Scopes
   scope :published, -> { where(published: true) }
 
-  # Misc
   mount_uploader :pdf, PdfUploader
   accepts_nested_attributes_for :pages, :body
 
-  # Solr Indexing
   searchable auto_index: false do
     # TODO: I think we need to strip summary too
     text :title, :source_name, :author, :translators, :editors, :publisher
@@ -152,6 +164,19 @@ class Document < ActiveRecord::Base
 
   def self.unpublished
     where(published: false)
+  end
+
+  def log_review
+    # puts "\n"
+    # ap "LOGREVIEW pc (reviewing_user: #{reviewing_user}):..."
+    # ap self.changes
+    # ap "reviewed?: '#{self.reviewed?}'"
+    # ap "done the dump"
+
+    if changes['reviewed'] == [false, true]
+      raise 'Cannot mark document as reviewed without a reviewing_user' unless reviewing_user
+      self.document_reviews << DocumentReview.new(user: reviewing_user)
+    end
   end
 
   def gregorian_date

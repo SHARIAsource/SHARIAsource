@@ -64,4 +64,53 @@ describe Document do
     document.reload
     expect(document.source_url).to eq 'http://www.example.org'
   end
+
+  describe '#log_review' do
+
+    let(:user) { create(:user) }
+
+    context 'a not-reviewed document gets flagged as reviewed' do
+      it 'creates a DocumentReview object' do
+        user = create(:user)
+        document = create(:document)
+
+        document.reviewing_user = user
+        expect {
+          document.update! reviewed: true
+        }.to change { document.reload.document_reviews.count }.by(1)
+      end
+    end
+
+    context 'a reviewed document gets flagged as not-reviewed' do
+      it 'does not create a DocumentReview object' do
+        document = create(:document, reviewed: true, reviewing_user: user)
+
+        expect {
+          document.update! reviewed: false
+        }.to change { document.reload.document_reviews.count }.by(0)
+      end
+    end
+
+    context 'a not-reviewed document stays not-reviewed' do
+      it 'does not create a DocumentReview object' do
+        document = create(:document)
+
+        expect {
+          document.update! reviewed: false
+        }.to change { document.reload.document_reviews.count }.by(0)
+      end
+    end
+
+    context 'a reviewed document stays reviewed' do
+      it 'does not create a DocumentReview object'  do
+        document = create(:document, reviewed: true, reviewing_user: user)
+
+        expect {
+          document.update! reviewed: true
+        }.to change { document.reload.document_reviews.count }.by(0)
+      end
+    end
+
+  end
+
 end

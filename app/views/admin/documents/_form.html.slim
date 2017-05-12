@@ -24,10 +24,10 @@
           = f.input :gregorian_month, placeholder: 'MM', label: 'Month', input_html: { min: 1, max: 12 }
         .large-3.columns
           = f.input :gregorian_day, placeholder: 'DD', label: 'Day', input_html: { min: 1, max: 31 }
-    - if current_user.is_admin && current_user.is_editor
+    - if current_user.is_superuser?
       .large-4.columns
-        = f.input :featured_position, input_html: { min: 1, max: 3, title: 'Reminder: Assigning the same position number to multiple documents will not sort things correctly on the home page.' } 
-    - if current_user.is_editor
+        = f.input :featured_position, input_html: { min: 1, max: 3, title: 'Reminder: Assigning the same position number to multiple documents will not sort things correctly on the home page.' }
+    - if current_user.is_editor?
       .large-4.columns
         = f.association :contributor, collection: User.all, include_blank: false
 
@@ -55,6 +55,14 @@
         = f.input :source_url, label: 'Source URL', placeholder: 'http://example.com'
         = f.input :permission_giver
         = f.input :citation, as: :string
+        - if current_user.can_review?
+          = f.input :reviewed, boolean_style: :inline, label: 'Mark Document Reviewed?'
+          - if @document.reviewed?
+            div
+              | Last reviewed by #{@document.reviewed_by_name} 
+              span title=@document.reviewed_at.to_time
+                | #{time_ago_in_words(@document.reviewed_at)} ago
+
     .large-4.columns
       .panel
         = f.association :topics, collection: Topic.all
@@ -73,13 +81,12 @@
       = f.input :content_password, as: :hidden, input_html: {'data-password' => @document.new_content_password}
 
   .scan-only.panel
+    = render partial: 'content_password', locals: {document: @document, f: f}
     .row
       .large-9.columns.end
         = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
-        - if @document.pdf.file
-          p= @document.pdf.file.identifier
+        = @document.pdf.file.try(:identifier)
 
-    = render partial: 'content_password', locals: {document: @document, f: f}
     - if @document.pages.present?
       .clearfix
         h3 Pages

@@ -1,8 +1,6 @@
 class User < ActiveRecord::Base
   ARTICLES_REGEX = /(Al[ |-]|El[ |-]\s*)/
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable
 
@@ -18,9 +16,19 @@ class User < ActiveRecord::Base
 
   mount_uploader :avatar, ImageUploader
   default_scope { order('last_name_without_articles') }
+  scope :editors, -> { where(is_editor: true) }
+  scope :enabled, -> { where(disabled: false) }
 
   def can_edit?(document)
     is_editor? || self_and_descendant_ids.include?(document.contributor.id)
+  end
+
+  def can_review?
+    is_admin? && is_editor?
+  end
+
+  def is_superuser?
+    is_admin? && is_editor?
   end
 
   # This overrides Devise default implementation to disable accounts with
@@ -31,14 +39,6 @@ class User < ActiveRecord::Base
 
   def name
     "#{first_name} #{last_name}"
-  end
-
-  def self.editors
-    where(is_editor: true)
-  end
-
-  def self.enabled
-    where(disabled: false)
   end
 
   private
