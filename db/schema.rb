@@ -314,6 +314,7 @@ ActiveRecord::Schema.define(version: 20170508232436) do
     t.boolean  "accepted_terms",             default: false
     t.boolean  "is_senior_scholar",          default: false
     t.boolean  "is_original_author",         default: false
+    t.boolean  "is_password_protector",      default: false
   end
 
   add_index "users", ["collaborator_id"], name: "index_users_on_collaborator_id", using: :btree

@@ -111,8 +111,6 @@ class Admin::DocumentsController < AdminController
                  :publisher, :publisher_location, :alternate_titles,
                  :alternate_authors, :featured_position, :reference_type_id,
                  :permission_giver, :document_style, :summary, :citation,
-                 :use_content_password,
-                 :content_password,
                  region_ids: [], theme_ids: [], topic_ids: [], tag_ids: [],
                  referenced_document_ids: [], era_ids: [],
                  body_attributes: [:id, :text], pages_attributes: [
@@ -125,10 +123,9 @@ class Admin::DocumentsController < AdminController
     unless current_user.requires_approval?
       whitelist << :published
     end
-
-    # logger.ap "BLIP"
-    # logger.ap params[:document][:use_content_password]
-    # logger.ap params[:document][:content_password]
+    if current_user.is_password_protector?
+      whitelist += [:use_content_password, :content_password]
+    end
 
     # This overcomes the duplicated :use_content_password checkbox data caused by
     # the funky partials and show()|hide() trickery used in the UI
@@ -144,12 +141,6 @@ class Admin::DocumentsController < AdminController
       redirect_to :back
     end
   end
-
-  # def set_new_content_password
-  #   @document.set_new_content_password
-  #   Rails.logger.debug "BOOPcur: '#{@document.content_password}'"
-  #   Rails.logger.debug "BOOPNew: '#{@document.new_content_password}'"
-  # end
 
   def response_as_json(pstatus)
     {
