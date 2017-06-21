@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(version: 20170508232436) do
     t.integer  "gregorian_day"
     t.string   "content_password"
     t.boolean  "use_content_password",  default: false
+    t.integer  "user_id"
   end
 
   add_index "documents", ["contributor_id"], name: "index_documents_on_contributor_id", using: :btree

@@ -47,7 +47,7 @@ gem 'awesome_print'
 
 group :development do
   gem 'annotate', '~> 2.6.5'
-  gem 'guard-livereload', '~> 2.3.0'
+  # gem 'guard-livereload', '~> 2.3.0'
   gem 'quiet_assets', '~> 1.0.3'
   gem 'rack-livereload', '~> 0.3.15'
   gem 'spring', '~> 1.1.3'
@@ -66,7 +66,7 @@ end
 
 group :test do
   gem 'capybara', '~> 2.3.0'
-  gem 'guard-rspec', '~> 4.2.10'
-  gem 'guard-sunspot', '~> 0.0.2'
+  # gem 'guard-rspec', '~> 4.2.10'
+  # gem 'guard-sunspot', '~> 0.0.2'
   gem 'shoulda-matchers', '~> 2.6.2'
 end
