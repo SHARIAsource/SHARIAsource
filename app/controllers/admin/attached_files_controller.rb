@@ -10,15 +10,7 @@ class Admin::AttachedFilesController < AdminController
       file: params[:file],
       user: current_user,
     }
-    AttachedFile.create!(file_params)
-
-    # This assigns the newly created AttachedFile, and any AttachedFiles previously created
-    #   with this token, to the attachable. This approach works for both new and persisted
-    #   attachables. When adding a new AttachedFile to a persisted attachable that already
-    #   has AttachedFiles, it doesn't need to touch the existing AttachedFiles.
-    if params[:token]
-      @attachable.attached_files << AttachedFile.where(token: params[:token])
-    end
+    @attachable.attached_files << AttachedFile.create!(file_params)
 
     render partial: 'admin/shared/attached_files_list', locals: {attachable: @attachable}
   end
