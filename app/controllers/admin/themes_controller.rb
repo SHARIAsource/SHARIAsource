@@ -8,9 +8,11 @@ class Admin::ThemesController < AdminController
 
   def new
     @theme = Theme.new
+    @themes = Theme.all
   end
 
   def edit
+    @themes = Theme.all
   end
 
   def create

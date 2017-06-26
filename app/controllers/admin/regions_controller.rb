@@ -8,9 +8,11 @@ class Admin::RegionsController < AdminController
 
   def new
     @region = Region.new
+    @regions = Region.hash_tree
   end
 
   def edit
+    @regions = Region.hash_tree
   end
 
   def create

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170607222537) do
+ActiveRecord::Schema.define(version: 20170611201448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,7 +126,8 @@ ActiveRecord::Schema.define(version: 20170607222537) do
     t.integer  "gregorian_month"
     t.integer  "gregorian_day"
     t.string   "content_password"
-    t.boolean  "use_content_password",  default: false
+    t.boolean  "use_content_password",              default: false
+    t.boolean  "reviewed",                          default: false
     t.integer  "user_id"
   end
 
@@ -139,6 +140,7 @@ ActiveRecord::Schema.define(version: 20170607222537) do
   add_index "documents", ["published"], name: "index_documents_on_published", using: :btree
   add_index "documents", ["published_at"], name: "index_documents_on_published_at", using: :btree
   add_index "documents", ["reference_type_id"], name: "index_documents_on_reference_type_id", using: :btree
+  add_index "documents", ["user_id"], name: "index_documents_on_user_id", using: :btree
 
   create_table "documents_eras", id: false, force: :cascade do |t|
     t.integer "era_id"
@@ -274,10 +276,9 @@ ActiveRecord::Schema.define(version: 20170607222537) do
   add_index "regions", ["parent_id"], name: "index_regions_on_parent_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
-    t.string   "name",           limit: 255
+    t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "taggings_count",             default: 0
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", using: :btree
@@ -333,10 +334,10 @@ ActiveRecord::Schema.define(version: 20170607222537) do
     t.boolean  "requires_approval",                      default: false
     t.boolean  "disabled"
     t.boolean  "is_admin"
-    t.boolean  "accepted_terms",             default: false
-    t.boolean  "is_senior_scholar",          default: false
-    t.boolean  "is_original_author",         default: false
-    t.boolean  "is_password_protector",      default: false
+    t.boolean  "accepted_terms",                         default: false
+    t.boolean  "is_senior_scholar",                      default: false
+    t.boolean  "is_original_author",                     default: false
+    t.boolean  "is_password_protector",                  default: false
   end
 
   add_index "users", ["collaborator_id"], name: "index_users_on_collaborator_id", using: :btree

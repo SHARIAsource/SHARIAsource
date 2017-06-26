@@ -1,28 +1,37 @@
-= simple_form_for @era, url: form_url do |f|
-  .row
-    .large-6.columns
-      = f.input :name, autofocus: true
-    .large-6.columns
-      = f.association :parent, collection: parent_collection, include_blank: 'Top Level'
-  .row
-    .large-6.columns
-      = f.input :start_year_gregorian
-    .large-6.columns
-      = f.input :end_year_gregorian
-  .row
-    .large-6.columns
-      = f.input :start_year_hijri
-    .large-6.columns
-      = f.input :end_year_hijri
-  .row
-    .large-6.columns
-      = f.input :gregorian_display
-    .large-6.columns
-      = f.input :hijri_display
-  .row
-    .large-6.columns.end
-      = f.input :extended, boolean_style: :inline
-  .row
-    .large-12.columns
-      = f.submit class: 'round button'
-
+.row
+  .large-6.columns
+    = simple_form_for @era, url: form_url do |f|
+      .row
+        .large-12.columns
+          = f.input :name, autofocus: true
+      .row
+        .large-12.columns
+          = f.association :parent, collection: parent_collection, include_blank: 'Top Level'
+      .row
+        .large-12.columns
+          = f.input :start_year_gregorian
+      .row
+        .large-12.columns
+          = f.input :end_year_gregorian
+      .row
+        .large-12.columns
+          = f.input :start_year_hijri
+      .row
+        .large-12.columns
+          = f.input :end_year_hijri
+      .row
+        .large-12.columns
+          = f.input :gregorian_display
+      .row
+        .large-12.columns
+          = f.input :hijri_display
+      .row
+        .large-12.columns.end
+          = f.input :extended, boolean_style: :inline
+      .row
+        .large-12.columns
+          = f.submit class: 'round button'
+  .large-6.columns
+    h3 Existing Empires and Eras:
+    .hierarchy= render partial: 'admin/hierarchy_list',
+      locals: { hash: @eras, include_edit: false, include_delete: false }

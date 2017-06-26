@@ -1,10 +1,15 @@
+- include_edit = local_assigns.fetch :include_edit, true
+- include_delete = local_assigns.fetch :include_delete, true
+
 - hash.map do |item, children|
   .row
     .small-8.columns
       .name= item.name
     .small-4.columns.actions
-      = link_to t('edit'), url_for([:admin, item, action: :edit]), class: 'tiny radius pill button'
-      -if local_assigns.fetch :include_delete, true
+      - if include_edit
+        = link_to t('edit'), url_for([:admin, item, action: :edit]), class: 'tiny radius pill button'
+      - if include_delete
         = link_to t('delete'), url_for([:admin, item]), class: 'tiny radius alert pill button', method: :delete, data: { confirm: t('helpers.delete_confirm', model: item.class.model_name.human) }
     - if children.size > 0
-      .small-12.columns= render partial: 'admin/hierarchy_list', locals: { hash: children }
+      .small-12.columns= render partial: 'admin/hierarchy_list',
+        locals: { hash: children, include_edit: include_edit, include_delete: include_delete }

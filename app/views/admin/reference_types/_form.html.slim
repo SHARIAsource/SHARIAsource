@@ -3,3 +3,7 @@
     = simple_form_for @reference_type, url: form_url do |f|
       = f.input :name, autofocus: true
       = f.submit class: 'round button'
+  .large-6.columns
+    h3 Existing Reference Types:
+    = render partial: 'admin/table',
+      locals: { collection: @reference_types, include_create_button: false, include_actions: false, include_header: false }

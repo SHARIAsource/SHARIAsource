@@ -3,3 +3,7 @@
     = simple_form_for @tag, url: form_url do |f|
       = f.input :name, autofocus: true
       = f.submit class: 'round button'
+  .large-6.columns
+    h3 Existing Tags:
+    = render partial: 'admin/table',
+      locals: { collection: @tags, include_create_button: false, include_actions: false, include_header: false }

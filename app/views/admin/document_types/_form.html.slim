@@ -5,3 +5,7 @@
       = f.association :parent, collection: parent_collection, include_blank: 'Top Level'
       = f.input :sort_order
       = f.submit class: 'round button'
+  .large-6.columns
+    h3 Existing Document Types:
+    .hierarchy= render partial: 'admin/hierarchy_list',
+      locals: { hash: @document_types, include_edit: false, include_delete: false }
