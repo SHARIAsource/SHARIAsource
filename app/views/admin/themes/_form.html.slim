@@ -4,3 +4,7 @@
       = f.input :name, autofocus: true
       = f.input :archived, boolean_style: :inline
       = f.submit class: 'round button'
+  .large-6.columns
+    h3 Existing Themes:
+    = render partial: 'admin/table',
+      locals: { collection: @themes, include_create_button: false, include_actions: false, include_header: false }

@@ -8,9 +8,11 @@ class Admin::ErasController < AdminController
 
   def new
     @era = Era.new
+    @eras = Era.hash_tree
   end
 
   def edit
+    @eras = Era.hash_tree
   end
 
   def create

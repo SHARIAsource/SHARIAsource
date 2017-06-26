@@ -8,9 +8,11 @@ class Admin::ReferenceTypesController < AdminController
 
   def new
     @reference_type = ReferenceType.new
+    @reference_types = ReferenceType.all
   end
 
   def edit
+    @reference_types = ReferenceType.all
   end
 
   def create

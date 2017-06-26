@@ -8,9 +8,11 @@ class Admin::TagsController < AdminController
 
   def new
     @tag = Tag.new
+    @tags = Tag.all
   end
 
   def edit
+    @tags = Tag.all
   end
 
   def create

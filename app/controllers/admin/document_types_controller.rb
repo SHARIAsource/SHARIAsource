@@ -8,9 +8,11 @@ class Admin::DocumentTypesController < AdminController
 
   def new
     @document_type = DocumentType.new
+    @document_types = DocumentType.hash_tree
   end
 
   def edit
+    @document_types = DocumentType.hash_tree
   end
 
   def create

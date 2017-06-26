@@ -1,5 +1,7 @@
 - if hash.keys.present? && !defined?(parent)
   small= link_to 'Sort all by name', url_for([:sort_name, :admin, hash.keys.first.class]), class: 'tiny radius pill button', data: { remote: true, method: :put }
+- include_edit = local_assigns.fetch :include_edit, true
+- include_delete = local_assigns.fetch :include_delete, true
 
 - hash.map do |item, children|
   .row
@@ -10,11 +12,13 @@
           small
             = link_to 'Sort children by name', url_for([:sort_name, :admin, item.class]), class: 'tiny radius pill button', data: { remote: true, method: :put, params: { item_id: item.id } }
     .small-4.columns.actions
-      = link_to t('edit'), url_for([:admin, item, action: :edit]), class: 'tiny radius pill button'
-      - if local_assigns.fetch :include_delete, true
+      - if include_edit
+        = link_to t('edit'), url_for([:admin, item, action: :edit]), class: 'tiny radius pill button'
+      - if include_delete
         = link_to t('delete'), url_for([:admin, item]), class: 'tiny radius alert pill button', method: :delete, data: { confirm: t('helpers.delete_confirm', model: item.class.model_name.human) }
       - if item.respond_to? :sort_order
         = link_to '▲', url_for([:admin, item, :sort]), class: 'sort-up', title: 'Move Up', data: { remote: true, method: :put, params: { sort_order_position: :up }}
         = link_to '▼', url_for([:admin, item, :sort]), class: 'sort-down', title: 'Move Down', data: { remote: true, method: :put, params: { sort_order_position: :down }}
     - if children.size > 0
-      .small-12.columns= render partial: 'admin/hierarchy_list', locals: { hash: children, parent: item }
+      .small-12.columns= render partial: 'admin/hierarchy_list',
+        locals: { hash: children, include_edit: include_edit, include_delete: include_delete }

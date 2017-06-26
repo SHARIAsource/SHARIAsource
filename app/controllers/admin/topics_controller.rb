@@ -8,9 +8,11 @@ class Admin::TopicsController < AdminController
 
   def new
     @topic = Topic.new
+    @topics = Topic.all
   end
 
   def edit
+    @topics = Topic.all
   end
 
   def create
