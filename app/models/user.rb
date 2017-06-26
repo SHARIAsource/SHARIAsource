@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
   has_many :documents, foreign_key: 'contributor_id',
     dependent: :restrict_with_error
 
+  # NOTE: Contributor was implemented first and it stole the 'has_many :documents' association
+  has_many :uploaded_documents, foreign_key: 'user_id', class_name: 'Document',
+    dependent: :restrict_with_error
+
   mount_uploader :avatar, ImageUploader
   default_scope { order('last_name_without_articles') }
   scope :editors, -> { where(is_editor: true) }
@@ -39,6 +43,19 @@ class User < ActiveRecord::Base
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def is_superuser?
+    # Short-hand method. Not really a term the business uses.
+    is_admin? && is_editor?
+  end
+
+  def self.editors
+    where(is_editor: true)
+  end
+
+  def self.enabled
+    where(disabled: false)
   end
 
   private

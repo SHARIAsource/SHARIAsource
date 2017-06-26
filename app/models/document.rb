@@ -66,6 +66,7 @@ class Document < ActiveRecord::Base
   belongs_to :reference_type
   belongs_to :language
   belongs_to :contributor, class_name: 'User'
+  belongs_to :user
 
   scope :published, -> { where(published: true) }
 
@@ -116,6 +117,8 @@ class Document < ActiveRecord::Base
     text :language do
       language.try(:name)
     end
+
+    integer :user_id
 
     integer :contributor_id
     text :contributor_name do
@@ -215,8 +218,6 @@ class Document < ActiveRecord::Base
     # NOTE: This lets us lazily just set content_password = new_content_password
     # (in the view) as a no-op when the pre-existing content_password isn't changing
     self.new_content_password = self.content_password.presence || SecureRandom.hex.first(8)
-    # Rails.logger.debug "BOOPcur: '#{self.content_password}'"
-    # Rails.logger.debug "BOOPNew: '#{self.new_content_password}'"
   end
 
   def authenticate_content_password(password)
@@ -429,6 +430,12 @@ class Document < ActiveRecord::Base
       puts "#{Time.now} - Firing id: #{doc_id}"
       PdfToImagesWorker.new.perform(doc_id, with_text)
     end
+  end
+
+  def viewable_by?(user)
+    return published? if user.nil?
+
+    user.is_superuser? || self.user == user || contributor.self_and_ancestors.include?(user)
   end
 
   private

@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 20170511004856) do
     t.integer  "gregorian_day"
     t.string   "content_password"
     t.boolean  "use_content_password",  default: false
-    t.boolean  "reviewed",              default: false
+    t.integer  "user_id"
   end
 
   add_index "documents", ["contributor_id"], name: "index_documents_on_contributor_id", using: :btree
@@ -322,6 +322,7 @@ ActiveRecord::Schema.define(version: 20170511004856) do
     t.boolean  "accepted_terms",             default: false
     t.boolean  "is_senior_scholar",          default: false
     t.boolean  "is_original_author",         default: false
+    t.boolean  "is_password_protector",      default: false
   end
 
   add_index "users", ["collaborator_id"], name: "index_users_on_collaborator_id", using: :btree

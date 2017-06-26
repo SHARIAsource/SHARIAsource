@@ -3,15 +3,16 @@ class Admin::DocumentsController < AdminController
   before_filter :ensure_editor!, only: [:destroy]
 
   def unpublished
-    datatables_response(false)
+    render_index(false)
   end
 
   def published
-    datatables_response(true)
+    render_index(true)
   end
 
   def new
     @document = current_user.documents.build
+    # TODO: These should probably be done in after_initialize (if: :new_record?) callbacks
     @document.build_body
     @document.set_new_content_password
   end
@@ -25,13 +26,18 @@ class Admin::DocumentsController < AdminController
   end
 
   def create
-    if permitted_params[:contributor_id]
-      contributor = User.find(permitted_params[:contributor_id])
-    else
-      contributor = current_user
-    end
+    # If current_user is allowed to set contributor, use value from them.
+    #   Otherwise, set the contributor to the current_user
+    document_params = permitted_params
+    document_params[:contributor_id] ||= current_user.id
 
-    @document = contributor.documents.build permitted_params
+    # if permitted_params[:contributor_id]
+    #   contributor = User.find(permitted_params[:contributor_id])
+    # else
+    #   contributor = current_user
+    # end
+
+    @document = current_user.uploaded_documents.build document_params
 
     if @document.save
       @document.index!
@@ -129,6 +135,9 @@ class Admin::DocumentsController < AdminController
     unless current_user.requires_approval?
       whitelist << :published
     end
+    if current_user.is_password_protector?
+      whitelist += [:use_content_password, :content_password]
+    end
 
     # This overcomes the duplicated :use_content_password checkbox data caused by
     # the funky partials and show()|hide() trickery used in the UI
@@ -145,10 +154,10 @@ class Admin::DocumentsController < AdminController
     end
   end
 
-  def datatables_response(is_published)
+  def render_index(published)
     respond_to do |format|
       format.html
-      format.json { render json: response_as_json(is_published) }
+      format.json { render json: response_as_json(published) }
     end
   end
 
@@ -183,30 +192,35 @@ class Admin::DocumentsController < AdminController
   end
 
   def fetch_documents(pstatus)
-    # Memoize this return value because this gets called twice in response_as_json
-    #   and produces incorrect "of $x entries" values if we capture its output there.
+    # Memoize search results because this gets called twice in response_as_json and
+    #   produces incorrect "of $x entries" values if we capture its output there.
     return @fetched_documents if defined?(@fetched_documents)
 
     attrs = {published: pstatus}
-    if !(current_user.is_editor && current_user.is_admin)
+    if !current_user.is_superuser?
+      # If they are normal user, restrict search to their uploaded docs and their contributor docs
+      # Otherwise they are a superuser, so we won't restrict by user or contributor ids
       attrs[:contributor_id] = current_user.self_and_descendant_ids
+      attrs[:user_id] = current_user.id
     end
 
-    # TODO: Consolidate sort/pagination code between here and front-end search
-    if params[:sSearch].present?
-      ids = Document.search do |query|
-        query.fulltext params[:sSearch]
-        query.with(:published, attrs[:published])
-        query.with(:contributor_id, attrs[:contributor_id]) if attrs[:contributor_id]
-      end.results.map(&:id)
+    search = Sunspot.search(Document) do
+      with(:published, attrs[:published])
+      fulltext(params[:sSearch]) if params[:sSearch].present?
 
-      documents = Document.where(id: ids)
-    else
-      documents = Document.where(attrs)
+      any_of do
+        [:user_id, :contributor_id].each do |field_name|
+          with(field_name, attrs[field_name]) if attrs[field_name]
+        end
+      end
     end
+    # logger.ap search
 
-    # TODO: does it really work to paginate before sorting like this?
-    documents = documents.page(page).per_page(per_page)
+    documents = Document
+      .where(id: search.results.map(&:id))
+      .page(page)
+      .per_page(per_page)
+
     @fetched_documents = order_documents(documents)
   end
 
