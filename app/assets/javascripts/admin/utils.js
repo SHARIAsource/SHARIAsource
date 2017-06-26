@@ -15,11 +15,4 @@
         }
     })
 
-
-    function hcWatcher(event) {
-        console.log('HC.event:...')
-        console.log(event)
-    }
-    window.addEventListener("hashchange", hcWatcher, false);
-    console.log('loaded utils')
 }())

@@ -36,22 +36,21 @@ Rails.application.routes.draw do
     resources :reference_types, path: '/reference-types', only: [
       :index, :new, :edit, :create, :update, :destroy
     ]
-    resources :languages, only: [:index, :new, :edit, :create, :update,
-                                 :destroy] do
+    resources :languages, only: [:index, :new, :edit, :create, :update, :destroy] do
       put :sort
     end
     resources :regions, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :tags, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :eras, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :miscs, only: [:index, :new, :edit, :create, :update, :destroy]
-    resources :documents, only: [
-       :new, :edit, :create, :update, :destroy
-    ] do
+    resources :documents, only: [:new, :edit, :create, :update, :destroy] do
       collection do
         get 'published'
         get 'unpublished'
       end
     end
+
+    resources :attached_files, only: [:index, :create]
   end
 
   authenticate :user, lambda {|u| u.is_editor? } do

@@ -9,6 +9,11 @@
           span.prefix= root_url
         .large-7.columns
           = f.input :slug, label: false
+
+  .row
+    .large-12.columns
+      = render partial: 'admin/shared/attached_files', locals: {container: @misc}
+
   .row
     .large-12.columns
       = f.input :body, label: 'Content', input_html: { class: 'wysiwyg' }

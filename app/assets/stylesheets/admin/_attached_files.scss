@@ -1,0 +1,33 @@
+.attached-files-outer {
+  border: grey 1px solid;
+  overflow: auto;
+  heigh: 180px;
+  .plupload_header_content, .plupload_header {
+    display: none;
+  }
+  .attached-files-inner {
+    .widget {
+      float: left;
+      width: 60%;
+      text-align: center;
+    }
+    .file-list {
+      float: left;
+      width: 40%;
+      label {
+      text-align: center;
+
+      }
+    }
+  }
+  .plupload_container {
+    min-height: 175px !important;
+  }
+  #uploader_dropbox {
+    top: 0px;
+    height: 160px;
+  }
+  .plupload_droptext {
+    top: -15px;
+  }
+}

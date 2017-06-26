@@ -17,12 +17,18 @@
         = f.input :accepted_terms, boolean_style: :inline, label: 'Accepted TOS', disabled: true
         = f.input :disabled, boolean_style: :inline
     .large-6.columns
-      = f.input :about, input_html: { class: 'wysiwyg' }
       = f.input :avatar, as: :file, label: 'Photo', input_html: { accept: 'image/png,image/jpg,image/gif' }
       = f.hidden_field :avatar_cache
       - if f.object.avatar?
         = image_tag f.object.avatar_url
 
+  .row
+    .large-12.columns
+      = render partial: 'admin/shared/attached_files', locals: {attachable: @user}
+
+  .row
+    .large-12.columns
+      = f.input :about, input_html: { class: 'wysiwyg' }
   .row
     .large-12.columns
       = f.submit class: 'round button'

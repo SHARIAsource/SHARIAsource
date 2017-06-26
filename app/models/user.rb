@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include HasManyAttachedFiles
+
   ARTICLES_REGEX = /(Al[ |-]|El[ |-]\s*)/
 
   devise :database_authenticatable, :registerable,

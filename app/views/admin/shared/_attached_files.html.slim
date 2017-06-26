@@ -1,0 +1,6 @@
+  .attached-files-outer
+    .attached-files-inner
+      .widget
+        = render partial: 'admin/shared/attached_files_widget', locals: {attachable: attachable}
+      .file-list
+        = render partial: 'admin/shared/attached_files_list', locals: {attachable: attachable}

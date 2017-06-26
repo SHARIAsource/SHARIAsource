@@ -14,7 +14,9 @@ class Admin::MiscsController < AdminController
   end
 
   def create
-    @misc = Misc.new permitted_params
+    @misc = Misc.new permitted_params.merge(attached_file_token: params[:authenticity_token])
+    logger.ap @misc
+
     if @misc.save
       flash[:notice] = 'Misc. page created successfully'
       redirect_to admin_miscs_path

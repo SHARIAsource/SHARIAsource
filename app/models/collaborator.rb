@@ -1,4 +1,5 @@
 class Collaborator < ActiveRecord::Base
+  include HasManyAttachedFiles
   include RankedModel
 
   validates :name, presence: true

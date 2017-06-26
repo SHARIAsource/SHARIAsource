@@ -1,6 +1,7 @@
 require 'securerandom'
 
 class Document < ActiveRecord::Base
+  include HasManyAttachedFiles
   include PdfParser
   alias_attribute :name, :title
 
@@ -170,12 +171,6 @@ class Document < ActiveRecord::Base
   end
 
   def log_review
-    # puts "\n"
-    # ap "LOGREVIEW pc (reviewing_user: #{reviewing_user}):..."
-    # ap self.changes
-    # ap "reviewed?: '#{self.reviewed?}'"
-    # ap "done the dump"
-
     if changes['reviewed'] == [false, true]
       raise 'Cannot mark document as reviewed without a reviewing_user' unless reviewing_user
       self.document_reviews << DocumentReview.new(user: reviewing_user)
@@ -211,7 +206,7 @@ class Document < ActiveRecord::Base
   end
 
   def boop(x)
-    puts "boop #{x}: #{Time.now.to_i}"
+    # puts "boop #{x}: #{Time.now.to_i}"
   end
 
   def set_new_content_password

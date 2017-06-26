@@ -32,6 +32,9 @@
         = f.association :contributor, collection: User.all, include_blank: false
 
   .row
+    .large-12.columns
+      = render partial: 'admin/shared/attached_files', locals: {attachable: @document}
+  .row
     .large-12.columns.end
       = f.input :summary, input_html: { rows: 4, class: 'wysiwyg-summary' }
 

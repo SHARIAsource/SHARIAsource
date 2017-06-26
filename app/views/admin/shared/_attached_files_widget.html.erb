@@ -1,0 +1,61 @@
+<div id="uploader" data-upload-url="<%= admin_attached_files_url(id: attachable.id, type: attachable.class.name) %>">
+</div>
+
+<script type="text/javascript">
+'use strict'
+
+$(function() {
+    var auth_token = $('input[name=authenticity_token]').val();
+    var form_url = $('#uploader').data('upload-url');
+
+    // This is the PLupload jQuery UI widget
+    $("#uploader").plupload({
+        runtimes: 'html5',
+        url: form_url,
+        max_file_count: 20,
+        filters: {
+            max_file_size: '5mb',
+            mime_types: [
+                {title : "Image files", extensions : "jpg,jpeg,png"}
+            ]
+        },
+        multipart_params: {authenticity_token: auth_token, token: auth_token},
+        autostart: true,
+        rename: false,
+        sortable: false,
+        dragdrop: true,
+        views: {
+            thumbs: true,
+            list: false,
+            active: 'thumbs'
+        },
+        ready: function(uploader) {
+          var uploader = $('#uploader').plupload('getUploader');
+          uploader.bind("FileUploaded", function(up, file, response) {
+            $( ".file-list" ).html( response.response );
+          });
+        },
+        complete: function(uploader, error, file, status) {
+        },
+        error: function(uploader, error, file, status) {
+            console.log(error);
+        }
+    });
+    $('.plupload_droptext').html('Drag images here so you can embed them in the content below.');
+
+    /*
+	// Handle the case when form was submitted before uploading has finished
+	$('#form').submit(function(e) {
+		// Files in queue upload them first
+		if ($('#uploader').plupload('getFiles').length > 0) {
+			// When all files are uploaded submit form
+			$('#uploader').on('complete', function() {
+				// $('#form')[0].submit();
+			});
+			$('#uploader').plupload('start');
+		}
+		return false; // Keep the form from submitting
+	});
+    */
+});
+</script>
