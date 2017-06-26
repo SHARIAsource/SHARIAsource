@@ -1,7 +1,6 @@
 label
   | Attached Files
-ul
+.attached_files
   - attachable.attached_files.each do |attached_file|
-    li
-      = link_to attached_file.file_identifier, attached_file.file.url, target: '_blank'
+    = image_tag attached_file.file.url, alt: attached_file.file_identifier, 'data-mce-src': attached_file.file.url
 

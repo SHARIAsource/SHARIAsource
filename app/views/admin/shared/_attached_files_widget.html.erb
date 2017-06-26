@@ -29,8 +29,8 @@ $(function(uploader_id) {
         dragdrop: true,
         views: {
             thumbs: true,
-            list: false,
-            active: 'thumbs'
+            list: true,
+            active: 'list'
         },
         ready: function(uploader) {
           var uploader = uploader_node.plupload('getUploader');
@@ -57,7 +57,7 @@ $(function(uploader_id) {
             console.log(error);
         }
     });
-    $('.plupload_droptext').html('Drag images here so you can embed them in the content below.');
+    $('.plupload_droptext').html('Upload images here. Then drag its thumbnail from the right side into your content below.');
 
 }('<%= uploader_id%>') );
 </script>
