@@ -111,6 +111,9 @@
     = render partial: 'content_password', locals: {document: @document, f: f}
     .row
       .large-12.columns
+        = render partial: 'admin/shared/attached_files', locals: {attachable: @document}
+    .row
+      .large-12.columns
         = f.fields_for :body do |b|
           = b.input :text, label: 'Content', input_html: { class: 'wysiwyg' }
 

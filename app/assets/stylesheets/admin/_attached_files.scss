@@ -15,8 +15,7 @@
       float: left;
       width: 40%;
       label {
-      text-align: center;
-
+        text-align: center;
       }
     }
   }
@@ -29,5 +28,11 @@
   }
   .plupload_droptext {
     top: -15px;
+  }
+  .plupload_view_thumbs .plupload_content {
+    top: 0;
+  }
+  .plupload_content {
+    bottom: 0;
   }
 }

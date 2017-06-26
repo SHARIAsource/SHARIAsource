@@ -3,5 +3,5 @@ label
 ul
   - attachable.attached_files.each do |attached_file|
     li
-      = link_to attached_file.file_identifier, attached_file.file.url
+      = link_to attached_file.file_identifier, attached_file.file.url, target: '_blank'
 

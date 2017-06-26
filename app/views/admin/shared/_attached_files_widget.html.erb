@@ -1,15 +1,18 @@
-<div id="uploader" data-upload-url="<%= admin_attached_files_url(id: attachable.id, type: attachable.class.name) %>">
+<% uploader_id = "uploader#{rand(9999)}"%>
+<div id="<%= uploader_id%>" class="uploader" data-upload-url="<%= admin_attached_files_url(id: attachable.id, type: attachable.class.name) %>">
 </div>
 
 <script type="text/javascript">
 'use strict'
+// TODO: abstract this and move the JS with the other javascript files
 
-$(function() {
+$(function(uploader_id) {
     var auth_token = $('input[name=authenticity_token]').val();
-    var form_url = $('#uploader').data('upload-url');
+    var uploader_node = $('#' + uploader_id);
+    var form_url = uploader_node.data('upload-url');
 
     // This is the PLupload jQuery UI widget
-    $("#uploader").plupload({
+    uploader_node.plupload({
         runtimes: 'html5',
         url: form_url,
         max_file_count: 20,
@@ -30,8 +33,21 @@ $(function() {
             active: 'thumbs'
         },
         ready: function(uploader) {
-          var uploader = $('#uploader').plupload('getUploader');
+          var uploader = uploader_node.plupload('getUploader');
+          var help_text = uploader_node.find('.plupload_droptext');
+          uploader.bind("QueueChanged", function(this_uploader) {
+            if (this_uploader.files.length > 0) {
+              help_text.hide();
+            }
+            else {
+              help_text.show();
+            }
+          });
           uploader.bind("FileUploaded", function(up, file, response) {
+            //Note: Updates the file list next to every uploader on the page because
+            //  the attached files are scoped to either the form's auth token (for
+            //  un-persisted objects) or the object's id and class name (for persisted
+            //  objects.)
             $( ".file-list" ).html( response.response );
           });
         },
@@ -43,19 +59,5 @@ $(function() {
     });
     $('.plupload_droptext').html('Drag images here so you can embed them in the content below.');
 
-    /*
-	// Handle the case when form was submitted before uploading has finished
-	$('#form').submit(function(e) {
-		// Files in queue upload them first
-		if ($('#uploader').plupload('getFiles').length > 0) {
-			// When all files are uploaded submit form
-			$('#uploader').on('complete', function() {
-				// $('#form')[0].submit();
-			});
-			$('#uploader').plupload('start');
-		}
-		return false; // Keep the form from submitting
-	});
-    */
-});
+}('<%= uploader_id%>') );
 </script>
