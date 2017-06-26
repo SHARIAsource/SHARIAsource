@@ -81,6 +81,7 @@
 
     &[scope="col"], &.tcol {
       background:white;
+      min-width: 99px;
 
       &:nth-child(even) {
         background:$ss-color-bodybg;
@@ -172,6 +173,13 @@
     width:267px;
     padding-left:0;
     font-size:15px;
+    min-width:367px;
+  }
+
+  @media screen and (max-width: 991px) {
+    th:first-child {
+      min-width: 377px;
+    }
   }
 }
 
