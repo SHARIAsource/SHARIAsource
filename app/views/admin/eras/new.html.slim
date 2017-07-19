@@ -1,6 +1,13 @@
 = content_for :page_title, 'New Empire/Era'
 = content_for :admin_active, 'Metadata'
 
-h2 New Empire & Era
+.row
+  .large-6.columns
+    h2 New Empire & Era
 
-= render partial: 'admin/eras/form', locals: { form_url: admin_eras_path, parent_collection: Era.all }
+    = render partial: 'admin/eras/form', locals: { form_url: admin_eras_path, parent_collection: Era.all }
+
+  .large-6.columns
+    h2 Existing Empires and Eras:
+    .hierarchy= render partial: 'admin/hierarchy_list',
+      locals: { hash: @eras, include_edit: false, include_delete: false }
