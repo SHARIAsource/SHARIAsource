@@ -1,6 +1,13 @@
 = content_for :page_title, 'New Document Type'
 = content_for :admin_active, 'Metadata'
 
-h2 New Document Type
+.row
+  .large-6.columns
+    h2 New Document Type
 
-= render partial: 'admin/document_types/form', locals: { form_url: admin_document_types_path, parent_collection: DocumentType.all }
+    = render partial: 'admin/document_types/form', locals: { form_url: admin_document_types_path, parent_collection: DocumentType.all }
+
+  .large-6.columns
+    h2 Existing Document Types:
+    .hierarchy= render partial: 'admin/hierarchy_list',
+      locals: { hash: @document_types, include_edit: false, include_delete: false }

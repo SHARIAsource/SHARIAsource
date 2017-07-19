@@ -1,6 +1,13 @@
 = content_for :page_title, 'Edit Document Type'
 = content_for :admin_active, 'Metadata'
 
-h2 Edit Document Type
+.row
+  .large-6.columns
+    h2 Edit Document Type
 
-= render partial: 'admin/document_types/form', locals: { form_url: admin_document_type_path(@document_type), parent_collection: DocumentType.where.not(id: @document_type.self_and_descendant_ids) }
+    = render partial: 'admin/document_types/form', locals: { form_url: admin_document_type_path(@document_type), parent_collection: DocumentType.where.not(id: @document_type.self_and_descendant_ids) }
+
+  .large-6.columns
+    h2 Existing Document Types:
+    .hierarchy= render partial: 'admin/hierarchy_list',
+      locals: { hash: @document_types, include_edit: false, include_delete: false }
