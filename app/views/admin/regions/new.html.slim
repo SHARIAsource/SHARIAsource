@@ -1,6 +1,13 @@
 = content_for :page_title, 'New Geographic Region'
 = content_for :admin_active, 'Metadata'
 
-h2 New Geographic Region
+.row
+  .large-6.columns
+    h2 New Geographic Region
 
-= render partial: 'admin/regions/form', locals: { form_url: admin_regions_path, parent_collection: Region.all }
+    = render partial: 'admin/regions/form', locals: { form_url: admin_regions_path, parent_collection: Region.all }
+
+  .large-6.columns
+    h2 Existing Regions:
+    .hierarchy= render partial: 'admin/hierarchy_list',
+      locals: { hash: @regions, include_edit: false, include_delete: false }

@@ -6,11 +6,11 @@
 - if include_header
   h2= collection.model_name.human.pluralize
 
-table
+table class="#{ include_actions ? '' : 'compact' }"
   thead
     tr
-      th Name
       - if include_actions
+        th Name
         th.actions Actions
   tbody
     - collection.each do |item|

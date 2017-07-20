@@ -1,6 +1,13 @@
 = content_for :page_title, 'New Theme'
 = content_for :admin_active, 'Metadata'
 
-h2 New Theme
+.row
+  .large-6.columns
+    h2 New Theme
 
-= render partial: 'admin/themes/form', locals: { form_url: admin_themes_path }
+    = render partial: 'admin/themes/form', locals: { form_url: admin_themes_path }
+
+  .large-6.columns
+    h2 Existing Themes:
+    = render partial: 'admin/table',
+      locals: { collection: @themes, include_create_button: false, include_actions: false, include_header: false }

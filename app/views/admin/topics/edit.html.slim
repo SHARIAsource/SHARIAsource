@@ -1,6 +1,13 @@
 = content_for :page_title, 'Edit Topic'
 = content_for :admin_active, 'Metadata'
 
-h2 Edit Topic
+.row
+  .large-6.columns
+    h2 Edit Topic
 
-= render partial: 'admin/topics/form', locals: { form_url: admin_topic_path(@topic) }
+    = render partial: 'admin/topics/form', locals: { form_url: admin_topic_path(@topic) }
+
+  .large-6.columns
+    h2 Existing Topics:
+    = render partial: 'admin/table',
+      locals: { collection: @topics, include_create_button: false, include_actions: false, include_header: false }
