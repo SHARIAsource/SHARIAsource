@@ -40,3 +40,7 @@ table {
 tbody tr:first-child .sort-up, tbody tr:last-child .sort-down {
   visibility:hidden;
 }
+
+table.compact {
+  margin-top: 28px;
+}

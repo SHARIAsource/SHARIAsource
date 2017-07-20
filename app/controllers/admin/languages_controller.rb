@@ -8,11 +8,11 @@ class Admin::LanguagesController < AdminController
 
   def new
     @language = Language.new
-    @languages = Language.rank(:sort_order)
+    @languages = Language.order(:name)
   end
 
   def edit
-    @languages = Language.rank(:sort_order)
+    @languages = Language.order(:name)
   end
 
   def create

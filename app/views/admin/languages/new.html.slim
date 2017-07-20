@@ -1,6 +1,13 @@
 = content_for :page_title, 'New Language'
 = content_for :admin_active, 'Metadata'
 
-h2 New Language
+.row
+  .large-6.columns
+    h2 New Language
 
-= render partial: 'admin/languages/form', locals: { form_url: admin_languages_path }
+    = render partial: 'admin/languages/form', locals: { form_url: admin_languages_path }
+
+  .large-6.columns
+    h2 Existing Languages:
+    = render partial: 'admin/table',
+      locals: { collection: @languages, include_create_button: false, include_actions: false, include_header: false }

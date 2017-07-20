@@ -1,6 +1,13 @@
 = content_for :page_title, 'New Tag'
 = content_for :admin_active, 'Metadata'
 
-h2 New Tag
+.row
+  .large-6.columns
+    h2 New Tag
 
-= render partial: 'admin/tags/form', locals: { form_url: admin_tags_path }
+    = render partial: 'admin/tags/form', locals: { form_url: admin_tags_path }
+
+  .large-6.columns
+    h2 Existing Tags:
+    = render partial: 'admin/table',
+      locals: { collection: @tags, include_create_button: false, include_actions: false, include_header: false }

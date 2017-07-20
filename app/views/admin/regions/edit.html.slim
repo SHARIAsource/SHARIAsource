@@ -1,6 +1,13 @@
 = content_for :page_title, 'Edit Geographic Region'
 = content_for :admin_active, 'Metadata'
 
-h2 Edit Geographic Region
+.row
+  .large-6.columns
+    h2 Edit Geographic Region
 
-= render partial: 'admin/regions/form', locals: { form_url: admin_region_path(@region), parent_collection: Region.where.not(id: @region.self_and_descendant_ids) }
+    = render partial: 'admin/regions/form', locals: { form_url: admin_region_path(@region), parent_collection: Region.where.not(id: @region.self_and_descendant_ids) }
+
+  .large-6.columns
+    h2 Existing Regions:
+    .hierarchy= render partial: 'admin/hierarchy_list',
+      locals: { hash: @regions, include_edit: false, include_delete: false }

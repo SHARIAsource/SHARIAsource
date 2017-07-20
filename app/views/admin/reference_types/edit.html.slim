@@ -1,6 +1,13 @@
 = content_for :page_title, 'Edit Reference Type'
 = content_for :admin_active, 'Metadata'
 
-h2 Edit Reference Type
+.row
+  .large-6.columns
+    h2 Edit Reference Type
 
-= render partial: 'admin/reference_types/form', locals: { form_url: admin_reference_type_path(@reference_type) }
+    = render partial: 'admin/reference_types/form', locals: { form_url: admin_reference_type_path(@reference_type) }
+
+  .large-6.columns
+    h2 Existing Reference Types:
+    = render partial: 'admin/table',
+      locals: { collection: @reference_types, include_create_button: false, include_actions: false, include_header: false }
