@@ -1,6 +1,6 @@
 class Admin::ErasController < AdminController
-  before_filter :ensure_editor!
-  before_filter :fetch_era, only: [:edit, :update, :destroy]
+  before_action :ensure_editor!
+  before_action :fetch_era, only: [:edit, :update, :destroy]
 
   def index
     @eras = Era.hash_tree

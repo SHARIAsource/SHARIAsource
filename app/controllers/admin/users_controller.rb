@@ -1,6 +1,6 @@
 class Admin::UsersController < AdminController
-  before_filter :ensure_elevated!
-  before_filter :fetch_user, only: [:edit, :update, :destroy]
+  before_action :ensure_elevated!
+  before_action :fetch_user, only: [:edit, :update, :destroy]
 
   def index
     if current_user.is_admin
