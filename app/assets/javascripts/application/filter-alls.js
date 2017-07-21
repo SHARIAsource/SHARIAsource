@@ -117,7 +117,7 @@
     checkInitialStates()
   }
 
-  $document.on('page:change', function() {
+  $document.on('turbolinks:load', function() {
     $('.filter-block').each(function() {
       var $block = $(this)
       if (!$block.data('blockPlugin')) {

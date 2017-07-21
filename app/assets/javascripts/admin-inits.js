@@ -1,6 +1,6 @@
 var $document = $(document)
 
-$document.on('page:change', function() {
+$document.on('turbolinks:load', function() {
   $document.foundation()
 
   $('select[multiple]').chosen()

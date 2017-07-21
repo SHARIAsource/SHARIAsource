@@ -12,7 +12,7 @@
     $all.toggleClass('js-expand-all', !allExpanded)
   }
 
-  $document.on('page:change', function() {
+  $document.on('turbolinks:load', function() {
     function arrowHtml(depth) {
       var $el = $('<tr data-depth="' + depth + '"></tr>')
       var $th = $('<th scope="row"></th>')
