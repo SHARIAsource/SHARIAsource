@@ -1,6 +1,6 @@
 class Admin::CollaboratorsController < AdminController
-  before_filter :ensure_elevated!
-  before_filter :fetch_collaborator, only: [:edit, :update, :destroy]
+  before_action :ensure_elevated!
+  before_action :fetch_collaborator, only: [:edit, :update, :destroy]
 
   def index
     @collaborators = Collaborator.rank(:sort_order).all

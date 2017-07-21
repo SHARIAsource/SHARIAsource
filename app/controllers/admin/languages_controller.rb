@@ -1,6 +1,6 @@
 class Admin::LanguagesController < AdminController
-  before_filter :ensure_editor!
-  before_filter :fetch_language, only: [:edit, :update, :destroy]
+  before_action :ensure_editor!
+  before_action :fetch_language, only: [:edit, :update, :destroy]
 
   def index
     @languages = Language.rank(:sort_order)

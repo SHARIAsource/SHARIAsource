@@ -1,6 +1,6 @@
 class Admin::ReferenceTypesController < AdminController
-  before_filter :ensure_editor!
-  before_filter :fetch_reference_type, only: [:edit, :update, :destroy]
+  before_action :ensure_editor!
+  before_action :fetch_reference_type, only: [:edit, :update, :destroy]
 
   def index
     @reference_types = ReferenceType.all

@@ -1,6 +1,6 @@
 class Admin::DocumentsController < AdminController
-  before_filter :fetch_document, only: [:edit, :update, :destroy]
-  before_filter :ensure_editor!, only: [:destroy]
+  before_action :fetch_document, only: [:edit, :update, :destroy]
+  before_action :ensure_editor!, only: [:destroy]
 
   def unpublished
     render_index(false)
