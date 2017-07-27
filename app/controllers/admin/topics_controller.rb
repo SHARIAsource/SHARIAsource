@@ -19,7 +19,7 @@ class Admin::TopicsController < AdminController
     @topic = Topic.new permitted_params
     if @topic.save
       flash[:notice] = 'Topic created successfully'
-      redirect_to admin_topics_path
+      redirect_to new_admin_topic_path
     else
       flash[:error] = @topic.errors.full_messages.to_sentence
       render :new

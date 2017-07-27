@@ -19,7 +19,7 @@ class Admin::DocumentTypesController < AdminController
     @document_type = DocumentType.new permitted_params
     if @document_type.save
       flash[:notice] = 'Document Type created successfully'
-      redirect_to admin_document_types_path
+      redirect_to new_admin_document_type_path
     else
       flash[:error] = @document_type.errors.full_messages.to_sentence
       render :new

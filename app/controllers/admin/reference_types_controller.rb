@@ -19,7 +19,7 @@ class Admin::ReferenceTypesController < AdminController
     @reference_type = ReferenceType.new permitted_params
     if @reference_type.save
       flash[:notice] = 'Reference Type created successfully'
-      redirect_to admin_reference_types_path
+      redirect_to new_admin_reference_type_path
     else
       flash[:error] = @reference_type.errors.full_messages.to_sentence
       render :new

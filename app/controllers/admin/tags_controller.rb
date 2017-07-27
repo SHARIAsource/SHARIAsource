@@ -19,7 +19,7 @@ class Admin::TagsController < AdminController
     @tag = Tag.new permitted_params
     if @tag.save
       flash[:notice] = 'Tag created successfully'
-      redirect_to admin_tags_path
+      redirect_to new_admin_tag_path
     else
       flash[:error] = @tag.errors.full_messages.to_sentence
       render :new
