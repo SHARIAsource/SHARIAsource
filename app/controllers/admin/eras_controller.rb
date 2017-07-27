@@ -19,7 +19,7 @@ class Admin::ErasController < AdminController
     @era = Era.new permitted_params
     if @era.save
       flash[:notice] = 'Era created successfully'
-      redirect_to admin_eras_path
+      redirect_to new_admin_era_path
     else
       flash[:error] = @era.errors.full_messages.to_sentence
       render :new

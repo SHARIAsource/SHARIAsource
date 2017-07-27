@@ -19,7 +19,7 @@ class Admin::RegionsController < AdminController
     @region = Region.new permitted_params
     if @region.save
       flash[:notice] = 'Region created successfully'
-      redirect_to admin_regions_path
+      redirect_to new_admin_region_path
     else
       flash[:error] = @region.errors.full_messages.to_sentence
       render :new

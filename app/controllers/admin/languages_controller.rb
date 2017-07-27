@@ -20,7 +20,7 @@ class Admin::LanguagesController < AdminController
     @language.sort_order_position = :last
     if @language.save
       flash[:notice] = 'Language created successfully'
-      redirect_to admin_languages_path
+      redirect_to new_admin_language_path
     else
       flash[:error] = @language.errors.full_messages.to_sentence
       render :new

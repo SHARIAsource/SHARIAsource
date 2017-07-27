@@ -19,7 +19,7 @@ class Admin::ThemesController < AdminController
     @theme = Theme.new permitted_params
     if @theme.save
       flash[:notice] = 'Theme created successfully'
-      redirect_to admin_themes_path
+      redirect_to new_admin_theme_path
     else
       flash[:error] = @theme.errors.full_messages.to_sentence
       render :new
