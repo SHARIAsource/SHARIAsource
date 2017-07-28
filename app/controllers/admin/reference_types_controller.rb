@@ -43,6 +43,13 @@ class Admin::ReferenceTypesController < AdminController
     redirect_to admin_reference_types_path
   end
 
+  def sort
+    type = ReferenceType.find params[:reference_type_id]
+    direction = params[:sort_order_position].to_sym
+    type.update_attribute :sort_order_position, direction
+    head :ok
+  end
+
   protected
 
   def permitted_params

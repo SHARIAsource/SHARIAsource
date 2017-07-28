@@ -35,7 +35,9 @@ Rails.application.routes.draw do
     ]
     resources :reference_types, path: '/reference-types', only: [
       :index, :new, :edit, :create, :update, :destroy
-    ]
+    ] do
+      put :sort
+    end
     resources :languages, only: [:index, :new, :edit, :create, :update, :destroy] do
       put :sort
     end
