@@ -1,4 +1,4 @@
 = content_for :page_title, 'Tags'
 = content_for :admin_active, 'Metadata'
 
-= render partial: 'admin/table', locals: { collection: @tags }
+= render partial: 'admin/table', locals: { collection: @tags, include_dates: true }

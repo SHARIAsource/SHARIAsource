@@ -1,5 +1,6 @@
 class ReferenceType < ActiveRecord::Base
   include RankedModel
+  include Sortable
 
   default_scope { rank(:sort_order) }
 

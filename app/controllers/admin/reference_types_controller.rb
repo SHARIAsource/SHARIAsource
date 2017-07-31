@@ -50,6 +50,22 @@ class Admin::ReferenceTypesController < AdminController
     head :ok
   end
 
+  def sort_date
+    ReferenceType.sort_by_dates
+
+    respond_to do |format|
+      format.js {render inline: "location.reload();" }
+    end
+  end
+
+  def sort_name
+    ReferenceType.sort_by_names
+
+    respond_to do |format|
+      format.js {render inline: "location.reload();" }
+    end
+  end
+
   protected
 
   def permitted_params

@@ -37,6 +37,8 @@ Rails.application.routes.draw do
       :index, :new, :edit, :create, :update, :destroy
     ] do
       put :sort
+      put :sort_name, on: :collection
+      put :sort_date, on: :collection
     end
     resources :languages, only: [:index, :new, :edit, :create, :update, :destroy] do
       put :sort
