@@ -54,7 +54,11 @@ Rails.application.routes.draw do
     resources :languages, only: [:index, :new, :edit, :create, :update, :destroy] do
       put :sort
     end
-    resources :regions, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :regions, only: [:index, :new, :edit, :create, :update, :destroy] do
+      put :sort
+      put :sort_name, on: :collection
+      put :sort_date, on: :collection
+    end
     resources :tags, only: [:index, :new, :edit, :create, :update, :destroy] do
       put :sort
       put :sort_name, on: :collection

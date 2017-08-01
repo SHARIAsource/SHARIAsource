@@ -43,6 +43,23 @@ class Admin::RegionsController < AdminController
     redirect_to admin_regions_path
   end
 
+  def sort
+    type = Region.find params[:region_id]
+    direction = params[:sort_order_position].to_sym
+    type.update_attribute :sort_order_position, direction
+
+    respond_to do |format|
+      format.js {render inline: "location.reload();" }
+    end
+  end
+
+  def sort_name
+    Region.sort_by_names params[:item_id]
+
+    respond_to do |format|
+      format.js {render inline: "location.reload();" }
+    end
+  end
   protected
 
   def permitted_params
