@@ -40,7 +40,10 @@ Rails.application.routes.draw do
     end
     resources :document_types, path: '/document-types', only: [
       :index, :new, :edit, :create, :update, :destroy
-    ]
+    ] do
+      put :sort
+      put :sort_name, on: :collection
+    end
     resources :reference_types, path: '/reference-types', only: [
       :index, :new, :edit, :create, :update, :destroy
     ] do

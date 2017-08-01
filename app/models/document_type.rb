@@ -1,10 +1,16 @@
 class DocumentType < ActiveRecord::Base
+  include RankedModel
+  include Sortable
   extend HashUtils
 
-  acts_as_tree order: 'sort_order ASC'
+  has_closure_tree order: 'sort_order'
+
   validates :name, presence: true, uniqueness: true
   validates :sort_order, numericality: true
+
   has_many :documents
+
+  ranks :sort_order, with_same: :parent_id
 
   def self_and_descendants_document_count
     self.self_and_descendants.joins(:documents)

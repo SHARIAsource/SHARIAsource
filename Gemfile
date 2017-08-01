@@ -1,13 +1,11 @@
 source 'https://rubygems.org'
 ruby '2.4.1'
 
-#gem 'compass-rails', git: 'https://github.com/Compass/compass-rails', branch: '2-0-stable'
-#gem 'compass-rails', '~> 3.0.2'
 gem 'active_attr', '~> 0.8.4'
 gem 'autoprefixer-rails', '~> 7.1.0'
 gem 'carrierwave', '~> 1.1'
 gem 'chosen-rails', '~> 1.1.0'
-gem 'closure_tree', '~> 4.6.3'
+gem 'closure_tree'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'devise', '~> 4.3'
 gem 'foreman', '~> 0.74.0'
@@ -46,7 +44,6 @@ gem 'therubyracer', platforms: :ruby
 gem 'will_paginate', '~> 3.1'
 gem 'eventmachine', '~> 1.0.4'
 gem 'awesome_print'
-# gem 'alchemy_cms', '~> 3.4'
 
 group :development do
   gem 'annotate', '~> 2.6.5'
