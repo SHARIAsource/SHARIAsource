@@ -1,7 +1,14 @@
+- if hash.keys.present? && !defined?(parent)
+  small= link_to 'Sort all by name', url_for([:sort_name, :admin, hash.keys.first.class]), class: 'tiny radius pill button', data: { remote: true, method: :put }
+
 - hash.map do |item, children|
   .row
     .small-8.columns
-      .name= item.name
+      .name
+        = item.name
+        - if children.present?
+          small
+            = link_to 'Sort children by name', url_for([:sort_name, :admin, item.class]), class: 'tiny radius pill button', data: { remote: true, method: :put, params: { item_id: item.id } }
     .small-4.columns.actions
       = link_to t('edit'), url_for([:admin, item, action: :edit]), class: 'tiny radius pill button'
       - if local_assigns.fetch :include_delete, true
@@ -10,4 +17,4 @@
         = link_to '▲', url_for([:admin, item, :sort]), class: 'sort-up', title: 'Move Up', data: { remote: true, method: :put, params: { sort_order_position: :up }}
         = link_to '▼', url_for([:admin, item, :sort]), class: 'sort-down', title: 'Move Down', data: { remote: true, method: :put, params: { sort_order_position: :down }}
     - if children.size > 0
-      .small-12.columns= render partial: 'admin/hierarchy_list', locals: { hash: children }
+      .small-12.columns= render partial: 'admin/hierarchy_list', locals: { hash: children, parent: item }

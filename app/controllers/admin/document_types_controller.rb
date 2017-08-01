@@ -54,7 +54,7 @@ class Admin::DocumentTypesController < AdminController
   end
 
   def sort_name
-    DocumentType.sort_by_names
+    DocumentType.sort_by_names params[:item_id]
 
     respond_to do |format|
       format.js {render inline: "location.reload();" }

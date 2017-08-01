@@ -60,7 +60,10 @@ Rails.application.routes.draw do
       put :sort_name, on: :collection
       put :sort_date, on: :collection
     end
-    resources :eras, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :eras, only: [:index, :new, :edit, :create, :update, :destroy] do
+      put :sort
+      put :sort_name, on: :collection
+    end
     resources :miscs, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :documents, only: [:new, :edit, :create, :update, :destroy] do
       collection do

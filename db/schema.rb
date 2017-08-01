@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170801091417) do
+ActiveRecord::Schema.define(version: 20170801122759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,12 +208,14 @@ ActiveRecord::Schema.define(version: 20170801091417) do
     t.boolean  "extended",                         default: false
     t.string   "hijri_display",        limit: 255
     t.string   "gregorian_display",    limit: 255
+    t.integer  "sort_order"
   end
 
   add_index "eras", ["end_year_gregorian"], name: "index_eras_on_end_year_gregorian", using: :btree
   add_index "eras", ["extended"], name: "index_eras_on_extended", using: :btree
   add_index "eras", ["name"], name: "index_eras_on_name", using: :btree
   add_index "eras", ["parent_id"], name: "index_eras_on_parent_id", using: :btree
+  add_index "eras", ["sort_order"], name: "index_eras_on_sort_order", using: :btree
   add_index "eras", ["start_year_gregorian"], name: "index_eras_on_start_year_gregorian", using: :btree
 
   create_table "languages", force: :cascade do |t|
