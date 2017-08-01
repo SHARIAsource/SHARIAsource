@@ -43,6 +43,29 @@ class Admin::TagsController < AdminController
     redirect_to admin_tags_path
   end
 
+  def sort
+    type = Tag.find params[:tag_id]
+    direction = params[:sort_order_position].to_sym
+    type.update_attribute :sort_order_position, direction
+    head :ok
+  end
+
+  def sort_date
+    Tag.sort_by_dates
+
+    respond_to do |format|
+      format.js {render inline: "location.reload();" }
+    end
+  end
+
+  def sort_name
+    Tag.sort_by_names
+
+    respond_to do |format|
+      format.js {render inline: "location.reload();" }
+    end
+  end
+
   protected
 
   def permitted_params

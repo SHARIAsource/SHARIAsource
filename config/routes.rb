@@ -28,8 +28,16 @@ Rails.application.routes.draw do
                                      :destroy] do
       put :sort
     end
-    resources :topics, only: [:index, :new, :edit, :create, :update, :destroy]
-    resources :themes, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :topics, only: [:index, :new, :edit, :create, :update, :destroy] do
+      put :sort
+      put :sort_name, on: :collection
+      put :sort_date, on: :collection
+    end
+    resources :themes, only: [:index, :new, :edit, :create, :update, :destroy] do
+      put :sort
+      put :sort_name, on: :collection
+      put :sort_date, on: :collection
+    end
     resources :document_types, path: '/document-types', only: [
       :index, :new, :edit, :create, :update, :destroy
     ]
@@ -44,7 +52,11 @@ Rails.application.routes.draw do
       put :sort
     end
     resources :regions, only: [:index, :new, :edit, :create, :update, :destroy]
-    resources :tags, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :tags, only: [:index, :new, :edit, :create, :update, :destroy] do
+      put :sort
+      put :sort_name, on: :collection
+      put :sort_date, on: :collection
+    end
     resources :eras, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :miscs, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :documents, only: [:new, :edit, :create, :update, :destroy] do

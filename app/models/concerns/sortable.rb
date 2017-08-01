@@ -21,7 +21,7 @@ module Sortable
             from #{table_name}
           ) x
           where #{table_name}.id = x.id
-            and #{table_name}.sort_order <> x.row_order
+            and (#{table_name}.sort_order <> x.row_order or #{table_name}.sort_order is null)
         sql
         return if result.cmd_tuples != 0
       end

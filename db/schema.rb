@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170728164127) do
+ActiveRecord::Schema.define(version: 20170801091417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -281,27 +281,33 @@ ActiveRecord::Schema.define(version: 20170728164127) do
     t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "sort_order"
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", using: :btree
+  add_index "tags", ["sort_order"], name: "index_tags_on_sort_order", using: :btree
 
   create_table "themes", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "archived",               default: false
+    t.integer  "sort_order"
   end
 
   add_index "themes", ["archived"], name: "index_themes_on_archived", using: :btree
   add_index "themes", ["name"], name: "index_themes_on_name", using: :btree
+  add_index "themes", ["sort_order"], name: "index_themes_on_sort_order", using: :btree
 
   create_table "topics", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "sort_order"
   end
 
   add_index "topics", ["name"], name: "index_topics_on_name", using: :btree
+  add_index "topics", ["sort_order"], name: "index_topics_on_sort_order", using: :btree
 
   create_table "user_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id",   null: false
