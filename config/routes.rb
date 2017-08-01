@@ -53,6 +53,7 @@ Rails.application.routes.draw do
     end
     resources :languages, only: [:index, :new, :edit, :create, :update, :destroy] do
       put :sort
+      put :sort_name, on: :collection
     end
     resources :regions, only: [:index, :new, :edit, :create, :update, :destroy] do
       put :sort
