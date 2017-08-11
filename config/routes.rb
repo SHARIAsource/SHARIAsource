@@ -58,4 +58,5 @@ Rails.application.routes.draw do
   end
 
   get '*slug', controller: 'misc', action: 'show'
+  get "/web/viewer", :to => redirect('/web/viewer.html')
 end
