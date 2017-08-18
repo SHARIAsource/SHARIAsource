@@ -121,4 +121,12 @@
     }
   }
 
+  a.button.round.donate {
+    color: white;
+    background-color: #FDAF00;
+    &:hover {
+      color: #630017;
+      text-decoration: none;
+    }
+  }
 }
