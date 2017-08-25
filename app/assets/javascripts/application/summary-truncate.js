@@ -24,12 +24,9 @@
       return
     }
 
-    $first.trunk8(documentOptions)
-    if($first.data('trunk8')) {
-      wasTruncated = $first.data('trunk8').original_text !== $first.html();
-    } else {
-      wasTruncated = false;
-    };
+    $first.trunk8(documentOptions);
+    var dat = $first.data('trunk8');
+    wasTruncated = dat !== undefined && dat !== null && dat.original_text !== $first.html()
 
     if ($paragraphs.length > 2 || wasTruncated) {
       $summary.addClass('truncated')
