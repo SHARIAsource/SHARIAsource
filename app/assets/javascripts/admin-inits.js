@@ -8,7 +8,7 @@ $document.on('page:change', function() {
   tinymce.init({
     selector: 'textarea.wysiwyg',
     toolbar: 'formatselect styleselect | bold italic underline strikethrough superscript | bullist numlist blockquote | link unlink | media table | undo redo | ltr rtl',
-    plugins: 'link table paste directionality media',
+    plugins: 'link table paste directionality media autosave',
     browser_spellcheck: true,
     style_formats: [{
       title: 'Footnote',
@@ -16,6 +16,7 @@ $document.on('page:change', function() {
       classes: 'ss-footnote'
     }],
     menubar: false,
+    autosave_restore_when_empty: true,
     statusbar: false,
     paste_remove_styles: true,
     height: 250,
@@ -25,9 +26,10 @@ $document.on('page:change', function() {
   tinymce.init({
     selector: 'textarea.wysiwyg-summary',
     toolbar: 'italic link unlink | bold italic underline strikethrough superscript | bullist numlist blockquote | undo redo',
-    plugins: 'link paste',
+    plugins: 'link paste autosave',
     browser_spellcheck: true,
     menubar: false,
+    autosave_restore_when_empty: true,
     statusbar: false,
     paste_remove_styles: true,
     height: 150,
