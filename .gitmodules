@@ -1,0 +1,3 @@
+[submodule "corpusbuilder"]
+	path = corpusbuilder
+	url = git@github.com:berkmancenter/corpusbuilder.git
