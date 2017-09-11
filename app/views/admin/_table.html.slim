@@ -9,7 +9,7 @@ table
         - if collection.empty?
           = 'Name'
         - else
-          = link_to 'Name', url_for([:sort_name, :admin, collection.first.class]), data: { remote: true, method: :put }
+          = link_to 'Name', url_for([:sort_name, :admin, collection.first.class]), data: { remote: true, method: :put } unless collection.first.class == Misc
       - if include_dates
         th
           - if collection.empty?
