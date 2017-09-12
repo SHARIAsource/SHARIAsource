@@ -1,4 +1,4 @@
-class AddSortOrderToEras < ActiveRecord::Migration
+class AddSortOrderToEras < ActiveRecord::Migration[5.1]
   def up
     add_column :eras, :sort_order, :integer
     add_index :eras, :sort_order

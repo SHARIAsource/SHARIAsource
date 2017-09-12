@@ -1,4 +1,4 @@
-class AddExtendedToEras < ActiveRecord::Migration
+class AddExtendedToEras < ActiveRecord::Migration[5.1]
   def change
     rename_column :eras, :start_year, :start_year_gregorian
     rename_column :eras, :end_year, :end_year_gregorian

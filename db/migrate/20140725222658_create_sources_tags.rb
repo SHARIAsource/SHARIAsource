@@ -1,4 +1,4 @@
-class CreateSourcesTags < ActiveRecord::Migration
+class CreateSourcesTags < ActiveRecord::Migration[5.1]
   def change
     create_table :sources_tags, id: false do |t|
       t.integer :source_id

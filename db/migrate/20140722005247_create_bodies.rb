@@ -1,4 +1,4 @@
-class CreateBodies < ActiveRecord::Migration
+class CreateBodies < ActiveRecord::Migration[5.1]
   def change
     create_table :bodies do |t|
       t.text :source_text

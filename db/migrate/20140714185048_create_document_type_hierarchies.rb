@@ -1,4 +1,4 @@
-class CreateDocumentTypeHierarchies < ActiveRecord::Migration
+class CreateDocumentTypeHierarchies < ActiveRecord::Migration[5.1]
   def change
     create_table :document_type_hierarchies, id: false do |t|
       t.integer :ancestor_id, null: false

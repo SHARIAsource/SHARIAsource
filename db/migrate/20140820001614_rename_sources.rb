@@ -1,4 +1,4 @@
-class RenameSources < ActiveRecord::Migration
+class RenameSources < ActiveRecord::Migration[5.1]
   def change
     rename_table :sources, :documents
     rename_table :eras_sources, :documents_eras

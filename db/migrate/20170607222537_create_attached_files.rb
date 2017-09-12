@@ -1,4 +1,4 @@
-class CreateAttachedFiles < ActiveRecord::Migration
+class CreateAttachedFiles < ActiveRecord::Migration[5.1]
   def change
     create_table :attached_files do |t|
       t.references :user, index: true, foreign_key: true, null: false
