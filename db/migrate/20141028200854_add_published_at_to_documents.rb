@@ -1,4 +1,4 @@
-class AddPublishedAtToDocuments < ActiveRecord::Migration
+class AddPublishedAtToDocuments < ActiveRecord::Migration[5.1]
   def up
     add_column :documents, :published_at, :datetime
     add_index :documents, :published_at

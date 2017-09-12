@@ -1,4 +1,4 @@
-class AddYearsToEras < ActiveRecord::Migration
+class AddYearsToEras < ActiveRecord::Migration[5.1]
   def change
     change_table :eras do |t|
       t.integer :start_year

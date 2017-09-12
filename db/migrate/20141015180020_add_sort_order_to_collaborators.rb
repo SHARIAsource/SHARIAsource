@@ -1,4 +1,4 @@
-class AddSortOrderToCollaborators < ActiveRecord::Migration
+class AddSortOrderToCollaborators < ActiveRecord::Migration[5.1]
   def up
     add_column :collaborators, :sort_order, :integer
     add_index :collaborators, :sort_order

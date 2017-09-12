@@ -1,4 +1,4 @@
-class CreateRegionHierarchies < ActiveRecord::Migration
+class CreateRegionHierarchies < ActiveRecord::Migration[5.1]
   def change
     create_table :region_hierarchies, id: false do |t|
       t.integer :ancestor_id, null: false

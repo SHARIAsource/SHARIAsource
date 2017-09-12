@@ -1,4 +1,4 @@
-class ChangeSourceRegionsToMultiselect < ActiveRecord::Migration
+class ChangeSourceRegionsToMultiselect < ActiveRecord::Migration[5.1]
   def change
     remove_index :sources, :region_id
     remove_column :sources, :region_id

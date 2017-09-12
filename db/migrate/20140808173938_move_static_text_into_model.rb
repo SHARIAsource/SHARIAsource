@@ -1,4 +1,4 @@
-class MoveStaticTextIntoModel < ActiveRecord::Migration
+class MoveStaticTextIntoModel < ActiveRecord::Migration[5.1]
   def change
     remove_index :bodies, :static_id
     remove_column :bodies, :static_id
