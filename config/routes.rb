@@ -69,7 +69,9 @@ Rails.application.routes.draw do
       put :sort
       put :sort_name, on: :collection
     end
-    resources :miscs, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :miscs, only: [:index, :new, :edit, :create, :update, :destroy] do
+      put :sort
+    end
     resources :documents, only: [:new, :edit, :create, :update, :destroy] do
       collection do
         get 'published'
