@@ -1,16 +1,11 @@
-# == Schema Information
-#
-# Table name: regions
-#
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  parent_id  :integer
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 class Region < ActiveRecord::Base
-  acts_as_tree order: 'name'
+  include RankedModel
+  include Sortable
+
+  has_closure_tree order: 'sort_order'
+
   validates :name, presence: true, uniqueness: true
   has_and_belongs_to_many :documents
+
+  ranks :sort_order, with_same: :parent_id
 end

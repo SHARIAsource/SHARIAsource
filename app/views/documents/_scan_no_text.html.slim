@@ -1,9 +1,8 @@
-.inner-wrapper
+.inner-wrapper style="position: relative;"
+  = render(partial: 'content_password') if @document.use_content_password?
   .inner
     .image-viewer-container
-      .image-viewer.full-width
-        = render 'documents/viewer_content'
-      = render 'documents/viewer_controls'
+      = render 'scan_viewer'
   hr.source-end
 
 

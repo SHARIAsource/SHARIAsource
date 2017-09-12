@@ -1,57 +1,21 @@
-# == Schema Information
-#
-# Table name: documents
-#
-#  id                    :integer          not null, primary key
-#  title                 :string(255)
-#  document_type_id      :integer
-#  pdf                   :string(255)
-#  processed             :boolean          default(TRUE)
-#  source_name           :string(255)
-#  source_url            :string(255)
-#  author                :string(255)
-#  translators           :string(255)
-#  editors               :string(255)
-#  publisher             :string(255)
-#  publisher_location    :string(255)
-#  volume_count          :integer
-#  alternate_titles      :string(255)
-#  alternate_authors     :string(255)
-#  language_id           :integer
-#  contributor_id        :integer
-#  popular_count         :integer          default(0)
-#  created_at            :datetime
-#  updated_at            :datetime
-#  featured_position     :integer
-#  reference_type_id     :integer
-#  permission_giver      :string(255)
-#  published             :boolean          default(FALSE)
-#  document_style        :string(255)      default("scan")
-#  alternate_editors     :string(255)
-#  alternate_translators :string(255)
-#  alternate_years       :string(255)
-#  summary               :text
-#  published_at          :datetime
-#  citation              :text
-#  gregorian_year        :integer
-#  gregorian_month       :integer
-#  gregorian_day         :integer
-#
+require 'securerandom'
 
 class Document < ActiveRecord::Base
+  include HasManyAttachedFiles
   include PdfParser
   alias_attribute :name, :title
+
+  attr_accessor :new_content_password, :reviewing_user
 
   BASE_PAGE_DIRECTORY = Rails.root.join('tmp', 'pdf-pages').to_s.freeze
   NO_TEXT_MESSAGE = "No text to show"
 
-  # Callbacks
   before_save :set_processed
   before_save :prepend_http_to_source_url
   before_save :set_published_at
+  after_save :log_review
   after_commit :generate_images
 
-  # Validations
   validates :title, presence: true
   validates :contributor_id, presence: true
   validates :document_type_id, presence: true
@@ -69,7 +33,6 @@ class Document < ActiveRecord::Base
     message: 'Must be scan w/ text, scan w/o text, or no-scan'
   }
 
-  # Associations
   has_and_belongs_to_many :themes
   has_and_belongs_to_many :topics
   has_and_belongs_to_many :tags
@@ -82,20 +45,35 @@ class Document < ActiveRecord::Base
     join_table: :document_documents, foreign_key: :referenced_id,
     association_foreign_key: :document_id
   has_many :pages, dependent: :destroy
+  has_many :document_reviews, -> { order(:created_at) }, dependent: :destroy
+
+  def current_review  #TODO: private
+    document_reviews.last if reviewed?
+  end
+
+  def reviewed_by_name
+    return nil unless reviewed?
+
+    reviewer = current_review.try(:user)
+    reviewer.try(:name)
+  end
+
+  def reviewed_at
+    current_review.try(:created_at)
+  end
+
   has_one :body
   belongs_to :document_type
   belongs_to :reference_type
   belongs_to :language
   belongs_to :contributor, class_name: 'User'
+  belongs_to :user
 
-  # Scopes
   scope :published, -> { where(published: true) }
 
-  # Misc
   mount_uploader :pdf, PdfUploader
   accepts_nested_attributes_for :pages, :body
 
-  # Solr Indexing
   searchable auto_index: false do
     # TODO: I think we need to strip summary too
     text :title, :source_name, :author, :translators, :editors, :publisher
@@ -140,6 +118,8 @@ class Document < ActiveRecord::Base
     text :language do
       language.try(:name)
     end
+
+    integer :user_id
 
     integer :contributor_id
     text :contributor_name do
@@ -190,6 +170,13 @@ class Document < ActiveRecord::Base
     where(published: false)
   end
 
+  def log_review
+    if changes['reviewed'] == [false, true]
+      raise 'Cannot mark document as reviewed without a reviewing_user' unless reviewing_user
+      self.document_reviews << DocumentReview.new(user: reviewing_user)
+    end
+  end
+
   def gregorian_date
     if gregorian_year
       Date.new(gregorian_year, gregorian_month || 1, gregorian_day || 1)
@@ -219,7 +206,17 @@ class Document < ActiveRecord::Base
   end
 
   def boop(x)
-    puts "boop #{x}: #{Time.now.to_i}"
+    # puts "boop #{x}: #{Time.now.to_i}"
+  end
+
+  def set_new_content_password
+    # NOTE: This lets us lazily just set content_password = new_content_password
+    # (in the view) as a no-op when the pre-existing content_password isn't changing
+    self.new_content_password = self.content_password.presence || SecureRandom.hex.first(8)
+  end
+
+  def authenticate_content_password(password)
+    password == content_password
   end
 
   def pdf_pages
@@ -234,6 +231,7 @@ class Document < ActiveRecord::Base
   end
 
   def self.repair_pages_days_older_than(days)
+    # TODO: do this in batches with: Document.in_batches(50).each_record ...
     # if this has old pages on disk, repair_pdf(...)
     Document.all.map { |doc| doc.repair_pdf days }
   end
@@ -427,6 +425,12 @@ class Document < ActiveRecord::Base
       puts "#{Time.now} - Firing id: #{doc_id}"
       PdfToImagesWorker.new.perform(doc_id, with_text)
     end
+  end
+
+  def viewable_by?(user)
+    return published? if user.nil?
+
+    user.is_superuser? || self.user == user || contributor.self_and_ancestors.include?(user)
   end
 
   private

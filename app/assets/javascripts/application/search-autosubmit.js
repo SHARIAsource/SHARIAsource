@@ -4,7 +4,11 @@
     $(this).closest('form').trigger('submit')
   })
 
-  $document.on('ajax:send', function(event) {
+  $document.on('ajax:beforeSend', function(event, xhr, settings) {
+    xhr.requestURL = settings.url
+  })
+
+  $document.on('ajax:send', '#new_search_filters, .more-results a', function(event) {
     if (event.target.id === 'new_search_filters') {
       $('.search-results').addClass('loading')
     }
@@ -18,11 +22,7 @@
     }
   })
 
-  $document.on('ajax:beforeSend', function(event, xhr, settings) {
-    xhr.requestURL = settings.url
-  })
-
-  $document.on('ajax:success', function(event, data, status, xhr) {
+  $document.on('ajax:success', '#new_search_filters, .more-results a', function(event, data, status, xhr) {
     var $results
 
     if (event.target.id === 'new_search_filters') {

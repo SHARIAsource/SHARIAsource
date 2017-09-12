@@ -1,15 +1,3 @@
-# == Schema Information
-#
-# Table name: pages
-#
-#  id          :integer          not null, primary key
-#  image       :string(255)
-#  document_id :integer
-#  number      :integer
-#  width       :integer
-#  height      :integer
-#
-
 class Page < ActiveRecord::Base
   validates :number, numericality: { greater_than: 0 }
   validates :width, numericality: true

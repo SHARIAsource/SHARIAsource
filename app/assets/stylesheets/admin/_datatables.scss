@@ -11,6 +11,11 @@ table.dataTable {
   margin: 0.5em 0 !important;
   max-width: none !important;
   width: 100%;
+
+  td.reviewed {
+    text-align: center;
+    font-size: 1.25em;
+  }
 }
 table.dataTable td,
 table.dataTable th {

@@ -19,6 +19,10 @@ ready = function() {
             "className": 'details-control',
             "orderable": false,
             "searchable": false
+        },
+        {
+            "targets": -3,
+            "className": 'reviewed'
         }]
     });
 

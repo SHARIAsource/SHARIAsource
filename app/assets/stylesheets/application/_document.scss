@@ -101,6 +101,7 @@
   font-size:medium;
   margin-top:10px;
   margin-bottom:0;
+  margin-right: 20px;
   font-weight:bold;
 }
 
@@ -500,6 +501,18 @@
 
 .zoomout-link {
   background:url(image-path('osg-zoomout.svg')) 0 0 no-repeat;
+  background-size:41px 41px;
+}
+
+.rotate-left-link {
+  background:url(image-path('osg-rotate-right.svg')) 0 0 no-repeat;
+  background-size:41px 41px;
+  transform-origin: 50% 50%;
+  transform: scale(-1,1);
+}
+
+.rotate-right-link {
+  background:url(image-path('osg-rotate-right.svg')) 0 0 no-repeat;
   background-size:41px 41px;
 }
 

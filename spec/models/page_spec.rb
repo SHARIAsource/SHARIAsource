@@ -1,17 +1,5 @@
 require 'rails_helper'
 
-# == Schema Information
-#
-# Table name: pages
-#
-#  id          :integer          not null, primary key
-#  image       :string(255)
-#  document_id :integer
-#  number      :integer
-#  width       :integer
-#  height      :integer
-#
-
 describe Page do
   it { should respond_to :image }
   it { should validate_numericality_of(:number).is_greater_than(0) }

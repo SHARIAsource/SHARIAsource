@@ -331,6 +331,9 @@ that use the API provided by core.
   };
 
   var changeHash = function(from, to) {
+    console.log('changeHash from: ' + from);
+    console.log('changeHash to: ' + to);
+    console.log('______________');
     var hash = '#' + $.deck('getSlide', to).attr('id');
     var hashPath = window.location.href.replace(/#.*/, '') + hash;
 

@@ -1,38 +1,8 @@
-# == Schema Information
-#
-# Table name: users
-#
-#  id                         :integer          not null, primary key
-#  email                      :string(255)      default(""), not null
-#  encrypted_password         :string(255)      default(""), not null
-#  reset_password_token       :string(255)
-#  reset_password_sent_at     :datetime
-#  remember_created_at        :datetime
-#  sign_in_count              :integer          default(0), not null
-#  current_sign_in_at         :datetime
-#  last_sign_in_at            :datetime
-#  current_sign_in_ip         :string(255)
-#  last_sign_in_ip            :string(255)
-#  created_at                 :datetime
-#  updated_at                 :datetime
-#  is_editor                  :boolean          default(FALSE)
-#  first_name                 :string(255)
-#  last_name                  :string(255)
-#  last_name_without_articles :string(255)
-#  collaborator_id            :integer
-#  parent_id                  :integer
-#  about                      :text
-#  avatar                     :string(255)
-#  requires_approval          :boolean          default(FALSE)
-#  disabled                   :boolean
-#  is_admin                   :boolean          default(FALSE)
-#
-
 class User < ActiveRecord::Base
+  include HasManyAttachedFiles
+
   ARTICLES_REGEX = /(Al[ |-]|El[ |-]\s*)/
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable
 
@@ -46,11 +16,25 @@ class User < ActiveRecord::Base
   has_many :documents, foreign_key: 'contributor_id',
     dependent: :restrict_with_error
 
+  # NOTE: Contributor was implemented first and it stole the 'has_many :documents' association
+  has_many :uploaded_documents, foreign_key: 'user_id', class_name: 'Document',
+    dependent: :restrict_with_error
+
   mount_uploader :avatar, ImageUploader
   default_scope { order('last_name_without_articles') }
+  scope :editors, -> { where(is_editor: true) }
+  scope :enabled, -> { where(disabled: false) }
 
   def can_edit?(document)
     is_editor? || self_and_descendant_ids.include?(document.contributor.id)
+  end
+
+  def can_review?
+    is_admin? && is_editor?
+  end
+
+  def is_superuser?
+    is_admin? && is_editor?
   end
 
   # This overrides Devise default implementation to disable accounts with
@@ -61,6 +45,11 @@ class User < ActiveRecord::Base
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def is_superuser?
+    # Short-hand method. Not really a term the business uses.
+    is_admin? && is_editor?
   end
 
   def self.editors

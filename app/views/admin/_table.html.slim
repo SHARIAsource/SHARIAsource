@@ -1,14 +1,28 @@
+- include_dates = defined?(include_dates) ? include_dates : false
+
 h2= collection.model_name.human.pluralize
 
 table
   thead
     tr
-      th Name
+      th
+        - if collection.empty?
+          = 'Name'
+        - else
+          = link_to 'Name', url_for([:sort_name, :admin, collection.first.class]), data: { remote: true, method: :put } unless collection.first.class == Misc
+      - if include_dates
+        th
+          - if collection.empty?
+            = 'Created At'
+          - else
+            = link_to 'Created At', url_for([:sort_date, :admin, collection.first.class]), data: { remote: true, method: :put }
       th.actions Actions
   tbody
     - collection.each do |item|
       tr
         td= item.name
+        - if include_dates
+          th= item.created_at.strftime("%B %d, %Y, %A")
         td.actions
           ul.inline-list
             li= link_to t('edit'), url_for([:admin, item, action: :edit]), class: 'tiny radius pill button'

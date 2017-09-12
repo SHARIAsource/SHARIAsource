@@ -1,4 +1,4 @@
 = content_for :page_title, 'Reference Types'
 = content_for :admin_active, 'Metadata'
 
-= render partial: 'admin/table', locals: { collection: @reference_types }
+= render partial: 'admin/table', locals: { collection: @reference_types, include_dates: true }

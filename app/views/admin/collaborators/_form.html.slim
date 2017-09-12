@@ -11,11 +11,16 @@
         .large-6.columns
           - if @collaborator.image.file
             = image_tag @collaborator.image.url
-      .row
-        .large-12.columns
-          = f.input :description, input_html: { class: 'wysiwyg' }
-          = f.submit class: 'round button'
     - if local_assigns.fetch :include_users, false
       .large-6.columns
         h3 Accounts
         .hierarchy= render partial: 'shared/contributor_lists', locals: { collaborator: @collaborator, in_admin: true }
+  .row
+    .large-12.columns
+      = render partial: 'admin/shared/attached_files', locals: {attachable: @collaborator}
+
+  .row
+    .large-12.columns
+      = f.input :description, input_html: { class: 'wysiwyg' }
+      = f.submit class: 'round button'
+

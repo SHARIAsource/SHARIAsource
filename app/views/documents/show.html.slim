@@ -30,6 +30,7 @@
             a href="#" Expand Summary
           .collapse
             a href="#" Collapse Summary
+        = render partial: 'documents/download_button', locals: { document: @document.object }
         = render partial: 'documents/edit_button', locals: { document: @document.object }
 
   .metadata-inner
@@ -154,14 +155,13 @@
               - else
                 li= link
           - if referencing.count > display_limit
-            .suggest-tags= link_to 'See More', '#', id: 'js-expand-referencing'
+            .suggest-tags
+              = link_to 'See More', '#', class: 'js-expand-referencing'
+              = link_to 'See Less', '#', class: 'js-expand-referencing', style: 'display: none;'
         - else
           em none
 
 - if @document.pages.present?
   = render 'documents/scan_no_text'
 - elsif @document.body.present?
-  .inner-wrapper
-    .inner.document-content
-      div class="#{@document.language ? @document.language.name.downcase : 'english'}"
-        == @document.body.text
+  = render 'documents/body_text', document: @document

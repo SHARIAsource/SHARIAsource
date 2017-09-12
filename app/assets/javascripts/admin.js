@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require dataTables/jquery.dataTables
 //= require dataTables/jquery.dataTables.foundation
 //= require foundation
@@ -21,3 +22,8 @@
 //= require tinymce
 //= require smart_listing
 //= require_tree ./admin
+//= require plupload-2.3.1/js/plupload.full.min
+// xrequire plupload-2.3.1/js/moxie
+// xrequire plupload-2.3.1/js/plupload.dev
+//= require plupload-2.3.1/js/jquery.ui.plupload/jquery.ui.plupload
+

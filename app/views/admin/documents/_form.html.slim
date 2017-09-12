@@ -24,13 +24,16 @@
           = f.input :gregorian_month, placeholder: 'MM', label: 'Month', input_html: { min: 1, max: 12 }
         .large-3.columns
           = f.input :gregorian_day, placeholder: 'DD', label: 'Day', input_html: { min: 1, max: 31 }
-    - if current_user.is_admin && current_user.is_editor
+    - if current_user.is_superuser?
       .large-4.columns
-        = f.input :featured_position, input_html: { min: 1, max: 3, title: 'Reminder: Assigning the same position number to multiple documents will not sort things correctly on the home page.' } 
-    - if current_user.is_editor
+        = f.input :featured_position, input_html: { min: 1, max: 3, title: 'Reminder: Assigning the same position number to multiple documents will not sort things correctly on the home page.' }
+    - if current_user.is_editor?
       .large-4.columns
         = f.association :contributor, collection: User.all, include_blank: false
 
+  .row
+    .large-12.columns
+      = render partial: 'admin/shared/attached_files', locals: {attachable: @document}
   .row
     .large-12.columns.end
       = f.input :summary, input_html: { rows: 4, class: 'wysiwyg-summary' }
@@ -55,6 +58,14 @@
         = f.input :source_url, label: 'Source URL', placeholder: 'http://example.com'
         = f.input :permission_giver
         = f.input :citation, as: :string
+        - if current_user.can_review?
+          = f.input :reviewed, boolean_style: :inline, label: 'Mark Document Reviewed?'
+          - if @document.reviewed?
+            div
+              | Last reviewed by #{@document.reviewed_by_name} 
+              span title=@document.reviewed_at.to_time
+                | #{time_ago_in_words(@document.reviewed_at)} ago
+
     .large-4.columns
       .panel
         = f.association :topics, collection: Topic.all
@@ -70,13 +81,14 @@
   .row
     .large-12.columns
       h3 Content
+      = f.input :content_password, as: :hidden, input_html: {'data-password' => @document.new_content_password}
 
   .scan-only.panel
+    = render partial: 'content_password', locals: {document: @document, f: f}
     .row
-      .large-6.columns.end
+      .large-9.columns.end
         = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
-        - if @document.pdf.file
-          p= @document.pdf.file.identifier
+        = @document.pdf.file.try(:identifier)
 
     - if @document.pages.present?
       .clearfix
@@ -92,10 +104,14 @@
                 .large-8.columns.page-text-preview
                   = p.fields_for :body do |b|
                     = b.input :hybrid_text, label: "Page #{p.index+1} Text", input_html: { class: 'wysiwyg' }
-                .large-4.columns.page-image-preview
+                .large-4.columns.page-image-preview#page-image-preview
                   img src=p.object.image.url
 
   .noscan-only.panel
+    = render partial: 'content_password', locals: {document: @document, f: f}
+    .row
+      .large-12.columns
+        = render partial: 'admin/shared/attached_files', locals: {attachable: @document}
     .row
       .large-12.columns
         = f.fields_for :body do |b|
@@ -105,4 +121,21 @@
     .button-group
       = f.submit "Save and return to menu", class: 'dark_gray button'
       = f.submit "Save and continue", class: 'light_blue button', name: "create_and_continue"
-      = f.submit "Save and edit", disabled: true, class: 'med_blue button', name: "create_and_edit", id: (@document.new_record? ? "new_create_and_edit" : "create_and_edit")
+      = f.submit "Save and edit", class: 'med_blue button', name: "create_and_edit", disabled: true, title: 'This action is only available when creating a new document', id: (@document.new_record? ? "new_create_and_edit" : "create_and_edit")
+
+  javascript:
+    dataChanged = false;     // global variable flags unsaved changes      
+    var form = $('.simple_form');
+    form.find('input,checkbox,textarea,radio,select').on('change',function(event) { dataChanged = true})
+    form.find('reset,:submit').on('click',function(event) { dataChanged = false })
+
+    $(window).on('page:before-change', function() {
+      if (dataChanged) {
+        if(window.confirm("Are you sure you want to leave? Your changes will be lost.")) {
+          dataChanged = false;
+          return true;      
+        } else {
+          return false;
+        }
+      }
+    }); 

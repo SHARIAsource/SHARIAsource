@@ -1,0 +1,44 @@
+.attached-files-outer {
+  border: grey 1px solid;
+  overflow: auto;
+  heigh: 180px;
+  .plupload_header_content, .plupload_header {
+    display: none;
+  }
+  .attached-files-inner {
+    .widget {
+      float: left;
+      width: 60%;
+      text-align: center;
+    }
+    .file-list {
+      float: left;
+      width: 40%;
+      label {
+        text-align: center;
+      }
+      .attached_files {
+        list-style: none;
+        float: left;
+        img {
+          margin: 4px;
+          max-width: 120px;
+          height: 90px;
+        }
+      }
+    }
+  }
+  .plupload_container {
+    min-height: 200px;
+  }
+  #uploader_dropbox {
+    top: 0px;
+    height: 160px;
+  }
+  .plupload_droptext {
+    top: -15px;
+  }
+  .plupload_content {
+    top: 32px;
+  }
+}

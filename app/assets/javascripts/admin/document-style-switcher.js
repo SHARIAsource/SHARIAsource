@@ -1,5 +1,6 @@
 $(document).on('page:change', function() {
   var $docStyle= $('#document_document_style')
+  //TODO: bailout if !$docStyle
 
   function showOrHidePanels() {
     var style = $docStyle.find(':selected').val()

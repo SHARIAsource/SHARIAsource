@@ -1,45 +1,5 @@
 require 'rails_helper'
 
-# == Schema Information
-#
-# Table name: documents
-#
-#  id                    :integer          not null, primary key
-#  title                 :string(255)
-#  document_type_id      :integer
-#  pdf                   :string(255)
-#  processed             :boolean          default(TRUE)
-#  source_name           :string(255)
-#  source_url            :string(255)
-#  author                :string(255)
-#  translators           :string(255)
-#  editors               :string(255)
-#  publisher             :string(255)
-#  publisher_location    :string(255)
-#  volume_count          :integer
-#  alternate_titles      :string(255)
-#  alternate_authors     :string(255)
-#  language_id           :integer
-#  contributor_id        :integer
-#  popular_count         :integer          default(0)
-#  created_at            :datetime
-#  updated_at            :datetime
-#  featured_position     :integer
-#  reference_type_id     :integer
-#  permission_giver      :string(255)
-#  published             :boolean          default(FALSE)
-#  document_style        :string(255)      default("scan")
-#  alternate_editors     :string(255)
-#  alternate_translators :string(255)
-#  alternate_years       :string(255)
-#  summary               :text
-#  published_at          :datetime
-#  citation              :text
-#  gregorian_year        :integer
-#  gregorian_month       :integer
-#  gregorian_day         :integer
-#
-
 describe Document do
   it { should validate_presence_of :title }
   it { should validate_presence_of :contributor_id }
@@ -104,4 +64,53 @@ describe Document do
     document.reload
     expect(document.source_url).to eq 'http://www.example.org'
   end
+
+  describe '#log_review' do
+
+    let(:user) { create(:user) }
+
+    context 'a not-reviewed document gets flagged as reviewed' do
+      it 'creates a DocumentReview object' do
+        user = create(:user)
+        document = create(:document)
+
+        document.reviewing_user = user
+        expect {
+          document.update! reviewed: true
+        }.to change { document.reload.document_reviews.count }.by(1)
+      end
+    end
+
+    context 'a reviewed document gets flagged as not-reviewed' do
+      it 'does not create a DocumentReview object' do
+        document = create(:document, reviewed: true, reviewing_user: user)
+
+        expect {
+          document.update! reviewed: false
+        }.to change { document.reload.document_reviews.count }.by(0)
+      end
+    end
+
+    context 'a not-reviewed document stays not-reviewed' do
+      it 'does not create a DocumentReview object' do
+        document = create(:document)
+
+        expect {
+          document.update! reviewed: false
+        }.to change { document.reload.document_reviews.count }.by(0)
+      end
+    end
+
+    context 'a reviewed document stays reviewed' do
+      it 'does not create a DocumentReview object'  do
+        document = create(:document, reviewed: true, reviewing_user: user)
+
+        expect {
+          document.update! reviewed: true
+        }.to change { document.reload.document_reviews.count }.by(0)
+      end
+    end
+
+  end
+
 end
