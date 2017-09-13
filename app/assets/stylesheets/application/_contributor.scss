@@ -8,3 +8,25 @@
     display:none;
   }
 }
+
+.tabs dd.active > a, .tabs .tab-title.active > a {
+  color: #eba400;
+  border: none;
+}
+
+.tabs dd > a, .tabs .tab-title > a {
+  font-size: 20px;
+  font-weight: bold;
+  background-color: white;
+  padding: .5rem .5rem;
+
+  :hover {
+    background-color: white;
+  }
+}
+
+.tab-span {
+  float: left;
+  font-size: 20px;
+  line-height: 48px;
+}

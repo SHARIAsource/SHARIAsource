@@ -1,7 +1,9 @@
 ul class="tabs" data-tab=""
   - contributor.sections_with_content.each_with_index do |(name, _), idx|
     li class="tab-title #{'active' if idx == 0}"
-      a href="##{name}"= contributor.biography_sections[name]
+      - if idx > 0
+        span class="tab-span" = '|'
+      a href=" ##{name}"= contributor.biography_sections[name]
 
 .tabs-content
   - contributor.sections_with_content.each_with_index do |(name, content), idx|
