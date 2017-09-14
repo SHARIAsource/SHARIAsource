@@ -126,6 +126,11 @@ class Document < ActiveRecord::Base
       contributor.try(:name)
     end
 
+    integer :original_author_id
+    text :original_author_name do
+      contributor.try(:name)
+    end
+ 
     integer :document_type_id
     text :document_type do
       document_type.try(:name)

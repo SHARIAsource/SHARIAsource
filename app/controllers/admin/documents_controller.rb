@@ -130,7 +130,7 @@ class Admin::DocumentsController < AdminController
                  ]
                 ]
     if current_user.is_editor
-      whitelist << :contributor_id
+      whitelist << [:contributor_id, :original_author_id]
     end
     unless current_user.requires_approval?
       whitelist << :published
@@ -209,7 +209,7 @@ class Admin::DocumentsController < AdminController
       fulltext(params[:sSearch]) if params[:sSearch].present?
 
       any_of do
-        [:user_id, :contributor_id].each do |field_name|
+        [:user_id, :contributor_id, :original_author_id].each do |field_name|
           with(field_name, attrs[field_name]) if attrs[field_name]
         end
       end

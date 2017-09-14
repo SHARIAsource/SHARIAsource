@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
   belongs_to :collaborator
   has_many :documents, foreign_key: 'contributor_id',
     dependent: :restrict_with_error
+  # NOTE: Per ticket 14413, needed to tabulates original author to add increment that user's
+  # contributions
+  has_many :documents_as_original_author, foreign_key: 'original_author_id', class_name: 'Document',
+    dependent: :restrict_with_error
 
   # NOTE: Contributor was implemented first and it stole the 'has_many :documents' association
   has_many :uploaded_documents, foreign_key: 'user_id', class_name: 'Document',

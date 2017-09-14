@@ -63,14 +63,16 @@ class DocumentTypeCounter
 
   def self.contributor_counts
     roots = DocumentType.roots.select(:id, :name)
-    contributors = User.where("disabled IS FALSE OR disabled IS NULL").joins("INNER JOIN documents on documents.contributor_id = users.id OR users.is_senior_scholar IS TRUE").distinct
+    contributors = User.where("disabled IS FALSE OR disabled IS NULL").joins("INNER JOIN documents on documents.contributor_id = users.id OR documents.original_author_id = users.id").distinct
     {
       contributors: contributors,
       document_types: roots,
       counts: contributors.map do |a|
         roots.map do |d|
           a.documents.published
-            .where(document_type: d.self_and_descendant_ids).count
+            .where(document_type: d.self_and_descendant_ids).or(
+          a.documents_as_original_author.published
+            .where(document_type: d.self_and_descendant_ids)).uniq.count
         end
       end
     }

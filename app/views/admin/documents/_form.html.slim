@@ -30,6 +30,8 @@
     - if current_user.is_editor?
       .large-4.columns
         = f.association :contributor, collection: User.all, include_blank: false
+      .large-4.columns
+        = f.input :original_author_id, collection: User.all
 
   .row
     .large-12.columns
