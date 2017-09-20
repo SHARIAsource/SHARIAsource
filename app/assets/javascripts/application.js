@@ -16,7 +16,6 @@
 //= require dataTables/jquery.dataTables.foundation
 //= require foundation
 //= require turbolinks
-//= require openseadragon
 //= require ./jquery.ba-throttle-debounce
 //= require ./trunk8
 //= require ./waypoints/waypoints
