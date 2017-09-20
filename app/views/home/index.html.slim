@@ -1,9 +1,9 @@
 .inner-wrapper
   .inner
-    = render partial: 'home/three_item_block', locals: { block_title: 'Featured', collection: @home_presenter.featured }
+    = render partial: 'home/three_item_block', locals: { block_title: 'Featured', collection: @home_presenter.featured, more_link: true }
 .inner-wrapper
   .inner
     = render partial: 'home/three_item_block', locals: { block_title: 'Popular', collection: @home_presenter.popular }
 .inner-wrapper
   .inner
-    = render partial: 'home/three_item_block', locals: { block_title: 'Recent', collection: @home_presenter.recent, more_link: true }
+    = render partial: 'home/three_item_block', locals: { block_title: 'Recent', collection: @home_presenter.recent }
