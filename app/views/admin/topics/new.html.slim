@@ -3,4 +3,4 @@
 
 h2 New Topic
 
-= render partial: 'admin/topics/form', locals: { form_url: admin_topics_path }
+= render partial: 'admin/topics/form', locals: { form_url: admin_topics_path, topic: Topic.new }

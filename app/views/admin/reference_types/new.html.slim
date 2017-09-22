@@ -3,4 +3,4 @@
 
 h2 New Reference Type
 
-= render partial: 'admin/reference_types/form', locals: { form_url: admin_reference_types_path }
+= render partial: 'admin/reference_types/form', locals: { form_url: admin_reference_types_path, :reference_type => ReferenceType.new }

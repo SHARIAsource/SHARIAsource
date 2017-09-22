@@ -6,6 +6,7 @@
       = f.input :document_style, as: :select, collection: [['Scan with Text', 'scan'], ['Scan without Text', 'scannotext'], ['No Scan', 'noscan']], include_blank: false
     .large-4.columns
       = f.association :document_type, collection: DocumentType.all
+      a data-reveal-id="documentTypeModal" href="#" Add Document Types
 
   .row
     .large-4.columns
@@ -46,6 +47,7 @@
     .large-4.columns
       .panel
         = f.association :reference_type, collection: ReferenceType.all
+        a data-reveal-id="referenceTypeModal" href="#" Add Reference Types
         = f.input :alternate_authors, label: 'Authors (long form)'
         = f.input :alternate_titles, label: 'Title (long form)'
         = f.input :alternate_editors, label: 'Editors (long form)'
@@ -69,11 +71,17 @@
     .large-4.columns
       .panel
         = f.association :topics, collection: Topic.all
+        a data-reveal-id="topicsModal" href="#" Add Topics
         = f.association :themes, collection: Theme.all
+        a data-reveal-id="themesModal" href="#" Add Themes
         = f.association :regions, collection: Region.all, label: 'Geographic Regions'
+        a data-reveal-id="geographicRegionsModal" href="#" Add Geographic Regions
         = f.association :eras, collection: Era.all, label: 'Empires & Eras'
+        a data-reveal-id="empiresAndErasModal" href="#" Add Empires & Eras
         = f.association :language, collection: Language.all
+        a data-reveal-id="languagesModal" href="#" Add Languages
         = f.association :tags, collection: Tag.all, label: 'Additional Tags'
+        a data-reveal-id="tagsModal" href="#" Add Tags
     .large-4.columns
       .panel
         = f.association :referenced_documents, collection: Document.where.not(id: @document.id)
@@ -139,3 +147,5 @@
         }
       }
     }); 
+= render "admin/shared/modal"
+

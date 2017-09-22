@@ -1,6 +1,6 @@
 .row
   .large-6.columns
-    = simple_form_for @document_type, url: form_url do |f|
+    = simple_form_for document_type, url: form_url do |f|
       = f.input :name, autofocus: true
       = f.association :parent, collection: parent_collection, include_blank: 'Top Level'
       = f.input :sort_order
