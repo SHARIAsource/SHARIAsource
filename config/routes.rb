@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   require 'sidekiq/web'
 
   devise_for :users,
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
   resources :regions, only: [:index]
   resources :document_types, path: '/document-types', only: [:index]
   resources :collaborators, only: [:index, :show]
+  resources :projects, only: [:show]
   resources :topics, only: [:index]
   resources :eras, only: [:index]
   resources :users, only: [:show]
