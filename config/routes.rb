@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :projects, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :collaborators, only: [:index, :new, :edit, :create, :update,
                                      :destroy] do
       put :sort
