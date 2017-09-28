@@ -1,2 +1,4 @@
-h1 Admin::Projects#index
-p Find me in app/views/admin/projects/index.html.slim
+= content_for :page_title, 'Projects'
+= content_for :admin_active, 'Projects'
+
+= render partial: 'admin/table', locals: { collection: @projects }

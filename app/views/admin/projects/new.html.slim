@@ -1,2 +1,6 @@
-h1 Admin::Projects#new
-p Find me in app/views/admin/projects/new.html.slim
+= content_for :page_title, 'New Project'
+= content_for :admin_active, 'Projects'
+
+h2 New Project
+
+= render partial: 'admin/projects/form', locals: { form_url: admin_projects_path }

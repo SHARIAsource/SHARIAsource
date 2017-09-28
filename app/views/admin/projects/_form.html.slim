@@ -1,0 +1,12 @@
+= simple_form_for @project, url: form_url do |f|
+  .row
+    .large-12.columns
+      .row
+        .large-12.columns
+          = f.input :name, autofocus: true
+          = f.input :description, input_html: { class: 'wysiwyg' }
+          = f.input :search_string
+  .row
+    .large-12.columns
+      = f.submit class: 'round button'
+

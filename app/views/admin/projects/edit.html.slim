@@ -1,2 +1,6 @@
-h1 Admin::Projects#edit
-p Find me in app/views/admin/projects/edit.html.slim
+= content_for :page_title, 'Edit Project'
+= content_for :admin_active, 'Projects'
+
+h2 Edit Project
+
+= render partial: 'admin/projects/form', locals: { form_url: admin_project_path(@project) }
