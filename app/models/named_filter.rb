@@ -7,4 +7,6 @@ class NamedFilter < ActiveRecord::Base
   belongs_to :era, required: false
   belongs_to :document_type, required: false
   belongs_to :project, required: false
+
+  validates :name, presence: true
 end
