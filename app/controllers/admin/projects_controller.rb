@@ -45,7 +45,7 @@ class Admin::ProjectsController < AdminController
   private
 
   def permitted_params
-    params.require(:project).permit(:name, :search_string, :description)
+    params.require(:project).permit(:name, :description, :photo, user_ids: [])
   end
 
   def fetch_project

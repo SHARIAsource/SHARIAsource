@@ -3,7 +3,6 @@ class ProjectsController < ApplicationController
     @project = Project.find params[:id]
     @filters = SearchFilters.new
     @languages = Language.rank(:sort_order)
-    @filters.q = @project.search_string
     @languages = Language.rank(:sort_order)
     @contributors = User.joins(:documents).distinct
     @topics = Topic.all

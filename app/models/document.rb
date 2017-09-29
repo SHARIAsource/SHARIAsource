@@ -294,7 +294,7 @@ class Document < ActiveRecord::Base
 
           hybrid_text = build_text_by_hybrid(page.text, image)
           source_page.body.hybrid_text = txt_to_html(hybrid_text)
-        rescue ArgumentError => e
+        rescue ArgumentError => _
           source_page.body.text = ""
           source_page.body.hybrid_text = ""
         end
