@@ -4,8 +4,32 @@
   .inner
     h2.section-heading.browse= @project.name
 
+  .row
+    .large-6.columns
+      - @project.users.each do |user|
+        .row
+          .large-4.columns
+            - if user.avatar && user.avatar.url
+              = image_tag(user.avatar.url, alt: user.name)
+            - else
+              <span>&nbsp;</span>
+          .large-8.columns
+            = link_to user.name, contributor_path(user)
+            - if user.collaborator.present?
+              br
+              = link_to user.collaborator.name, collaborator_path(user.collaborator)
+    .large-6.columns
+      - if @project.photo && @project.photo.url
+        = image_tag(@project.photo.url, alt: @project.name)
+
   .inner.document-content
-    == @project.description
+    .large-8.columns
+      h4 Project description
+      == @project.description
+    .large-4.columns
+      h4 Additional search
+      - @project.named_filters.each do |filter|
+        = link_to filter.name, search_project_path(@project.id, filter.id)
 
   .inner
     = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|

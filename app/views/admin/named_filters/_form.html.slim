@@ -7,6 +7,9 @@
           = f.input :q
           - # todo: move the fetch part into the controller
           = f.input :user_id, collection: User.enabled.editors
+          = f.input :date_from, include_blank: true
+          = f.input :date_to, include_blank: true
+          = f.input :date_format
           = f.input :language_id, collection: Language.where({})
           = f.input :topic_id, collection: Topic.where({})
           = f.input :theme_id, collection: Theme.where({})

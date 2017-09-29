@@ -18,7 +18,9 @@ Rails.application.routes.draw do
   resources :regions, only: [:index]
   resources :document_types, path: '/document-types', only: [:index]
   resources :collaborators, only: [:index, :show]
-  resources :projects, only: [:show]
+  resources :projects, only: [:show] do
+    get ':named_filter_id' => 'projects#search', as: :search, on: :member
+  end
   resources :topics, only: [:index]
   resources :eras, only: [:index]
   resources :users, only: [:show]

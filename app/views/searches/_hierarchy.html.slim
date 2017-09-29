@@ -1,7 +1,10 @@
 - hash.map do |item, children|
   li class=('extended' if item.attributes.fetch('extended', false))
     label.check-label
-      input type='checkbox' name=input_name value=item.id checked=(f.object.public_send(field_name) && f.object.public_send(field_name).include?(item.id.to_s))
+      - if f.object.region.is_a? ActiveRecord::Base
+        input type='checkbox' name=input_name value=item.id checked=(f.object.public_send(field_name) && f.object.public_send(field_name).id == (item.id))
+      - else
+        input type='checkbox' name=input_name value=item.id checked=(f.object.public_send(field_name) && f.object.public_send(field_name).include?(item.id.to_s))
       = item.name
     - if children.size > 0
       ul

@@ -38,7 +38,10 @@
           - @languages.each do |language|
             li
               label.check-label
-                input type='checkbox' name='language[]' value=language.id checked=(f.object.language && f.object.language.include?(language.id.to_s))
+                - if f.object.language.is_a? Language
+                  input type='checkbox' name='language[]' value=language.id checked=(f.object.language && f.object.language.id == language.id)
+                - else
+                  input type='checkbox' name='language[]' value=language.id checked=(f.object.language && f.object.language.include?(language.id.to_s))
                 = language.name
 
   .filter-contributor.js-same-height
@@ -63,7 +66,10 @@
           - @topics.each do |topic|
             li
               label.check-label
-                input type='checkbox' name='topic[]' value=topic.id checked=(f.object.topic && f.object.topic.include?(topic.id.to_s))
+                - if f.object.topic.is_a? Topic
+                  input type='checkbox' name='topic[]' value=topic.id checked=(f.object.topic && f.object.topic.id == topic.id)
+                - else
+                  input type='checkbox' name='topic[]' value=topic.id checked=(f.object.topic && f.object.topic.include?(topic.id.to_s))
                 = topic.name
     
     .filter-block.is-contracted
@@ -75,7 +81,10 @@
           - @themes.each do |theme|
             li class=('extended' if theme.archived)
               label.check-label
-                input type='checkbox' name='theme[]' value=theme.id checked=(f.object.theme && f.object.theme.include?(theme.id.to_s))
+                - if f.object.theme.is_a? Theme
+                  input type='checkbox' name='theme[]' value=theme.id checked=(f.object.theme && f.object.theme.id == theme.id)
+                - else
+                  input type='checkbox' name='theme[]' value=theme.id checked=(f.object.theme && f.object.theme.include?(theme.id.to_s))
                 = theme.name
         - if @themes.find{|t| t.archived }
           a.filter-extend-toggle data-expandtext='Expand Archived Themes' data-contracttext='Contract Archived Themes' href='#' Expand Archived Themes

@@ -9,4 +9,6 @@ class NamedFilter < ActiveRecord::Base
   belongs_to :project, required: false
 
   validates :name, presence: true
+
+  alias :contributor :user
 end
