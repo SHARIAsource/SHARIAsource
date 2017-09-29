@@ -1,0 +1,21 @@
+= simple_form_for @named_filter, url: form_url do |f|
+  .row
+    .large-12.columns
+      .row
+        .large-12.columns
+          = f.input :name, autofocus: true
+          = f.input :q
+          - # todo: move the fetch part into the controller
+          = f.input :user_id, collection: User.enabled.editors
+          = f.input :language_id, collection: Language.where({})
+          = f.input :topic_id, collection: Topic.where({})
+          = f.input :theme_id, collection: Theme.where({})
+          = f.input :region_id, collection: Region.where({})
+          = f.input :era_id, collection: Era.where({})
+          = f.input :document_type_id, collection: DocumentType.where({})
+          = f.input :project_id, collection: Project.where({})
+  .row
+    .large-12.columns
+      = f.submit class: 'round button'
+
+

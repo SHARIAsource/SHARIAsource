@@ -32,6 +32,8 @@ nav.top-bar data-topbar='true'
             = link_to 'Misc. Pages', admin_miscs_path
           li class=('active' if admin_active == 'Projects')
             = link_to 'Projects', admin_projects_path
+          li class=('active' if admin_active == 'Named Filters')
+            = link_to 'Named Filters', admin_named_filters_path
     ul.right
       li class=('active' if admin_active == 'My Account')
         = link_to 'My Account', edit_user_registration_path

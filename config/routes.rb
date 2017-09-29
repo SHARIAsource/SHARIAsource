@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   require 'sidekiq/web'
 
   devise_for :users,
@@ -27,6 +26,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :projects, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :named_filters, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :collaborators, only: [:index, :new, :edit, :create, :update,
                                      :destroy] do
       put :sort

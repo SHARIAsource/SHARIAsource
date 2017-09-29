@@ -1,0 +1,6 @@
+= content_for :page_title, 'Edit named filter'
+= content_for :admin_active, 'Named filters'
+
+h2 Edit named filter
+
+= render partial: 'admin/named_filters/form', locals: { form_url: admin_named_filter_path(@named_filter) }
