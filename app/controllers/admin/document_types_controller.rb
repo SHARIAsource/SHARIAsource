@@ -15,12 +15,18 @@ class Admin::DocumentTypesController < AdminController
 
   def create
     @document_type = DocumentType.new permitted_params
-    if @document_type.save
-      flash[:notice] = 'Document Type created successfully'
-      redirect_to admin_document_types_path
-    else
-      flash[:error] = @document_type.errors.full_messages.to_sentence
-      render :new
+    respond_to do |format|
+      if @document_type.save
+        format.html { flash[:notice] = 'Document Type created successfully'
+                    redirect_to admin_document_types_path
+                    } 
+        format.js  { render layout: false, action: 'create' }
+      else
+        format.html { flash[:error] = @document_type.errors.full_messages.to_sentence
+                    render :new
+                    }
+        format.js
+      end
     end
   end
 

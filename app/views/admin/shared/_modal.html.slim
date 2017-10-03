@@ -1,5 +1,5 @@
 #documentTypeModal.reveal-modal aria-hidden="true" aria-labelledby="modalTitle" data-reveal="" role="dialog" 
-  = render file: "admin/document_types/new.html.slim"
+  = render file: "admin/document_types/_modal_form.html.slim", locals: { form_url: admin_document_types_path, parent_collection: DocumentType.all, document_type: DocumentType.new }
   a.close-reveal-modal aria-label="Close"  ×
 #empiresAndErasModal.reveal-modal aria-hidden="true" aria-labelledby="modalTitle" data-reveal="" role="dialog" 
   = render file: "admin/eras/new.html.slim"
