@@ -25,7 +25,7 @@
   .inner.document-content
     .large-8.columns
       h4 Project description
-      == @project.description
+      .project-description== @project.description
     .large-4.columns
       h4 Additional search
       - @project.named_filters.each do |filter|
