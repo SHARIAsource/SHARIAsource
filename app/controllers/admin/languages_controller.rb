@@ -16,12 +16,18 @@ class Admin::LanguagesController < AdminController
   def create
     @language = Language.new permitted_params
     @language.sort_order_position = :last
-    if @language.save
-      flash[:notice] = 'Language created successfully'
-      redirect_to admin_languages_path
-    else
-      flash[:error] = @language.errors.full_messages.to_sentence
-      render :new
+    respond_to do |format|
+      if @language.save
+        format.html { flash[:notice] = 'Language created successfully'
+                    redirect_to admin_languages_path
+                    }
+        format.js { render layout: false, action: 'create' }
+      else
+        format.html { flash[:error] = @language.errors.full_messages.to_sentence
+                    render :new
+                    }
+        format.js
+      end
     end
   end
 

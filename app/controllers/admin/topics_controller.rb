@@ -15,12 +15,18 @@ class Admin::TopicsController < AdminController
 
   def create
     @topic = Topic.new permitted_params
-    if @topic.save
-      flash[:notice] = 'Topic created successfully'
-      redirect_to admin_topics_path
-    else
-      flash[:error] = @topic.errors.full_messages.to_sentence
-      render :new
+    respond_to do |format|
+      if @topic.save
+        format.html { flash[:notice] = 'Topic created successfully'
+                    redirect_to admin_topics_path
+	            }
+        format.js { render layout: false, action: 'create' }
+      else
+        format.html { flash[:error] = @topic.errors.full_messages.to_sentence
+                    render :new
+                    }
+        format.js
+      end
     end
   end
 

@@ -15,12 +15,18 @@ class Admin::ErasController < AdminController
 
   def create
     @era = Era.new permitted_params
-    if @era.save
-      flash[:notice] = 'Era created successfully'
-      redirect_to admin_eras_path
-    else
-      flash[:error] = @era.errors.full_messages.to_sentence
-      render :new
+    respond_to do |format|
+      if @era.save
+        format.html { flash[:notice] = 'Era created successfully'
+                    redirect_to admin_eras_path
+                    }
+        format.js { render layout: false, action: 'create' }
+      else
+        format.html { flash[:error] = @era.errors.full_messages.to_sentence
+                    render :new
+                    }
+        format.js
+      end
     end
   end
 

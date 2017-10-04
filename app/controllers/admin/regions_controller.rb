@@ -15,12 +15,18 @@ class Admin::RegionsController < AdminController
 
   def create
     @region = Region.new permitted_params
-    if @region.save
-      flash[:notice] = 'Region created successfully'
-      redirect_to admin_regions_path
-    else
-      flash[:error] = @region.errors.full_messages.to_sentence
-      render :new
+    respond_to do |format|
+      if @region.save
+        format.html { flash[:notice] = 'Region created successfully'
+                    redirect_to admin_regions_path
+                    }
+        format.js { render layout: false, action: 'create' }
+      else
+        format.html { flash[:error] = @region.errors.full_messages.to_sentence
+                    render :new
+                    }
+        format.js
+      end
     end
   end
 

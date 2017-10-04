@@ -15,12 +15,18 @@ class Admin::TagsController < AdminController
 
   def create
     @tag = Tag.new permitted_params
-    if @tag.save
-      flash[:notice] = 'Tag created successfully'
-      redirect_to admin_tags_path
-    else
-      flash[:error] = @tag.errors.full_messages.to_sentence
-      render :new
+    respond_to do |format|
+      if @tag.save
+        format.html { flash[:notice] = 'Tag created successfully'
+                    redirect_to admin_tags_path
+                    }
+        format.js { render layout: false, action: 'create' }
+      else
+        format.html { flash[:error] = @tag.errors.full_messages.to_sentence
+                    render :new
+                    }
+        format.js
+      end
     end
   end
 

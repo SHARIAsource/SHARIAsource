@@ -1,0 +1,28 @@
+= simple_form_for era, url: form_url, remote: true do |f|
+  .row
+    .large-6.columns
+      = f.input :name, autofocus: true
+    .large-6.columns
+      = f.association :parent, collection: parent_collection, include_blank: 'Top Level'
+  .row
+    .large-6.columns
+      = f.input :start_year_gregorian
+    .large-6.columns
+      = f.input :end_year_gregorian
+  .row
+    .large-6.columns
+      = f.input :start_year_hijri
+    .large-6.columns
+      = f.input :end_year_hijri
+  .row
+    .large-6.columns
+      = f.input :gregorian_display
+    .large-6.columns
+      = f.input :hijri_display
+  .row
+    .large-6.columns.end
+      = f.input :extended, boolean_style: :inline
+  .row
+    .large-12.columns
+      = f.submit class: 'round button'
+

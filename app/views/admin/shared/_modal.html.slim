@@ -2,23 +2,23 @@
   = render file: "admin/document_types/_modal_form.html.slim", locals: { form_url: admin_document_types_path, parent_collection: DocumentType.all, document_type: DocumentType.new }
   a.close-reveal-modal aria-label="Close"  ×
 #empiresAndErasModal.reveal-modal aria-hidden="true" aria-labelledby="modalTitle" data-reveal="" role="dialog" 
-  = render file: "admin/eras/new.html.slim"
+  = render file: "admin/eras/_modal_form.html.slim", locals: { form_url: admin_eras_path, parent_collection: Era.all, era: Era.new }
   a.close-reveal-modal aria-label="Close"  ×
 #geographicRegionsModal.reveal-modal aria-hidden="true" aria-labelledby="modalTitle" data-reveal="" role="dialog" 
-  = render file: "admin/regions/new.html.slim"
+  = render file: "admin/regions/_modal_form.html.slim", locals: { form_url: admin_regions_path, parent_collection: Region.all, region: Region.new }
   a.close-reveal-modal aria-label="Close"  ×
 #languagesModal.reveal-modal aria-hidden="true" aria-labelledby="modalTitle" data-reveal="" role="dialog" 
-  = render file: "admin/languages/new.html.slim"
+  = render file: "admin/languages/_modal_form.html.slim", locals: { form_url: admin_languages_path, language: Language.new }
   a.close-reveal-modal aria-label="Close"  ×
 #referenceTypeModal.reveal-modal aria-hidden="true" aria-labelledby="modalTitle" data-reveal="" role="dialog" 
-  = render file: "admin/reference_types/new.html.slim"
+  = render file: "admin/reference_types/_modal_form.html.slim", locals: { form_url: admin_reference_types_path, :reference_type => ReferenceType.new }
   a.close-reveal-modal aria-label="Close"  ×
 #tagsModal.reveal-modal aria-hidden="true" aria-labelledby="modalTitle" data-reveal="" role="dialog" 
-  = render file: "admin/tags/new.html.slim"
+  = render file: "admin/tags/_modal_form.html.slim", locals: { form_url: admin_tags_path, tag: Tag.new }
   a.close-reveal-modal aria-label="Close"  ×
 #topicsModal.reveal-modal aria-hidden="true" aria-labelledby="modalTitle" data-reveal="" role="dialog" 
-  = render file: "admin/topics/new.html.slim"
+  = render file: "admin/topics/_modal_form.html.slim", locals: { form_url: admin_topics_path, topic: Topic.new }
   a.close-reveal-modal aria-label="Close"  ×
 #themesModal.reveal-modal aria-hidden="true" aria-labelledby="modalTitle" data-reveal="" role="dialog" 
-  = render file: "admin/themes/new.html.slim"
+  = render file: "admin/themes/_modal_form.html.slim", locals: { form_url: admin_themes_path, theme: Theme.new }
   a.close-reveal-modal aria-label="Close"  ×

@@ -1,0 +1,13 @@
+$("document_tag_id.select").append(new Option('<%=j @tag.name %>' , <%= @tag.id %> ));
+<% if @tag.errors.any? %>
+  $("#new_tag").fadeOut(500, function(){
+    $('.alert-box').remove();
+    $(this).prepend($("<p class='alert-box alert'><%=j @tag.errors.full_messages.join('; ') %></p>")).fadeIn(500);
+  });
+<% else %>
+  $("#new_tag").fadeOut(500, function(){
+    $('.alert-box').remove();
+    $(this).prepend($('<p class="alert-box"><%=j @tag.name %> was created successfully</p>')).fadeIn(500);
+  });
+  $("#new_tag")[0].reset();
+<% end %>

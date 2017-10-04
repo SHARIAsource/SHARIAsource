@@ -1,0 +1,13 @@
+$("document_theme_id.select").append(new Option('<%=j @theme.name %>' , <%= @theme.id %> ));
+<% if @theme.errors.any? %>
+  $("#new_theme").fadeOut(500, function(){
+    $('.alert-box').remove();
+    $(this).prepend($("<p class='alert-box alert'><%=j @theme.errors.full_messages.join('; ') %></p>")).fadeIn(500);
+  });
+<% else %>
+  $("#new_theme").fadeOut(500, function(){
+    $('.alert-box').remove();
+    $(this).prepend($('<p class="alert-box"><%=j @theme.name %> was created successfully</p>')).fadeIn(500);
+  });
+  $("#new_theme")[0].reset();
+<% end %>

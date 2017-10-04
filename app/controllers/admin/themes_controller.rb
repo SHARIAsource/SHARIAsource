@@ -15,12 +15,18 @@ class Admin::ThemesController < AdminController
 
   def create
     @theme = Theme.new permitted_params
-    if @theme.save
-      flash[:notice] = 'Theme created successfully'
-      redirect_to admin_themes_path
-    else
-      flash[:error] = @theme.errors.full_messages.to_sentence
-      render :new
+    respond_to do |format|
+      if @theme.save
+        format.html { flash[:notice] = 'Theme created successfully'
+                    redirect_to admin_themes_path
+                    }
+        format.js { render layout: false, action: 'create' }
+      else
+        format.html { flash[:error] = @theme.errors.full_messages.to_sentence
+                    render :new
+                    }
+        format.js
+      end
     end
   end
 

@@ -1,0 +1,13 @@
+$("document_era_id.select").append(new Option('<%=j @era.name %>' , <%= @era.id %> ));
+<% if @era.errors.any? %>
+  $("#new_era").fadeOut(500, function(){
+    $('.alert-box').remove();
+    $(this).prepend($("<p class='alert-box alert'><%=j @era.errors.full_messages.join('; ') %></p>")).fadeIn(500);
+  });
+<% else %>
+  $("#new_era").fadeOut(500, function(){
+    $('.alert-box').remove();
+    $(this).prepend($('<p class="alert-box"><%=j @era.name %> was created successfully</p>')).fadeIn(500);
+  });
+  $("#new_era")[0].reset();
+<% end %>

@@ -1,0 +1,13 @@
+$("document_language_id.select").append(new Option('<%=j @language.name %>' , <%= @language.id %> ));
+<% if @language.errors.any? %>
+  $("#new_language").fadeOut(500, function(){
+    $('.alert-box').remove();
+    $(this).prepend($("<p class='alert-box alert'><%=j @language.errors.full_messages.join('; ') %></p>")).fadeIn(500);
+  });
+<% else %>
+  $("#new_language").fadeOut(500, function(){
+    $('.alert-box').remove();
+    $(this).prepend($('<p class="alert-box"><%=j @language.name %> was created successfully</p>')).fadeIn(500);
+  });
+  $("#new_language")[0].reset();
+<% end %>

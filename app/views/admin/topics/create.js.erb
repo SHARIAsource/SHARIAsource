@@ -1,0 +1,13 @@
+$("document_topic_id.select").append(new Option('<%=j @topic.name %>' , <%= @topic.id %> ));
+<% if @topic.errors.any? %>
+  $("#new_topic").fadeOut(500, function(){
+    $('.alert-box').remove();
+    $(this).prepend($("<p class='alert-box alert'><%=j @topic.errors.full_messages.join('; ') %></p>")).fadeIn(500);
+  });
+<% else %>
+  $("#new_topic").fadeOut(500, function(){
+    $('.alert-box').remove();
+    $(this).prepend($('<p class="alert-box"><%=j @topic.name %> was created successfully</p>')).fadeIn(500);
+  });
+  $("#new_topic")[0].reset();
+<% end %>

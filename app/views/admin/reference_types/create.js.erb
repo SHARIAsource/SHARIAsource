@@ -1,0 +1,13 @@
+$("document_reference_type_id.select").append(new Option('<%=j @reference_type.name %>' , <%= @reference_type.id %> ));
+<% if @reference_type.errors.any? %>
+  $("#new_reference_type").fadeOut(500, function(){
+    $('.alert-box').remove();
+    $(this).prepend($("<p class='alert-box alert'><%=j @reference_type.errors.full_messages.join('; ') %></p>")).fadeIn(500);
+  });
+<% else %>
+  $("#new_reference_type").fadeOut(500, function(){
+    $('.alert-box').remove();
+    $(this).prepend($('<p class="alert-box"><%=j @reference_type.name %> was created successfully</p>')).fadeIn(500);
+  });
+  $("#new_reference_type")[0].reset();
+<% end %>

@@ -15,12 +15,18 @@ class Admin::ReferenceTypesController < AdminController
 
   def create
     @reference_type = ReferenceType.new permitted_params
-    if @reference_type.save
-      flash[:notice] = 'Reference Type created successfully'
-      redirect_to admin_reference_types_path
-    else
-      flash[:error] = @reference_type.errors.full_messages.to_sentence
-      render :new
+    respond_to do |format|
+      if @reference_type.save
+        format.html { flash[:notice] = 'Reference Type created successfully'
+                    redirect_to admin_reference_types_path
+                    }
+        format.js { render layout: false, action: 'create' }
+      else
+        format.html { flash[:error] = @reference_type.errors.full_messages.to_sentence
+                    render :new
+                    }
+        format.js
+      end
     end
   end
 
