@@ -5,6 +5,7 @@
         .large-12.columns
           = f.input :name, autofocus: true
           = f.input :q
+          = f.input :quick_create_url
           - # todo: move the fetch part into the controller
           = f.input :user_id, collection: User.enabled.editors
           = f.input :date_from, include_blank: true

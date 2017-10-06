@@ -11,4 +11,6 @@ class NamedFilter < ActiveRecord::Base
   validates :name, presence: true
 
   alias :contributor :user
+
+  attr_accessor :quick_create_url
 end
