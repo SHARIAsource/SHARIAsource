@@ -52,7 +52,10 @@
         = render 'searches/all'
         select name='contributor[]' multiple=true size=4
           - @contributors.each do |contributor|
-            option value=contributor.id selected=(f.object.contributor && f.object.contributor.include?(contributor.id.to_s)) = contributor.name
+            - if f.object.contributor.is_a? User
+              option value=contributor.id selected=(f.object.contributor && f.object.contributor.id == contributor.id) = contributor.name
+            - else
+              option value=contributor.id selected=(f.object.contributor && f.object.contributor.include?(contributor.id.to_s)) = contributor.name
         span.multiple-instructions Ctrl-click to select multiple people.
 
 .filter-row.js-same-height-container.last

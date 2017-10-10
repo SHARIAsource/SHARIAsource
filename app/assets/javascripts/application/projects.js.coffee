@@ -2,6 +2,24 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $(document).on 'ready page:load', ->
+  $('#all_named_search').on 'click', (event) ->
+    check_boxes = $('.additional_search')
+    i = 0
+    filter_ids = []
+    while i < check_boxes.length
+      check_boxes[i].checked = true
+      filter_ids.push check_boxes[i].value
+      i++
+    $.ajax
+     data: 
+      named_filter_id: filter_ids
+     url: '/projects/' + this.value
+     success: (res) ->
+       search_results = res.indexOf('<div class="search-results">')
+       footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
+       $(".search-results").replaceWith(res.substring(search_results, footer_div));
+       return
+
   $('.additional_search').on 'click', (event) ->
     check_boxes = $('.additional_search')
     checked_boxes = []
@@ -10,8 +28,6 @@ $(document).on 'ready page:load', ->
       if check_boxes[i].checked
         checked_boxes.push check_boxes[i]
       i++
-    if checked_boxes.length < 1
-      return
     filter_ids = []
     i = 0
     while i < checked_boxes.length
@@ -21,7 +37,9 @@ $(document).on 'ready page:load', ->
       $.ajax
         url: '/projects/' + this.id
         success: (res) ->
-          console.log(res)
+          search_results = res.indexOf('<div class="search-results">')
+          footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
+          $(".search-results").replaceWith(res.substring(search_results, footer_div));
           return
     else
       $.ajax

@@ -1,7 +1,11 @@
 - f = locals[:f]
 
 p.result-count
-  - desc = @filters.q.present? ? " for \"#{@filters.q}\"" : ''
+  - if @filters.is_a? Array
+    - desc = @filters.map(&:q).delete_if(&:empty?).present? ? " for \"#{@filters.q}\"" : ''
+  - else
+    - desc = @filters.q.present? ? " for \"#{@filters.q}\"" : ''
+
   span.count= "#{@search.total} #{'result'.pluralize(@search.total)}#{desc}"
 
 = f.input :sort, collection: [['Best Match', ''], ['Recent First', 'recent'], ['Oldest First', 'oldest'], ['Author Last Name', 'author']], include_blank: false, label: 'Sort by:', input_html: { name: 'sort' }
@@ -25,4 +29,3 @@ p.result-count
         = link_to(image_tag(document.thumb.url), document_path(document.object)) if document.thumb
 
 - unless @search.results.last_page?
-  p.more-results= link_to 'Load More Results', search_path(@filters.attributes.with_indifferent_access.merge(page: @search.results.next_page)), class: 'ss-button', data: { remote: true }

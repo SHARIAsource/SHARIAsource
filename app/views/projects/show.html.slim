@@ -28,6 +28,9 @@
       .project-description== @project.description
     .large-4.columns
       h4 Additional search
+      .row
+          = check_box_tag 'all_named_search', @project.id, false
+          = label_tag 'All', nil, class: 'named_filter_label'
       - @project.named_filters.each do |filter|
         .row
           / the additional_search class below has a JavaScript click event attached to it, don't change the class name
