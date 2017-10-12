@@ -5,27 +5,52 @@ p.result-count
     - desc = @filters.map(&:q).delete_if(&:empty?).present? ? " for \"#{@filters.q}\"" : ''
   - else
     - desc = @filters.q.present? ? " for \"#{@filters.q}\"" : ''
-
+- if @named_results.nil?
   span.count= "#{@search.total} #{'result'.pluralize(@search.total)}#{desc}"
+  = f.input :sort, collection: [['Best Match', ''], ['Recent First', 'recent'], ['Oldest First', 'oldest'], ['Author Last Name', 'author']], include_blank: false, label: 'Sort by:', input_html: { name: 'sort' }
+  
+  .result-list
+    - @search.results.each do |result|
+      - document = DocumentPresenter.new result
+      .result
+        .result-info
+          p.breadcrumb
+            - document.document_type.self_and_ancestors.reverse.each do |dt|
+              = link_to dt.name, search_path(document_type: dt.self_and_descendant_ids, q: '')
+              span= ' :: '
+            span= document.dates
+  
+          h2= link_to document.title, document_path(document.object)
+          = render partial: 'documents/byline', locals: { document: document }
+          = render partial: 'searches/summary', locals: { document: document }
+  
+        .result-thumbnail
+          = link_to(image_tag(document.thumb.url), document_path(document.object)) if document.thumb
+  
+  - unless @search.results.last_page?
+    p.more-results= link_to 'Load More Results', search_path(@filters.attributes.with_indifferent_access.merge(page: @search.results.next_page)), class: 'ss-button', data: { remote: true }
+- else
+  span.count= "#{@search.map(&:total).sum} #{'result'.pluralize(@search.map(&:total).sum)}#{desc}"
+  = f.input :sort, collection: [['Best Match', ''], ['Recent First', 'recent'], ['Oldest First', 'oldest'], ['Author Last Name', 'author']], include_blank: false, label: 'Sort by:', input_html: { name: 'sort' }
+ 
+  .result-list
+    - @named_results.each do |result|
+      - document = DocumentPresenter.new result
+      .result
+        .result-info
+          p.breadcrumb
+            - document.document_type.self_and_ancestors.reverse.each do |dt|
+              = link_to dt.name, search_path(document_type: dt.self_and_descendant_ids, q: '')
+              span= ' :: '
+            span= document.dates
+  
+          h2= link_to document.title, document_path(document.object)
+          = render partial: 'documents/byline', locals: { document: document }
+          = render partial: 'searches/summary', locals: { document: document }
+  
+        .result-thumbnail
+          = link_to(image_tag(document.thumb.url), document_path(document.object)) if document.thumb
+  
+    p#more-results.more-results= link_to 'Load More Results', search_path(id: @filters.first.project.id, filter_ids: @filters.map(&:id), page: @named_results.next_page), class: 'ss-button', data: { remote: true }
+=will_paginate @named_results
 
-= f.input :sort, collection: [['Best Match', ''], ['Recent First', 'recent'], ['Oldest First', 'oldest'], ['Author Last Name', 'author']], include_blank: false, label: 'Sort by:', input_html: { name: 'sort' }
-
-.result-list
-  - @search.results.each do |result|
-    - document = DocumentPresenter.new result
-    .result
-      .result-info
-        p.breadcrumb
-          - document.document_type.self_and_ancestors.reverse.each do |dt|
-            = link_to dt.name, search_path(document_type: dt.self_and_descendant_ids, q: '')
-            span= ' :: '
-          span= document.dates
-
-        h2= link_to document.title, document_path(document.object)
-        = render partial: 'documents/byline', locals: { document: document }
-        = render partial: 'searches/summary', locals: { document: document }
-
-      .result-thumbnail
-        = link_to(image_tag(document.thumb.url), document_path(document.object)) if document.thumb
-
-- unless @search.results.last_page?

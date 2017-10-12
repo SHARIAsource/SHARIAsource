@@ -2,6 +2,24 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $(document).on 'ready page:load', ->
+
+  $('.pagination').hide()
+  $('.ss-button').on 'click', (event) ->
+    $('.next_page').click()
+    return
+
+  $('.contributor-search').on 'click', $('.next_page'), (event) ->
+    event.preventDefault()
+    $.ajax
+      url: $('.next_page')[0].href 
+      success: (res) ->
+        search_results = res.indexOf('<div class="search-results">')
+        footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
+        $(".search-results").replaceWith(res.substring(search_results, footer_div));
+        $('.pagination').hide()
+        window.history.pushState('','', this.url)
+        return false
+
   $('#all_named_search').on 'click', (event) ->
     check_boxes = $('.additional_search')
     i = 0
