@@ -7,17 +7,18 @@
   .row
     .large-6.columns
       - @project.users.each do |user|
-        .row
+        .row.project-user-data
           .large-4.columns
+            = user.name
             - if user.avatar && user.avatar.url
-              = image_tag(user.avatar.url, alt: user.name)
+              = link_to image_tag(user.avatar.url, alt: user.name), contributor_path(user)
+            - if user.collaborator.present?
+              br
+              = link_to user.collaborator.name, collaborator_path(user.collaborator), :class => 'project-collaborator'
             - else
               <span>&nbsp;</span>
           .large-8.columns
             = link_to user.name, contributor_path(user)
-            - if user.collaborator.present?
-              br
-              = link_to user.collaborator.name, collaborator_path(user.collaborator)
     .large-6.columns
       - if @project.photo && @project.photo.url
         = image_tag(@project.photo.url, alt: @project.name)
@@ -25,7 +26,11 @@
   .inner.document-content
     .large-8.columns
       h4 Project description
-      .project-description== @project.description
+      .project-description.project-description-short== @project.description
+      br
+      .show-more-description >> Show More
+      .show-less-description >> Show Less
+
     .large-4.columns
       h4 Additional search
       .row
@@ -34,7 +39,7 @@
       - @project.named_filters.each do |filter|
         .row
           / the additional_search class below has a JavaScript click event attached to it, don't change the class name
-          = check_box_tag @project.id, filter.id, false, :class => 'additional_search'
+          = check_box_tag @project.id, filter.id, false, :class => 'additional_search', :checked => @filters.is_a?(NamedFilter) ? false : @filters.include?(filter)
           = label_tag filter.name, nil, class: 'named_filter_label'
 
   .inner

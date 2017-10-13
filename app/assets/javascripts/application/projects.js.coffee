@@ -2,22 +2,37 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $(document).on 'ready page:load', ->
-
   $('.pagination').hide()
-  $('.ss-button').on 'click', (event) ->
-    $('.next_page').click()
-    return
 
-  $('.contributor-search').on 'click', $('.next_page'), (event) ->
+  # only show part of project description text
+  $('.show-less-description').addClass('project-hide') 
+  $('.show-more-description').on 'click', (event) ->
+     $('.project-description').removeClass('project-description-short')
+     $('.show-more-description').addClass('project-hide')
+     $('.show-less-description').removeClass('project-hide')
+     event.preventDefault()
+
+  $('.show-less-description').on 'click', (event) ->
+     $('.project-description').addClass('project-description-short')
+     $('.show-more-description').removeClass('project-hide')
+     $('.show-less-description').addClass('project-hide')
+     event.preventDefault()
+
+  # handles (un)checking search boxes
+  $('.contributor-search').on 'click', '.ss-button', (event) ->
     event.preventDefault()
+    if $('.next_page')[0] == undefined
+        next_page_url = this.href
+       else
+         next_page_url = $('.next_page')[0].href
     $.ajax
-      url: $('.next_page')[0].href 
+      url: next_page_url 
       success: (res) ->
         search_results = res.indexOf('<div class="search-results">')
         footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
         $(".search-results").replaceWith(res.substring(search_results, footer_div));
-        $('.pagination').hide()
         window.history.pushState('','', this.url)
+        $('.pagination').hide()
         return false
 
   $('#all_named_search').on 'click', (event) ->
@@ -35,7 +50,9 @@ $(document).on 'ready page:load', ->
      success: (res) ->
        search_results = res.indexOf('<div class="search-results">')
        footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
+       window.history.pushState('','', this.url)
        $(".search-results").replaceWith(res.substring(search_results, footer_div));
+       $('.pagination').hide()
        return
 
   $('.additional_search').on 'click', (event) ->
@@ -57,7 +74,9 @@ $(document).on 'ready page:load', ->
         success: (res) ->
           search_results = res.indexOf('<div class="search-results">')
           footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
+          window.history.pushState('','', this.url) 
           $(".search-results").replaceWith(res.substring(search_results, footer_div));
+          $('.pagination').hide()
           return
     else
       $.ajax
@@ -67,7 +86,15 @@ $(document).on 'ready page:load', ->
         success: (res) ->
           search_results = res.indexOf('<div class="search-results">')
           footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
-          $(".search-results").replaceWith(res.substring(search_results, footer_div));
-          return
+          window.history.pushState('','', this.url)
+          $(".search-results").replaceWith(res.substring(search_results, footer_div))
+          $('.pagination').hide()
+          $.ajax
+            url: this.url 
+            success: (res) ->
+              search_sidebar = res.indexOf('<div class="search-sidebar">')
+              search_results = res.indexOf('class="search-results">')
+              $(".search-sidebar").replaceWith(res.substring(search_sidebar, search_results))
+              return
   return
 

@@ -28,7 +28,7 @@ p.result-count
           = link_to(image_tag(document.thumb.url), document_path(document.object)) if document.thumb
   
   - unless @search.results.last_page?
-    p.more-results= link_to 'Load More Results', search_path(@filters.attributes.with_indifferent_access.merge(page: @search.results.next_page)), class: 'ss-button', data: { remote: true }
+    p.more-results= link_to 'Load More Results', project_path(@filters.attributes.with_indifferent_access.merge(id: @project.id, page: @search.results.next_page)), class: 'ss-button', data: { remote: true }
 - else
   span.count= "#{@search.map(&:total).sum} #{'result'.pluralize(@search.map(&:total).sum)}#{desc}"
   = f.input :sort, collection: [['Best Match', ''], ['Recent First', 'recent'], ['Oldest First', 'oldest'], ['Author Last Name', 'author']], include_blank: false, label: 'Sort by:', input_html: { name: 'sort' }
@@ -50,7 +50,6 @@ p.result-count
   
         .result-thumbnail
           = link_to(image_tag(document.thumb.url), document_path(document.object)) if document.thumb
-  
-    p#more-results.more-results= link_to 'Load More Results', search_path(id: @filters.first.project.id, filter_ids: @filters.map(&:id), page: @named_results.next_page), class: 'ss-button', data: { remote: true }
-=will_paginate @named_results
-
+    -if @named_results.total_pages != @named_results.current_page 
+      p.more-results= link_to 'Load More Results', search_path(id: @filters.first.project.id, filter_ids: @filters.map(&:id), page: @named_results.next_page), class: 'ss-button', data: { remote: true }
+=will_paginate @named_results if @named_results

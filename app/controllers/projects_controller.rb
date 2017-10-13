@@ -19,7 +19,7 @@ class ProjectsController < ApplicationController
       @search = Document.search do |query|
         query.fulltext @filters.q
         query.with(:published, true)
-        query.paginate :page => 1, :per_page => 5
+        query.paginate :page => params[:page] || 1, :per_page => 5
       end
     else
       #if this method  is being hit by clicking checkboxes on projects show page it will be an array

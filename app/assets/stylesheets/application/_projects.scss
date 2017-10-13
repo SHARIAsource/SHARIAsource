@@ -12,3 +12,23 @@
 .named_filter_label {
   margin: 0 !important;
 }
+
+.project-description-short {
+  height: 370px;
+  overflow: hidden;
+}
+
+.project-hide {
+  display: none
+}
+
+.show-more-description, .show-less-description, .project-collaborator {
+  color: #eba400;
+  &:hover {
+    color: #ebc700;
+  }
+}
+
+.project-user-data {
+  margin-bottom: 2% !important;
+}
