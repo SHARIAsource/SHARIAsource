@@ -39,7 +39,7 @@
       - @project.named_filters.each do |filter|
         .row
           / the additional_search class below has a JavaScript click event attached to it, don't change the class name
-          = check_box_tag @project.id, filter.id, false, :class => 'additional_search', :checked => @filters.is_a?(NamedFilter) ? false : @filters.include?(filter)
+          = check_box_tag @project.id, filter.id, false, :class => 'additional_search', :checked => @filters.is_a?(NamedFilter) || @filters.is_a?(SearchFilters) ? false : @filters.include?(filter)
           = label_tag filter.name, nil, class: 'named_filter_label'
 
   .inner

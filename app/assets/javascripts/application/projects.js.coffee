@@ -22,7 +22,7 @@ $(document).on 'ready page:load', ->
   $('.contributor-search').on 'click', '.ss-button', (event) ->
     event.preventDefault()
     if $('.next_page')[0] == undefined
-        next_page_url = this.href
+         next_page_url = this.href
        else
          next_page_url = $('.next_page')[0].href
     $.ajax
@@ -69,6 +69,11 @@ $(document).on 'ready page:load', ->
       filter_ids.push checked_boxes[i].value
       i++
     if checked_boxes.length < 1
+      window.history.pushState('','', window.location.href.split('?')[0]) 
+      location.reload()
+      ### TODO implement following Ajax request. Due to the urgency of the projects
+          page and how the pagination works with the filters and searches the page
+          will now just refresh if all named filters are unselected
       $.ajax
         url: '/projects/' + this.id
         success: (res) ->
@@ -77,7 +82,15 @@ $(document).on 'ready page:load', ->
           window.history.pushState('','', this.url) 
           $(".search-results").replaceWith(res.substring(search_results, footer_div));
           $('.pagination').hide()
-          return
+          $.ajax
+            url: this.url 
+            success: (res) ->
+              search_sidebar = res.indexOf('<div class="search-sidebar">')
+              search_results = res.indexOf('class="search-results">')
+              $(".search-sidebar").replaceWith(res.substring(search_sidebar, search_results))
+              $(".edit_named_filter").attr('id', 'new_named_filter')
+              return
+      ###
     else
       $.ajax
         data: 
