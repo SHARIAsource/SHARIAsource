@@ -28,35 +28,26 @@
   }
 }
 
-.project-user-data {
-  margin-bottom: 2% !important;
-}
-
 .project-description p {
   font-family: sans-serif;
 }
 
 .project-user-photo {
-  height: 68px;
-  width: 68px;
+  height: 130px;
+  width: 130px;
   object-fit: cover;
 }
 
-div.grey, div.orange {
-  width: 12px;
-  height: 12px;
-  background-color: #e7e9e8;
+.project-photo {
+  height: 130px;
+  width: 520px;
+  object-fit: cover;
 }
 
-div.orange {
-  display: none;
-}
 
 /*Named Filters Checkboxes*/
 .additional_search {
  z-index: 1
-}
-.named_filter_label {
 }
 
 .ss-cb {
