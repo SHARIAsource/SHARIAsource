@@ -5,11 +5,11 @@
   })
 
   $document.on('ajax:beforeSend', function(event, xhr, settings) {
-    xhr.requestURL = window.location.href.split('?')[0] + '?' + settings.url.split('?')[1]
+    xhr.requestURL = settings.url
   })
 
-  $document.on('ajax:send', '#new_search_filters, #new_named_filter, .more-results a', function(event) {
-    if (event.target.id === 'new_search_filters' || event.target.id === 'new_named_filter') {
+  $document.on('ajax:send', '#new_search_filters, .more-results a', function(event) {
+    if (event.target.id === 'new_search_filters') {
       $('.search-results').addClass('loading')
     }
     else if ($(event.target).is('.more-results a')) {
@@ -22,9 +22,10 @@
     }
   })
 
-  $document.on('ajax:success', '#new_search_filters, #new_named_filter, .more-results a', function(event, data, status, xhr) {
+  $document.on('ajax:success', '#new_search_filters, .more-results a', function(event, data, status, xhr) {
     var $results
-    if (event.target.id === 'new_search_filters' || event.target.id === 'new_named_filter') {
+
+    if (event.target.id === 'new_search_filters') {
       $results = $(data).find('.search-results').children()
       $('.search-results').empty().append($results)
     }
@@ -41,7 +42,7 @@
     $document.trigger('sameheight:refresh')
   })
 
-  $document.on('ajax:complete', '#new_search_filters, #new_named_filter', function(event, data) {
+  $document.on('ajax:complete', '#new_search_filters', function(event, data) {
     $('.search-results').removeClass('loading')
   })
 

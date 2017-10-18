@@ -2,7 +2,7 @@
 
 p.result-count
   - if @filters.is_a? Array
-    - desc = @filters.map(&:q).delete_if(&:empty?).present? ? " for \"#{@filters.q}\"" : ''
+    - desc = @filters.map(&:q).delete_if(&:empty?).present? ? " for \"#{@filters.map(&:q).join(' ')}\"" : ''
   - else
     - desc = @filters.q.present? ? " for \"#{@filters.q}\"" : ''
 - if @named_results.nil?
@@ -27,9 +27,9 @@ p.result-count
         .result-thumbnail
           = link_to(image_tag(document.thumb.url), document_path(document.object)) if document.thumb
   
-  - unless true
-    p.more-results= link_to 'Load More Results', project_path(@filters.attributes.with_indifferent_access.merge(id: @filters.project.id, page: @search.results.next_page)), class: 'ss-button', data: { remote: true }
-  - unless @search.results.last_page? && @project.nil?
+  - if request.path.include?('/projects')
+    p.more-results= link_to 'Load More Results', project_path(@filters.attributes.with_indifferent_access.merge(id: @project.id, page: @search.results.next_page)), class: 'ss-button', data: { remote: true }
+  - else
     p.more-results= link_to 'Load More Results', search_path(@filters.attributes.with_indifferent_access.merge(page: @search.results.next_page)), class: 'ss-button', data: { remote: true }
 
 - else
