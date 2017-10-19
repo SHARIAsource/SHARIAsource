@@ -1,4 +1,4 @@
-$("document_document_type_id.select").append(new Option('<%=j @document_type.name %>' , <%= @document_type.id %> ));
+$("#document_document_type_id.select").append(new Option('<%=j @document_type.name %>' , <%= @document_type.id %> ));
 <% if @document_type.errors.any? %>
   $("#new_document_type").fadeOut(500, function(){
     $('.alert-box').remove();

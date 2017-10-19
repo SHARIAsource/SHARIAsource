@@ -1,4 +1,4 @@
-$("document_language_id.select").append(new Option('<%=j @language.name %>' , <%= @language.id %> ));
+$("#document_language_id.select").append(new Option('<%=j @language.name %>' , <%= @language.id %> ));
 <% if @language.errors.any? %>
   $("#new_language").fadeOut(500, function(){
     $('.alert-box').remove();

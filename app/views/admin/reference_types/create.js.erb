@@ -1,4 +1,4 @@
-$("document_reference_type_id.select").append(new Option('<%=j @reference_type.name %>' , <%= @reference_type.id %> ));
+$("#document_reference_type_id.select").append(new Option('<%=j @reference_type.name %>' , <%= @reference_type.id %> ));
 <% if @reference_type.errors.any? %>
   $("#new_reference_type").fadeOut(500, function(){
     $('.alert-box').remove();

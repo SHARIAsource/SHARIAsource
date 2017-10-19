@@ -1,4 +1,4 @@
-$("document_topic_id.select").append(new Option('<%=j @topic.name %>' , <%= @topic.id %> ));
+$(".chosen-results").append("<li class='active-result'><%=j @topic.name %></li>");
 <% if @topic.errors.any? %>
   $("#new_topic").fadeOut(500, function(){
     $('.alert-box').remove();
