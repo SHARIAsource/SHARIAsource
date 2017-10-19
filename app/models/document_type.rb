@@ -42,6 +42,7 @@ class DocumentType < ActiveRecord::Base
   end
 
   def self.contributor_counts
+    Rails.cache.clear
     Rails.cache.fetch 'document_type_contributor_counts' do
       DocumentTypeCounter.contributor_counts
     end
