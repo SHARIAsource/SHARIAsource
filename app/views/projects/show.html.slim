@@ -9,11 +9,11 @@
       - @project.users.each do |user|
         .project-user-data
           .large-4.columns.project-user-container
-            - if user.avatar && user.avatar.url
+            - if user.avatar && user.avatar.url && FileTest.exist?("#{Rails.root}/public/#{user.avatar.url}")
               .large-12.columns.project-profile
                 = link_to image_tag(user.avatar.url, alt: user.name, class: "project-user-photo"), contributor_path(user), title: truncate(strip_tags(user.about), :length => 50), 'data-placement' => 'right'
             .large-12.columns.project-profile
-              = link_to user.name, contributor_path(user)
+              = link_to user.name, contributor_path(user), :class => "contributor_link"
               br
               - if user.collaborator.present?
                 = link_to user.collaborator.name, collaborator_path(user.collaborator), :class => 'project-collaborator'

@@ -21,12 +21,18 @@
   display: none
 }
 
-.show-more-description, .show-less-description, .project-collaborator {
+.show-more-description, .show-less-description, .contributor_link {
   color: #eba400;
   &:hover {
     color: #ebc700;
   }
 }
+.project-collaborator {
+  color: #660011;
+  &:hover {
+    color: #910018;
+  }
+} 
 
 .project-description p {
   font-family: sans-serif;
