@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170801132134) do
+ActiveRecord::Schema.define(version: 20170929133811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -239,6 +239,35 @@ ActiveRecord::Schema.define(version: 20170801132134) do
 
   add_index "miscs", ["slug"], name: "index_miscs_on_slug", using: :btree
 
+  create_table "named_filters", force: :cascade do |t|
+    t.string   "name"
+    t.string   "q"
+    t.date     "date_from"
+    t.date     "date_to"
+    t.string   "date_format"
+    t.integer  "language_id"
+    t.integer  "user_id"
+    t.integer  "topic_id"
+    t.integer  "theme_id"
+    t.integer  "region_id"
+    t.integer  "era_id"
+    t.integer  "document_type_id"
+    t.integer  "project_id"
+    t.string   "sort"
+    t.integer  "page"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "named_filters", ["document_type_id"], name: "index_named_filters_on_document_type_id", using: :btree
+  add_index "named_filters", ["era_id"], name: "index_named_filters_on_era_id", using: :btree
+  add_index "named_filters", ["language_id"], name: "index_named_filters_on_language_id", using: :btree
+  add_index "named_filters", ["project_id"], name: "index_named_filters_on_project_id", using: :btree
+  add_index "named_filters", ["region_id"], name: "index_named_filters_on_region_id", using: :btree
+  add_index "named_filters", ["theme_id"], name: "index_named_filters_on_theme_id", using: :btree
+  add_index "named_filters", ["topic_id"], name: "index_named_filters_on_topic_id", using: :btree
+  add_index "named_filters", ["user_id"], name: "index_named_filters_on_user_id", using: :btree
+
   create_table "pages", force: :cascade do |t|
     t.string  "image",       limit: 255
     t.integer "document_id"
@@ -249,6 +278,22 @@ ActiveRecord::Schema.define(version: 20170801132134) do
 
   add_index "pages", ["document_id"], name: "index_pages_on_document_id", using: :btree
   add_index "pages", ["number"], name: "index_pages_on_number", using: :btree
+
+  create_table "projects", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "photo"
+  end
+
+  create_table "projects_users", id: false, force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.integer "user_id",    null: false
+  end
+
+  add_index "projects_users", ["project_id", "user_id"], name: "index_projects_users_on_project_id_and_user_id", using: :btree
+  add_index "projects_users", ["user_id", "project_id"], name: "index_projects_users_on_user_id_and_project_id", using: :btree
 
   create_table "reference_types", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -361,4 +406,12 @@ ActiveRecord::Schema.define(version: 20170801132134) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "attached_files", "users"
+  add_foreign_key "named_filters", "document_types"
+  add_foreign_key "named_filters", "eras"
+  add_foreign_key "named_filters", "languages"
+  add_foreign_key "named_filters", "projects"
+  add_foreign_key "named_filters", "regions"
+  add_foreign_key "named_filters", "themes"
+  add_foreign_key "named_filters", "topics"
+  add_foreign_key "named_filters", "users"
 end

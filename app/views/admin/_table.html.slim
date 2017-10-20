@@ -6,7 +6,7 @@ table
   thead
     tr
       th
-        - if collection.empty?
+        - if collection.empty? || !controller.respond_to?(:sort_name)
           = 'Name'
         - else
           = link_to 'Name', url_for([:sort_name, :admin, collection.first.class]), data: { remote: true, method: :put } unless collection.first.class == Misc

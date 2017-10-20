@@ -1,0 +1,4 @@
+= content_for :page_title, 'Projects'
+= content_for :admin_active, 'Projects'
+
+= render partial: 'admin/table', locals: { collection: @projects }

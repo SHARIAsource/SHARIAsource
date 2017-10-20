@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   has_many :documents, foreign_key: 'contributor_id',
     dependent: :restrict_with_error
 
+  has_and_belongs_to_many :projects
+
   # NOTE: Contributor was implemented first and it stole the 'has_many :documents' association
   has_many :uploaded_documents, foreign_key: 'user_id', class_name: 'Document',
     dependent: :restrict_with_error

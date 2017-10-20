@@ -18,12 +18,17 @@ Rails.application.routes.draw do
   resources :regions, only: [:index]
   resources :document_types, path: '/document-types', only: [:index]
   resources :collaborators, only: [:index, :show]
+  resources :projects, only: [:show] do
+    get ':named_filter_id' => 'projects#search', as: :search, on: :member
+  end
   resources :topics, only: [:index]
   resources :eras, only: [:index]
   resources :users, only: [:show]
 
   namespace :admin do
     resources :users, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :projects, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :named_filters, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :collaborators, only: [:index, :new, :edit, :create, :update,
                                      :destroy] do
       put :sort

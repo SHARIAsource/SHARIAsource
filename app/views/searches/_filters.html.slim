@@ -22,9 +22,9 @@
       .filter-content
         = render 'searches/all'
         .date-block
-          = f.input :date_from, label: 'From:', placeholder: 'dd/mm/yyyy', input_html: { name: :date_from }
+          = f.input :date_from, label: 'From:', placeholder: 'dd/mm/yyyy', input_html: { name: :date_from } if f.object.date_from
         .date-block
-          = f.input :date_to, label: 'To:', placeholder:'dd/mm/yyyy', input_html: { name: :date_to }
+          = f.input :date_to, label: 'To:', placeholder:'dd/mm/yyyy', input_html: { name: :date_to } if f.object.date_to
         .date-block.format
           = f.input :date_format, as: :radio_buttons, collection: [['AH', 'ah'], ['CE', 'ce']], item_wrapper_class: 'radio-label', input_html: { name: 'date_format'}, label: false
 
@@ -38,7 +38,10 @@
           - @languages.each do |language|
             li
               label.check-label
-                input type='checkbox' name='language[]' value=language.id checked=(f.object.language && f.object.language.include?(language.id.to_s))
+                - if f.object.language.is_a? Language
+                  input type='checkbox' name='language[]' value=language.id checked=(f.object.language && f.object.language.id == language.id)
+                - else
+                  input type='checkbox' name='language[]' value=language.id checked=(f.object.language && f.object.language.include?(language.id.to_s))
                 = language.name
 
   .filter-contributor.js-same-height
@@ -49,7 +52,10 @@
         = render 'searches/all'
         select name='contributor[]' multiple=true size=4
           - @contributors.each do |contributor|
-            option value=contributor.id selected=(f.object.contributor && f.object.contributor.include?(contributor.id.to_s)) = contributor.name
+            - if f.object.contributor.is_a? User
+              option value=contributor.id selected=(f.object.contributor && f.object.contributor.id == contributor.id) = contributor.name
+            - else
+              option value=contributor.id selected=(f.object.contributor && f.object.contributor.include?(contributor.id.to_s)) = contributor.name
         span.multiple-instructions Ctrl-click to select multiple people.
 
 .filter-row.js-same-height-container.last
@@ -63,7 +69,10 @@
           - @topics.each do |topic|
             li
               label.check-label
-                input type='checkbox' name='topic[]' value=topic.id checked=(f.object.topic && f.object.topic.include?(topic.id.to_s))
+                - if f.object.topic.is_a? Topic
+                  input type='checkbox' name='topic[]' value=topic.id checked=(f.object.topic && f.object.topic.id == topic.id)
+                - else
+                  input type='checkbox' name='topic[]' value=topic.id checked=(f.object.topic && f.object.topic.include?(topic.id.to_s))
                 = topic.name
     
     .filter-block.is-contracted
@@ -75,7 +84,10 @@
           - @themes.each do |theme|
             li class=('extended' if theme.archived)
               label.check-label
-                input type='checkbox' name='theme[]' value=theme.id checked=(f.object.theme && f.object.theme.include?(theme.id.to_s))
+                - if f.object.theme.is_a? Theme
+                  input type='checkbox' name='theme[]' value=theme.id checked=(f.object.theme && f.object.theme.id == theme.id)
+                - else
+                  input type='checkbox' name='theme[]' value=theme.id checked=(f.object.theme && f.object.theme.include?(theme.id.to_s))
                 = theme.name
         - if @themes.find{|t| t.archived }
           a.filter-extend-toggle data-expandtext='Expand Archived Themes' data-contracttext='Contract Archived Themes' href='#' Expand Archived Themes
