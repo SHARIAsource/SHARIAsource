@@ -40,7 +40,7 @@
         .ss-cb
           / the additional_search class below has a JavaScript click event attached to it, don't change the class name
           = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', :checked => @filters.is_a?(NamedFilter) || @filters.is_a?(SearchFilters) ? false : @filters.include?(filter)
-          = label_tag filter.name, nil, class: 'named_filter_label ss-cb-label'
+          = label_tag :name, filter.name, class: 'named_filter_label ss-cb-label'
 
   .inner
     = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|
