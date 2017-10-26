@@ -42,6 +42,9 @@ class Admin::DocumentsController < AdminController
     if @document.save
       @document.index!
       flash[:notice] = 'Document created successfully'
+      @document.attached_files.each do |file|
+        SendDocumentWorker.perform_asynch( { images:[], metadata: file })
+      end
       if params[:create_and_continue]
         redirect_to new_admin_document_path
       elsif params[:create_and_edit]
