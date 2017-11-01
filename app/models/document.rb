@@ -280,6 +280,7 @@ class Document < ActiveRecord::Base
     self.processed = false
     self.pages.destroy_all
 
+    SendImagesWorker.new.perform(images)
     images.each_with_index do |image, idx|
       puts "Analyzing image: #{image}"
       source_page = Page.new(image: File.open(image), number: idx + 1)
