@@ -11,12 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< cec525946e3dca6bb74da01927918432d884be8d
 ActiveRecord::Schema.define(version: 20171111000741) do
+=======
+ActiveRecord::Schema.define(version: 20170929133811) do
+>>>>>>> Update latest migrations for Rails 5, update schema.rb
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "attached_files", force: :cascade do |t|
+<<<<<<< cec525946e3dca6bb74da01927918432d884be8d
     t.integer  "user_id",         null: false
     t.integer  "attachable_id"
     t.string   "attachable_type"
@@ -24,6 +29,17 @@ ActiveRecord::Schema.define(version: 20171111000741) do
     t.string   "file"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+=======
+    t.bigint "user_id", null: false
+    t.string "attachable_type"
+    t.bigint "attachable_id"
+    t.string "token"
+    t.string "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attachable_type", "attachable_id"], name: "index_attached_files_on_attachable_type_and_attachable_id"
+    t.index ["user_id"], name: "index_attached_files_on_user_id"
+>>>>>>> Update latest migrations for Rails 5, update schema.rb
   end
 
   add_index "attached_files", ["attachable_type", "attachable_id"], name: "index_attached_files_on_attachable_type_and_attachable_id", using: :btree
@@ -59,6 +75,7 @@ ActiveRecord::Schema.define(version: 20171111000741) do
     t.integer "referenced_id"
   end
 
+<<<<<<< cec525946e3dca6bb74da01927918432d884be8d
   add_index "document_documents", ["document_id", "referenced_id"], name: "index_document_documents_on_document_id_and_referenced_id", unique: true, using: :btree
   add_index "document_documents", ["document_id"], name: "index_document_documents_on_document_id", using: :btree
   add_index "document_documents", ["referenced_id"], name: "index_document_documents_on_referenced_id", using: :btree
@@ -68,6 +85,15 @@ ActiveRecord::Schema.define(version: 20171111000741) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+=======
+  create_table "document_reviews", force: :cascade do |t|
+    t.bigint "document_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id"], name: "index_document_reviews_on_document_id"
+    t.index ["user_id"], name: "index_document_reviews_on_user_id"
+>>>>>>> Update latest migrations for Rails 5, update schema.rb
   end
 
   create_table "document_type_hierarchies", id: false, force: :cascade do |t|
@@ -121,6 +147,7 @@ ActiveRecord::Schema.define(version: 20171111000741) do
     t.string   "alternate_years",       limit: 255
     t.text     "summary"
     t.datetime "published_at"
+<<<<<<< cec525946e3dca6bb74da01927918432d884be8d
     t.text     "citation"
     t.integer  "gregorian_year"
     t.integer  "gregorian_month"
@@ -129,6 +156,26 @@ ActiveRecord::Schema.define(version: 20171111000741) do
     t.boolean  "use_content_password",              default: false
     t.boolean  "reviewed",                          default: false
     t.integer  "user_id"
+=======
+    t.text "citation"
+    t.integer "gregorian_year"
+    t.integer "gregorian_month"
+    t.integer "gregorian_day"
+    t.string "content_password"
+    t.boolean "use_content_password", default: false
+    t.boolean "reviewed", default: false
+    t.bigint "user_id"
+    t.index ["contributor_id"], name: "index_documents_on_contributor_id"
+    t.index ["created_at"], name: "index_documents_on_created_at"
+    t.index ["document_type_id"], name: "index_documents_on_document_type_id"
+    t.index ["featured_position"], name: "index_documents_on_featured_position"
+    t.index ["language_id"], name: "index_documents_on_language_id"
+    t.index ["popular_count"], name: "index_documents_on_popular_count"
+    t.index ["published"], name: "index_documents_on_published"
+    t.index ["published_at"], name: "index_documents_on_published_at"
+    t.index ["reference_type_id"], name: "index_documents_on_reference_type_id"
+    t.index ["user_id"], name: "index_documents_on_user_id"
+>>>>>>> Update latest migrations for Rails 5, update schema.rb
   end
 
   add_index "documents", ["contributor_id"], name: "index_documents_on_contributor_id", using: :btree
@@ -259,6 +306,7 @@ ActiveRecord::Schema.define(version: 20171111000741) do
     t.datetime "updated_at",       null: false
   end
 
+<<<<<<< cec525946e3dca6bb74da01927918432d884be8d
   add_index "named_filters", ["document_type_id"], name: "index_named_filters_on_document_type_id", using: :btree
   add_index "named_filters", ["era_id"], name: "index_named_filters_on_era_id", using: :btree
   add_index "named_filters", ["language_id"], name: "index_named_filters_on_language_id", using: :btree
@@ -270,12 +318,45 @@ ActiveRecord::Schema.define(version: 20171111000741) do
 
   create_table "pages", force: :cascade do |t|
     t.string  "image",       limit: 255
+=======
+  create_table "named_filters", force: :cascade do |t|
+    t.string "name"
+    t.string "q"
+    t.date "date_from"
+    t.date "date_to"
+    t.string "date_format"
+    t.bigint "language_id"
+    t.bigint "user_id"
+    t.bigint "topic_id"
+    t.bigint "theme_id"
+    t.bigint "region_id"
+    t.bigint "era_id"
+    t.bigint "document_type_id"
+    t.bigint "project_id"
+    t.string "sort"
+    t.integer "page"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_type_id"], name: "index_named_filters_on_document_type_id"
+    t.index ["era_id"], name: "index_named_filters_on_era_id"
+    t.index ["language_id"], name: "index_named_filters_on_language_id"
+    t.index ["project_id"], name: "index_named_filters_on_project_id"
+    t.index ["region_id"], name: "index_named_filters_on_region_id"
+    t.index ["theme_id"], name: "index_named_filters_on_theme_id"
+    t.index ["topic_id"], name: "index_named_filters_on_topic_id"
+    t.index ["user_id"], name: "index_named_filters_on_user_id"
+  end
+
+  create_table "pages", id: :serial, force: :cascade do |t|
+    t.string "image", limit: 255
+>>>>>>> Update latest migrations for Rails 5, update schema.rb
     t.integer "document_id"
     t.integer "number"
     t.integer "width"
     t.integer "height"
   end
 
+<<<<<<< cec525946e3dca6bb74da01927918432d884be8d
   add_index "pages", ["document_id"], name: "index_pages_on_document_id", using: :btree
   add_index "pages", ["number"], name: "index_pages_on_number", using: :btree
 
@@ -299,6 +380,25 @@ ActiveRecord::Schema.define(version: 20171111000741) do
 
   create_table "reference_types", force: :cascade do |t|
     t.string   "name",       limit: 255
+=======
+  create_table "projects", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "photo"
+  end
+
+  create_table "projects_users", id: false, force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["project_id", "user_id"], name: "index_projects_users_on_project_id_and_user_id"
+    t.index ["user_id", "project_id"], name: "index_projects_users_on_user_id_and_project_id"
+  end
+
+  create_table "reference_types", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+>>>>>>> Update latest migrations for Rails 5, update schema.rb
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sort_order"
