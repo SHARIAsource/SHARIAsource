@@ -5,9 +5,10 @@ class CreateDocumentWorker
     begin
       api = Corpusbuilder::Ruby::Api.new
       document = Document.find document_id
-      api.create_document({:images => image_ids, :metadata => document.to_json, :editor_email => document.user.email})
+      response = api.create_document({:images => image_ids, :metadata => document.to_json, :editor_email => document.user.email})
+      PollDocumentWorker.perform_async(response["id"])
     rescue Exception => e
-      Rails.logger.error "Error creating Corpusbuilder document: #{image_ids}"
+      Rails.logger.error "Error creating Corpusbuilder document: #{e}"
     end
   end
 end
