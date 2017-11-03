@@ -1,7 +1,7 @@
 require 'will_paginate/array'
 
 class ProjectsController < ApplicationController
-  before_filter :fetch_data, :fetch_filters
+  before_action :fetch_data, :fetch_filters
 
   def show
   end

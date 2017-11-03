@@ -1,5 +1,5 @@
 class Admin::NamedFiltersController < AdminController
-  before_filter :fetch_filter, only: [:edit, :update, :destroy]
+  before_action :fetch_filter, only: [:edit, :update, :destroy]
 
   def index
     @named_filters = NamedFilter.where({})

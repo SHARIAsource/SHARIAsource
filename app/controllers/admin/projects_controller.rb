@@ -1,5 +1,5 @@
 class Admin::ProjectsController < AdminController
-  before_filter :fetch_project, only: [:edit, :update, :destroy]
+  before_action :fetch_project, only: [:edit, :update, :destroy]
 
   def index
     @projects = Project.where({})
