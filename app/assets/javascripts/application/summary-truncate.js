@@ -24,8 +24,9 @@
       return
     }
 
-    $first.trunk8(documentOptions)
-    wasTruncated = $first.data('trunk8').original_text !== $first.html()
+    $first.trunk8(documentOptions);
+    var dat = $first.data('trunk8');
+    wasTruncated = dat !== undefined && dat !== null && dat.original_text !== $first.html()
 
     if ($paragraphs.length > 2 || wasTruncated) {
       $summary.addClass('truncated')

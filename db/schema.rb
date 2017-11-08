@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170607222537) do
+ActiveRecord::Schema.define(version: 20170929133811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,7 +126,8 @@ ActiveRecord::Schema.define(version: 20170607222537) do
     t.integer  "gregorian_month"
     t.integer  "gregorian_day"
     t.string   "content_password"
-    t.boolean  "use_content_password",  default: false
+    t.boolean  "use_content_password",              default: false
+    t.boolean  "reviewed",                          default: false
     t.integer  "user_id"
   end
 
@@ -139,6 +140,7 @@ ActiveRecord::Schema.define(version: 20170607222537) do
   add_index "documents", ["published"], name: "index_documents_on_published", using: :btree
   add_index "documents", ["published_at"], name: "index_documents_on_published_at", using: :btree
   add_index "documents", ["reference_type_id"], name: "index_documents_on_reference_type_id", using: :btree
+  add_index "documents", ["user_id"], name: "index_documents_on_user_id", using: :btree
 
   create_table "documents_eras", id: false, force: :cascade do |t|
     t.integer "era_id"
@@ -206,12 +208,14 @@ ActiveRecord::Schema.define(version: 20170607222537) do
     t.boolean  "extended",                         default: false
     t.string   "hijri_display",        limit: 255
     t.string   "gregorian_display",    limit: 255
+    t.integer  "sort_order"
   end
 
   add_index "eras", ["end_year_gregorian"], name: "index_eras_on_end_year_gregorian", using: :btree
   add_index "eras", ["extended"], name: "index_eras_on_extended", using: :btree
   add_index "eras", ["name"], name: "index_eras_on_name", using: :btree
   add_index "eras", ["parent_id"], name: "index_eras_on_parent_id", using: :btree
+  add_index "eras", ["sort_order"], name: "index_eras_on_sort_order", using: :btree
   add_index "eras", ["start_year_gregorian"], name: "index_eras_on_start_year_gregorian", using: :btree
 
   create_table "languages", force: :cascade do |t|
@@ -235,6 +239,35 @@ ActiveRecord::Schema.define(version: 20170607222537) do
 
   add_index "miscs", ["slug"], name: "index_miscs_on_slug", using: :btree
 
+  create_table "named_filters", force: :cascade do |t|
+    t.string   "name"
+    t.string   "q"
+    t.date     "date_from"
+    t.date     "date_to"
+    t.string   "date_format"
+    t.integer  "language_id"
+    t.integer  "user_id"
+    t.integer  "topic_id"
+    t.integer  "theme_id"
+    t.integer  "region_id"
+    t.integer  "era_id"
+    t.integer  "document_type_id"
+    t.integer  "project_id"
+    t.string   "sort"
+    t.integer  "page"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "named_filters", ["document_type_id"], name: "index_named_filters_on_document_type_id", using: :btree
+  add_index "named_filters", ["era_id"], name: "index_named_filters_on_era_id", using: :btree
+  add_index "named_filters", ["language_id"], name: "index_named_filters_on_language_id", using: :btree
+  add_index "named_filters", ["project_id"], name: "index_named_filters_on_project_id", using: :btree
+  add_index "named_filters", ["region_id"], name: "index_named_filters_on_region_id", using: :btree
+  add_index "named_filters", ["theme_id"], name: "index_named_filters_on_theme_id", using: :btree
+  add_index "named_filters", ["topic_id"], name: "index_named_filters_on_topic_id", using: :btree
+  add_index "named_filters", ["user_id"], name: "index_named_filters_on_user_id", using: :btree
+
   create_table "pages", force: :cascade do |t|
     t.string  "image",       limit: 255
     t.integer "document_id"
@@ -246,13 +279,31 @@ ActiveRecord::Schema.define(version: 20170607222537) do
   add_index "pages", ["document_id"], name: "index_pages_on_document_id", using: :btree
   add_index "pages", ["number"], name: "index_pages_on_number", using: :btree
 
+  create_table "projects", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "photo"
+  end
+
+  create_table "projects_users", id: false, force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.integer "user_id",    null: false
+  end
+
+  add_index "projects_users", ["project_id", "user_id"], name: "index_projects_users_on_project_id_and_user_id", using: :btree
+  add_index "projects_users", ["user_id", "project_id"], name: "index_projects_users_on_user_id_and_project_id", using: :btree
+
   create_table "reference_types", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "sort_order"
   end
 
   add_index "reference_types", ["name"], name: "index_reference_types_on_name", using: :btree
+  add_index "reference_types", ["sort_order"], name: "index_reference_types_on_sort_order", using: :btree
 
   create_table "region_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id",   null: false
@@ -268,37 +319,44 @@ ActiveRecord::Schema.define(version: 20170607222537) do
     t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "sort_order"
   end
 
   add_index "regions", ["name"], name: "index_regions_on_name", using: :btree
   add_index "regions", ["parent_id"], name: "index_regions_on_parent_id", using: :btree
+  add_index "regions", ["sort_order"], name: "index_regions_on_sort_order", using: :btree
 
   create_table "tags", force: :cascade do |t|
-    t.string   "name",           limit: 255
+    t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "taggings_count",             default: 0
+    t.integer  "sort_order"
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", using: :btree
+  add_index "tags", ["sort_order"], name: "index_tags_on_sort_order", using: :btree
 
   create_table "themes", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "archived",               default: false
+    t.integer  "sort_order"
   end
 
   add_index "themes", ["archived"], name: "index_themes_on_archived", using: :btree
   add_index "themes", ["name"], name: "index_themes_on_name", using: :btree
+  add_index "themes", ["sort_order"], name: "index_themes_on_sort_order", using: :btree
 
   create_table "topics", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "sort_order"
   end
 
   add_index "topics", ["name"], name: "index_topics_on_name", using: :btree
+  add_index "topics", ["sort_order"], name: "index_topics_on_sort_order", using: :btree
 
   create_table "user_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id",   null: false
@@ -333,10 +391,10 @@ ActiveRecord::Schema.define(version: 20170607222537) do
     t.boolean  "requires_approval",                      default: false
     t.boolean  "disabled"
     t.boolean  "is_admin"
-    t.boolean  "accepted_terms",             default: false
-    t.boolean  "is_senior_scholar",          default: false
-    t.boolean  "is_original_author",         default: false
-    t.boolean  "is_password_protector",      default: false
+    t.boolean  "accepted_terms",                         default: false
+    t.boolean  "is_senior_scholar",                      default: false
+    t.boolean  "is_original_author",                     default: false
+    t.boolean  "is_password_protector",                  default: false
   end
 
   add_index "users", ["collaborator_id"], name: "index_users_on_collaborator_id", using: :btree
@@ -348,4 +406,12 @@ ActiveRecord::Schema.define(version: 20170607222537) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "attached_files", "users"
+  add_foreign_key "named_filters", "document_types"
+  add_foreign_key "named_filters", "eras"
+  add_foreign_key "named_filters", "languages"
+  add_foreign_key "named_filters", "projects"
+  add_foreign_key "named_filters", "regions"
+  add_foreign_key "named_filters", "themes"
+  add_foreign_key "named_filters", "topics"
+  add_foreign_key "named_filters", "users"
 end

@@ -122,3 +122,20 @@
       = f.submit "Save and return to menu", class: 'dark_gray button'
       = f.submit "Save and continue", class: 'light_blue button', name: "create_and_continue"
       = f.submit "Save and edit", class: 'med_blue button', name: "create_and_edit", disabled: true, title: 'This action is only available when creating a new document', id: (@document.new_record? ? "new_create_and_edit" : "create_and_edit")
+
+  javascript:
+    dataChanged = false;     // global variable flags unsaved changes      
+    var form = $('.simple_form');
+    form.find('input,checkbox,textarea,radio,select').on('change',function(event) { dataChanged = true})
+    form.find('reset,:submit').on('click',function(event) { dataChanged = false })
+
+    $(window).on('page:before-change', function() {
+      if (dataChanged) {
+        if(window.confirm("Are you sure you want to leave? Your changes will be lost.")) {
+          dataChanged = false;
+          return true;      
+        } else {
+          return false;
+        }
+      }
+    }); 

@@ -51,6 +51,13 @@ class Admin::LanguagesController < AdminController
     head :ok
   end
 
+  def sort_name
+    Language.sort_by_names
+
+    respond_to do |format|
+      format.js {render inline: "location.reload();" }
+    end
+  end
   protected
 
   def permitted_params

@@ -1,0 +1,4 @@
+= content_for :page_title, 'Named Filters'
+= content_for :admin_active, 'Named Filters'
+
+= render partial: 'admin/table', locals: { collection: @named_filters }

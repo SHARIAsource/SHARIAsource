@@ -242,6 +242,7 @@ class Admin::DocumentsController < AdminController
     when "contributor" then docs.joins(:contributor).order("users.last_name #{sort_direction}")
     when "language" then docs.joins(:language).order("languages.name #{sort_direction}")
     when "regions" then docs.joins(:regions).order("regions.name #{sort_direction}")
+    else docs.order("updated_at #{sort_direction}")
     end
   end
 

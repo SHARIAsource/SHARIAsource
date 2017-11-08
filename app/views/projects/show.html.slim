@@ -1,0 +1,51 @@
+= content_for :page_title, @project.name
+
+.inner-wrapper
+  .inner
+    h2.section-heading.browse= @project.name
+
+  .row
+    .large-6.columns
+      - @project.users.each do |user|
+        .project-user-data
+          .large-4.columns.project-user-container
+            - if user.avatar && user.avatar.url && FileTest.exist?("#{Rails.root}/public/#{user.avatar.url}")
+              .large-12.columns.project-profile
+                = link_to image_tag(user.avatar.url, alt: user.name, class: "project-user-photo"), contributor_path(user), title: truncate(strip_tags(user.about), :length => 50), 'data-placement' => 'right'
+            .large-12.columns.project-profile
+              = link_to user.name, contributor_path(user), :class => "contributor_link"
+              br
+              - if user.collaborator.present?
+                = link_to user.collaborator.name, collaborator_path(user.collaborator), :class => 'project-collaborator'
+              - else
+                <span>&nbsp;</span>
+    .large-6.columns
+      - if @project.photo && @project.photo.url
+        = image_tag(@project.photo.url, alt: @project.name, class: "project-photo")
+
+  .inner.document-content
+    .large-8.columns
+      h4.project-header Project Profile
+      .project-description.project-description-short== @project.description
+      br
+      .show-more-description >> Show More
+      .show-less-description >> Show Less
+
+    .large-4.columns
+      h4.project-header Collections
+      .ss-cb
+          = check_box_tag 'all_named_search',@project.id, false, :class => 'ss-cb-input'
+          = label_tag 'All', nil, class: 'named_filter_label ss-cb-label'
+      - @project.named_filters.each do |filter|
+        .ss-cb
+          / the additional_search class below has a JavaScript click event attached to it, don't change the class name
+          = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', :checked => @filters.is_a?(NamedFilter) || @filters.is_a?(SearchFilters) ? false : @filters.include?(filter)
+          = label_tag :name, filter.name, class: 'named_filter_label ss-cb-label'
+
+  .inner
+    = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|
+      .search-two-columns.contributor-search
+        .search-sidebar
+          = render 'searches/filters', locals: { f: f }
+        .search-results
+          = render 'searches/results', locals: { f: f }

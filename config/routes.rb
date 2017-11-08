@@ -18,30 +18,62 @@ Rails.application.routes.draw do
   resources :regions, only: [:index]
   resources :document_types, path: '/document-types', only: [:index]
   resources :collaborators, only: [:index, :show]
+  resources :projects, only: [:show] do
+    get ':named_filter_id' => 'projects#search', as: :search, on: :member
+  end
   resources :topics, only: [:index]
   resources :eras, only: [:index]
   resources :users, only: [:show]
 
   namespace :admin do
     resources :users, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :projects, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :named_filters, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :collaborators, only: [:index, :new, :edit, :create, :update,
                                      :destroy] do
       put :sort
     end
-    resources :topics, only: [:index, :new, :edit, :create, :update, :destroy]
-    resources :themes, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :topics, only: [:index, :new, :edit, :create, :update, :destroy] do
+      put :sort
+      put :sort_name, on: :collection
+      put :sort_date, on: :collection
+    end
+    resources :themes, only: [:index, :new, :edit, :create, :update, :destroy] do
+      put :sort
+      put :sort_name, on: :collection
+      put :sort_date, on: :collection
+    end
     resources :document_types, path: '/document-types', only: [
       :index, :new, :edit, :create, :update, :destroy
-    ]
+    ] do
+      put :sort
+      put :sort_name, on: :collection
+    end
     resources :reference_types, path: '/reference-types', only: [
       :index, :new, :edit, :create, :update, :destroy
-    ]
+    ] do
+      put :sort
+      put :sort_name, on: :collection
+      put :sort_date, on: :collection
+    end
     resources :languages, only: [:index, :new, :edit, :create, :update, :destroy] do
       put :sort
+      put :sort_name, on: :collection
     end
-    resources :regions, only: [:index, :new, :edit, :create, :update, :destroy]
-    resources :tags, only: [:index, :new, :edit, :create, :update, :destroy]
-    resources :eras, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :regions, only: [:index, :new, :edit, :create, :update, :destroy] do
+      put :sort
+      put :sort_name, on: :collection
+      put :sort_date, on: :collection
+    end
+    resources :tags, only: [:index, :new, :edit, :create, :update, :destroy] do
+      put :sort
+      put :sort_name, on: :collection
+      put :sort_date, on: :collection
+    end
+    resources :eras, only: [:index, :new, :edit, :create, :update, :destroy] do
+      put :sort
+      put :sort_name, on: :collection
+    end
     resources :miscs, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :documents, only: [:new, :edit, :create, :update, :destroy] do
       collection do
@@ -58,4 +90,5 @@ Rails.application.routes.draw do
   end
 
   get '*slug', controller: 'misc', action: 'show'
+  get "/web/viewer", :to => redirect('/web/viewer.html')
 end

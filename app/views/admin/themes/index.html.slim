@@ -1,4 +1,4 @@
 = content_for :page_title, 'Themes'
 = content_for :admin_active, 'Metadata'
 
-= render partial: 'admin/table', locals: { collection: @themes }
+= render partial: 'admin/table', locals: { collection: @themes, include_dates: true }
