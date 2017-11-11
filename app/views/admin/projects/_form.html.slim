@@ -6,6 +6,11 @@
           = f.input :name, autofocus: true
           = f.input :description, input_html: { class: 'wysiwyg' }
           = f.association :users, collection: User.enabled.editors
+          = f.association :projects_users do |ff|
+            = ff.input :id, selected: ff.object.id, as: :hidden
+            = ff.input :user_id, selected: ff.object.user_id, as: :hidden
+            = ff.input :project_id, selected: ff.object.user_id, as: :hidden
+            = ff.input :sort_order, label: User.find(ff.object.user_id).name, collection: 1..6
           = f.input :photo, as: :file, label: 'Photo', input_html: { accept: 'image/png,image/jpg,image/gif' }
           = f.hidden_field :photo_cache
           - if f.object.photo?
