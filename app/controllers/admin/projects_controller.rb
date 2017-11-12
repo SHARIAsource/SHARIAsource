@@ -21,8 +21,7 @@ class Admin::ProjectsController < AdminController
 
   def update
     if @project.update permitted_params
-      flash[:notice] = 'Project updated successfully'
-      redirect_to admin_projects_path
+      redirect_to :back, notice: 'Project updated successfully'
     else
       flash[:error] = @project.errors.full_messages.to_sentence
       render :edit
