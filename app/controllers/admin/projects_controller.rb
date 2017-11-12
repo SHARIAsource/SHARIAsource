@@ -12,7 +12,7 @@ class Admin::ProjectsController < AdminController
     @project = Project.new permitted_params
     if @project.save
       flash[:notice] = 'New project created successfully'
-      redirect_to admin_projects_path
+      redirect_to edit_admin_project_path @project
     else
       flash[:error] = @project.errors.full_messages.to_sentence
       render :new

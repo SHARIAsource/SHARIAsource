@@ -288,9 +288,9 @@ ActiveRecord::Schema.define(version: 20171111000741) do
   end
 
   create_table "projects_users", force: :cascade do |t|
-    t.integer "project_id",   null: false
-    t.integer "user_id",      null: false
-    t.integer "sort_order"
+    t.integer "project_id",               null: false
+    t.integer "user_id",                  null: false
+    t.integer "sort_order",   default: 1
     t.string  "project_role"
   end
 
