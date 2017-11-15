@@ -1,3 +1,6 @@
+- if @project.id
+  = link_to 'Go To Project', project_path,  class: 'small round button'
+
 = simple_form_for @project, url: form_url do |f|
   .row
     .large-12.columns
@@ -23,7 +26,7 @@
   .row
     .large-12.columns
       .large-2.columns
-        = f.submit class: 'round button'
+        = f.submit class: 'small round button'
       .large-2.columns
-        = link_to 'Back', admin_projects_path,  class: 'round button'
-      .large-8.columns
+        = link_to 'Back', admin_projects_path,  class: 'small round button'
+      .large-6.columns
