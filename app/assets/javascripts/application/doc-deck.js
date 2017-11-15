@@ -2,7 +2,7 @@ $( document ).ready(function() {
   // If a user clicks on the jsPDF next/previous buttons, update the old
   // controls' page number
   $("#myiframe").load(function() {
-    $("#myiframe").contents().find("#next,#previous").click(function() {
+    $("#myiframe").contents().find("#next,#previous,#firstPage,#lastPage").click(function() {
       updatePageNumber();
     })
   });
