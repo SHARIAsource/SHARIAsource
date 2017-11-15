@@ -1,3 +1,47 @@
+$( document ).ready(function() {
+  // If a user clicks on the jsPDF next/previous buttons, update the old
+  // controls' page number
+  $("#myiframe").load(function() {
+    $("#myiframe").contents().find("#next,#previous").click(function() {
+      updatePageNumber();
+    })
+  });
+
+  // Trigger the jsPDF controls by using the old controls, current page #
+  $(document).on('click', '#next-link', function(event) {
+      event.preventDefault();
+      iframe = $("#myiframe").contents();
+      $('#next', iframe).trigger('click');
+      updatePageNumber();
+  });
+  $(document).on('click', '#prev-link', function(event) {
+      event.preventDefault();
+      iframe = $("#myiframe").contents();
+      $('#previous', iframe).trigger('click');
+      updatePageNumber();
+  });
+  $(document).on('click', '#first-link', function(event) {
+      event.preventDefault();
+      iframe = $("#myiframe").contents();
+      $('#firstPage', iframe).trigger('click');
+      updatePageNumber();
+  });
+  $(document).on('click', '#last-link', function(event) {
+      event.preventDefault();
+      iframe = $("#myiframe").contents();
+      $('#lastPage', iframe).trigger('click');
+      $('#first-link').removeClass('disabled');
+      updatePageNumber();
+  });
+
+  function updatePageNumber() {
+    iframe = $("#myiframe").contents();
+    current_page = $('#pageNumber', iframe).val();
+    $(".current").text(current_page);
+  }
+});
+
+
 (function() {
   var $document = $(document)
   var viewerCount = 0;
