@@ -1,0 +1,15 @@
+.controls
+  - if @document.pages.length > 1
+    a#first-link.first-link.disabled href='#' title='First Page' First
+    a#prev-link.prev-link href='#' title='Previous Page' Previous
+  span.status
+    = "Page "
+    span.current 1
+    = " of "
+    - if @document.pages.length == 1
+      span.total "of 1"
+    - else
+      span.total of #{@document.pages.count}
+  - if @document.pages.length > 1
+    a#next-link.next-link href='#' title='Next Page' Next
+    a#last-link.last-link href='#' title='Last Page' Last
