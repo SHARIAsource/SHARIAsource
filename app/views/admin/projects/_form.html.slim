@@ -16,7 +16,7 @@
               = ff.input :project_id, selected: ff.object.user_id, as: :hidden
               .large-2.columns
                 = ff.input :sort_order, label: User.find(ff.object.user_id).name, collection: 1..6, :required => false
-                = ff.input :project_role, label: false, collection: ["Researcher","Author","Editor","Research Assistant"], prompt: "Pick a project role"
+                = ff.input :project_role, label: false, collection: ["Author","Editor","Researcher","Research Assistant"], prompt: "Pick a project role"
           .row
             .large-12.columns
               = f.input :photo, as: :file, label: 'Photo', input_html: { accept: 'image/png,image/jpg,image/gif' }

@@ -18,7 +18,7 @@
               = proj_user.project_role
               br
               - if proj_user.user.collaborator.present?
-                - if proj_user.user.collaborator.name != "Independent Researcher"
+                - if proj_user.user.collaborator.name.downcase != "independent researcher"
                   = link_to proj_user.user.collaborator.name, collaborator_path(proj_user.user.collaborator), :class => 'project-collaborator'
                 - else
                   = proj_user.user.collaborator.name
