@@ -14,7 +14,7 @@
               = ff.input :id, selected: ff.object.id, as: :hidden
               = ff.input :user_id, selected: ff.object.user_id, as: :hidden
               = ff.input :project_id, selected: ff.object.user_id, as: :hidden
-              .large-2.columns
+              .large-3.columns
                 = ff.input :sort_order, label: User.find(ff.object.user_id).name, collection: 1..6, :required => false
                 = ff.input :project_role, label: false, collection: ["Author","Editor","Researcher","Research Assistant"], prompt: "Pick a project role"
           .row
