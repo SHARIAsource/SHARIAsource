@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
   include HasManyAttachedFiles
+  before_save :create_corpus_builder_editor
+  #Virtual attribute used only to create Corpus Builder Editors
+  attr_accessor :set_as_corpus_builder_editor
 
   ARTICLES_REGEX = /(Al[ |-]|El[ |-]\s*)/
 
@@ -39,6 +42,10 @@ class User < ActiveRecord::Base
     is_admin? && is_editor?
   end
 
+  def is_cb_editor?
+    cb_editor_id.present?
+  end
+
   # This overrides Devise default implementation to disable accounts with
   # out custom disabled flag
   def active_for_authentication?
@@ -63,6 +70,23 @@ class User < ActiveRecord::Base
   end
 
   private
+  def create_corpus_builder_editor
+    set_as_editor = self.set_as_corpus_builder_editor == "1"
+
+    return if set_as_editor && self.is_cb_editor?
+    #if she/he was not an editor but is now
+    if set_as_editor && !self.is_cb_editor?
+      api = Corpusbuilder::Ruby::Api.new
+      self.cb_editor_id = api.create_editor({email: self.email,
+                                        first_name: self.first_name,
+                                         last_name: self.last_name
+                                           })["id"]
+    else
+      #if she/he is no longer an editor
+      # TODO, when endpoint becomes available delete editor from CB
+      self.cb_editor_id = ""
+    end
+  end
 
   def remove_articles
     self.last_name_without_articles = last_name.sub ARTICLES_REGEX, ''

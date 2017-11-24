@@ -63,7 +63,7 @@ class Admin::UsersController < AdminController
                                  :last_name, :about, :avatar, :email,
                                  :collaborator_id, :parent_id, :disabled,
                                  :is_admin, :is_senior_scholar, :is_password_protector,
-                                 :is_original_author)
+                                 :is_original_author, :set_as_corpus_builder_editor)
   end
 
   def fetch_user
