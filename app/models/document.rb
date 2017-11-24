@@ -280,8 +280,7 @@ class Document < ActiveRecord::Base
     self.processed = false
     self.pages.destroy_all
 
-    #self.id retains the id of the document associated with these images
-    SendImagesWorker.new.perform(images, self.id)
+
     images.each_with_index do |image, idx|
       puts "Analyzing image: #{image}"
       source_page = Page.new(image: File.open(image), number: idx + 1)
@@ -405,6 +404,12 @@ class Document < ActiveRecord::Base
 
   def regenerate_pdf(with_text)
     extract_pages(with_text)
+    image_filepaths = []
+    self.pages.each do |page|
+      image_filepaths << page.image.file.file
+    end
+    #self.id retains the id of the document associated with these images
+    SendImagesWorker.perform_async(image_filepaths, self.id)
   end
 
   def self.regenerate_all(options={})
