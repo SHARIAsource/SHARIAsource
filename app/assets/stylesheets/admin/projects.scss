@@ -27,6 +27,10 @@ div.pagination {
   -webkit-animation-iteration-count: infinite;
 }
 
+.initial_status, .ready_status, .error_status {
+  display: inline-block;
+}
+
 @-webkit-keyframes bluePulse {
   from { background-color: #2daebf; -webkit-box-shadow: 0 0 9px #333; }
   50% { background-color: #007d9a; -webkit-box-shadow: 0 0 18px #007d9a; }
