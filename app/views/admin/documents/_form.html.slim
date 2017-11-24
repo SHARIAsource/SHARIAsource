@@ -145,7 +145,6 @@
     }); 
     if ($(".cb_status").length === 1) {
       check_status = setInterval(function(){
-        console.log('checking status');
         $.ajax({
           url: "cb_status",
           cache: false,
@@ -156,5 +155,5 @@
             }
           }
         });
-      }, 6000);
+      }, 4000);
     }

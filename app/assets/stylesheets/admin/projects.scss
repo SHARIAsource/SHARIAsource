@@ -15,6 +15,12 @@ div.pagination {
   -webkit-animation-iteration-count: infinite;
 }
 
+.processing_status {
+  -webkit-animation-name: purplePulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+}
+
 .ready_status {
   -webkit-animation-name: greenPulse;
   -webkit-animation-duration: 2s;
@@ -27,7 +33,7 @@ div.pagination {
   -webkit-animation-iteration-count: infinite;
 }
 
-.initial_status, .ready_status, .error_status {
+.initial_status, .processing_status, .ready_status, .error_status {
   display: inline-block;
 }
 
@@ -35,6 +41,12 @@ div.pagination {
   from { background-color: #2daebf; -webkit-box-shadow: 0 0 9px #333; }
   50% { background-color: #007d9a; -webkit-box-shadow: 0 0 18px #007d9a; }
   to { background-color: #2daebf; -webkit-box-shadow: 0 0 9px #333; }
+}
+
+@-webkit-keyframes purplePulse {
+  from { background-color: #630030; -webkit-box-shadow: 0 0 9px #333; }
+  50% { background-color: #a9014b; -webkit-box-shadow: 0 0 18px #a9014b; }
+  to { background-color: #630030; -webkit-box-shadow: 0 0 9px #333; }
 }
 
 @-webkit-keyframes greenPulse {

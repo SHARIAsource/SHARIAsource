@@ -1,9 +1,12 @@
--if @document.cb_status == "error"
-  p.error_status
-    = "status: error"
 -if @document.cb_status == "initial"
   p.initial_status
     = "status: initial"
--if @document.cb_status == "ready"
+-elsif @document.cb_status == "processing"
+  p.processing_status
+    = "status: processing"
+-elsif @document.cb_status == "ready"
   p.ready_status
     = "status: ready"
+-else
+  p.error_status
+   = "status: error"
