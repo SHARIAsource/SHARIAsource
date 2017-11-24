@@ -87,9 +87,13 @@
     = render partial: 'content_password', locals: {document: @document, f: f}
     .row
       .large-9.columns.end
-        = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
-        = @document.pdf.file.try(:identifier)
-
+        .row
+          = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
+          = "name: #{@document.pdf.file.try(:identifier)}"
+        /cb_status has JavaScript events to it in order to update document status in view
+        - if @document.cb_status
+          .row.cb_status
+            p status: checking...
     - if @document.pages.present?
       .clearfix
         h3 Pages
@@ -139,3 +143,18 @@
         }
       }
     }); 
+    if ($(".cb_status").length === 1) {
+      check_status = setInterval(function(){
+        console.log('checking status');
+        $.ajax({
+          url: "cb_status",
+          cache: false,
+          success: function(status_partial){
+            $(".cb_status").html(status_partial);
+            if ($('.initial_status').length === 0) {
+              clearInterval(check_status)
+            }
+          }
+        });
+      }, 6000);
+    }

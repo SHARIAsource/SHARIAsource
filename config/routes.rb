@@ -80,6 +80,7 @@ Rails.application.routes.draw do
         get 'published'
         get 'unpublished'
       end
+      get 'cb_status', :to => 'documents#cb_status'
     end
 
     resources :attached_files, only: [:index, :create]

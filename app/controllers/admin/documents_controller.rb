@@ -2,6 +2,11 @@ class Admin::DocumentsController < AdminController
   before_filter :fetch_document, only: [:edit, :update, :destroy]
   before_filter :ensure_editor!, only: [:destroy]
 
+  def cb_status
+    @document = Document.find params[:document_id]
+    render :layout => false
+  end
+
   def unpublished
     render_index(false)
   end

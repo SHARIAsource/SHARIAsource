@@ -8,3 +8,39 @@
 div.pagination {
   visibility: hidden !important;
 }
+
+.initial_status {
+  -webkit-animation-name: bluePulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+}
+
+.ready_status {
+  -webkit-animation-name: greenPulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+}
+
+.error_status {
+  -webkit-animation-name: redPulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes bluePulse {
+  from { background-color: #2daebf; -webkit-box-shadow: 0 0 9px #333; }
+  50% { background-color: #007d9a; -webkit-box-shadow: 0 0 18px #007d9a; }
+  to { background-color: #2daebf; -webkit-box-shadow: 0 0 9px #333; }
+}
+
+@-webkit-keyframes greenPulse {
+  from { background-color: #749a02; -webkit-box-shadow: 0 0 9px #333; }
+  50% { background-color: #91bd09; -webkit-box-shadow: 0 0 18px #91bd09; }
+  to { background-color: #749a02; -webkit-box-shadow: 0 0 9px #333; }
+}
+
+@-webkit-keyframes redPulse {
+  from { background-color: #C70039; -webkit-box-shadow: 0 0 9px #333; }
+  50% { background-color: #F03108; -webkit-box-shadow: 0 0 18px #F03108; }
+  to { background-color: #C70030; -webkit-box-shadow: 0 0 9px #333; }
+}
