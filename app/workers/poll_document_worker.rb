@@ -10,12 +10,15 @@ class PollDocumentWorker
         PollDocumentWorker.perform_in(1.minute, document_id, sharia_source_doc_id)
       elsif response["status"] === "error"
         Rails.logger.info "Document #{document_id} failed to be processed by Corpusbuilder: #{response}"
-        raise "Document #{document_id} failed to be processed by Corpusbuilder: #{response}"
+      else
         #start next worker
       end
     rescue Exception => e
-      Rails.logger.error "Error polling Corpusbuilder for document status: #{e}"
-      raise e
+      #Decide how long you want to wait before trying again
+      minutes_til_resend = 1
+
+      Rails.logger.error "Error polling Corpusbuilder for document status: #{e}, polling again in #{minutes_til_resend} minute"
+      PollDocumentWorker.perform_in(minutes_til_resend.minute, document_id, sharia_source_doc_id)
     end
   end
 end
