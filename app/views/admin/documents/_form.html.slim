@@ -80,7 +80,7 @@
 
   .row
     .large-12.columns
-      h3 Content
+      h3#document_content data-document=('edit_document' if !@document.new_record?) Content
       = f.input :content_password, as: :hidden, input_html: {'data-password' => @document.new_content_password}
 
   .scan-only.panel
@@ -125,7 +125,7 @@
     .button-group
       = f.submit "Save and return to menu", class: 'dark_gray button'
       = f.submit "Save and continue", class: 'light_blue button', name: "create_and_continue"
-      = f.submit "Save and edit", class: 'med_blue button', name: "create_and_edit", disabled: true, title: 'This action is only available when creating a new document', id: (@document.new_record? ? "new_create_and_edit" : "create_and_edit")
+      = f.submit "Save and edit", class: 'med_blue button', name: "create_and_edit", title: 'This action is only available when creating a new document', id: (@document.new_record? ? "new_create_and_edit" : "create_and_edit")
 
   javascript:
     dataChanged = false;     // global variable flags unsaved changes      
@@ -143,17 +143,4 @@
         }
       }
     }); 
-    if ($(".cb_status").length === 1) {
-      check_status = setInterval(function(){
-        $.ajax({
-          url: "cb_status",
-          cache: false,
-          success: function(status_partial){
-            $(".cb_status").html(status_partial);
-            if ($('.initial_status').length === 0) {
-              clearInterval(check_status)
-            }
-          }
-        });
-      }, 4000);
-    }
+
