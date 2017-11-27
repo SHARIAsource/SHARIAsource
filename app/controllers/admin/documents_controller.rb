@@ -23,10 +23,6 @@ class Admin::DocumentsController < AdminController
   end
 
   def edit
-    unless @document.processed
-      flash[:error] = "Sorry, that document cannot be edited until after it has been processed by the system"
-      redirect_to unpublished_admin_documents_path
-    end
     @document.set_new_content_password
   end
 
