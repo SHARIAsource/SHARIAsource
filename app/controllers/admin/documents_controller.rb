@@ -4,7 +4,7 @@ class Admin::DocumentsController < AdminController
 
   def cb_status
     @document = Document.find params[:document_id]
-    render :layout => false
+    render :partial => 'cb_status'
   end
 
   def unpublished
