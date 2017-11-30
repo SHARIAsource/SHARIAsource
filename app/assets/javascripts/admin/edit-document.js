@@ -1,11 +1,8 @@
 var ready;
 ready = function() {
   var is_editing = $('#document_content').length > 0 &&  $('#document_content')[0].getAttribute("data-document") === "edit_document";
-
   if (is_editing) {
     reset_form = setInterval(function(){
-      console.log("Reseting form");
-      //$('.scan-only').load(window.location.href + " scan-only")
       $.ajax({
         url: window.location.href,
         cache: false,
@@ -34,4 +31,4 @@ ready = function() {
   }, 4000)};
 };
 $(document).ready(ready);
-$(document).on('page:load', ready);
+$(document).on('page:load', ready, is_editing=false);
