@@ -68,9 +68,15 @@ class ProjectsController < ApplicationController
       @search = []
     
       @filters.each do |filters|
+        if filters.named_filter_documents.any?
+          selected_documents = filters.named_filter_documents
+           ref_docs = selected_documents.map(&:referenced_documents).map(&:ids).flatten
+          #referenced_documents = filters.named_filter_documents.map(
+        end
         search = Document.search do |query|
           query.fulltext filters.q
           query.with(:published, true)
+          query.with(:id, ref_docs) if ref_docs
           query.with(:contributor_id, filters.contributor.id) if filters.contributor
           query.with(:region_ids, filters.region.id) if filters.region
           query.with(:language_id, filters.language.id) if filters.language

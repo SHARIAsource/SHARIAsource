@@ -18,6 +18,9 @@
           = f.input :era_id, collection: Era.where({})
           = f.input :document_type_id, collection: DocumentType.where({})
           = f.input :project_id, collection: Project.where({})
+    .large-12.columns
+      .panel
+        = f.association :named_filter_documents, label: "All Documents Referneced By:",collection: Document.all
   .row
     .large-12.columns
       = f.submit class: 'round button'

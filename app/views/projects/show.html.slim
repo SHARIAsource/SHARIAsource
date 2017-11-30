@@ -53,4 +53,6 @@
         .search-sidebar
           = render 'searches/filters', locals: { f: f }
         .search-results
-          = render 'searches/results', locals: { f: f }
+          - unless @filters.is_a?(NamedFilter)
+            = render 'searches/results', locals: { f: f }
+
