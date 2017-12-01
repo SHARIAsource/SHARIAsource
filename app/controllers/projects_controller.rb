@@ -6,43 +6,6 @@ class ProjectsController < ApplicationController
   def show
   end
 
-  def paramterized_search
-    @filters = SearchFilters.new permitted_params
-    date_from, date_to = parse_dates
-    @languages = Language.rank(:sort_order)
-    @contributors = User.joins(:documents).distinct
-    @topics = Topic.all
-    @themes = Theme.all
-    @regions = Region.hash_tree
-    @eras = Era.hash_tree
-    @document_types = DocumentType.hash_tree
-    @search = Document.search do |query|
-      query.fulltext @filters.q
-      query.with(:published, true)
-      query.with(:topic_ids, @filters.topic) if @filters.topic
-      query.with(:theme_ids, @filters.theme) if @filters.theme
-      query.with(:language_id, @filters.language) if @filters.language
-      query.with(:contributor_id, @filters.contributor) if @filters.contributor
-      query.with(:region_ids, @filters.region) if @filters.region
-      query.with(:era_ids, @filters.era) if @filters.era
-      if @filters.document_type
-        query.with(:document_type_id, @filters.document_type)
-      end
-      if @filters.sort.present?
-        query.order_by(order_field(@filters.sort),
-                       order_direction(@filters.sort))
-      end
-      if @filters.date_format == 'ce'
-        query.with(:gregorian_date).greater_than(date_from) if date_from
-        query.with(:gregorian_date).less_than(date_to) if date_to
-      elsif @filters.date_format == 'ah'
-        query.with(:lunar_hijri_date).greater_than(date_from) if date_from
-        query.with(:lunar_hijri_date).less_than(date_to) if date_to
-      end
-      query.paginate page: @filters.page, per_page: 20
-    end
-  end
-
   def search
     render :show
   end
@@ -50,28 +13,15 @@ class ProjectsController < ApplicationController
   private
   def fetch_filters
     filter_ids = params[:named_filter_id]
-    @filters = NamedFilter.find(filter_ids) if filter_ids.present?
-    if @filters.nil?
-      if permitted_params.present?
-        paramterized_search
-      else 
-        @filters = NamedFilter.new
-        @search = Document.search do |query|
-          query.fulltext @filters.q
-          query.with(:published, true)
-          query.paginate :page => params[:page] || 1, :per_page => 5
-        end
-      end
-    else
-      #if this method  is being hit by clicking checkboxes on projects show page it will be an array
-      #if not it will just be an instance of the NamedFilter class
+    #clicking a filter updates the URL, see if nothing has been selected
+    @filters = filter_ids.present? ? @filters = NamedFilter.find(filter_ids) : nil
+    if @filters.present?
+      #if this method is being hit by clicking checkboxes on projects show page it will be an array
       @search = []
-    
       @filters.each do |filters|
         if filters.named_filter_documents.any?
           selected_documents = filters.named_filter_documents
-           ref_docs = selected_documents.map(&:referenced_documents).map(&:ids).flatten
-          #referenced_documents = filters.named_filter_documents.map(
+          ref_docs = selected_documents.map(&:referenced_documents).map(&:ids).flatten
         end
         search = Document.search do |query|
           query.fulltext filters.q

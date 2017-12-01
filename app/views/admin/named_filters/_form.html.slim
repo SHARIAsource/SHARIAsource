@@ -20,7 +20,7 @@
           = f.input :project_id, collection: Project.where({})
     .large-12.columns
       .panel
-        = f.association :named_filter_documents, label: "All Documents Referneced By:",collection: Document.all
+        = f.association :named_filter_documents, label: "All Documents Referenced By:",collection: Document.all
   .row
     .large-12.columns
       = f.submit class: 'round button'
