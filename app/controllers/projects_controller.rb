@@ -13,10 +13,10 @@ class ProjectsController < ApplicationController
   private
   def fetch_filters
     filter_ids = params[:named_filter_id]
-    #clicking a filter updates the URL, see if nothing has been selected
+    # clicking a filter updates the URL, see if anything has been selected
     @filters = filter_ids.present? ? @filters = NamedFilter.find(filter_ids) : nil
     if @filters.present?
-      #if this method is being hit by clicking checkboxes on projects show page it will be an array
+      # we build an array of searches to handle multiple named filters
       @search = []
       @filters.each do |filters|
         if filters.named_filter_documents.any?
