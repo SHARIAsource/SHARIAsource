@@ -1,7 +1,7 @@
-var $document = $(document)
+var ready;
 
-$document.on('page:change', function() {
-  $document.foundation()
+ready = function() {
+  $(document).foundation()
 
   $('select[multiple]').chosen()
 
@@ -35,4 +35,6 @@ $document.on('page:change', function() {
     height: 150,
     content_css: $('meta[name="tinymce-content-css"]').attr('content')
   })
-})
+}
+$(document).on('page:change', ready);
+$(document).on('turbolinks:load', ready);
