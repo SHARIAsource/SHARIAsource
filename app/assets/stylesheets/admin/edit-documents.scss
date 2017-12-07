@@ -1,0 +1,36 @@
+.processing_state {
+  -webkit-animation-name: stateBluePulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+}
+
+.ready_state {
+  -webkit-animation-name: stateGreenPulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+}
+
+.error_state {
+  -webkit-animation-name: stateRedPulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+}
+
+// States
+@-webkit-keyframes stateBluePulse {
+  from { color: #2daebf  }
+  50% { color: #007d9a  }
+  to { color: #2daebf  }
+}
+
+@-webkit-keyframes stateGreenPulse {
+  from { color: #749a02  }
+  50% { color: #91bd09  }
+  to { color: #749a02  }
+}
+
+@-webkit-keyframes stateRedPulse {
+  from { color: #C70039  }
+  50% { color: #F03108  }
+  to { color: #C70039  }
+}

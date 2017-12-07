@@ -91,7 +91,7 @@
           = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
           = @document.pdf.file.try(:identifier)
         /cb_status has JavaScript events to it in order to update document status in view
-        - if @document.cb_status
+        - if @document.ocr_state
           .row.cb_status
             p status: checking...
     - if @document.pages.present?

@@ -18,7 +18,8 @@ ready = function() {
 
   if (is_editing) {
     check_status = setInterval(function(){
-      if ($('.ready_status').length === 1 || $('.error_status').length === 1) {
+      var is_editing = $('#document_content').length > 0 &&  $('#document_content')[0].getAttribute("data-document") === "edit_document";
+      if ($('.ready_status').length === 1 || $('.error_status').length === 1 || !is_editing) {
         clearInterval(check_status);
       }
       $.ajax({
@@ -32,3 +33,4 @@ ready = function() {
 };
 $(document).ready(ready);
 $(document).on('page:load', ready, is_editing=false);
+$(document).on('turbolinks:load',ready, is_editing=false);

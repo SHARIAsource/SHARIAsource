@@ -1,12 +1,11 @@
--if @document.cb_status == "initial"
-  p.initial_status
-    = "status: initial"
--elsif @document.cb_status == "processing"
-  p.processing_status
-    = "status: processing"
--elsif @document.cb_status == "ready"
-  p.ready_status
-    = "status: ready"
--else
-  p.error_status
-   = "status: error"
+div OCR Process:
+.large-12.columns
+  - OcrState.states.each do |state|
+    .large-12.columns class=(@document.ocr_state.state == state.first ? "#{@document.ocr_state.status}_state" : "")
+      = "#{state.first}"
+      - if @document.ocr_state.state == state.first && @document.ocr_state.state != 'complete'
+        = ": #{@document.ocr_state.status}"
+        - if @document.ocr_state.status == 'error'
+          = ", #{@document.ocr_state.error_message}"
+      - if @document.ocr_state[:state] > OcrState.states[state.first]
+        = ": completed"

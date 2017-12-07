@@ -46,6 +46,7 @@ class Document < ActiveRecord::Base
     association_foreign_key: :document_id
   has_many :pages, dependent: :destroy
   has_many :document_reviews, -> { order(:created_at) }, dependent: :destroy
+  has_one :ocr_state
 
   def current_review  #TODO: private
     document_reviews.last if reviewed?
@@ -409,6 +410,7 @@ class Document < ActiveRecord::Base
       image_filepaths << page.image.file.file
     end
     #self.id retains the id of the document associated with these images
+    ocr_state = OcrState.create!(state: :sending_images, status: :processing, document_id: self.id)
     SendImagesWorker.perform_async(image_filepaths, self.id)
   end
 
