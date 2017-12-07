@@ -119,6 +119,8 @@ class Document < ActiveRecord::Base
       language.try(:name)
     end
 
+    integer :id, multiple: true
+
     integer :user_id
 
     integer :contributor_id

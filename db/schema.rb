@@ -11,11 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 <<<<<<< cec525946e3dca6bb74da01927918432d884be8d
 ActiveRecord::Schema.define(version: 20171111000741) do
 =======
 ActiveRecord::Schema.define(version: 20170929133811) do
 >>>>>>> Update latest migrations for Rails 5, update schema.rb
+=======
+ActiveRecord::Schema.define(version: 20171129203005) do
+>>>>>>> 8fedbac8750f094b8863817360a1c13f2b51494f
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +83,15 @@ ActiveRecord::Schema.define(version: 20170929133811) do
   add_index "document_documents", ["document_id", "referenced_id"], name: "index_document_documents_on_document_id_and_referenced_id", unique: true, using: :btree
   add_index "document_documents", ["document_id"], name: "index_document_documents_on_document_id", using: :btree
   add_index "document_documents", ["referenced_id"], name: "index_document_documents_on_referenced_id", using: :btree
+
+  create_table "document_named_filters", force: :cascade do |t|
+    t.integer "document_id"
+    t.integer "named_filter_id"
+  end
+
+  add_index "document_named_filters", ["document_id", "named_filter_id"], name: "index_document_named_filters_on_document_id_and_named_filter_id", unique: true, using: :btree
+  add_index "document_named_filters", ["document_id"], name: "index_document_named_filters_on_document_id", using: :btree
+  add_index "document_named_filters", ["named_filter_id"], name: "index_document_named_filters_on_named_filter_id", using: :btree
 
   create_table "document_reviews", force: :cascade do |t|
     t.integer  "document_id"
@@ -285,6 +298,15 @@ ActiveRecord::Schema.define(version: 20170929133811) do
   end
 
   add_index "miscs", ["slug"], name: "index_miscs_on_slug", using: :btree
+
+  create_table "named_filter_documents", force: :cascade do |t|
+    t.integer "named_filter_id"
+    t.integer "document_id"
+  end
+
+  add_index "named_filter_documents", ["document_id"], name: "index_named_filter_documents_on_document_id", using: :btree
+  add_index "named_filter_documents", ["named_filter_id", "document_id"], name: "index_named_filter_documents_on_named_filter_id_and_document_id", unique: true, using: :btree
+  add_index "named_filter_documents", ["named_filter_id"], name: "index_named_filter_documents_on_named_filter_id", using: :btree
 
   create_table "named_filters", force: :cascade do |t|
     t.string   "name"

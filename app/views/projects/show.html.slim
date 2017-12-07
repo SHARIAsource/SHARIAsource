@@ -44,13 +44,24 @@
       - @project.named_filters.each do |filter|
         .ss-cb
           / the additional_search class below has a JavaScript click event attached to it, don't change the class name
-          = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', :checked => @filters.is_a?(NamedFilter) || @filters.is_a?(SearchFilters) ? false : @filters.include?(filter)
+          -if @filters.present?
+            = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', :checked => @filters.is_a?(NamedFilter) || @filters.is_a?(SearchFilters) ? false : @filters.include?(filter)
+          -else
+            = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input'
           = label_tag :name, filter.name, class: 'named_filter_label ss-cb-label'
 
   .inner
-    = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|
-      .search-two-columns.contributor-search
-        .search-sidebar
-          = render 'searches/filters', locals: { f: f }
-        .search-results
-          = render 'searches/results', locals: { f: f }
+    -if @filters.present?
+      = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|
+        .search-two-columns.contributor-search
+          .search-sidebar
+            = render 'searches/filters', locals: { f: f }
+          .search-results
+            - unless @filters.is_a?(NamedFilter)
+              = render 'searches/project_results', locals: { f: f }
+    -else
+      = simple_form_for NamedFilter.new, url: search_path, method: :get, remote: true do |f|
+        .search-two-columns.contributor-search
+          .search-sidebar
+            = render 'searches/filters', locals: { f: f }
+          .search-results
