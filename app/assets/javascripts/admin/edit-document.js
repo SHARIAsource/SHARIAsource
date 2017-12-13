@@ -19,7 +19,7 @@ ready = function() {
   if (is_editing) {
     check_status = setInterval(function(){
       var is_editing = $('#document_content').length > 0 &&  $('#document_content')[0].getAttribute("data-document") === "edit_document";
-      if ($('.ready_status').length === 1 || $('.error_status').length === 1 || !is_editing) {
+      if ($('.ready_state').length === 1 || $('.error_state').length === 1 || !is_editing) {
         clearInterval(check_status);
       }
       $.ajax({
