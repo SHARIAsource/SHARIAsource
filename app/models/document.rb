@@ -410,7 +410,8 @@ class Document < ActiveRecord::Base
       image_filepaths << page.image.file.file
     end
     #self.id retains the id of the document associated with these images
-    ocr_state = OcrState.create!(state: :sending_images, status: :processing, document_id: self.id)
+    # set state in error until it begins to process in the send images worker
+    OcrState.create!(state: :sending_images, status: :error, document_id: self.id)
     SendImagesWorker.perform_async(image_filepaths, self.id)
   end
 

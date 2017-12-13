@@ -11,7 +11,7 @@ class CreateDocumentWorker
       response = api.create_document({:images => image_ids, :metadata => document.to_json, :editor_email => document.user.email})
       PollDocumentWorker.perform_async(response["id"], document_id)
     rescue Exception => e
-      ocr_state.set_error_message(e)
+      ocr_state.set_error_message(e.response)
       Rails.logger.error "Error creating Corpusbuilder document: #{e}"
     end
   end

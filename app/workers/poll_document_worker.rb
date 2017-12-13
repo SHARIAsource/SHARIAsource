@@ -18,11 +18,8 @@ class PollDocumentWorker
         ocr_state.update_attributes(state: :complete, status: :ready)
       end
     rescue Exception => e
-      minutes_til_resend = 1
-      ocr_state.set_error_message(e)
-
-      Rails.logger.error "Error polling Corpusbuilder for document status: #{e}, polling again in #{minutes_til_resend} minute"
-      PollDocumentWorker.perform_in(minutes_til_resend.minute, document_id, sharia_source_doc_id)
+      ocr_state.set_error_message(e.response)
+      Rails.logger.error "Error polling Corpusbuilder for document status: #{e}"
     end
   end
 end

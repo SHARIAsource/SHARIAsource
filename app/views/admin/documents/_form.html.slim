@@ -89,7 +89,7 @@
       .large-9.columns.end
         .row
           = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
-          = @document.pdf.file.try(:identifier)
+          = @document.pdf.file.try(:identifier) unless @document.ocr_state
         /cb_status has JavaScript events to it in order to update document status in view
         - if @document.ocr_state
           .row.cb_status

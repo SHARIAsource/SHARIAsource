@@ -1,4 +1,4 @@
-div OCR Process:
+div OCR Process: #{@document.pdf.file.try(:identifier)}
 .large-12.columns
   - OcrState.states.each do |state|
     .large-12.columns class=(@document.ocr_state.state == state.first ? "#{@document.ocr_state.status}_state" : "")
