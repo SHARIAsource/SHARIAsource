@@ -144,7 +144,7 @@
 
       .meta-column.last.references.js-same-height
         h3 This document is referenced by:
-        - referencing = @document.referencing_documents
+        - referencing = @document.referencing_documents.select {|doc| doc.published}
         - display_limit = 10
         - if referencing.present?
           ul.hidden-ref-list
