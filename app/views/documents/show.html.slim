@@ -137,7 +137,7 @@
         h3 Documents referenced:
         - if @document.referenced_documents.present?
           ul
-            - @document.referenced_documents.each do |d|
+            - @document.referenced_documents.select {|doc| doc.published}.each do |d|
               li= link_to d.title_with_author, document_path(d.object)
         - else
           em none
