@@ -141,6 +141,11 @@
               li= link_to d.title_with_author, document_path(d.object)
         - else
           em none
+        - if @document.owned_referenced_documents(current_user).present?
+          h3 Unpublished
+          ul
+            - @document.owned_referenced_documents(current_user).each do |d|
+              li= link_to d.title_with_author, document_path(d.object), class: "owned_document"
 
       .meta-column.last.references.js-same-height
         h3 This document is referenced by:
@@ -154,12 +159,22 @@
                 li.hidden-ref= link
               - else
                 li= link
-          - if referencing.count > display_limit
-            .suggest-tags
-              = link_to 'See More', '#', class: 'js-expand-referencing'
-              = link_to 'See Less', '#', class: 'js-expand-referencing', style: 'display: none;'
         - else
           em none
+        - owned_referencing = @document.owned_referencing_documents(current_user)
+        - if owned_referencing.present?
+          h3 Unpublished
+          ul.hidden-ref-list
+            - owned_referencing.each_with_index do |d, idx|
+              - link = link_to d.title_with_author, document_path(d.object), class: 'owned_document'
+              - if idx > display_limit
+                li.hidden-ref= link
+              - else
+                li= link
+        - if (referencing.count + owned_referencing.count) > display_limit
+          .suggest-tags
+            = link_to 'See More', '#', class: 'js-expand-referencing'
+            = link_to 'See Less', '#', class: 'js-expand-referencing', style: 'display: none;'
 
 - if @document.pages.present?
   = render 'documents/scan_no_text'
