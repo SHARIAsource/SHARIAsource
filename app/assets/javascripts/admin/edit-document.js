@@ -26,7 +26,7 @@ ready = function() {
         url: "cb_status",
         cache: false,
         success: function(status_partial){
-          $(".cb_status").html(status_partial);
+          $(".cb_state").html(status_partial);
         }
       });
   }, 4000)};

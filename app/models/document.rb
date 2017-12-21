@@ -46,7 +46,7 @@ class Document < ActiveRecord::Base
     association_foreign_key: :document_id
   has_many :pages, dependent: :destroy
   has_many :document_reviews, -> { order(:created_at) }, dependent: :destroy
-  has_one :ocr_state
+  has_one :ocr_state, dependent: :destroy
 
   def current_review  #TODO: private
     document_reviews.last if reviewed?
