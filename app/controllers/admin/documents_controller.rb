@@ -57,7 +57,6 @@ class Admin::DocumentsController < AdminController
 
   def update
     update_params = permitted_params
-
     if current_user.requires_approval?
       update_params[:published] = false
     end
@@ -91,8 +90,11 @@ class Admin::DocumentsController < AdminController
           path = published_admin_documents_path
         end
       end
-
-      redirect_to path
+      if permitted_params[:document_show_page]
+        redirect_to :back
+      else
+        redirect_to path
+      end
     else
       flash[:error] = @document.errors.full_messages.to_sentence
       render :edit
@@ -123,6 +125,7 @@ class Admin::DocumentsController < AdminController
                  :reviewed,
                  :use_content_password,
                  :content_password,
+                 :document_show_page,
                  region_ids: [], theme_ids: [], topic_ids: [], tag_ids: [],
                  referenced_document_ids: [], era_ids: [],
                  body_attributes: [:id, :text], pages_attributes: [

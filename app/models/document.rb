@@ -5,7 +5,7 @@ class Document < ActiveRecord::Base
   include PdfParser
   alias_attribute :name, :title
 
-  attr_accessor :new_content_password, :reviewing_user
+  attr_accessor :new_content_password, :reviewing_user, :document_show_page
 
   BASE_PAGE_DIRECTORY = Rails.root.join('tmp', 'pdf-pages').to_s.freeze
   NO_TEXT_MESSAGE = "No text to show"
