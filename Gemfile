@@ -44,6 +44,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'will_paginate', '~> 3.1'
 gem 'eventmachine', '~> 1.0.4'
 gem 'awesome_print'
+gem 'corpusbuilder-ruby', path: './corpusbuilder-ruby-client'
 
 group :development do
   gem 'annotate', '~> 2.6.5'
