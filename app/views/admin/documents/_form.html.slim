@@ -1,4 +1,4 @@
-= simple_form_for @document, url: form_url, html: { class: 'edit_document' } do |f|
+= simple_form_for @document, url: form_url, html: { multipart: true, class: 'edit_document' } do |f|
   .row
     .large-4.columns
       = f.input :title, autofocus: true
@@ -88,7 +88,20 @@
     .row
       .large-9.columns.end
         .row
-          = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
+          .inner-wrapper style="position: relative; padding: 20px;"
+            script src="http://91.shariasource.berkman.temphost.net:7991/packs/client.js"
+            link rel="stylesheet" href="http://91.shariasource.berkman.temphost.net:7991/packs/client.css"
+            javascript:
+              $( document ).ready(function() {
+                //var = ;
+                CorpusBuilderUploader.init(
+                  document.getElementById('corpusbuilderuploader'),
+                  {
+                    baseUrl: 'http://91.shariasource.berkman.temphost.net:9091/corpusbuilder',
+                  }
+                );
+              });
+            #corpusbuilderuploader
           = @document.pdf.file.try(:identifier) unless @document.ocr_state
         /cb_state has JavaScript events to it in order to update document status/state
         - if @document.pdf.file.try(:identifier) 
