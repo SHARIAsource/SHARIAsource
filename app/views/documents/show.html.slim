@@ -161,7 +161,25 @@
         - else
           em none
 
-- if @document.pages.present?
+- if @document.pages.present? and @document.ocr_state.nil?
   = render 'documents/scan_no_text'
-- elsif @document.body.present?
+- elsif @document.body.present? and @document.ocr_state.nil?
   = render 'documents/body_text', document: @document
+- else
+  .inner-wrapper style="position: relative; padding: 20px;"
+    script src="http://91.shariasource.berkman.temphost.net:7991/packs/client.js"
+    link rel="stylesheet" href="http://91.shariasource.berkman.temphost.net:7991/packs/client.css"
+    javascript:
+      $( document ).ready(function() {
+        var documentId = "#{@document.ocr_state.cb_document_id}";
+        CorpusBuilder.init(
+          document.getElementById('corpusbuilder'),
+          {
+            baseUrl: 'http://91.shariasource.berkman.temphost.net:9091/corpusbuilder',
+            documentId: documentId,
+            showImage: #{ params[:simple] ? 'false' : 'true' },
+            editorEmail: "#{@document.user.email}"
+          }
+        );
+      });
+    #corpusbuilder

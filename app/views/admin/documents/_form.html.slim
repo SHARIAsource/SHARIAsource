@@ -97,14 +97,25 @@
                 CorpusBuilderUploader.init(
                   document.getElementById('corpusbuilderuploader'),
                   {
-                    baseUrl: 'http://91.shariasource.berkman.temphost.net:9091/corpusbuilder',
+                    baseUrl: "#{admin_attached_files_url}?type=Document",
+                    onSuccess: function(file) {
+                                 if($('#document_img_ids').val()) {
+                                   var ids = [$('#document_img_ids').val()]
+                                   ids.push(file.id);
+                                 } else {
+                                   var ids = [file.id];
+                                 }
+                                   $('#document_img_ids').val(ids);
+                                   console.log('uploaded', file);
+                               }
                   }
                 );
               });
             #corpusbuilderuploader
           = @document.pdf.file.try(:identifier) unless @document.ocr_state
+          = f.input :img_ids, :multiple => true, class: 'img_ids', as: :hidden
         /cb_state has JavaScript events to it in order to update document status/state
-        - if @document.pdf.file.try(:identifier) 
+        - if @document.ocr_state
           .row.cb_state
             p status: checking...
     - if @document.pages.present?

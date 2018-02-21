@@ -37,14 +37,13 @@ class Admin::DocumentsController < AdminController
     # else
     #   contributor = current_user
     # end
-
     @document = current_user.uploaded_documents.build document_params
-
     if @document.save
       @document.index!
       flash[:notice] = 'Document created successfully'
-      @document.attached_files.each do |file|
-        SendDocumentWorker.perform_asynch( { images:[], metadata: file })
+      if params["document"]["img_ids"]
+        OcrState.create!(state: :sending_document, status: :processing, document_id: @document.id)
+        CreateDocumentWorker.perform_async([{id: params["document"]["img_ids"]}], @document.id)
       end
       if params[:create_and_continue]
         redirect_to new_admin_document_path
@@ -128,7 +127,7 @@ class Admin::DocumentsController < AdminController
                  :use_content_password,
                  :content_password,
                  region_ids: [], theme_ids: [], topic_ids: [], tag_ids: [],
-                 referenced_document_ids: [], era_ids: [],
+                 referenced_document_ids: [], era_ids: [], images: [],
                  body_attributes: [:id, :text], pages_attributes: [
                    :id, body_attributes: [:id, :text, :hybrid_text]
                  ]

@@ -5,7 +5,7 @@ class Document < ActiveRecord::Base
   include PdfParser
   alias_attribute :name, :title
 
-  attr_accessor :new_content_password, :reviewing_user
+  attr_accessor :new_content_password, :reviewing_user, :img_ids
 
   BASE_PAGE_DIRECTORY = Rails.root.join('tmp', 'pdf-pages').to_s.freeze
   NO_TEXT_MESSAGE = "No text to show"
@@ -73,6 +73,7 @@ class Document < ActiveRecord::Base
   scope :published, -> { where(published: true) }
 
   mount_uploader :pdf, PdfUploader
+  mount_uploaders :images, ImageUploader
   accepts_nested_attributes_for :pages, :body
 
   searchable auto_index: false do
@@ -410,8 +411,6 @@ class Document < ActiveRecord::Base
       image_filepaths << page.image.file.file
     end
     #self.id retains the id of the document associated with these images
-    # set state in error until it begins to process in the send images worker
-    OcrState.create!(state: :sending_images, status: :error, document_id: self.id)
     SendImagesWorker.perform_async(image_filepaths, self.id)
   end
 
