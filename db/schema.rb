@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171128212105) do
+ActiveRecord::Schema.define(version: 20180201101837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -310,6 +310,8 @@ ActiveRecord::Schema.define(version: 20171128212105) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "sort_order"
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
     t.index ["name"], name: "index_regions_on_name"
     t.index ["parent_id"], name: "index_regions_on_parent_id"
     t.index ["sort_order"], name: "index_regions_on_sort_order"
