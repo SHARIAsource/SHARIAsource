@@ -85,8 +85,16 @@
 
   .scan-only.panel
     = render partial: 'content_password', locals: {document: @document, f: f}
-    .row
+    - if current_user.is_cb_editor?
+      .row
+        .large-9.columns.end
+          a#toggleOCR.btn-sm class="button tiny" OCR
+    .row#non-ocr class="#{ @document.ocr_state.present? ? 'hide' : '' }"
       .large-9.columns.end
+        = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
+        = @document.pdf.file.try(:identifier)
+    .row#ocr class="#{ @document.ocr_state.present? ? '' : 'hide' }"
+      .large-12.columns
         .row
           .inner-wrapper style="position: relative; padding: 20px;"
             script src="http://91.shariasource.berkman.temphost.net:7991/packs/client.js"
@@ -168,3 +176,15 @@
       }
     }); 
 
+  javascript:
+    $( document ).ready(function() {
+      $('#toggleOCR').click(function(){
+        if($("#ocr").hasClass('hide')) {
+          $("#ocr").removeClass('hide');
+          $("#non-ocr").addClass('hide');
+        } else {
+          $("#ocr").addClass('hide');
+          $("#non-ocr").removeClass('hide');
+        }
+      })
+    });

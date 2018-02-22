@@ -410,8 +410,6 @@ class Document < ActiveRecord::Base
     self.pages.each do |page|
       image_filepaths << page.image.file.file
     end
-    #self.id retains the id of the document associated with these images
-    SendImagesWorker.perform_async(image_filepaths, self.id)
   end
 
   def self.regenerate_all(options={})

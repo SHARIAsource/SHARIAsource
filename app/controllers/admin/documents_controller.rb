@@ -26,6 +26,16 @@ class Admin::DocumentsController < AdminController
     @document.set_new_content_password
   end
 
+  #CorpusBilder expects {images: {id: #}} so update document create params to match that
+  #expectation
+  def build_cb_params(array_of_ids)
+    cb_params = []
+    array_of_ids.split(',').each do |img_id|
+      cb_params << {id: img_id}
+    end
+    cb_params
+  end
+
   def create
     # If current_user is allowed to set contributor, use value from them.
     #   Otherwise, set the contributor to the current_user
@@ -41,9 +51,9 @@ class Admin::DocumentsController < AdminController
     if @document.save
       @document.index!
       flash[:notice] = 'Document created successfully'
-      if params["document"]["img_ids"]
+      if params["document"]["img_ids"].present?
         OcrState.create!(state: :sending_document, status: :processing, document_id: @document.id)
-        CreateDocumentWorker.perform_async([{id: params["document"]["img_ids"]}], @document.id)
+        CreateDocumentWorker.perform_async(build_cb_params(params["document"]["img_ids"]), @document.id)
       end
       if params[:create_and_continue]
         redirect_to new_admin_document_path

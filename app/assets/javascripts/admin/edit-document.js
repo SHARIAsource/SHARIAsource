@@ -7,10 +7,10 @@ ready = function() {
         url: window.location.href,
         cache: false,
         success: function(edit_form){
-          var scan_only_div = edit_form.search('<div class="scan-only panel">');
+          var scan_only_div = edit_form.search('<div class="row cb_state">');
           var next_div = edit_form.search('<div class="noscan-only panel">') - 1;
           var scan_only_html = edit_form.substr(scan_only_div, next_div - scan_only_div );
-          $(".scan-only").replaceWith(scan_only_html);
+          $(".cb_state").replaceWith(scan_only_html);
           clearInterval(reset_form);
         }
       });
