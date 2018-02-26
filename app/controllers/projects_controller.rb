@@ -14,7 +14,13 @@ class ProjectsController < ApplicationController
   def fetch_filters
     filter_ids = params[:named_filter_id]
     # clicking a filter updates the URL, see if anything has been selected
-    @filters = filter_ids.present? ? @filters = NamedFilter.find(filter_ids) : nil
+    if filter_ids.present?
+      @filters = NamedFilter.find(filter_ids)
+      @check_filters = true
+    else
+      @filters = @project.named_filters.to_ary
+      @check_filters = false
+    end
     if @filters.present?
       # we build an array of searches to handle multiple named filters
       @search = []
