@@ -22,6 +22,8 @@ span.count= "#{@search.map(&:total).sum} #{'result'.pluralize(@search.map(&:tota
 
       .result-thumbnail
         = link_to(image_tag(document.thumb.url), document_path(document.object)) if document.thumb
+  -if  @named_results.current_page > 1
+    p.more-results= link_to 'Back', search_path(id: @filters.first.project.id, filter_ids: @filters.map(&:id), page: @named_results.previous_page), class: 'ss-button', data: { remote: true }
   -if @named_results.total_pages != @named_results.current_page
     p.more-results= link_to 'Load More Results', search_path(id: @filters.first.project.id, filter_ids: @filters.map(&:id), page: @named_results.next_page), class: 'ss-button', data: { remote: true }
 / there is some JS which routes clicks from the 'Load More Results' button to the hidden will_paginate controls, just made it quicker and easier to implement
