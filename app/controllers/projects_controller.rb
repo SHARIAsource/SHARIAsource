@@ -42,7 +42,9 @@ class ProjectsController < ApplicationController
         end
         @search.push(search)
       end
-      named_results = @search.map(&:results).inject(nil) {|all_results, search_results| all_results = [] if all_results.nil?; all_results + search_results}
+      # this was a little unusual as we were not just creating unions of different search terms, but unions of different searches. So, the following line is
+      # unfortunately more complicated than would be desired
+      named_results = @search.map(&:results).inject(nil) {|all_results, search_results| all_results = [] if all_results.nil?; all_results + search_results}.uniq
       @named_results = named_results.paginate :page => params[:page] || 1, :per_page => 5
     end
   end

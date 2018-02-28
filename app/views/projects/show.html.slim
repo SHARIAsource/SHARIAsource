@@ -19,34 +19,34 @@
               br
               - if proj_user.user.collaborator.present?
                 - if proj_user.user.collaborator.name.downcase != "independent researcher"
-                  = link_to proj_user.user.collaborator.name, collaborator_path(proj_user.user.collaborator), :class => 'project-collaborator'
+                  - collaborator_link = (proj_user.external_collaborator && proj_user.user.collaborator.url.present?)  ? proj_user.user.collaborator.url : collaborator_path(proj_user.user.collaborator)
+                  = link_to proj_user.user.collaborator.name, collaborator_link, :class => 'project-collaborator'
                 - else
                   = proj_user.user.collaborator.name
               - else
                 <span>&nbsp;</span>
     .large-6.columns
       - if @project.photo && @project.photo.url
-        = image_tag(@project.photo.url, alt: @project.name, class: "project-photo")
+        = image_tag(@project.photo.url, alt: @project.name, class: "project-photo #{'scaled-photo' if @project.scale_photo}")
 
-  .inner.document-content
-    .large-8.columns
-      h4.project-header Project Profile
-      .project-description.project-description-short== @project.description
-      br
-      .show-more-description >> Show More
-      .show-less-description >> Show Less
-
-    .large-4.columns
-      h4.project-header Collections
-      - @project.named_filters.each do |filter|
-        .ss-cb
-          / the additional_search class below has a JavaScript click event attached to it, don't change the class name
-          -if @filters.present?
-            = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', :checked => @check_filters && (@filters.is_a?(NamedFilter) || @filters.is_a?(SearchFilters) ? false : @filters.include?(filter))
-          -else
-            = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input'
-          = label_tag :name, filter.name, class: 'named_filter_label ss-cb-label'
-
+  .inner.document-content.project-content
+    .project-summary.project-description.project-description-short
+      .large-8.columns
+        h4.project-header Project Profile
+        == @project.description
+      .large-4.columns
+        h4.project-header Collections
+        - @project.named_filters.each do |filter|
+          .ss-cb
+            / the additional_search class below has a JavaScript click event attached to it, don't change the class name
+            -if @filters.present?
+              = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', :checked => @check_filters && (@filters.is_a?(NamedFilter) || @filters.is_a?(SearchFilters) ? false : @filters.include?(filter))
+            -else
+              = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input'
+            = label_tag :name, filter.name, class: 'named_filter_label ss-cb-label'
+  .large-offset-2.medium-offset-2.small-offset-2
+    .show-more-description >> Show More
+    .show-less-description << Show Less
   .inner
     = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|
       .search-two-columns.contributor-search

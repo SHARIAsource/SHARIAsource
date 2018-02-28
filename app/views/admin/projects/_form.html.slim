@@ -8,6 +8,7 @@
         .large-12.columns
           = f.input :name, autofocus: true
           = f.input :description, input_html: { class: 'wysiwyg' }
+          hr
           = f.association :users, collection: User.enabled.editors
           = f.association :projects_users do |ff|
             div class="project_user_#{ff.object.user_id}"
@@ -16,13 +17,17 @@
               = ff.input :project_id, selected: ff.object.user_id, as: :hidden
               .large-3.columns
                 = ff.input :sort_order, label: User.find(ff.object.user_id).name, collection: 1..6, :required => false
-                = ff.input :project_role, label: false, collection: ["Author","Editor","Researcher","Research Assistant"], prompt: "Pick a project role"
-          .row
-            .large-12.columns
-              = f.input :photo, as: :file, label: 'Photo', input_html: { accept: 'image/png,image/jpg,image/gif' }
-              = f.hidden_field :photo_cache
-              - if f.object.photo?
-                = image_tag f.object.photo_url
+                = ff.input :project_role, label: false, collection: ["Author","Editor","Researcher","Research Assistant", "Student Editor"], prompt: "Pick a project role"
+                .explanation Check the box below if you'd like the user's collaborator link to go to the collaborator's external URL rather than the ShariaSource collaborator view
+                = ff.input :external_collaborator, input_html: { class: "label_margin" }
+          hr
+          .large-12.columns
+            .explanation Project photos will be cropped by default, would you like to scale the image instead?
+            = f.input :scale_photo, label: 'Yes, scale photo', input_html: { class: "label_margin" }
+            = f.input :photo, as: :file, label: 'Photo', input_html: { accept: 'image/png,image/jpg,image/gif' }
+            = f.hidden_field :photo_cache
+            - if f.object.photo?
+              = image_tag f.object.photo_url
   .row
     .large-12.columns
       .large-2.columns

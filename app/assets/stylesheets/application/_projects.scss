@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.document-content.project-content {
+  min-height: 180px;
+}
+
 .project-description {
   p {
     font-size: 12pt;
@@ -10,12 +14,16 @@
 }
 
 .project-description-short {
-  height: 370px;
+  height: 150px;
   overflow: hidden;
 }
 
 .project-hide {
   display: none
+}
+
+img.project-photo.scaled-photo {
+  object-fit: scale-down;
 }
 
 .show-more-description, .show-less-description, .contributor_link {

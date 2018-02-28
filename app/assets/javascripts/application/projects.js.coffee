@@ -18,15 +18,18 @@ $(document).on 'ready page:load', ->
      $('.show-less-description').addClass('project-hide')
      event.preventDefault()
 
-  # handles (un)checking search boxes
+  # handles pagination for search results
   $('.contributor-search').on 'click', '.ss-button', (event) ->
     event.preventDefault()
-    if $('.next_page')[0] == undefined
-         next_page_url = this.href
-       else
-         next_page_url = $('.next_page')[0].href
+    if (event.target.id == "next")
+      if $('.next_page')[0] == undefined
+           next_page_url = this.href
+         else
+           next_page_url = $('.next_page')[0].href
+    else
+      next_page_url = $('.previous_page')[0].href
     $.ajax
-      url: next_page_url 
+      url: next_page_url
       success: (res) ->
         search_results = res.indexOf('<div class="search-results">')
         footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
@@ -35,26 +38,7 @@ $(document).on 'ready page:load', ->
         $('.pagination').hide()
         return false
 
-  $('#all_named_search').on 'click', (event) ->
-    check_boxes = $('.additional_search')
-    i = 0
-    filter_ids = []
-    while i < check_boxes.length
-      check_boxes[i].checked = true
-      filter_ids.push check_boxes[i].value
-      i++
-    $.ajax
-     data: 
-      named_filter_id: filter_ids
-     url: '/projects/' + this.value
-     success: (res) ->
-       search_results = res.indexOf('<div class="search-results">')
-       footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
-       window.history.pushState('','', this.url)
-       $(".search-results").replaceWith(res.substring(search_results, footer_div));
-       $('.pagination').hide()
-       return
-
+  # handles selecting collections
   $('.additional_search').on 'click', (event) ->
     check_boxes = $('.additional_search')
     checked_boxes = []
