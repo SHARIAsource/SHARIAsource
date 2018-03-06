@@ -144,7 +144,11 @@ class DocumentPresenter < BasePresenter
   end
 
   def title_with_author
-    [title, contributor.name].reject(&:empty?).join ' by '
+    if author.present?
+      title + ' by ' + author
+    elsif contributor.present?
+      title + ' ed. ' + contributor.name
+    end
   end
 
   def twitter_share_url(document_url)
