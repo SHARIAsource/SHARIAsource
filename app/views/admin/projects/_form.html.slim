@@ -17,7 +17,7 @@
               = ff.input :project_id, selected: ff.object.user_id, as: :hidden
               .large-3.columns
                 = ff.input :sort_order, label: User.find(ff.object.user_id).name, collection: 1..6, :required => false
-                = ff.input :project_role, label: false, collection: ["Author","Editor","Researcher","Research Assistant", "Student Editor"], prompt: "Pick a project role"
+                = ff.input :project_role, label: false, collection: ["Author","Editor","Project Editor","Researcher","Research Assistant","Senior Scholar","Student Editor"], prompt: "Pick a project role"
                 .explanation Check the box below if you'd like the user's collaborator link to go to the collaborator's external URL rather than the ShariaSource collaborator view
                 = ff.input :external_collaborator, input_html: { class: "label_margin" }
           hr
