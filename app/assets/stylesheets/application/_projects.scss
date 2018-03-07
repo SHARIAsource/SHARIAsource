@@ -15,11 +15,13 @@
 }
 
 .project-hide {
-  display: none
+  display: none;
 }
 
 .show-more-description, .show-less-description, .contributor_link {
   color: #eba400;
+  cursor: pointer;
+
   &:hover {
     color: #ebc700;
   }

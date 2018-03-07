@@ -32,9 +32,10 @@
     .large-8.columns
       h4.project-header Project Profile
       .project-description.project-description-short== @project.description
-      br
-      .show-more-description >> Show More
-      .show-less-description >> Show Less
+      - unless @project.description.empty?
+        br
+        .show-more-description >> Show More
+        .show-less-description >> Show Less
 
     .large-4.columns
       h4.project-header Collections
