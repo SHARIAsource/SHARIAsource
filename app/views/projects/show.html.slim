@@ -40,15 +40,15 @@
       h4.project-header Collections
       .ss-cb
           = check_box_tag 'all_named_search',@project.id, false, :class => 'ss-cb-input'
-          = label_tag 'All', nil, class: 'named_filter_label ss-cb-label'
+          = label_tag 'All', nil, class: 'named_filter_label ss-cb-label', for: 'all_named_search'
       - @project.named_filters.each do |filter|
         .ss-cb
           / the additional_search class below has a JavaScript click event attached to it, don't change the class name
           -if @filters.present?
-            = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', :checked => @filters.is_a?(NamedFilter) || @filters.is_a?(SearchFilters) ? false : @filters.include?(filter)
+            = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', :checked => @filters.is_a?(NamedFilter) || @filters.is_a?(SearchFilters) ? false : @filters.include?(filter), id: 'ss-cb-input-' + filter.id.to_s
           -else
-            = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input'
-          = label_tag :name, filter.name, class: 'named_filter_label ss-cb-label'
+            = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', id: 'ss-cb-input-' + filter.id.to_s
+          = label_tag :name, filter.name, class: 'named_filter_label ss-cb-label', for: 'ss-cb-input-' + filter.id.to_s
 
   .inner
     -if @filters.present?
