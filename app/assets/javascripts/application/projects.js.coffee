@@ -18,6 +18,26 @@ $(document).on 'ready page:load', ->
      $('.show-less-description').addClass('project-hide')
      event.preventDefault()
 
+  $('#all_named_search').on 'click', (event) ->
+    check_boxes = $('.additional_search')
+    i = 0
+    filter_ids = []
+    while i < check_boxes.length
+      check_boxes[i].checked = true
+      filter_ids.push check_boxes[i].value
+      i++
+    $.ajax
+     data: 
+      named_filter_id: filter_ids
+     url: '/projects/' + this.value
+     success: (res) ->
+       search_results = res.indexOf('<div class="search-results">')
+       footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
+       window.history.pushState('','', this.url)
+       $(".search-results").replaceWith(res.substring(search_results, footer_div));
+       $('.pagination').hide()
+       return
+
   # handles pagination for search results
   $('.contributor-search').on 'click', '.ss-button', (event) ->
     event.preventDefault()
@@ -79,7 +99,7 @@ $(document).on 'ready page:load', ->
       $.ajax
         data: 
          named_filter_id: filter_ids
-        url: '/projects/' + this.id
+        url: '/projects/' + $('#project_id').val()
         success: (res) ->
           search_results = res.indexOf('<div class="search-results">')
           footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
@@ -94,4 +114,3 @@ $(document).on 'ready page:load', ->
               $(".search-sidebar").replaceWith(res.substring(search_sidebar, search_results))
               return
   return
-

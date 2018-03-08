@@ -29,24 +29,30 @@
       - if @project.photo && @project.photo.url
         = image_tag(@project.photo.url, alt: @project.name, class: "project-photo #{'scaled-photo' if @project.scale_photo}")
 
-  .inner.document-content.project-content
-    .project-summary.project-description.project-description-short
-      .large-8.columns
-        h4.project-header Project Profile
-        == @project.description
-      .large-4.columns
-        h4.project-header Collections
-        - @project.named_filters.each do |filter|
-          .ss-cb
-            / the additional_search class below has a JavaScript click event attached to it, don't change the class name
-            -if @filters.present?
-              = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', :checked => @check_filters && (@filters.is_a?(NamedFilter) || @filters.is_a?(SearchFilters) ? false : @filters.include?(filter))
-            -else
-              = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input'
-            = label_tag :name, filter.name, class: 'named_filter_label ss-cb-label'
-  .large-offset-2.medium-offset-2.small-offset-2
-    .show-more-description >> Show More
-    .show-less-description << Show Less
+  .inner.document-content
+    .large-8.columns
+      h4.project-header Project Profile
+      .project-description.project-description-short== @project.description
+      - unless @project.description.empty?
+        br
+        .show-more-description >> Show More
+        .show-less-description >> Show Less
+
+    .large-4.columns
+      h4.project-header Collections
+      = check_box_tag 'project_id', @project.id, false, hidden: true
+      .ss-cb
+          = check_box_tag 'all_named_search',@project.id, false, :class => 'ss-cb-input'
+          = label_tag 'All', nil, class: 'named_filter_label ss-cb-label', for: 'all_named_search'
+      - @project.named_filters.each do |filter|
+        .ss-cb
+          / the additional_search class below has a JavaScript click event attached to it, don't change the class name
+          -if @filters.present?
+            = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', :checked => @check_filters && (@filters.is_a?(NamedFilter) || @filters.is_a?(SearchFilters) ? false : @filters.include?(filter)), id: 'ss-cb-input-' + filter.id.to_s
+          -else
+            = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', id: 'ss-cb-input-' + filter.id.to_s
+          = label_tag :name, filter.name, class: 'named_filter_label ss-cb-label', for: 'ss-cb-input-' + filter.id.to_s
+
   .inner
     = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|
       .search-two-columns.contributor-search
