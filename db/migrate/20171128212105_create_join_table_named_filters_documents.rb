@@ -1,4 +1,4 @@
-class CreateJoinTableNamedFiltersDocuments < ActiveRecord::Migration
+class CreateJoinTableNamedFiltersDocuments < ActiveRecord::Migration[5.1]
   def change
     create_table :named_filter_documents do |t|
       t.integer :named_filter_id

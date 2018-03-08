@@ -1,6 +1,6 @@
 class Admin::TopicsController < AdminController
-  before_filter :ensure_editor!
-  before_filter :fetch_topic, only: [:edit, :update, :destroy]
+  before_action :ensure_editor!
+  before_action :fetch_topic, only: [:edit, :update, :destroy]
 
   def index
     @topics = Topic.all

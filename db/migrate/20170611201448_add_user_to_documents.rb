@@ -1,4 +1,4 @@
-class AddUserToDocuments < ActiveRecord::Migration
+class AddUserToDocuments < ActiveRecord::Migration[5.1]
   def up
     add_reference :documents, :user, index: true
 

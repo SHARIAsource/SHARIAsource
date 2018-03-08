@@ -1,4 +1,4 @@
-class CreateCommentaries < ActiveRecord::Migration
+class CreateCommentaries < ActiveRecord::Migration[5.1]
   def change
     create_table :commentaries do |t|
       t.string :title

@@ -143,6 +143,24 @@ class DocumentPresenter < BasePresenter
     end
   end
 
+  def owned_referenced_documents(user)
+    @object.referenced_documents.select{ |doc| doc.viewable_by?(user) && !doc.published}.map do |document|
+      DocumentPresenter.new document
+    end
+  end
+
+  def owned_referencing_documents(user)
+    @object.referencing_documents.select{ |doc| doc.viewable_by?(user) && !doc.published}.map do |document|
+      DocumentPresenter.new document
+    end
+  end
+
+  def viewable_by?(user)
+    return @object.published? if user.nil?
+
+    user.is_superuser? || user.is_editor? || self.user == user || contributor.self_and_ancestors.include?(user)
+  end
+
   def title_with_author
     if author.present?
       title + ' by ' + author

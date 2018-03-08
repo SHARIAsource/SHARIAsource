@@ -1,4 +1,4 @@
-class RemoveAdminAddApproval < ActiveRecord::Migration
+class RemoveAdminAddApproval < ActiveRecord::Migration[5.1]
   def change
     remove_index :users, column: :is_admin
     remove_column :users, :is_admin, :boolean

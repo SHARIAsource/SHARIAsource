@@ -2,7 +2,7 @@
 
 p.result-count
   - desc = @filters.map(&:q).delete_if(&:empty?).present? ? " for \"#{@filters.map(&:q).join(' ')}\"" : ''
-span.count= "#{@search.map(&:total).sum} #{'result'.pluralize(@search.map(&:total).sum)}#{desc}"
+span.count= "#{@named_results.total_entries} #{'result'.pluralize(@named_results.total_entries)}#{desc}"
 = f.input :sort, collection: [['Best Match', ''], ['Recent First', 'recent'], ['Oldest First', 'oldest'], ['Author Last Name', 'author']], include_blank: false, label: 'Sort by:', input_html: { name: 'sort' }
 
 .result-list
@@ -22,7 +22,9 @@ span.count= "#{@search.map(&:total).sum} #{'result'.pluralize(@search.map(&:tota
 
       .result-thumbnail
         = link_to(image_tag(document.thumb.url), document_path(document.object)) if document.thumb
+  -if  @named_results.current_page > 1
+    p.more-results= link_to 'Back', search_path(id: @filters.first.project.id, filter_ids: @filters.map(&:id), page: @named_results.previous_page), class: 'ss-button', id: "back", data: { remote: true }
   -if @named_results.total_pages != @named_results.current_page
-    p.more-results= link_to 'Load More Results', search_path(id: @filters.first.project.id, filter_ids: @filters.map(&:id), page: @named_results.next_page), class: 'ss-button', data: { remote: true }
+    p.more-results= link_to 'Load More Results', search_path(id: @filters.first.project.id, filter_ids: @filters.map(&:id), page: @named_results.next_page), class: 'ss-button', id: "next", data: { remote: true }
 / there is some JS which routes clicks from the 'Load More Results' button to the hidden will_paginate controls, just made it quicker and easier to implement
 =will_paginate @named_results

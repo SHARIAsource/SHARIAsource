@@ -44,7 +44,7 @@
     $filterHeader.addClass('all-contracted')
     $('.filter-block:not(.is-contracted) .expand-contract').trigger('click')
     event.preventDefault()
-  }).on('page:change', function() {
+  }).on('turbolinks:load', function() {
     var checkedSelector = 'input[type="checkbox"]:checked:not(.all input)'
     var $blocks = $('.filter-block')
     var $checked = $blocks.find(checkedSelector)

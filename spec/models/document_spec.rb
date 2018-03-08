@@ -5,14 +5,14 @@ describe Document do
   it { should validate_presence_of :contributor_id }
   it { should validate_presence_of :document_type_id }
   it { should validate_presence_of :language_id }
-  it { should ensure_inclusion_of(:document_style).in_array(
+  it { should validate_inclusion_of(:document_style).in_array(
     %w(scan noscan scannotext)
   )}
   it { should validate_numericality_of :popular_count }
   it { should validate_numericality_of(:gregorian_year).allow_nil }
   it { should validate_numericality_of(:gregorian_month).allow_nil }
   it { should validate_numericality_of(:gregorian_day).allow_nil }
-  it { should ensure_inclusion_of(:featured_position)
+  it { should validate_inclusion_of(:featured_position)
     .in_range(1..3)
     .with_message('Must be between 1 and 3') }
 

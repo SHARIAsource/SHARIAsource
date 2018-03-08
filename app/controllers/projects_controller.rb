@@ -1,7 +1,7 @@
 require 'will_paginate/array'
 
 class ProjectsController < ApplicationController
-  before_filter :fetch_data, :fetch_filters
+  before_action :fetch_data, :fetch_filters
 
   def show
   end
@@ -14,7 +14,13 @@ class ProjectsController < ApplicationController
   def fetch_filters
     filter_ids = params[:named_filter_id]
     # clicking a filter updates the URL, see if anything has been selected
-    @filters = filter_ids.present? ? @filters = NamedFilter.find(filter_ids) : nil
+    if filter_ids.present?
+      @filters = NamedFilter.find(filter_ids)
+      @check_filters = true
+    else
+      @filters = @project.named_filters.to_ary
+      @check_filters = false
+    end
     if @filters.present?
       # we build an array of searches to handle multiple named filters
       @search = []
@@ -36,7 +42,9 @@ class ProjectsController < ApplicationController
         end
         @search.push(search)
       end
-      named_results = @search.map(&:results).inject(nil) {|all_results, search_results| all_results = [] if all_results.nil?; all_results + search_results}
+      # this was a little unusual as we were not just creating unions of different search terms, but unions of different searches. So, the following line is
+      # unfortunately more complicated than would be desired
+      named_results = @search.map(&:results).inject(nil) {|all_results, search_results| all_results = [] if all_results.nil?; all_results + search_results}.uniq
       @named_results = named_results.paginate :page => params[:page] || 1, :per_page => 5
     end
   end

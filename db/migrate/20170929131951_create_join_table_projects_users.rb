@@ -1,4 +1,4 @@
-class CreateJoinTableProjectsUsers < ActiveRecord::Migration
+class CreateJoinTableProjectsUsers < ActiveRecord::Migration[5.1]
   def change
     create_join_table :projects, :users do |t|
       t.index [:project_id, :user_id]

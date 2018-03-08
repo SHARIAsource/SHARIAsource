@@ -36,7 +36,7 @@
     }
   }
 
-  $(document).on('page:change', function() {
+  $(document).on('turbolinks:load', function() {
     truncateHomepage()
     truncateDocument()
 

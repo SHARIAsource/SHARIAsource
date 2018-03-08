@@ -584,3 +584,10 @@
 p.rtl {
   direction: rtl;
 }
+
+.owned_document {
+   padding: 0;
+   li a {
+     color: #fdaf00;
+   }
+}

@@ -1,6 +1,6 @@
 class Admin::TagsController < AdminController
-  before_filter :ensure_editor!
-  before_filter :fetch_tag, only: [:edit, :update, :destroy]
+  before_action :ensure_editor!
+  before_action :fetch_tag, only: [:edit, :update, :destroy]
 
   def index
     @tags = Tag.all

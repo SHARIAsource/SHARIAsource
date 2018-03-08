@@ -19,7 +19,8 @@
               br
               - if proj_user.user.collaborator.present?
                 - if proj_user.user.collaborator.name.downcase != "independent researcher"
-                  = link_to proj_user.user.collaborator.name, collaborator_path(proj_user.user.collaborator), :class => 'project-collaborator'
+                  - collaborator_link = (proj_user.external_collaborator && proj_user.user.collaborator.url.present?)  ? proj_user.user.collaborator.url : collaborator_path(proj_user.user.collaborator)
+                  = link_to proj_user.user.collaborator.name, collaborator_link, :class => 'project-collaborator'
                 - else
                   = proj_user.user.collaborator.name
               - else
@@ -51,18 +52,29 @@
             = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', id: 'ss-cb-input-' + filter.id.to_s
           = label_tag :name, filter.name, class: 'named_filter_label ss-cb-label', for: 'ss-cb-input-' + filter.id.to_s
 
+  .inner.document-content.project-content
+    .project-summary.project-description.project-description-short
+      .large-8.columns
+        h4.project-header Project Profile
+        == @project.description
+      .large-4.columns
+        h4.project-header Collections
+        - @project.named_filters.each do |filter|
+          .ss-cb
+            / the additional_search class below has a JavaScript click event attached to it, don't change the class name
+            -if @filters.present?
+              = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', :checked => @check_filters && (@filters.is_a?(NamedFilter) || @filters.is_a?(SearchFilters) ? false : @filters.include?(filter))
+            -else
+              = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input'
+            = label_tag :name, filter.name, class: 'named_filter_label ss-cb-label'
+  .large-offset-2.medium-offset-2.small-offset-2
+    .show-more-description >> Show More
+    .show-less-description << Show Less
   .inner
-    -if @filters.present?
-      = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|
-        .search-two-columns.contributor-search
-          .search-sidebar
-            = render 'searches/filters', locals: { f: f }
-          .search-results
-            - unless @filters.is_a?(NamedFilter)
-              = render 'searches/project_results', locals: { f: f }
-    -else
-      = simple_form_for NamedFilter.new, url: search_path, method: :get, remote: true do |f|
-        .search-two-columns.contributor-search
-          .search-sidebar
-            = render 'searches/filters', locals: { f: f }
-          .search-results
+    = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|
+      .search-two-columns.contributor-search
+        .search-sidebar
+          = render 'searches/filters', locals: { f: f }
+        .search-results
+          - unless @filters.is_a?(NamedFilter)
+            = render 'searches/project_results', locals: { f: f }

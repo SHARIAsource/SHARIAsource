@@ -1,4 +1,4 @@
-class AddStringMetadatasToSources < ActiveRecord::Migration
+class AddStringMetadatasToSources < ActiveRecord::Migration[5.1]
   def change
     change_table :sources do |t|
       t.column :gregorian_date, :date

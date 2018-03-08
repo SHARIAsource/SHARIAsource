@@ -20,9 +20,9 @@ module Shariasource
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    config.assets.paths.concat(
-      Compass::Frameworks::ALL.map { |f| f.stylesheets_directory }
-    )
+   #config.assets.paths.concat(
+   #  Compass::Frameworks::ALL.map { |f| f.stylesheets_directory }
+   #)
 
     config.autoload_paths << Rails.root.join('lib')
     config.cache_store = :mem_cache_store
