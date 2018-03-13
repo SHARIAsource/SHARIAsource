@@ -5,7 +5,23 @@ class DocumentPresenter < BasePresenter
   REFERENCE_LIMIT = 3
 
   def author_or_contributor
-    author.present? ? author : contributor.name
+    authors.any? ? authors_together : contributors_together
+  end
+
+  def authors_together
+    authors.pluck(:name).join(', ')
+  end
+
+  def editors_together
+    editors.pluck(:name).join(', ')
+  end
+
+  def translators_together
+    translators.pluck(:name).join(', ')
+  end
+
+  def contributors_together
+    contributors.map { |c| "#{c.first_name} #{c.last_name}" }.join(', ')
   end
 
   def alternate_authors
@@ -49,13 +65,14 @@ class DocumentPresenter < BasePresenter
   end
 
   def byline
-    result = [@object.author]
-    if editors.present?
-      result << "Edited by #{editors}"
+    result = [authors_together]
+    if editors.any?
+      result << "Edited by #{editors_together}"
     end
-    if translators.present?
-      result << "Translated by #{translators}"
+    if translators.any?
+      result << "Translated by #{translators_together}"
     end
+
     result.join(', ')
   end
 
@@ -124,7 +141,7 @@ class DocumentPresenter < BasePresenter
   end
 
   def posted_by_author?
-    author.blank? || author == contributor.name
+    authors.empty? || (authors.any? && authors.first.name == contributors.first.name)
   end
 
   def published_at
@@ -158,14 +175,14 @@ class DocumentPresenter < BasePresenter
   def viewable_by?(user)
     return @object.published? if user.nil?
 
-    user.is_superuser? || user.is_editor? || self.user == user || contributor.self_and_ancestors.include?(user)
+    user.is_superuser? || user.is_editor? || self.user == user || contributors.first.self_and_ancestors.include?(user)
   end
 
   def title_with_author
-    if author.present?
-      title + ' by ' + author
-    elsif contributor.present?
-      title + ' ed. ' + contributor.name
+    if authors.any?
+      title + ' by ' + authors_together
+    elsif contributors.any?
+      title + ' ed. ' + contributors_together
     end
   end
 

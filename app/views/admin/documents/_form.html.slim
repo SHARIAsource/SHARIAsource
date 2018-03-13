@@ -9,11 +9,11 @@
 
   .row
     .large-4.columns
-      = f.input :author, label: 'Authors (short form)'
+      = f.association :authors, label: 'Authors (short form)', collection: Author.order('name ASC'), input_html: { data: { tags: true } }
     .large-4.columns
-      = f.input :editors, label: 'Editors (short form)'
+      = f.association :editors, label: 'Editors (short form)', collection: Editor.order('name ASC'), input_html: { data: { tags: true } }
     .large-4.columns
-      = f.input :translators, label: 'Translators (short form)'
+      = f.association :translators, label: 'Translators (short form)', collection: Translator.order('name ASC'), input_html: { data: { tags: true } }
 
   .row
     .large-4.columns
@@ -29,7 +29,7 @@
         = f.input :featured_position, input_html: { min: 1, max: 3, title: 'Reminder: Assigning the same position number to multiple documents will not sort things correctly on the home page.' }
     - if current_user.is_editor?
       .large-4.columns
-        = f.association :contributor, collection: User.all, include_blank: false
+        = f.association :contributors, collection: User.order('last_name ASC'), include_blank: false
 
   .row
     .large-12.columns

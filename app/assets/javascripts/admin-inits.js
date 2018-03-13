@@ -3,7 +3,9 @@ var ready;
 ready = function() {
   $(document).foundation()
 
-  $('select[multiple]').chosen()
+  $('select[multiple]').select2({
+    placeholder: 'Select an option'
+  })
 
   tinymce.init({
     selector: 'textarea.wysiwyg',

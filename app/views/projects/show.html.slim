@@ -44,7 +44,7 @@
       .ss-cb
           = check_box_tag 'all_named_search',@project.id, false, :class => 'ss-cb-input'
           = label_tag 'All', nil, class: 'named_filter_label ss-cb-label', for: 'all_named_search'
-      - @project.named_filters.each do |filter|
+      - @project.named_filters.where(parent_id: nil).each do |filter|
         .ss-cb
           / the additional_search class below has a JavaScript click event attached to it, don't change the class name
           -if @filters.present?
@@ -52,6 +52,20 @@
           -else
             = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', id: 'ss-cb-input-' + filter.id.to_s
           = label_tag :name, filter.name, class: 'named_filter_label ss-cb-label', for: 'ss-cb-input-' + filter.id.to_s
+            = filter.name
+            - unless filter.children.empty?
+              span.ss-cb-toggler
+                = icon 'caret-down'
+                = icon 'caret-up'
+          - unless filter.children.empty?
+            .ss-cb-children
+              - filter.children.each do |filter_sub|
+                .ss-cb
+                  -if @filters.present?
+                    = check_box_tag @project.id, filter_sub.id, false, :class => 'additional_search ss-cb-input', :checked => @check_filters && (@filters.is_a?(NamedFilter) || @filters.is_a?(SearchFilters) ? false : @filters.include?(filter_sub)), id: 'ss-cb-input-' + filter_sub.id.to_s
+                  -else
+                    = check_box_tag @project.id, filter_sub.id, false, :class => 'additional_search ss-cb-input', id: 'ss-cb-input-' + filter_sub.id.to_s
+                  = label_tag :name, filter_sub.name, class: 'named_filter_label ss-cb-label', for: 'ss-cb-input-' + filter_sub.id.to_s
 
   .inner
     = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|

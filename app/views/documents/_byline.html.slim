@@ -2,6 +2,7 @@ p.byline
   - if !document.posted_by_author?
     span= document.byline
     span= ', Posted by '
-  = link_to document.contributor.name, contributor_path(document.contributor)
+  - document.contributors.each do |contributor|
+    = link_to contributor.name, contributor_path(contributor)
   - if !document.posted_by_author?
     span= ", #{document.published_at.to_formatted_s(:dd_month_yyyy)}"

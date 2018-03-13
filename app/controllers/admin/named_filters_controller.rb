@@ -49,7 +49,7 @@ class Admin::NamedFiltersController < AdminController
   private
 
   def permitted_params
-    params.require(:named_filter).permit(:name, :language_id, :user_id, :topic_id, :theme_id, :region_id, :era_id, :document_type_id, :project_id, :q, :date_from, :date_to, :date_format, :quick_create_url, named_filter_document_ids: [])
+    params.require(:named_filter).permit(:name, :language_id, :user_id, :topic_id, :theme_id, :region_id, :era_id, :document_type_id, :project_id, :q, :date_from, :date_to, :date_format, :quick_create_url, :parent_id, named_filter_document_ids: [], named_filter_additional_document_ids: [], named_filter_excluded_document_ids: [])
   end
 
   def fetch_filter

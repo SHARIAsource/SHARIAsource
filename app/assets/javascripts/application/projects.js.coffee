@@ -60,7 +60,17 @@ $(document).on 'ready page:load', ->
 
   # handles selecting collections
   $('.additional_search').on 'click', (event) ->
+    elem = $(this)
     check_boxes = $('.additional_search')
+    children = elem.nextAll('.ss-cb-children').first()
+
+    # handle children auto-selection
+    if elem.is(':checked') && children
+      if !children.is(':visible')
+        children.slideToggle()
+        container = elem.parent()
+        container.addClass('ss-cb-open')
+
     checked_boxes = []
     i = 0
     while i < check_boxes.length
@@ -113,4 +123,28 @@ $(document).on 'ready page:load', ->
               search_results = res.indexOf('class="search-results">')
               $(".search-sidebar").replaceWith(res.substring(search_sidebar, search_results))
               return
+
+  $('.ss-cb-toggler').on 'click', (event) ->
+    event.preventDefault()
+
+    elem = $(this)
+    container = elem.parent().parent()
+    groups = container.find('.ss-cb-children')
+    groups.slideToggle()
+
+    if container.hasClass('ss-cb-open')
+      container.removeClass('ss-cb-open')
+    else
+      container.addClass('ss-cb-open')
+
+  # open selected subfilters
+  $.each $('.ss-cb-children'), (index, subfilter) ->
+    elem = $(subfilter)
+    container = elem.parent()
+    selectedSelf = elem.prevAll('input').is(':checked')
+    selectedFilters = elem.find('input').is(':checked')
+    if selectedFilters || selectedSelf
+      container.addClass('ss-cb-open')
+      elem.show()
+
   return

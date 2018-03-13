@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180228123344) do
+ActiveRecord::Schema.define(version: 20180312191816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 20180228123344) do
     t.datetime "updated_at", null: false
     t.index ["attachable_type", "attachable_id"], name: "index_attached_files_on_attachable_type_and_attachable_id"
     t.index ["user_id"], name: "index_attached_files_on_user_id"
+  end
+
+  create_table "authors", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "authors_documents", id: false, force: :cascade do |t|
+    t.bigint "document_id", null: false
+    t.bigint "author_id", null: false
+    t.index ["author_id"], name: "index_authors_documents_on_author_id"
+    t.index ["document_id"], name: "index_authors_documents_on_document_id"
   end
 
   create_table "bodies", id: :serial, force: :cascade do |t|
@@ -48,6 +59,13 @@ ActiveRecord::Schema.define(version: 20180228123344) do
     t.integer "sort_order"
     t.index ["name"], name: "index_collaborators_on_name"
     t.index ["sort_order"], name: "index_collaborators_on_sort_order"
+  end
+
+  create_table "contributors_documents", id: false, force: :cascade do |t|
+    t.bigint "document_id", null: false
+    t.bigint "contributor_id", null: false
+    t.index ["contributor_id"], name: "index_contributors_documents_on_contributor_id"
+    t.index ["document_id"], name: "index_contributors_documents_on_document_id"
   end
 
   create_table "document_documents", id: false, force: :cascade do |t|
@@ -93,16 +111,12 @@ ActiveRecord::Schema.define(version: 20180228123344) do
     t.boolean "processed", default: true
     t.string "source_name", limit: 255
     t.string "source_url", limit: 255
-    t.string "author", limit: 255
-    t.string "translators", limit: 255
-    t.string "editors", limit: 255
     t.string "publisher", limit: 255
     t.string "publisher_location", limit: 255
     t.integer "volume_count"
     t.string "alternate_titles", limit: 255
     t.string "alternate_authors", limit: 255
     t.integer "language_id"
-    t.integer "contributor_id"
     t.integer "popular_count", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -124,7 +138,6 @@ ActiveRecord::Schema.define(version: 20180228123344) do
     t.boolean "use_content_password", default: false
     t.boolean "reviewed", default: false
     t.bigint "user_id"
-    t.index ["contributor_id"], name: "index_documents_on_contributor_id"
     t.index ["created_at"], name: "index_documents_on_created_at"
     t.index ["document_type_id"], name: "index_documents_on_document_type_id"
     t.index ["featured_position"], name: "index_documents_on_featured_position"
@@ -134,6 +147,13 @@ ActiveRecord::Schema.define(version: 20180228123344) do
     t.index ["published_at"], name: "index_documents_on_published_at"
     t.index ["reference_type_id"], name: "index_documents_on_reference_type_id"
     t.index ["user_id"], name: "index_documents_on_user_id"
+  end
+
+  create_table "documents_editors", id: false, force: :cascade do |t|
+    t.bigint "document_id", null: false
+    t.bigint "editor_id", null: false
+    t.index ["document_id"], name: "index_documents_editors_on_document_id"
+    t.index ["editor_id"], name: "index_documents_editors_on_editor_id"
   end
 
   create_table "documents_eras", id: false, force: :cascade do |t|
@@ -174,6 +194,17 @@ ActiveRecord::Schema.define(version: 20180228123344) do
     t.index ["document_id", "topic_id"], name: "index_documents_topics_on_document_id_and_topic_id", unique: true
     t.index ["document_id"], name: "index_documents_topics_on_document_id"
     t.index ["topic_id"], name: "index_documents_topics_on_topic_id"
+  end
+
+  create_table "documents_translators", id: false, force: :cascade do |t|
+    t.bigint "document_id", null: false
+    t.bigint "translator_id", null: false
+    t.index ["document_id"], name: "index_documents_translators_on_document_id"
+    t.index ["translator_id"], name: "index_documents_translators_on_translator_id"
+  end
+
+  create_table "editors", force: :cascade do |t|
+    t.string "name"
   end
 
   create_table "era_hierarchies", id: false, force: :cascade do |t|
@@ -224,12 +255,28 @@ ActiveRecord::Schema.define(version: 20180228123344) do
     t.index ["slug"], name: "index_miscs_on_slug"
   end
 
+  create_table "named_filter_additional_documents", force: :cascade do |t|
+    t.integer "named_filter_id"
+    t.integer "document_id"
+    t.index ["document_id"], name: "n_f_add_doc_doc_id"
+    t.index ["named_filter_id", "document_id"], name: "n_f_add_doc_nam_fil_doc_id", unique: true
+    t.index ["named_filter_id"], name: "n_f_add_doc_nam_fil"
+  end
+
   create_table "named_filter_documents", force: :cascade do |t|
     t.integer "named_filter_id"
     t.integer "document_id"
     t.index ["document_id"], name: "index_named_filter_documents_on_document_id"
     t.index ["named_filter_id", "document_id"], name: "index_named_filter_documents_on_named_filter_id_and_document_id", unique: true
     t.index ["named_filter_id"], name: "index_named_filter_documents_on_named_filter_id"
+  end
+
+  create_table "named_filter_excluded_documents", force: :cascade do |t|
+    t.integer "named_filter_id"
+    t.integer "document_id"
+    t.index ["document_id"], name: "n_f_ex_doc_doc_id"
+    t.index ["named_filter_id", "document_id"], name: "n_f_ex_doc_nam_fil_doc_id", unique: true
+    t.index ["named_filter_id"], name: "n_f_ex_doc_nam_fil"
   end
 
   create_table "named_filters", force: :cascade do |t|
@@ -250,9 +297,11 @@ ActiveRecord::Schema.define(version: 20180228123344) do
     t.integer "page"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "parent_id"
     t.index ["document_type_id"], name: "index_named_filters_on_document_type_id"
     t.index ["era_id"], name: "index_named_filters_on_era_id"
     t.index ["language_id"], name: "index_named_filters_on_language_id"
+    t.index ["parent_id"], name: "index_named_filters_on_parent_id"
     t.index ["project_id"], name: "index_named_filters_on_project_id"
     t.index ["region_id"], name: "index_named_filters_on_region_id"
     t.index ["theme_id"], name: "index_named_filters_on_theme_id"
@@ -348,6 +397,10 @@ ActiveRecord::Schema.define(version: 20180228123344) do
     t.index ["sort_order"], name: "index_topics_on_sort_order"
   end
 
+  create_table "translators", force: :cascade do |t|
+    t.string "name"
+  end
+
   create_table "user_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id", null: false
     t.integer "descendant_id", null: false
@@ -397,6 +450,7 @@ ActiveRecord::Schema.define(version: 20180228123344) do
   add_foreign_key "named_filters", "document_types"
   add_foreign_key "named_filters", "eras"
   add_foreign_key "named_filters", "languages"
+  add_foreign_key "named_filters", "named_filters", column: "parent_id"
   add_foreign_key "named_filters", "projects"
   add_foreign_key "named_filters", "regions"
   add_foreign_key "named_filters", "themes"
