@@ -37,6 +37,8 @@ class Admin::DocumentsController < AdminController
     #   contributor = current_user
     # end
 
+    document_params.delete(:ocr)
+
     @document = current_user.uploaded_documents.build document_params
 
     if @document.save
@@ -46,13 +48,14 @@ class Admin::DocumentsController < AdminController
       api = Corpusbuilder::Ruby::Api.new
 
       doc = api.create_document({
-        images: params[:ocr][:images].map { |id| { id: id } },
+        images: params[:document][:ocr][:images].map { |id| { id: id } },
         metadata: {
           title: @document.title
-        }
+        },
+        editor_email: "kamil@endpoint.com"
       })
 
-      @document.update_attributes!(ocr_document_id: doc[:id])
+      @document.update_attributes!(ocr_document_id: doc["id"])
 
       if params[:create_and_continue]
         redirect_to new_admin_document_path
