@@ -1,0 +1,77 @@
+.large-12.columns
+  script src="#{ corpusbuilder_public_url }/packs/client.js"
+  link rel="stylesheet" href="#{ corpusbuilder_public_url }/packs/client.css"
+  javascript:
+    $( document ).ready(function() {
+      var corpusBuilderUploader = CorpusBuilderUploader.init(
+        document.getElementById('corpusbuilderuploader'),
+        {
+          baseUrl: '#{ request.base_url }/corpusbuilder',
+          editorEmail: '#{ editor_email }',
+          onDocumentPicked: function(doc) {
+            console.log("Chosen document id:", doc.id);
+          },
+          onDocumentUnpicked: function() {
+            console.log("Unpicked document");
+          },
+          onImagesUploaded: function(images) {
+            console.log("CorpusBuilder reported created images:", images);
+            for(var i = 0; i < images.length; i++) {
+              $('form.edit_document').append(
+                $('<input type="text" name="document[ocr][images][][' + i + ']" value="' + images[i].id + '" />')
+              )
+            }
+          }
+        }
+      );
+
+      var metadata = {
+        title: null,
+        author: null,
+        authority: null,
+        date: null,
+        editor: null,
+        licence: null,
+        notes: null,
+        publisher: null
+      };
+
+      var setMeta = function() {
+        corpusBuilderUploader.setMetadata(metadata);
+      };
+
+      $('input#document_title').on('change', function(e) {
+        metadata.title = e.currentTarget.value;
+        setMeta();
+      });
+
+      $('input#document_author').on('change', function(e) {
+        metadata.author = e.currentTarget.value;
+        setMeta();
+      });
+
+      $('input#document_gregorian_year, input#document_gregorian_month, input#document_gregorian_day').on('change', function(e) {
+        var year = $('input#document_gregorian_year').val();
+        var month = $('input#document_gregorian_month').val();
+        var day = $('input#document_gregorian_day').val();
+
+        metadata.date = year + '/' + month + '/' + day;
+        setMeta();
+      });
+
+      $('input#document_editors').on('change', function(e) {
+        metadata.editors = e.currentTarget.value;
+        setMeta();
+      });
+
+      $('input#document_summary').on('change', function(e) {
+        metadata.notes = e.currentTarget.value;
+        setMeta();
+      });
+
+      $('input#document_publisher').on('change', function(e) {
+        metadata.publisher = e.currentTarget.value;
+        setMeta();
+      });
+    });
+  #corpusbuilderuploader
