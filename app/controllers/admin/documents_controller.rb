@@ -42,6 +42,18 @@ class Admin::DocumentsController < AdminController
     if @document.save
       @document.index!
       flash[:notice] = 'Document created successfully'
+
+      api = Corpusbuilder::Ruby::Api.new
+
+      doc = api.create_document({
+        images: params[:ocr][:images].map { |id| { id: id } },
+        metadata: {
+          title: @document.title
+        }
+      })
+
+      @document.update_attributes!(ocr_document_id: doc[:id])
+
       if params[:create_and_continue]
         redirect_to new_admin_document_path
       elsif params[:create_and_edit]
@@ -125,6 +137,7 @@ class Admin::DocumentsController < AdminController
                  :content_password,
                  region_ids: [], theme_ids: [], topic_ids: [], tag_ids: [],
                  referenced_document_ids: [], era_ids: [],
+                 ocr: [ :images, :document_id ],
                  body_attributes: [:id, :text], pages_attributes: [
                    :id, body_attributes: [:id, :text, :hybrid_text]
                  ]

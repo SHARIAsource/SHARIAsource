@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170929133811) do
+ActiveRecord::Schema.define(version: 20180322161434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(version: 20170929133811) do
     t.boolean  "use_content_password",              default: false
     t.boolean  "reviewed",                          default: false
     t.integer  "user_id"
+    t.string   "ocr_document_id"
   end
 
   add_index "documents", ["contributor_id"], name: "index_documents_on_contributor_id", using: :btree
