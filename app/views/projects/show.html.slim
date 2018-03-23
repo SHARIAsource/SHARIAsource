@@ -6,17 +6,22 @@
 
   .row
     .large-6.columns
-      - @project.users.each do |user|
+      - @project.projects_users.sort_by {|proj_user| proj_user.try(:sort_order) || 6}.each do |proj_user|
         .project-user-data
           .large-4.columns.project-user-container
-            - if user.avatar && user.avatar.url && FileTest.exist?("#{Rails.root}/public/#{user.avatar.url}")
+            - if proj_user.user.avatar && proj_user.user.avatar.url && FileTest.exist?("#{Rails.root}/public/#{proj_user.user.avatar.url}")
               .large-12.columns.project-profile
-                = link_to image_tag(user.avatar.url, alt: user.name, class: "project-user-photo"), contributor_path(user), title: truncate(strip_tags(user.about), :length => 50), 'data-placement' => 'right'
+                = link_to image_tag(proj_user.user.avatar.url, alt: proj_user.user.name, class: "project-user-photo"), contributor_path(proj_user.user), title: truncate(strip_tags(proj_user.user.about), :length => 50), 'data-placement' => 'right'
             .large-12.columns.project-profile
-              = link_to user.name, contributor_path(user), :class => "contributor_link"
+              = link_to proj_user.user.name, contributor_path(proj_user.user), :class => "contributor_link"
               br
-              - if user.collaborator.present?
-                = link_to user.collaborator.name, collaborator_path(user.collaborator), :class => 'project-collaborator'
+              = proj_user.project_role
+              br
+              - if proj_user.user.collaborator.present?
+                - if proj_user.user.collaborator.name.downcase != "independent researcher"
+                  = link_to proj_user.user.collaborator.name, collaborator_path(proj_user.user.collaborator), :class => 'project-collaborator'
+                - else
+                  = proj_user.user.collaborator.name
               - else
                 <span>&nbsp;</span>
     .large-6.columns
@@ -39,13 +44,24 @@
       - @project.named_filters.each do |filter|
         .ss-cb
           / the additional_search class below has a JavaScript click event attached to it, don't change the class name
-          = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', :checked => @filters.is_a?(NamedFilter) || @filters.is_a?(SearchFilters) ? false : @filters.include?(filter)
+          -if @filters.present?
+            = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input', :checked => @filters.is_a?(NamedFilter) || @filters.is_a?(SearchFilters) ? false : @filters.include?(filter)
+          -else
+            = check_box_tag @project.id, filter.id, false, :class => 'additional_search ss-cb-input'
           = label_tag :name, filter.name, class: 'named_filter_label ss-cb-label'
 
   .inner
-    = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|
-      .search-two-columns.contributor-search
-        .search-sidebar
-          = render 'searches/filters', locals: { f: f }
-        .search-results
-          = render 'searches/results', locals: { f: f }
+    -if @filters.present?
+      = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|
+        .search-two-columns.contributor-search
+          .search-sidebar
+            = render 'searches/filters', locals: { f: f }
+          .search-results
+            - unless @filters.is_a?(NamedFilter)
+              = render 'searches/project_results', locals: { f: f }
+    -else
+      = simple_form_for NamedFilter.new, url: search_path, method: :get, remote: true do |f|
+        .search-two-columns.contributor-search
+          .search-sidebar
+            = render 'searches/filters', locals: { f: f }
+          .search-results

@@ -119,6 +119,8 @@ class Document < ActiveRecord::Base
       language.try(:name)
     end
 
+    integer :id, multiple: true
+
     integer :user_id
 
     integer :contributor_id
@@ -430,7 +432,7 @@ class Document < ActiveRecord::Base
   def viewable_by?(user)
     return published? if user.nil?
 
-    user.is_superuser? || self.user == user || contributor.self_and_ancestors.include?(user)
+    user.is_superuser? || user.is_editor? || self.user == user || contributor.self_and_ancestors.include?(user)
   end
 
   private

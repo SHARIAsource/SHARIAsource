@@ -12,7 +12,7 @@ class Admin::ProjectsController < AdminController
     @project = Project.new permitted_params
     if @project.save
       flash[:notice] = 'New project created successfully'
-      redirect_to admin_projects_path
+      redirect_to edit_admin_project_path @project
     else
       flash[:error] = @project.errors.full_messages.to_sentence
       render :new
@@ -21,8 +21,7 @@ class Admin::ProjectsController < AdminController
 
   def update
     if @project.update permitted_params
-      flash[:notice] = 'Project updated successfully'
-      redirect_to admin_projects_path
+      redirect_to edit_admin_project_path @project, notice: 'Project updated successfully'
     else
       flash[:error] = @project.errors.full_messages.to_sentence
       render :edit
@@ -45,7 +44,7 @@ class Admin::ProjectsController < AdminController
   private
 
   def permitted_params
-    params.require(:project).permit(:name, :description, :photo, user_ids: [])
+    params.require(:project).permit(:name, :description, :photo, :projects_users_attributes => [:id, :sort_order, :user_id, :project_id, :project_role], user_ids: [])
   end
 
   def fetch_project

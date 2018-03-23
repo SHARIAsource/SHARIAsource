@@ -240,6 +240,15 @@ ActiveRecord::Schema.define(version: 20180322161434) do
 
   add_index "miscs", ["slug"], name: "index_miscs_on_slug", using: :btree
 
+  create_table "named_filter_documents", force: :cascade do |t|
+    t.integer "named_filter_id"
+    t.integer "document_id"
+  end
+
+  add_index "named_filter_documents", ["document_id"], name: "index_named_filter_documents_on_document_id", using: :btree
+  add_index "named_filter_documents", ["named_filter_id", "document_id"], name: "index_named_filter_documents_on_named_filter_id_and_document_id", unique: true, using: :btree
+  add_index "named_filter_documents", ["named_filter_id"], name: "index_named_filter_documents_on_named_filter_id", using: :btree
+
   create_table "named_filters", force: :cascade do |t|
     t.string   "name"
     t.string   "q"
@@ -288,9 +297,11 @@ ActiveRecord::Schema.define(version: 20180322161434) do
     t.string   "photo"
   end
 
-  create_table "projects_users", id: false, force: :cascade do |t|
-    t.integer "project_id", null: false
-    t.integer "user_id",    null: false
+  create_table "projects_users", force: :cascade do |t|
+    t.integer "project_id",               null: false
+    t.integer "user_id",                  null: false
+    t.integer "sort_order",   default: 1
+    t.string  "project_role"
   end
 
   add_index "projects_users", ["project_id", "user_id"], name: "index_projects_users_on_project_id_and_user_id", using: :btree
