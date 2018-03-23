@@ -1,0 +1,16 @@
+.large-12.columns
+  script src="#{ corpusbuilder_public_url }/packs/client.js"
+  link rel="stylesheet" href="#{ corpusbuilder_public_url }/packs/client.css"
+  javascript:
+    $( document ).ready(function() {
+      var corpusBuilderStatuis = CorpusBuilderDocumentStatus.init(
+        document.getElementById('corpusbuilderuploader'),
+        {
+          baseUrl: '#{ request.base_url }/corpusbuilder',
+          editorEmail: '#{ editor_email }',
+          documentId: '#{ document.ocr_document_id }'
+        }
+      );
+    });
+  #corpusbuilderuploader
+

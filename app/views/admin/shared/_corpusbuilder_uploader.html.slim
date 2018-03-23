@@ -3,22 +3,29 @@
   link rel="stylesheet" href="#{ corpusbuilder_public_url }/packs/client.css"
   javascript:
     $( document ).ready(function() {
+      var clearHidden = function() {
+        $('form.edit_document input.corpusbuilder-hidden').remove();
+      };
+
       var corpusBuilderUploader = CorpusBuilderUploader.init(
         document.getElementById('corpusbuilderuploader'),
         {
           baseUrl: '#{ request.base_url }/corpusbuilder',
           editorEmail: '#{ editor_email }',
           onDocumentPicked: function(doc) {
-            console.log("Chosen document id:", doc.id);
+            clearHidden();
+            $('form.edit_document').append(
+              $('<input class="corpusbuilder-hidden" type="hidden" name="document[ocr][document_id]" value="' + doc.id + '" />')
+            )
           },
           onDocumentUnpicked: function() {
-            console.log("Unpicked document");
+            clearHidden();
           },
           onImagesUploaded: function(images) {
-            console.log("CorpusBuilder reported created images:", images);
+            clearHidden();
             for(var i = 0; i < images.length; i++) {
               $('form.edit_document').append(
-                $('<input type="text" name="document[ocr][images][]" value="' + images[i].id + '" />')
+                $('<input class="corpusbuilder-hidden" type="hidden" name="document[ocr][images][]" value="' + images[i].id + '" />')
               )
             }
           }

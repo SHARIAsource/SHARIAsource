@@ -45,17 +45,29 @@ class Admin::DocumentsController < AdminController
       @document.index!
       flash[:notice] = 'Document created successfully'
 
-      api = Corpusbuilder::Ruby::Api.new
+      if params[:document].has_key?(:ocr)
+        begin
+          api = Corpusbuilder::Ruby::Api.new
 
-      doc = api.create_document({
-        images: params[:document][:ocr][:images].map { |id| { id: id } },
-        metadata: {
-          title: @document.title
-        },
-        editor_email: "kamil@endpoint.com"
-      })
+          doc = if params[:document][:ocr].has_key?(:document_id)
+                  { "id" => params[:document][:ocr][:document_id] }
+                else
+                  api.create_document({
+                    images: params[:document][:ocr][:images].map { |id| { id: id } },
+                    metadata: {
+                      title: @document.title
+                    },
+                    editor_email: current_user.email
+                  })
+                end
 
-      @document.update_attributes!(ocr_document_id: doc["id"])
+          @document.update_attributes!(ocr_document_id: doc["id"])
+        rescue
+          flash[:error] = $!.message
+          render :new
+          return
+        end
+      end
 
       if params[:create_and_continue]
         redirect_to new_admin_document_path
