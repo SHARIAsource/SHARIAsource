@@ -3,9 +3,13 @@
 - cache 'region_count_view', skip_digest: true do
   .inner-wrapper
     .inner.browse-tables
+      link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css"
+      script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js"
       h2.section-heading.browse
-        span Browse Geographic Regions | 
+        span Browse Geographic Regions |&nbsp;
         = link_to("Browse Empires & Eras", eras_path)
+
+      div id="map" style="height:500px;"
 
       table.browse-table.browse-table-stick
         thead
@@ -30,3 +34,49 @@
               th.tcol &nbsp;
               - @region_table[:document_types].each do |document_type|
                 th.tcol== document_type.name.split(' ').join('<br>')
+
+      javascript:
+        var map = L.map("map").setView([0,0],2);
+        var Esri_WorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+        	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+        });
+        Esri_WorldTopoMap.addTo(map);
+        var regions = [];
+        var counts = [];
+        var scaleMax = 100;
+        var scaleMin = 3;
+        function scaleRangeValue(value,min,max) {
+          scaledValue = ((scaleMax-scaleMin)*(value-min))/(max-min)+scaleMin;
+          return scaledValue;
+        }
+      - @region_table[:regions].each_with_index do |region, region_index|
+        - if region.latitude?
+          - count = @region_table[:counts][region_index]
+          - searchLink = link_to region.name, search_path(region: region.self_and_descendant_ids, q: '')
+          javascript:
+            var sumCount = #{count}.reduce(function(sum,value){ return sum + value; }, 0);
+            if (sumCount>0) {
+              regions.push({
+                'lat':#{region.latitude},
+                'lon':#{region.longitude},
+                'name':"#{region.name}",
+                'count':sumCount,
+                'nameLink':'#{searchLink}',
+              });
+            }
+            counts.push(sumCount);
+      javascript:
+        var countMax = counts.reduce(function(a,b){return Math.max(a,b);},1);
+        var countMin = counts.reduce(function(a,b){return Math.min(a,b);},1)
+        for (var i = 0; i < regions.length; i++) {
+          var rgn = regions[i]
+          var circle = L.circleMarker([rgn['lat'],rgn['lon']], {
+            color: '#b30024',
+            fillColor: '#b30024',
+            fillOpacity: 0.3,
+            radius: scaleRangeValue(rgn['count'],countMin,countMax),
+            weight: 2
+          });
+          circle.bindPopup(rgn['nameLink']+': '+rgn['count']+" documents");
+          circle.addTo(map);
+        }

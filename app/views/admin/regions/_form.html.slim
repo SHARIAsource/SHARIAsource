@@ -2,5 +2,7 @@
   .large-6.columns
     = simple_form_for @region, url: form_url do |f|
       = f.input :name, autofocus: true
+      = f.input :latitude
+      = f.input :longitude
       = f.association :parent, collection: parent_collection, include_blank: 'Top Level'
       = f.submit class: 'round button'
