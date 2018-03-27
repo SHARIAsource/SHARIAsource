@@ -2,7 +2,11 @@
   script src="#{ corpusbuilder_public_url }/packs/client.js"
   link rel="stylesheet" href="#{ corpusbuilder_public_url }/packs/client.css"
   javascript:
-    $( document ).ready(function() {
+    var loadStatus = function() {
+      if(window.CorpusBuilderDocumentStatus === undefined) {
+        setTimeout(loadStatus, 1000);
+        return;
+      }
       var corpusBuilderStatuis = CorpusBuilderDocumentStatus.init(
         document.getElementById('corpusbuilderuploader'),
         {
@@ -11,6 +15,7 @@
           documentId: '#{ document.ocr_document_id }'
         }
       );
-    });
+    };
+    $( document ).ready(loadStatus);
   #corpusbuilderuploader
 

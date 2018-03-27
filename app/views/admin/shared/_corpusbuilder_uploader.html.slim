@@ -10,7 +10,13 @@
       "undefined"
     end
   javascript:
-    $( document ).ready(function() {
+    var loadUploader = function() {
+      if(window.CorpusBuilderUploader === undefined) {
+        console.log('waiting for corpus builder to load');
+        setTimeout(loadUploader, 1000);
+        return;
+      }
+
       var clearHidden = function() {
         $('form.edit_document input.corpusbuilder-hidden').remove();
       };
@@ -92,5 +98,10 @@
 
       setMeta();
       setImages(images);
+    };
+
+    $( document ).ready(function() {
+      loadUploader();
     });
+
   #corpusbuilderuploader
