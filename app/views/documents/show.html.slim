@@ -178,8 +178,8 @@
           {
             baseUrl: 'http://46.shariasource.berkman.temphost.net:9046/corpusbuilder',
             documentId: documentId,
-            showImage: #{ params[:simple] ? 'false' : 'true' },
-            editorEmail: 'kamil@endpoint.com'
+            showImage: true,
+            editorEmail: #{ current_user.present? ? "'#{current_user.email}'".html_safe : 'null' }
           }
         );
       });

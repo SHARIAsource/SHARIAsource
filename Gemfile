@@ -66,6 +66,7 @@ group :development, :test do
   gem 'rb-fsevent'
   gem 'rspec-rails', '~> 3.0'
   gem 'spring-commands-rspec', '~> 1.0.2'
+  gem 'dotenv-rails'
 end
 
 group :test do

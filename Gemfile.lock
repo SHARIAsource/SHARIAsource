@@ -146,6 +146,8 @@ GEM
     dotenv (0.11.1)
       dotenv-deployment (~> 0.0.2)
     dotenv-deployment (0.0.2)
+    dotenv-rails (0.11.1)
+      dotenv (= 0.11.1)
     erubis (2.7.0)
     eventmachine (1.0.9.1)
     execjs (2.7.0)
@@ -400,6 +402,7 @@ DEPENDENCIES
   corpusbuilder-ruby!
   dalli (~> 2.7.2)
   devise (~> 4.3)
+  dotenv-rails
   eventmachine (~> 1.0.4)
   factory_girl_rails (~> 4.4)
   font-awesome-sass (~> 4.3.2.1)
