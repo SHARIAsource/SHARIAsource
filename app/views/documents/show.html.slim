@@ -166,21 +166,21 @@
 - elsif @document.body.present? and false
   = render 'documents/body_text', document: @document
 
-.inner-wrapper style="position: relative; padding: 20px;"
-  script src="http://46.shariasource.berkman.temphost.net:7946/packs/client.js"
-  link rel="stylesheet" href="http://46.shariasource.berkman.temphost.net:7946/packs/client.css"
-  javascript:
-    $( document ).ready(function() {
-      //var documentId = "52cc3586-549d-42e2-a050-0914e6ffaa9b";
-      var documentId = "08765319-5641-407d-8fc7-53b7ce493ad5";
-      CorpusBuilder.init(
-        document.getElementById('corpusbuilder'),
-        {
-          baseUrl: 'http://46.shariasource.berkman.temphost.net:9046/corpusbuilder',
-          documentId: documentId,
-          showImage: #{ params[:simple] ? 'false' : 'true' },
-          editorEmail: 'kamil@endpoint.com'
-        }
-      );
-    });
-  #corpusbuilder
+- if @document.ocr_document_id.present?
+  .inner-wrapper style="position: relative; padding: 20px;"
+    script src="http://46.shariasource.berkman.temphost.net:7946/packs/client.js"
+    link rel="stylesheet" href="http://46.shariasource.berkman.temphost.net:7946/packs/client.css"
+    javascript:
+      $( document ).ready(function() {
+        var documentId = '#{ @document.ocr_document_id }';
+        CorpusBuilder.init(
+          document.getElementById('corpusbuilder'),
+          {
+            baseUrl: 'http://46.shariasource.berkman.temphost.net:9046/corpusbuilder',
+            documentId: documentId,
+            showImage: #{ params[:simple] ? 'false' : 'true' },
+            editorEmail: 'kamil@endpoint.com'
+          }
+        );
+      });
+    #corpusbuilder

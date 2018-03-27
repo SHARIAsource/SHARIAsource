@@ -1,10 +1,30 @@
 .large-12.columns
   script src="#{ corpusbuilder_public_url }/packs/client.js"
   link rel="stylesheet" href="#{ corpusbuilder_public_url }/packs/client.css"
+  ruby:
+    images = if params.fetch(:document, {}).has_key?(:ocr)
+      params[:document][:ocr][:images].zip(params[:document][:ocr][:image_names]).map do |arr|
+        { id: arr[0], name: arr[1] }
+      end.to_json.html_safe
+    else
+      "undefined"
+    end
   javascript:
     $( document ).ready(function() {
       var clearHidden = function() {
         $('form.edit_document input.corpusbuilder-hidden').remove();
+      };
+
+      var injectImages = function(images) {
+        clearHidden();
+        for(var i = 0; i < images.length; i++) {
+          $('form.edit_document').append(
+            $('<input class="corpusbuilder-hidden" type="hidden" name="document[ocr][images][]" value="' + images[i].id + '" />')
+          )
+          $('form.edit_document').append(
+            $('<input class="corpusbuilder-hidden" type="hidden" name="document[ocr][image_names][]" value="' + images[i].name + '" />')
+          )
+        }
       };
 
       var corpusBuilderUploader = CorpusBuilderUploader.init(
@@ -22,12 +42,7 @@
             clearHidden();
           },
           onImagesUploaded: function(images) {
-            clearHidden();
-            for(var i = 0; i < images.length; i++) {
-              $('form.edit_document').append(
-                $('<input class="corpusbuilder-hidden" type="hidden" name="document[ocr][images][]" value="' + images[i].id + '" />')
-              )
-            }
+            injectImages(images);
           }
         }
       );
@@ -43,42 +58,39 @@
         publisher: null
       };
 
+      var setImages = function(images) {
+        corpusBuilderUploader.setImages(images);
+
+        if(images !== undefined) {
+          injectImages(images);
+        }
+      }
+
       var setMeta = function() {
-        corpusBuilderUploader.setMetadata(metadata);
-      };
-
-      $('input#document_title').on('change', function(e) {
-        metadata.title = e.currentTarget.value;
-        setMeta();
-      });
-
-      $('input#document_author').on('change', function(e) {
-        metadata.author = e.currentTarget.value;
-        setMeta();
-      });
-
-      $('input#document_gregorian_year, input#document_gregorian_month, input#document_gregorian_day').on('change', function(e) {
         var year = $('input#document_gregorian_year').val();
         var month = $('input#document_gregorian_month').val();
         var day = $('input#document_gregorian_day').val();
 
+        metadata.title = $('input#document_title').val();
+        metadata.author = $('input#document_author').val();
         metadata.date = year + '/' + month + '/' + day;
-        setMeta();
-      });
+        metadata.editors = $('input#document_editors').val();
+        metadata.notes = $('input#document_summary').val();
+        metadata.publisher = $('input#document_publisher').val();
 
-      $('input#document_editors').on('change', function(e) {
-        metadata.editors = e.currentTarget.value;
-        setMeta();
-      });
+        corpusBuilderUploader.setMetadata(metadata);
+      };
 
-      $('input#document_summary').on('change', function(e) {
-        metadata.notes = e.currentTarget.value;
-        setMeta();
-      });
+      $('input#document_title').on('change', setMeta);
+      $('input#document_author').on('change', setMeta);
+      $('input#document_gregorian_year, input#document_gregorian_month, input#document_gregorian_day').on('change', setMeta);
+      $('input#document_editors').on('change', setMeta);
+      $('input#document_summary').on('change', setMeta);
+      $('input#document_publisher').on('change', setMeta);
 
-      $('input#document_publisher').on('change', function(e) {
-        metadata.publisher = e.currentTarget.value;
-        setMeta();
-      });
+      var images = #{images};
+
+      setMeta();
+      setImages(images);
     });
   #corpusbuilderuploader
