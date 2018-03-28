@@ -4,5 +4,5 @@
       = f.input :name, autofocus: true
       = f.input :latitude
       = f.input :longitude
-      = f.association :parent, collection: parent_collection, include_blank: 'Top Level'
+      = f.association :parent, collection: Region.order('name ASC'), include_blank: 'Top Level'
       = f.submit class: 'round button'
