@@ -12,9 +12,10 @@ p.result-count
     .result
       .result-info
         p.breadcrumb
-          - document.document_type.self_and_ancestors.reverse.each do |dt|
-            = link_to dt.name, search_path(document_type: dt.self_and_descendant_ids, q: '')
-            span= ' :: '
+          - unless document.document_type.nil?
+            - document.document_type.self_and_ancestors.reverse.each do |dt|
+              = link_to dt.name, search_path(document_type: dt.self_and_descendant_ids, q: '')
+              span= ' :: '
           span= document.dates
 
         h2= link_to document.title, document_path(document.object)
