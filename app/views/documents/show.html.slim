@@ -166,21 +166,4 @@
 - elsif @document.body.present? and false
   = render 'documents/body_text', document: @document
 
-- if @document.ocr_document_id.present?
-  .inner-wrapper style="position: relative; padding: 20px;"
-    script src="http://46.shariasource.berkman.temphost.net:7946/packs/client.js"
-    link rel="stylesheet" href="http://46.shariasource.berkman.temphost.net:7946/packs/client.css"
-    javascript:
-      $( document ).ready(function() {
-        var documentId = '#{ @document.ocr_document_id }';
-        CorpusBuilder.init(
-          document.getElementById('corpusbuilder'),
-          {
-            baseUrl: 'http://46.shariasource.berkman.temphost.net:9046/corpusbuilder',
-            documentId: documentId,
-            showImage: true,
-            editorEmail: #{ current_user.present? ? "'#{current_user.email}'".html_safe : 'null' }
-          }
-        );
-      });
-    #corpusbuilder
+= corpusbuilder_document(@document)

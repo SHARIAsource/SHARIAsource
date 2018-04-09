@@ -1,0 +1,18 @@
+.inner-wrapper.corpusbuilder-document-container
+  script src="#{ Corpusbuilder::Ruby::Api.config.public_url }/packs/client.js"
+  link rel="stylesheet" href="#{ Corpusbuilder::Ruby::Api.config.public_url }/packs/client.css"
+  javascript:
+    $( document ).ready(function() {
+      var documentId = '#{ @document.ocr_document_id }';
+      CorpusBuilder.init(
+        document.getElementById('corpusbuilder'),
+        {
+          baseUrl: '#{ request.base_url }/corpusbuilder',
+          documentId: documentId,
+          showImage: true,
+          editorEmail: '#{ editor_email }'
+        }
+      );
+    });
+
+  #corpusbuilder
