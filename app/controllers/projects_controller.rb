@@ -33,7 +33,7 @@ class ProjectsController < ApplicationController
           query.fulltext filters.q
           query.with(:published, true)
           query.with(:id, ref_docs) if ref_docs
-          query.with(:contributor_id, filters.contributor.id) if filters.contributor
+          query.with(:contributor_ids, filters.contributor.id) if filters.contributor
           query.with(:region_ids, filters.region.id) if filters.region
           query.with(:language_id, filters.language.id) if filters.language
           query.with(:document_type_id, filters.document_type.id) if filters.document_type

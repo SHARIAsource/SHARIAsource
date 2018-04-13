@@ -156,3 +156,21 @@ input[type="checkbox"] + label.ss-cb-label {
     background-color: $ss-color-secondary;
   }
 }
+
+.projects-documents-link {
+  display: inline-block;
+  background-color: $ss-color-secondary;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  border-bottom: 5px solid #986a00;
+  transition: all 0.25s ease;
+
+  &:hover {
+    transform: scale(1.15);
+  }
+
+  span {
+    color: #ffffff;
+  }
+}

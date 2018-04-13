@@ -66,8 +66,11 @@
                   -else
                     = check_box_tag @project.id, filter_sub.id, false, :class => 'additional_search ss-cb-input', id: 'ss-cb-input-' + filter_sub.id.to_s
                   = label_tag :name, filter_sub.name, class: 'named_filter_label ss-cb-label', for: 'ss-cb-input-' + filter_sub.id.to_s
+      a.projects-documents-link onclick='document.getElementById("projects-documents").scrollIntoView();'
+        span Documents #{ icon('caret-down') }
 
   .inner
+    a#projects-documents
     = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|
       .search-two-columns.contributor-search
         .search-sidebar

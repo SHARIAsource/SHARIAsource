@@ -15,7 +15,7 @@ class SearchesController < ApplicationController
       query.with(:topic_ids, @filters.topic) if @filters.topic
       query.with(:theme_ids, @filters.theme) if @filters.theme
       query.with(:language_id, @filters.language) if @filters.language
-      query.with(:contributor_id, @filters.contributor) if @filters.contributor
+      query.with(:contributor_ids, @filters.contributor) if @filters.contributor
       query.with(:region_ids, @filters.region) if @filters.region
       query.with(:era_ids, @filters.era) if @filters.era
       if @filters.document_type
