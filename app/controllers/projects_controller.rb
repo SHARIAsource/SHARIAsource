@@ -33,12 +33,14 @@ class ProjectsController < ApplicationController
           query.fulltext filters.q
           query.with(:published, true)
           query.with(:id, ref_docs) if ref_docs
-          query.with(:contributor_id, filters.contributor.id) if filters.contributor
+          query.with(:contributor_ids, filters.contributor.id) if filters.contributor
           query.with(:region_ids, filters.region.id) if filters.region
           query.with(:language_id, filters.language.id) if filters.language
           query.with(:document_type_id, filters.document_type.id) if filters.document_type
           query.with(:theme_ids, filters.theme.id) if filters.theme
           query.with(:topic_ids, filters.topic.id) if filters.topic
+          query.with(:id, filters.named_filter_additional_documents.map(&:id).flatten) if filters.named_filter_additional_documents.any?
+          query.without(:id, filters.named_filter_excluded_documents.map(&:id).flatten) if filters.named_filter_excluded_documents.any?
         end
         @search.push(search)
       end

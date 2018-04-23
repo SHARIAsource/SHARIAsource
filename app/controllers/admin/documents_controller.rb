@@ -29,13 +29,14 @@ class Admin::DocumentsController < AdminController
     # If current_user is allowed to set contributor, use value from them.
     #   Otherwise, set the contributor to the current_user
     document_params = permitted_params
-    document_params[:contributor_id] ||= current_user.id
+    document_params[:contributors] ||= [current_user]
 
-    # if permitted_params[:contributor_id]
-    #   contributor = User.find(permitted_params[:contributor_id])
-    # else
-    #   contributor = current_user
-    # end
+    # create new authors
+    document_params[:author_ids] = create_new_attributes document_params[:author_ids], Author if document_params[:author_ids].present?
+    # create new editors
+    document_params[:editor_ids] = create_new_attributes document_params[:editor_ids], Editor if document_params[:editor_ids].present?
+    # create new translators
+    document_params[:translator_ids] = create_new_attributes document_params[:translator_ids], Translator if document_params[:translator_ids].present?
 
     @document = current_user.uploaded_documents.build document_params
 
@@ -60,6 +61,13 @@ class Admin::DocumentsController < AdminController
     if current_user.requires_approval?
       update_params[:published] = false
     end
+
+    # create new authors
+    update_params[:author_ids] = create_new_attributes update_params[:author_ids], Author if update_params[:author_ids].present?
+    # create new editors
+    update_params[:editor_ids] = create_new_attributes update_params[:editor_ids], Editor if update_params[:editor_ids].present?
+    # create new translators
+    update_params[:translator_ids] = create_new_attributes update_params[:translator_ids], Translator if update_params[:translator_ids].present?
 
     # This forces any edit by a non-reviewer to set reviewed to false
     update_params[:reviewed] ||= '0'
@@ -117,7 +125,7 @@ class Admin::DocumentsController < AdminController
     whitelist = [
                  :title, :volume_count, :document_type_id, :pdf, :language_id,
                  :gregorian_year, :gregorian_month, :gregorian_day,
-                 :source_name, :source_url, :author, :translators, :editors,
+                 :source_name, :source_url, :authors, :translators, :editors,
                  :publisher, :publisher_location, :alternate_titles,
                  :alternate_authors, :featured_position, :reference_type_id,
                  :permission_giver, :document_style, :summary, :citation,
@@ -127,13 +135,14 @@ class Admin::DocumentsController < AdminController
                  :content_password,
                  :document_show_page,
                  region_ids: [], theme_ids: [], topic_ids: [], tag_ids: [],
-                 referenced_document_ids: [], era_ids: [],
+                 referenced_document_ids: [], era_ids: [], author_ids: [],
+                 editor_ids: [], translator_ids: [], contributor_ids: [],
                  body_attributes: [:id, :text], pages_attributes: [
                    :id, body_attributes: [:id, :text, :hybrid_text]
                  ]
                 ]
     if current_user.is_editor
-      whitelist << :contributor_id
+      whitelist << :contributors
     end
     unless current_user.requires_approval?
       whitelist << :published
@@ -180,7 +189,7 @@ class Admin::DocumentsController < AdminController
         document.publisher,
         document.tags.pluck(:name).join(', '),
         document.topics.pluck(:name).join(', '),
-        document.contributor.name,
+        document.contributors.map { |contributor| contributor.first_name + ' ' + contributor.last_name }.join(', '),
         document.language.name,
         document.regions.pluck(:name).join(', '),
        "<i class='fa fa-#{document.reviewed? ? 'check' : 'close'}' aria-hidden='true'></i>",
@@ -203,7 +212,7 @@ class Admin::DocumentsController < AdminController
     if !current_user.is_superuser?
       # If they are normal user, restrict search to their uploaded docs and their contributor docs
       # Otherwise they are a superuser, so we won't restrict by user or contributor ids
-      attrs[:contributor_id] = current_user.self_and_descendant_ids
+      attrs[:contributor_ids] = current_user.self_and_descendant_ids
       attrs[:user_id] = current_user.id
     end
 
@@ -212,12 +221,11 @@ class Admin::DocumentsController < AdminController
       fulltext(params[:sSearch]) if params[:sSearch].present?
 
       any_of do
-        [:user_id, :contributor_id].each do |field_name|
+        [:user_id, :contributor_ids].each do |field_name|
           with(field_name, attrs[field_name]) if attrs[field_name]
         end
       end
     end
-    # logger.ap search
 
     documents = Document
       .where(id: search.results.map(&:id))
@@ -242,7 +250,7 @@ class Admin::DocumentsController < AdminController
     when "title","publisher", "updated_at" then docs.order("#{col} #{sort_direction}")
     when "topics" then docs.joins(:topics).order("topics.name #{sort_direction}")
     when "tags" then docs.includes(:tags).order("tags.name #{sort_direction}")
-    when "contributor" then docs.joins(:contributor).order("users.last_name #{sort_direction}")
+    when "contributor" then docs.joins(:contributors).order("users.last_name #{sort_direction}")
     when "language" then docs.joins(:language).order("languages.name #{sort_direction}")
     when "regions" then docs.joins(:regions).order("regions.name #{sort_direction}")
     else docs.order("updated_at #{sort_direction}")
@@ -251,5 +259,28 @@ class Admin::DocumentsController < AdminController
 
   def sort_direction
     params[:sSortDir_0] == "desc" ? "desc" : "asc"
+  end
+
+  def create_new_attributes(names, model)
+    new_ids = []
+    existing = names.select do |single|
+      single =~ /\A[-+]?[0-9]*\.?[0-9]+\Z/
+    end
+
+    new_attributes = names.reject do |single|
+      single =~ /\A[-+]?[0-9]*\.?[0-9]+\Z/
+    end
+
+    new_attributes.each do |attr_name|
+      next if attr_name.empty?
+
+      new_attr = model.new
+      new_attr.name = attr_name
+      new_attr.save!
+
+      new_ids << new_attr[:id]
+    end
+
+    existing + new_ids
   end
 end
