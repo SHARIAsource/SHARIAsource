@@ -31,6 +31,13 @@ class Admin::DocumentsController < AdminController
     document_params = permitted_params
     document_params[:contributors] ||= [current_user]
 
+    # create new authors
+    document_params[:author_ids] = create_new_attributes document_params[:author_ids], Author if document_params[:author_ids].present?
+    # create new editors
+    document_params[:editor_ids] = create_new_attributes document_params[:editor_ids], Editor if document_params[:editor_ids].present?
+    # create new translators
+    document_params[:translator_ids] = create_new_attributes document_params[:translator_ids], Translator if document_params[:translator_ids].present?
+
     @document = current_user.uploaded_documents.build document_params
 
     if @document.save
