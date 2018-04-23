@@ -152,7 +152,7 @@ class Document < ActiveRecord::Base
 
     integer :contributor_ids, multiple: true
     text :contributors do
-      contributors.pluck :first_name, :last_name
+      contributors.map { |contributor| contributor.first_name + ' ' + contributor.last_name }
     end
 
     integer :document_type_id

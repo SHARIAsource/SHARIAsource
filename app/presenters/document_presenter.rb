@@ -9,15 +9,15 @@ class DocumentPresenter < BasePresenter
   end
 
   def authors_together
-    authors.map(&:name).to_sentence(words_connector: ' and ')
+    authors.map(&:name).to_sentence
   end
 
   def editors_together
-    editors.map(&:name).to_sentence(words_connector: ' and ')
+    editors.map(&:name).to_sentence
   end
 
   def translators_together
-    translators.map(&:name).to_sentence(words_connector: ' and ')
+    translators.map(&:name).to_sentence
   end
 
   def contributors_together
@@ -30,7 +30,7 @@ class DocumentPresenter < BasePresenter
     else
       return author if author.nil?
 
-      author.map(&:name).to_sentence(words_connector: ' and ')
+      author.map(&:name).to_sentence
     end
   end
 
@@ -40,7 +40,7 @@ class DocumentPresenter < BasePresenter
     else
       return editors if editors.nil?
 
-      editors.map(&:name).to_sentence(words_connector: ' and ')
+      editors.map(&:name).to_sentence
     end
   end
 
@@ -58,7 +58,7 @@ class DocumentPresenter < BasePresenter
     else
       return translators if translators.nil?
 
-      translators.map(&:name).to_sentence(words_connector: ' and ')
+      translators.map(&:name).to_sentence
     end
   end
 

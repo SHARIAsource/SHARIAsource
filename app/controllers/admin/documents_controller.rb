@@ -189,7 +189,7 @@ class Admin::DocumentsController < AdminController
         document.publisher,
         document.tags.pluck(:name).join(', '),
         document.topics.pluck(:name).join(', '),
-        document.contributors.pluck(:first_name, :last_name).join(', '),
+        document.contributors.map { |contributor| contributor.first_name + ' ' + contributor.last_name }.join(', '),
         document.language.name,
         document.regions.pluck(:name).join(', '),
        "<i class='fa fa-#{document.reviewed? ? 'check' : 'close'}' aria-hidden='true'></i>",
