@@ -99,7 +99,7 @@ class Admin::DocumentsController < AdminController
         end
       end
       if permitted_params[:document_show_page]
-        redirect_to :back
+        redirect_back(fallback_location: root_path)
       else
         redirect_to path
       end
@@ -162,7 +162,7 @@ class Admin::DocumentsController < AdminController
     @document = Document.find params[:id]
     if !current_user.can_edit?(@document)
       flash[:alert] = "Sorry, but you must be an editor or the owner of that document to do this"
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
