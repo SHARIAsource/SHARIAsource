@@ -1,6 +1,6 @@
 class Admin::ThemesController < AdminController
-  before_filter :ensure_editor!
-  before_filter :fetch_theme, only: [:edit, :update, :destroy]
+  before_action :ensure_editor!
+  before_action :fetch_theme, only: [:edit, :update, :destroy]
 
   def index
     @themes = Theme.all

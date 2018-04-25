@@ -1,4 +1,4 @@
-class CreateSourcesTopics < ActiveRecord::Migration
+class CreateSourcesTopics < ActiveRecord::Migration[5.1]
   def change
     create_table :sources_topics, id: false do |t|
       t.integer :source_id

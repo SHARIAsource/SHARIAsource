@@ -9,7 +9,7 @@
     $group.filter(':checked').parent('label').addClass('selected')
   })
 
-  $document.on('page:change', function() {
+  $document.on('turbolinks:load', function() {
     $('input[type=radio]:checked').parent('label').addClass('selected')
   })
 }())

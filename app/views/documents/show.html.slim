@@ -2,6 +2,7 @@
 - content_for :head do
   meta property='og:description' content=@document.facebook_description
   meta property='og:site_name' content='SHARIAsource'
+  title SHARIAsource
   - if @document.pages.present?
     meta property='og:image' content=image_url(@document.pages[0].image.url)
 
@@ -142,7 +143,18 @@
               li= link_to d.title_with_author, document_path(d.object)
         - else
           em none
-
+        - if @document.owned_referenced_documents(current_user).present?
+          h3 Unpublished
+          ul
+            - @document.owned_referenced_documents(current_user).each do |d|
+              .row
+                .large-8.columns.owned_document
+                  li= link_to d.title_with_author, document_path(d.object)
+                .large-4.columns
+                  = simple_form_for d.object, url: admin_document_path(d.object) do |f|
+                    = f.input_field :document_show_page, as: :hidden, value: true
+                    = f.input_field :published, as: :hidden, value: true
+                    = f.submit 'Publish'
       .meta-column.last.references.js-same-height
         h3 This document is referenced by:
         - referencing = @document.referencing_documents.select {|doc| doc.published}
@@ -155,12 +167,29 @@
                 li.hidden-ref= link
               - else
                 li= link
-          - if referencing.count > display_limit
-            .suggest-tags
-              = link_to 'See More', '#', class: 'js-expand-referencing'
-              = link_to 'See Less', '#', class: 'js-expand-referencing', style: 'display: none;'
         - else
           em none
+        - owned_referencing = @document.owned_referencing_documents(current_user)
+        - if owned_referencing.present?
+          h3 Unpublished
+          ul.hidden-ref-list
+            - owned_referencing.each_with_index do |d, idx|
+              - link = link_to d.title_with_author, document_path(d.object), class: 'owned_document'
+              - if idx > display_limit
+                li.hidden-ref= link
+              - else
+                .row
+                  .large-8.columns.owned_document
+                    li=link
+                  .large-4.columns
+                    = simple_form_for d.object, url: admin_document_path(d.object) do |f|
+                      = f.input_field :published, as: :hidden, value: true
+                      = f.input_field :document_show_page, as: :hidden, value: true
+                      = f.submit 'Publish'
+        - if (referencing.count + owned_referencing.count) > display_limit
+          .suggest-tags
+            = link_to 'See More', '#', class: 'js-expand-referencing'
+            = link_to 'See Less', '#', class: 'js-expand-referencing', style: 'display: none;'
 
 - if @document.pages.present?
   = render 'documents/scan_no_text'

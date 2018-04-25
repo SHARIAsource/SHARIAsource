@@ -4,7 +4,9 @@ RSpec.describe ProjectsController, type: :controller do
 
   describe "GET #show" do
     it "returns http success" do
-      get :show
+      project = create(:project)
+
+      get :show, params: {id: project.id }
       expect(response).to have_http_status(:success)
     end
   end

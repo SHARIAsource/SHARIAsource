@@ -6,7 +6,7 @@ FactoryGirl.define do
     date_to "2017-09-29"
     date_format "MyString"
     language nil
-    contributor nil
+    user nil
     topic nil
     theme nil
     region nil

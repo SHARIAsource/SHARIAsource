@@ -1,4 +1,20 @@
+function loadIframePage () {
+  var hash = top.location.hash.replace('#', '');
+  var params = hash.split('&');
+  var resultParams = {};
+  for (var i = 0; i < params.length; i++) {
+     var propval = params[i].split('=');
+     resultParams[propval[0]] = propval[1];
+  }
+
+  if (resultParams['page']) {
+    $("#myiframe").attr('src', $("#myiframe").attr('src') + '#page=' + resultParams['page']);
+  }
+}
+
 $( document ).ready(function() {
+  loadIframePage();
+
   // If a user clicks on the jsPDF next/previous buttons, update the old
   // controls' page number
   $("#myiframe").load(function() {
@@ -110,7 +126,7 @@ $( document ).ready(function() {
     })
   }
 
-  $document.on('page:change', function() {
+  $document.on('turbolinks:load', function() {
       initSeadragon();
   })
 
@@ -165,5 +181,4 @@ $( document ).ready(function() {
     $('.js-expand-referencing').toggle()
     $(document).trigger('sameheight:refresh')
   })
-
 }())

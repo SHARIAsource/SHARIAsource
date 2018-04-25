@@ -16,7 +16,7 @@
 //= require dataTables/jquery.dataTables
 //= require dataTables/jquery.dataTables.foundation
 //= require foundation
-//= require chosen-jquery
+//= require select2-full
 //= require turbolinks
 //= require admin-inits
 //= require tinymce
@@ -26,4 +26,3 @@
 // xrequire plupload-2.3.1/js/moxie
 // xrequire plupload-2.3.1/js/plupload.dev
 //= require plupload-2.3.1/js/jquery.ui.plupload/jquery.ui.plupload
-

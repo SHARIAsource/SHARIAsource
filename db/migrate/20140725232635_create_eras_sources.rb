@@ -1,4 +1,4 @@
-class CreateErasSources < ActiveRecord::Migration
+class CreateErasSources < ActiveRecord::Migration[5.1]
   def change
     create_table :eras_sources, id: false do |t|
       t.integer :era_id

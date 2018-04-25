@@ -5,7 +5,7 @@ class Document < ActiveRecord::Base
   include PdfParser
   alias_attribute :name, :title
 
-  attr_accessor :new_content_password, :reviewing_user
+  attr_accessor :new_content_password, :reviewing_user, :document_show_page
 
   BASE_PAGE_DIRECTORY = Rails.root.join('tmp', 'pdf-pages').to_s.freeze
   NO_TEXT_MESSAGE = "No text to show"
@@ -17,7 +17,7 @@ class Document < ActiveRecord::Base
   after_commit :generate_images
 
   validates :title, presence: true
-  validates :contributor_id, presence: true
+  validates :contributors, presence: true
   validates :document_type_id, presence: true
   validates :language_id, presence: true
   validates :popular_count, numericality: true
@@ -38,14 +38,33 @@ class Document < ActiveRecord::Base
   has_and_belongs_to_many :tags
   has_and_belongs_to_many :eras
   has_and_belongs_to_many :regions
-  has_and_belongs_to_many :referenced_documents, class_name: 'Document',
-    join_table: :document_documents, foreign_key: :document_id,
-    association_foreign_key: :referenced_id
-  has_and_belongs_to_many :referencing_documents, class_name: 'Document',
-    join_table: :document_documents, foreign_key: :referenced_id,
-    association_foreign_key: :document_id
+  has_and_belongs_to_many :referenced_documents,
+                          class_name: 'Document',
+                          join_table: :document_documents,
+                          foreign_key: :document_id,
+                          association_foreign_key: :referenced_id
+  has_and_belongs_to_many :referencing_documents,
+                          class_name: 'Document',
+                          join_table: :document_documents,
+                          foreign_key: :referenced_id,
+                          association_foreign_key: :document_id
+  has_and_belongs_to_many :authors,
+                          dependent: :destroy
+  has_and_belongs_to_many :editors,
+                          dependent: :destroy
+  has_and_belongs_to_many :translators,
+                          dependent: :destroy
+  has_and_belongs_to_many :contributors,
+                          join_table: :contributors_documents,
+                          association_foreign_key: :contributor_id,
+                          class_name: 'User'
   has_many :pages, dependent: :destroy
   has_many :document_reviews, -> { order(:created_at) }, dependent: :destroy
+  has_one :body
+  belongs_to :document_type
+  belongs_to :reference_type
+  belongs_to :language
+  belongs_to :user
 
   def current_review  #TODO: private
     document_reviews.last if reviewed?
@@ -62,21 +81,13 @@ class Document < ActiveRecord::Base
     current_review.try(:created_at)
   end
 
-  has_one :body
-  belongs_to :document_type
-  belongs_to :reference_type
-  belongs_to :language
-  belongs_to :contributor, class_name: 'User'
-  belongs_to :user
-
   scope :published, -> { where(published: true) }
 
   mount_uploader :pdf, PdfUploader
   accepts_nested_attributes_for :pages, :body
 
   searchable auto_index: false do
-    # TODO: I think we need to strip summary too
-    text :title, :source_name, :author, :translators, :editors, :publisher
+    text :title, :source_name, :publisher
 
     text :summary do
       strip_control_characters summary
@@ -88,6 +99,22 @@ class Document < ActiveRecord::Base
 
     text :body_text do
       body.text if body
+    end
+
+    text :authors do
+      authors.pluck :name
+    end
+
+    text :editors do
+      editors.pluck :name
+    end
+
+    text :translators do
+      translators.pluck :name
+    end
+
+    text :topics do
+      topics.pluck :name
     end
 
     integer :theme_ids, multiple: true
@@ -123,9 +150,9 @@ class Document < ActiveRecord::Base
 
     integer :user_id
 
-    integer :contributor_id
-    text :contributor_name do
-      contributor.try(:name)
+    integer :contributor_ids, multiple: true
+    text :contributors do
+      contributors.map { |contributor| contributor.first_name + ' ' + contributor.last_name }
     end
 
     integer :document_type_id
@@ -134,10 +161,10 @@ class Document < ActiveRecord::Base
     end
 
     string :sort_author do
-      if author.present?
-        author.split(',').first.split(' ').last
+      if authors.any?
+        authors.first.name
       else
-        contributor.try(:last_name)
+        contributors.first.try(:last_name)
       end
     end
 
@@ -432,7 +459,7 @@ class Document < ActiveRecord::Base
   def viewable_by?(user)
     return published? if user.nil?
 
-    user.is_superuser? || user.is_editor? || self.user == user || contributor.self_and_ancestors.include?(user)
+    user.is_superuser? || user.is_editor? || self.user == user || contributors.include?(user)
   end
 
   private

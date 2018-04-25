@@ -1,4 +1,4 @@
-$(document).on('page:change', function() {
+$(document).on('turbolinks:load', function() {
   var $docStyle= $('#document_document_style')
   //TODO: bailout if !$docStyle
 

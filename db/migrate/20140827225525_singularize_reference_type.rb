@@ -1,4 +1,4 @@
-class SingularizeReferenceType < ActiveRecord::Migration
+class SingularizeReferenceType < ActiveRecord::Migration[5.1]
   def change
     drop_table :documents_reference_types
     add_column :documents, :reference_type_id, :integer

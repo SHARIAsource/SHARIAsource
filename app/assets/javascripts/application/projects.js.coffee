@@ -18,23 +18,6 @@ $(document).on 'ready page:load', ->
      $('.show-less-description').addClass('project-hide')
      event.preventDefault()
 
-  # handles (un)checking search boxes
-  $('.contributor-search').on 'click', '.ss-button', (event) ->
-    event.preventDefault()
-    if $('.next_page')[0] == undefined
-         next_page_url = this.href
-       else
-         next_page_url = $('.next_page')[0].href
-    $.ajax
-      url: next_page_url 
-      success: (res) ->
-        search_results = res.indexOf('<div class="search-results">')
-        footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
-        $(".search-results").replaceWith(res.substring(search_results, footer_div));
-        window.history.pushState('','', this.url)
-        $('.pagination').hide()
-        return false
-
   $('#all_named_search').on 'click', (event) ->
     check_boxes = $('.additional_search')
     i = 0
@@ -55,8 +38,39 @@ $(document).on 'ready page:load', ->
        $('.pagination').hide()
        return
 
+  # handles pagination for search results
+  $('.contributor-search').on 'click', '.ss-button', (event) ->
+    event.preventDefault()
+    if (event.target.id == "next")
+      if $('.next_page')[0] == undefined
+           next_page_url = this.href
+         else
+           next_page_url = $('.next_page')[0].href
+    else
+      next_page_url = $('.previous_page')[0].href
+    $.ajax
+      url: next_page_url
+      success: (res) ->
+        search_results = res.indexOf('<div class="search-results">')
+        footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
+        $(".search-results").replaceWith(res.substring(search_results, footer_div));
+        window.history.pushState('','', this.url)
+        $('.pagination').hide()
+        return false
+
+  # handles selecting collections
   $('.additional_search').on 'click', (event) ->
+    elem = $(this)
     check_boxes = $('.additional_search')
+    children = elem.nextAll('.ss-cb-children').first()
+
+    # handle children auto-selection
+    if elem.is(':checked') && children
+      if !children.is(':visible')
+        children.slideToggle()
+        container = elem.parent()
+        container.addClass('ss-cb-open')
+
     checked_boxes = []
     i = 0
     while i < check_boxes.length
@@ -95,7 +109,7 @@ $(document).on 'ready page:load', ->
       $.ajax
         data: 
          named_filter_id: filter_ids
-        url: '/projects/' + this.id
+        url: '/projects/' + $('#project_id').val()
         success: (res) ->
           search_results = res.indexOf('<div class="search-results">')
           footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
@@ -109,5 +123,28 @@ $(document).on 'ready page:load', ->
               search_results = res.indexOf('class="search-results">')
               $(".search-sidebar").replaceWith(res.substring(search_sidebar, search_results))
               return
-  return
 
+  $('.ss-cb-toggler').on 'click', (event) ->
+    event.preventDefault()
+
+    elem = $(this)
+    container = elem.parent().parent()
+    groups = container.find('.ss-cb-children')
+    groups.slideToggle()
+
+    if container.hasClass('ss-cb-open')
+      container.removeClass('ss-cb-open')
+    else
+      container.addClass('ss-cb-open')
+
+  # open selected subfilters
+  $.each $('.ss-cb-children'), (index, subfilter) ->
+    elem = $(subfilter)
+    container = elem.parent()
+    selectedSelf = elem.prevAll('input').is(':checked')
+    selectedFilters = elem.find('input').is(':checked')
+    if selectedFilters || selectedSelf
+      container.addClass('ss-cb-open')
+      elem.show()
+
+  return

@@ -13,6 +13,6 @@
     })
   }
 
-  $document.on('page:change', sameHeight)
+  $document.on('turbolinks:load', sameHeight)
   $document.on('sameheight:refresh', sameHeight)
 }())

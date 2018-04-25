@@ -4,6 +4,7 @@
       .row
         .large-12.columns
           = f.input :name, autofocus: true
+          = f.input :parent_id, collection: NamedFilter.where({})
           = f.input :q
           = f.input :quick_create_url
           - # todo: move the fetch part into the controller
@@ -20,9 +21,13 @@
           = f.input :project_id, collection: Project.where({})
     .large-12.columns
       .panel
-        = f.association :named_filter_documents, label: "All Documents Referenced By:",collection: Document.all
+        = f.association :named_filter_documents, label: "All Documents Referenced By:", collection: Document.all
+    .large-12.columns
+      .panel
+        = f.association :named_filter_additional_documents, label: "Additional documents:", collection: Document.all
+    .large-12.columns
+      .panel
+        = f.association :named_filter_excluded_documents, label: "Excluded documents:", collection: Document.all
   .row
     .large-12.columns
       = f.submit class: 'round button'
-
-

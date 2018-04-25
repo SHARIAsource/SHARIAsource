@@ -1,6 +1,6 @@
 class Admin::RegionsController < AdminController
-  before_filter :ensure_editor!
-  before_filter :fetch_region, only: [:edit, :update, :destroy]
+  before_action :ensure_editor!
+  before_action :fetch_region, only: [:edit, :update, :destroy]
 
   def index
     @regions = Region.hash_tree

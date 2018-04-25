@@ -1,6 +1,6 @@
 class Admin::DocumentTypesController < AdminController
-  before_filter :ensure_editor!
-  before_filter :fetch_document_type, only: [:edit, :update, :destroy]
+  before_action :ensure_editor!
+  before_action :fetch_document_type, only: [:edit, :update, :destroy]
 
   def index
     @document_types = DocumentType.hash_tree

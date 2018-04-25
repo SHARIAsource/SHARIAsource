@@ -1,4 +1,4 @@
-class AddNumberToPages < ActiveRecord::Migration
+class AddNumberToPages < ActiveRecord::Migration[5.1]
   def change
     add_column :pages, :number, :integer
     add_index :pages, :number
