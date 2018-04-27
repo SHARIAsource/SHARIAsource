@@ -96,4 +96,7 @@ Rails.application.configure do
   config.action_mailer.default_options = {
     from: ENV['SS_ACTION_MAILER_DEFAULT_FROM']
   }
+
+  # Autoload the lib folder, required by Rails 5
+  config.autoload_paths << "#{Rails.root}/lib"
 end
