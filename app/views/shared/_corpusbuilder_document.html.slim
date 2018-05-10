@@ -8,6 +8,7 @@
         document.getElementById('corpusbuilder'),
         {
           baseUrl: '#{ request.base_url }/corpusbuilder',
+          directUrl: '#{ Corpusbuilder::Ruby::Api.config.public_url }',
           documentId: documentId,
           showImage: true,
           editorEmail: '#{ editor_email }'
