@@ -1,3 +1,15 @@
 header .left.button {
   margin:16px 0 0 20px;
 }
+
+.select2-container {
+  margin-bottom: 15px;
+
+  input {
+    margin-bottom: 5px;
+  }
+
+  .select2-selection__choice {
+    white-space: normal;
+  }
+}

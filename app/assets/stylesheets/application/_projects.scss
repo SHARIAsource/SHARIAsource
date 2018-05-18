@@ -27,7 +27,7 @@ img.project-photo.scaled-photo {
 }
 
 .show-more-description, .show-less-description, .contributor_link {
-  color: #eba400;
+  color: $ss-color-secondary;
   cursor: pointer;
 
   &:hover {
@@ -64,10 +64,34 @@ img.project-photo.scaled-photo {
  z-index: 1
 }
 
+.ss-cb-children {
+  margin-left: 20px;
+  display: none;
+}
+
 .ss-cb {
   margin-bottom: 0.25em;
   margin-left: 0;
   position: relative;
+
+  .ss-cb-toggler {
+    margin-left: 5px;
+    color: $ss-color-secondary;
+  }
+
+  i.fa-caret-up {
+    display: none;
+  }
+
+  &.ss-cb-open {
+    i.fa-caret-down {
+      display: none;
+    }
+
+    i.fa-caret-up {
+      display: inline-block;
+    }
+  }
 }
 
 .ss-cb-input[type="checkbox"] {
@@ -94,7 +118,7 @@ img.project-photo.scaled-photo {
 }
 
 .project-header {
-  color: #eba400;
+  color: $ss-color-secondary;
   font-weight: bold;
 }
 
@@ -129,6 +153,24 @@ input[type="checkbox"] + label.ss-cb-label {
 // is checked
 .ss-cb-input:checked ~ .ss-cb-label {
   &:before {
-    background-color: orange;
+    background-color: $ss-color-secondary;
+  }
+}
+
+.projects-documents-link {
+  display: inline-block;
+  background-color: $ss-color-secondary;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  border-bottom: 5px solid #986a00;
+  transition: all 0.25s ease;
+
+  &:hover {
+    transform: scale(1.15);
+  }
+
+  span {
+    color: #ffffff;
   }
 }

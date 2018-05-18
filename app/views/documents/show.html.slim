@@ -16,9 +16,10 @@
           li= link_to 'Twitter', @document.twitter_share_url(document_url(@document.object)), class: 'twitter', title: 'Share this page on Twitter', target: '_blank'
           li= link_to 'Facebook', @document.facebook_share_url(document_url(@document.object)), class: 'facebook', title: 'Share this page on Facebook', target: '_blank'
       p.breadcrumb
-        - @document.document_type.self_and_ancestors.reverse.each do |dt|
-          = link_to dt.name, search_path(document_type: dt.self_and_descendant_ids, q: '')
-          span= ' :: '
+        - unless @document.document_type.nil?
+          - @document.document_type.self_and_ancestors.reverse.each do |dt|
+            = link_to dt.name, search_path(document_type: dt.self_and_descendant_ids, q: '')
+            span= ' :: '
         span= @document.dates
 
       h2= @document.title

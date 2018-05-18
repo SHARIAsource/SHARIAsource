@@ -5,14 +5,32 @@ class DocumentPresenter < BasePresenter
   REFERENCE_LIMIT = 3
 
   def author_or_contributor
-    author.present? ? author : contributor.name
+    authors.any? ? authors_together : contributors_together
+  end
+
+  def authors_together
+    authors.map(&:name).to_sentence
+  end
+
+  def editors_together
+    editors.map(&:name).to_sentence
+  end
+
+  def translators_together
+    translators.map(&:name).to_sentence
+  end
+
+  def contributors_together
+    contributors.map { |c| "#{c.first_name} #{c.last_name}" }.join(', ')
   end
 
   def alternate_authors
     if @object.alternate_authors.present?
       @object.alternate_authors
     else
-      author
+      return author if author.nil?
+
+      author.map(&:name).to_sentence
     end
   end
 
@@ -20,7 +38,9 @@ class DocumentPresenter < BasePresenter
     if @object.alternate_editors.present?
       @object.alternate_editors
     else
-      editors
+      return editors if editors.nil?
+
+      editors.map(&:name).to_sentence
     end
   end
 
@@ -36,7 +56,9 @@ class DocumentPresenter < BasePresenter
     if @object.alternate_translators.present?
       @object.alternate_translators
     else
-      translators
+      return translators if translators.nil?
+
+      translators.map(&:name).to_sentence
     end
   end
 
@@ -49,13 +71,14 @@ class DocumentPresenter < BasePresenter
   end
 
   def byline
-    result = [@object.author]
-    if editors.present?
-      result << "Edited by #{editors}"
+    result = [authors_together]
+    if editors.any?
+      result << "Edited by #{editors_together}"
     end
-    if translators.present?
-      result << "Translated by #{translators}"
+    if translators.any?
+      result << "Translated by #{translators_together}"
     end
+
     result.join(', ')
   end
 
@@ -124,7 +147,7 @@ class DocumentPresenter < BasePresenter
   end
 
   def posted_by_author?
-    author.blank? || author == contributor.name
+    authors.empty? || (authors.any? && authors.first.name == contributors.first.name)
   end
 
   def published_at
@@ -158,21 +181,44 @@ class DocumentPresenter < BasePresenter
   def viewable_by?(user)
     return @object.published? if user.nil?
 
-    user.is_superuser? || user.is_editor? || self.user == user || contributor.self_and_ancestors.include?(user)
+    user.is_superuser? || user.is_editor? || self.user == user || contributors.first.self_and_ancestors.include?(user)
   end
 
   def title_with_author
-    if author.present?
-      title + ' by ' + author
-    elsif contributor.present?
-      title + ' ed. ' + contributor.name
+    if authors.any?
+      title + ' by ' + authors_together
+    elsif contributors.any?
+      title + ' ed. ' + contributors_together
     end
   end
 
   def twitter_share_url(document_url)
     url = CGI.escape(document_url)
     title_length_max = 90 - author_or_contributor.length
+
+    if title_length_max > 0
+      shortened_title = short_title(title, title_length_max)
+
+      [
+        "https://twitter.com/share?url=#{url}",
+        '&via=SHARIAsource&text=',
+        CGI.escape("#{shortened_title} by #{author_or_contributor}")
+      ].join('')
+    else
+      title_length_max = 90
+      shortened_title = short_title(title, title_length_max)
+
+      [
+        "https://twitter.com/share?url=#{url}",
+        '&via=SHARIAsource&text=',
+        CGI.escape("#{shortened_title}")
+      ].join('')
+    end
+  end
+
+  def short_title(title, title_length_max)
     shortened_title = title
+
     if title.length > title_length_max
       shortened_title = title.slice(0, title_length_max)
       if shortened_title.slice(-1) == " "
@@ -184,11 +230,8 @@ class DocumentPresenter < BasePresenter
       end
       shortened_title += '…'
     end
-    [
-      "https://twitter.com/share?url=#{url}",
-      '&via=SHARIAsource&text=',
-      CGI.escape("#{shortened_title} by #{author_or_contributor}")
-    ].join('')
+
+    shortened_title
   end
 
   def years
