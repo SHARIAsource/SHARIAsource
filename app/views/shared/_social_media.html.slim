@@ -5,3 +5,4 @@ ul.social-links
     a.facebook href='https://www.facebook.com/SHARIAsource.at.HARVARD/' Facebook
   li
     a.wordpress href='https://shariasourceblog.wordpress.com/' Blog
+  li.login-link= link_to 'Login', new_user_session_path if current_user.nil?

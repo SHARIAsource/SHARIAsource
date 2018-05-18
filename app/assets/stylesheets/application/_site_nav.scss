@@ -12,7 +12,7 @@
 
   li {
     float:left;
-    width:110px;
+    width:118px;
     padding-right:20px;
     line-height:1.14286;
   }
@@ -39,6 +39,17 @@
 
   li {
     margin-left:8px;
+  }
+
+  li.login-link {
+    a {
+      text-indent: 0px;
+      height: auto;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 16px;
+      color: RGBA(243, 178, 62, 1);
+    }
   }
 
   .twitter {
