@@ -29,7 +29,7 @@
       - if @project.photo && @project.photo.url
         = image_tag(@project.photo.url, alt: @project.name, class: "project-photo #{'scaled-photo' if @project.scale_photo}")
 
-  .inner.document-content
+  .inner.document-content.project-content
     .large-8.columns
       h4.project-header Project Profile
       .project-description.project-description-short== @project.description

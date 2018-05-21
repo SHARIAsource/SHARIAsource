@@ -3,7 +3,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .document-content.project-content {
-  min-height: 180px;
+  min-height: 0px !important;
+  padding-bottom: 10px !important;
 }
 
 .project-description {
@@ -14,7 +15,7 @@
 }
 
 .project-description-short {
-  height: 150px;
+  height: 105px;
   overflow: hidden;
 }
 
