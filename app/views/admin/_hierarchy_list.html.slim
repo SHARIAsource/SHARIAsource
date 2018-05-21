@@ -1,6 +1,8 @@
 - if hash.keys.present? && !defined?(parent)
   small= link_to 'Sort all by name', url_for([:sort_name, :admin, hash.keys.first.class]), class: 'tiny radius pill button', data: { remote: true, method: :put }
 
+- raise "yy"
+
 - hash.map do |item, children|
   .row
     .small-8.columns
