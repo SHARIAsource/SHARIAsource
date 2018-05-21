@@ -1,5 +1,6 @@
 / TODO: render this for secured documents when correct password supplied
 - if document.pdf? && !document.use_content_password?
-  = link_to "Download This Document", document_download_path(document), class: 'tiny radius pill button', id: 'edit-this', target: '_blank'
+  .download-doc
+    = link_to "Download This Document", document_download_path(document), target: '_blank'
 
 

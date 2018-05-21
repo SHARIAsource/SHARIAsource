@@ -128,13 +128,13 @@
       display:none;
     }
 
-    .expand, .collapse {
+    .expand, .collapse, .download-doc, .edit-doc {
       margin:16px 0 0 0;
       font-family:$ss-font-serif;
       line-height:1.14286;
     }
 
-    .expand a, .collapse a {
+    .expand a, .collapse a, .download-doc a, .edit-doc a {
       font-family:$ss-font-serif;
       font-size:14px;
       font-weight:bold;
