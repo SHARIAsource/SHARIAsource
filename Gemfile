@@ -51,6 +51,8 @@ gem 'therubyracer', platforms: :ruby
 gem 'will_paginate', '~> 3.1'
 gem 'eventmachine', '~> 1.0.4'
 gem 'awesome_print'
+gem 'leaflet-rails'
+gem "d3-rails"
 
 group :development do
   gem 'annotate'

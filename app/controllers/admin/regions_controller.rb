@@ -63,7 +63,7 @@ class Admin::RegionsController < AdminController
   protected
 
   def permitted_params
-    params.require(:region).permit(:name, :parent_id)
+    params.require(:region).permit(:name, :parent_id, :latitude, :longitude)
   end
 
   def fetch_region
