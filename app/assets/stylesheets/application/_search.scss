@@ -130,6 +130,13 @@
     position:relative;
     line-height:1.1486;
 
+    .unselect-all {
+      display: block;
+      height: 32px;
+      line-height: 32px;
+      color: #eba400;
+    }
+
     &.check-label {
       padding-left:20px;
 
