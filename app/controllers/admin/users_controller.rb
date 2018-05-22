@@ -70,7 +70,7 @@ class Admin::UsersController < AdminController
   def fetch_author
     author_id = params[:user].fetch(:author_id, nil)
 
-    if author_id
+    if author_id.present?
       @author = Author.find(author_id)
     else
       @author = nil
