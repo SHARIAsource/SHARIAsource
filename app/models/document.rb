@@ -89,6 +89,10 @@ class Document < ActiveRecord::Base
   searchable auto_index: false do
     text :title, :source_name, :publisher
 
+    string :name do |doc|
+      doc.title
+    end
+
     text :summary do
       strip_control_characters summary
     end

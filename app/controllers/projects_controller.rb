@@ -24,7 +24,7 @@ class ProjectsController < ApplicationController
     if @filters.present?
       # we build an array of searches to handle multiple named filters
       @search = []
-      @filters.each do |filters|
+      @filters.sort_by(&:priority).each do |filters|
         if filters.named_filter_documents.any?
           selected_documents = filters.named_filter_documents
           ref_docs = selected_documents.map(&:referenced_documents).map(&:ids).flatten
@@ -34,19 +34,23 @@ class ProjectsController < ApplicationController
           query.with(:published, true)
           query.with(:id, ref_docs) if ref_docs
           query.with(:contributor_ids, filters.contributor.id) if filters.contributor
-          query.with(:region_ids, filters.region.id) if filters.region
+
+          query.with(:region_ids, filters.region.id) if filters.region && !filters.invert_region_id
+          query.without(:region_ids, filters.region.id) if filters.region && filters.invert_region_id
+
           query.with(:language_id, filters.language.id) if filters.language
           query.with(:document_type_id, filters.document_type.id) if filters.document_type
           query.with(:theme_ids, filters.theme.id) if filters.theme
           query.with(:topic_ids, filters.topic.id) if filters.topic
           query.with(:id, filters.named_filter_additional_documents.map(&:id).flatten) if filters.named_filter_additional_documents.any?
           query.without(:id, filters.named_filter_excluded_documents.map(&:id).flatten) if filters.named_filter_excluded_documents.any?
+          query.order_by(:name)
         end
         @search.push(search)
       end
       # this was a little unusual as we were not just creating unions of different search terms, but unions of different searches. So, the following line is
       # unfortunately more complicated than would be desired
-      named_results = @search.map(&:results).inject(nil) {|all_results, search_results| all_results = [] if all_results.nil?; all_results + search_results}.uniq
+      named_results = @search.map(&:results).flatten.uniq
       @named_results = named_results.paginate :page => params[:page] || 1, :per_page => 5
     end
   end

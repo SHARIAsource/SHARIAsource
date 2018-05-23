@@ -13,11 +13,17 @@
           = f.input :date_to, include_blank: true
           = f.input :date_format
           = f.input :language_id, collection: Language.where({})
+          = f.input :invert_language_id, label: "Invert Language"
           = f.input :topic_id, collection: Topic.where({})
+          = f.input :invert_topic_id, label: "Invert Topic"
           = f.input :theme_id, collection: Theme.where({})
+          = f.input :invert_theme_id, label: "Invert Theme"
           = f.input :region_id, collection: Region.where({})
+          = f.input :invert_region_id, label: "Invert Region"
           = f.input :era_id, collection: Era.where({})
+          = f.input :invert_era_id, label: "Invert Era"
           = f.input :document_type_id, collection: DocumentType.where({})
+          = f.input :invert_document_type_id, label: "Invert Document"
           = f.input :project_id, collection: Project.where({})
           = f.input :priority
     .large-12.columns

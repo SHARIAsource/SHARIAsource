@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180522112631) do
+ActiveRecord::Schema.define(version: 20180523094103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -300,6 +300,12 @@ ActiveRecord::Schema.define(version: 20180522112631) do
     t.datetime "updated_at", null: false
     t.bigint "parent_id"
     t.integer "priority", default: 1
+    t.boolean "invert_region_id", default: false
+    t.boolean "invert_language_id", default: false
+    t.boolean "invert_document_type_id", default: false
+    t.boolean "invert_theme_id", default: false
+    t.boolean "invert_topic_id", default: false
+    t.boolean "invert_era_id", default: false
     t.index ["document_type_id"], name: "index_named_filters_on_document_type_id"
     t.index ["era_id"], name: "index_named_filters_on_era_id"
     t.index ["language_id"], name: "index_named_filters_on_language_id"
