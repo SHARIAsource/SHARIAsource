@@ -2,7 +2,10 @@
 
 .inner-wrapper
   .inner
-    h2.section-heading.browse= @project.name
+    h2.section-heading.browse
+      = @project.name
+      - if current_user.try(:can_edit?, @project)
+        = link_to "Edit This Project", edit_admin_project_path(@project), class: 'tiny radius pill button', id: 'edit-this'
 
   .row
     .large-6.columns

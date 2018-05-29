@@ -4,6 +4,11 @@ class ProjectsController < ApplicationController
   before_action :fetch_data, :fetch_filters
 
   def show
+    if !allowed_to_view
+      redirect_to root_path
+
+      return
+    end
   end
 
   def search
@@ -96,4 +101,18 @@ class ProjectsController < ApplicationController
     dates
   end
 
+  def allowed_to_view
+    allowed = true
+
+    if current_user.can_edit?(@project)
+      return true
+    end
+
+    # deny if the project is not published yet
+    if !@project.published
+      return false
+    end
+
+    allowed
+  end
 end

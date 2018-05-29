@@ -44,7 +44,7 @@ class Admin::ProjectsController < AdminController
   private
 
   def permitted_params
-    params.require(:project).permit(:name, :description, :photo, :scale_photo, :projects_users_attributes => [:id, :sort_order, :user_id, :project_id, :project_role, :external_collaborator], user_ids: [])
+    params.require(:project).permit(:name, :description, :photo, :scale_photo, :published, :projects_users_attributes => [:id, :sort_order, :user_id, :project_id, :project_role, :external_collaborator], user_ids: [])
   end
 
   def fetch_project

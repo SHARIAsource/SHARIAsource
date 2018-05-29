@@ -30,8 +30,14 @@ class User < ActiveRecord::Base
   scope :editors, -> { where(is_editor: true) }
   scope :enabled, -> { where(disabled: false) }
 
-  def can_edit?(document)
-    is_editor? || self_and_descendant_ids.include?(document.contributor.id)
+  def can_edit?(object)
+    if object.is_a? Document
+      return is_editor? || self_and_descendant_ids.include?(object.contributor.id)
+    elsif object.is_a? Project
+      return is_admin || object.users.include?(self)
+    end
+
+    false
   end
 
   def can_review?

@@ -8,6 +8,7 @@
         .large-12.columns
           = f.input :name, autofocus: true
           = f.input :description, input_html: { class: 'wysiwyg' }
+          = f.input :published, boolean_style: :inline, label: 'Published'
           hr
           = f.association :users, collection: User.enabled.editors
           = f.association :projects_users do |ff|
