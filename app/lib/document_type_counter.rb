@@ -69,8 +69,17 @@ class DocumentTypeCounter
       document_types: roots,
       counts: contributors.map do |a|
         roots.map do |d|
-          a.documents.published
-            .where(document_type: d.self_and_descendant_ids).count
+          base_docs = a.documents.published
+            .where(document_type: d.self_and_descendant_ids).uniq
+          if a.author.present?
+            authored_docs = Document.joins(:authors).published
+              .where(document_type: d.self_and_descendant_ids)
+              .merge(Author.where(name: a.name))
+              .uniq
+            (base_docs + authored_docs).uniq.count
+          else
+            base_docs.count
+          end
         end
       end
     }
