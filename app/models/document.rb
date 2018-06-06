@@ -106,7 +106,7 @@ class Document < ActiveRecord::Base
     end
 
     text :authors do
-      authors.pluck :name
+      authors.pluck(:name)
     end
 
     text :editors do
