@@ -5,7 +5,7 @@ class UserPresenter < BasePresenter
 
   def name_with_status
     if is_senior_scholar
-      "#{name} Senior Scholar"
+      "#{name}, Senior Scholar"
     else
       name
     end

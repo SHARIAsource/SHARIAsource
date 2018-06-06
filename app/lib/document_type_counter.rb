@@ -65,7 +65,7 @@ class DocumentTypeCounter
     roots = DocumentType.roots.select(:id, :name)
     contributors = User.where("disabled = FALSE OR disabled IS NULL").joins(:documents).distinct
     {
-      contributors: contributors,
+      contributors: contributors.map { |c| UserPresenter.new(c) },
       document_types: roots,
       counts: contributors.map do |a|
         roots.map do |d|
