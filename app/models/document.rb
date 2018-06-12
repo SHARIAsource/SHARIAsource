@@ -238,10 +238,6 @@ class Document < ActiveRecord::Base
     pages[0] && pages[0].image.thumb
   end
 
-  def boop(x)
-    # puts "boop #{x}: #{Time.now.to_i}"
-  end
-
   def set_new_content_password
     # NOTE: This lets us lazily just set content_password = new_content_password
     # (in the view) as a no-op when the pre-existing content_password isn't changing
@@ -253,14 +249,7 @@ class Document < ActiveRecord::Base
   end
 
   def pdf_pages
-    begin
-      PDF::Reader.new(pdf.current_path).pages
-    rescue PDF::Reader::MalformedPDFError => e
-      # TODO: save this error in self.processing_error
-      Rails.logger.warn e.to_s
-      puts e.to_s
-      return []
-    end
+    PDF::Reader.new(pdf.current_path).pages
   end
 
   def self.repair_pages_days_older_than(days)
@@ -303,7 +292,7 @@ class Document < ActiveRecord::Base
 
     # TODO: handle failures in extract_pdf_images_to_disk by adding a nil image and detecting it here
     #   Ideally, we would use a stock "this page is unavailable" image instead
-    images = extract_pdf_images_to_disk(page_count: page_count)
+    images = extract_pdf_images_to_disk(page_count: 1)
 
     message = "Images successfully generated for document #{id}."
     message += " Now parsing all #{page_count} pages of text." if with_text
@@ -313,30 +302,24 @@ class Document < ActiveRecord::Base
     self.processed = false
     self.pages.destroy_all
 
-    images.each_with_index do |image, idx|
-      puts "Analyzing image: #{image}"
-      source_page = Page.new(image: File.open(image), number: idx + 1)
+    pages.zip(images).each_with_index do |pair, idx|
+      page, image = pair
+
+      source_page = Page.new(image: (image.nil? ? image : File.open(image)), number: idx + 1)
       source_page.build_body
 
       if with_text
-        # There was a problem with PDF::Reader back in the day, so don't use it here.
-        begin
-          page = pages[idx]
-          puts "Firing build_text_by_hybrid for page #{idx}..."
-          source_page.body.text = txt_to_html(page.text)
+        page = pages[idx]
+        puts "Firing build_text_by_hybrid for page #{idx}..."
+        source_page.body.text = txt_to_html(page.text)
 
-          hybrid_text = build_text_by_hybrid(page.text, image)
-          source_page.body.hybrid_text = txt_to_html(hybrid_text)
-        rescue ArgumentError => _
-          source_page.body.text = ""
-          source_page.body.hybrid_text = ""
-        end
+        hybrid_text = build_text_by_hybrid(page.text, image)
+        source_page.body.hybrid_text = txt_to_html(hybrid_text)
       else
         source_page.body.text = NO_TEXT_MESSAGE
         source_page.body.hybrid_text = NO_TEXT_MESSAGE
       end
 
-      puts "Saving page #{source_page.number} of #{page_count}" 
       self.pages << source_page  #This saves the source_page
       source_page = nil
 
@@ -347,11 +330,9 @@ class Document < ActiveRecord::Base
     self.processed = true
     self.save!
 
-    GC.start
     clean_up_temp_images(images)
 
     log_message = "Image generation #{'and text parsing ' if with_text}complete for document #{self.id}"
-    puts log_message
     Rails.logger.info log_message
   end
 
@@ -387,12 +368,11 @@ class Document < ActiveRecord::Base
       start_index = endpoints.first
       end_index = endpoints.last
       new_images = extract_page_range(start_index: start_index, end_index: end_index)
-      
+
       new_images.each_with_index do |image, idx|
         global_page_number = start_index + idx
         img_path = BASE_PAGE_DIRECTORY + "/#{id}/pdf-#{id}-#{global_page_number}.jpg"
         images << img_path
-        # puts "Creating image: #{img_path}"
 
         image.alpha = Magick::DeactivateAlphaChannel if image.alpha?
         image.to_blob
@@ -471,7 +451,7 @@ class Document < ActiveRecord::Base
   def generate_images
     changes = self.previous_changes
     if changes.include?(:pdf) && changes[:pdf].first != changes[:pdf].last
-      PdfToImagesWorker.perform_async(id)
+      regenerate_pdf false
     end
   end
 
