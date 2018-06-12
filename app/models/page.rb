@@ -1,7 +1,7 @@
 class Page < ActiveRecord::Base
   validates :number, numericality: { greater_than: 0 }
-  validates :width, numericality: true
-  validates :height, numericality: true
+  validates :width, numericality: true, if: :image?
+  validates :height, numericality: true, if: :image?
 
   has_one :body, dependent: :destroy
   belongs_to :document

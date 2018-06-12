@@ -3,12 +3,14 @@
 
   $(document).on('turbolinks:load', function() {
     var metadata = $('.metadata')[0];
-    var maxChild = Math.max.apply(null, Array.from(metadata.children).map(col => Math.max.apply(null, Array.from(col.children).map(el => el.offsetHeight))));
-    if(max > maxChild) {
-      $('.meta-show-more, .meta-show-less').hide();
-    }
-    else {
-      $('.meta-column').css('max-height', max + 'px');
+    if(metadata !== null && metadata !== undefined) {
+      var maxChild = Math.max.apply(null, Array.from(metadata.children).map(col => Math.max.apply(null, Array.from(col.children).map(el => el.offsetHeight))));
+      if(max > maxChild) {
+        $('.meta-show-more, .meta-show-less').hide();
+      }
+      else {
+        $('.meta-column').css('max-height', max + 'px');
+      }
     }
   }).on('click', '.meta-show-more', function(event) {
     $(event.target).parents('.metadata').css('max-height', 'none');

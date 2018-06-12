@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180523094103) do
+ActiveRecord::Schema.define(version: 20180612152454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,7 +109,6 @@ ActiveRecord::Schema.define(version: 20180523094103) do
     t.string "title", limit: 255
     t.integer "document_type_id"
     t.string "pdf", limit: 255
-    t.boolean "processed", default: true
     t.string "source_name", limit: 255
     t.string "source_url", limit: 255
     t.string "publisher", limit: 255

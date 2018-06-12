@@ -10,7 +10,6 @@ class Document < ActiveRecord::Base
   BASE_PAGE_DIRECTORY = Rails.root.join('tmp', 'pdf-pages').to_s.freeze
   NO_TEXT_MESSAGE = "No text to show"
 
-  before_save :set_processed
   before_save :prepend_http_to_source_url
   before_save :set_published_at
   after_save :log_review
@@ -86,7 +85,7 @@ class Document < ActiveRecord::Base
   mount_uploader :pdf, PdfUploader
   accepts_nested_attributes_for :pages, :body
 
-  searchable auto_index: false do
+  searchable auto_remove: true do
     text :title, :source_name, :publisher
 
     string :name do |doc|
@@ -299,7 +298,6 @@ class Document < ActiveRecord::Base
     puts message
     Rails.logger.info message
 
-    self.processed = false
     self.pages.destroy_all
 
     pages.zip(images).each_with_index do |pair, idx|
@@ -322,12 +320,8 @@ class Document < ActiveRecord::Base
 
       self.pages << source_page  #This saves the source_page
       source_page = nil
-
-      # NOTE: Force garbage collection to try and prevent unreasonably heavy memory use
-      GC.start
     end
 
-    self.processed = true
     self.save!
 
     clean_up_temp_images(images)
@@ -446,23 +440,12 @@ class Document < ActiveRecord::Base
     user.is_superuser? || user.is_editor? || self.user == user || contributors.include?(user)
   end
 
-  private
 
   def generate_images
     changes = self.previous_changes
     if changes.include?(:pdf) && changes[:pdf].first != changes[:pdf].last
       regenerate_pdf false
     end
-  end
-
-  def set_processed
-    pdf_updated = self.pdf_changed? && !self.new_record?
-    new_with_pdf = self.new_record? && self.pdf.present?
-    if pdf_updated || new_with_pdf
-      self.processed = false
-      self.published = false
-    end
-    return true
   end
 
   def prepend_http_to_source_url
