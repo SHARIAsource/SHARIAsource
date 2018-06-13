@@ -24,7 +24,6 @@
 
       h2
         = @document.title
-        = render partial: 'documents/edit_button', locals: { document: @document.object }
 
       = render partial: 'documents/byline', locals: { document: @document }
 
@@ -36,6 +35,7 @@
           .collapse
             a href="#" Collapse Summary
         = render partial: 'documents/download_button', locals: { document: @document.object }
+        = render partial: 'documents/edit_button', locals: { document: @document.object }
 
   .metadata-inner
     .metadata.js-same-height-container
