@@ -4,6 +4,8 @@
       = f.input :email, required: true
       = f.input :first_name
       = f.input :last_name
+      = f.input :author_id, as: :select, collection: Author.order('name asc'),
+          include_blank: true, label: "Author", selected: @user.author_id
       = f.association :collaborator, collection: Collaborator.all, include_blank: 'None'
       = f.association :parent, collection: User.where.not(id: @user.self_and_descendant_ids), include_blank: false, label: 'Supervisor'
       fieldset

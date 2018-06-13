@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 class DocumentPresenter < BasePresenter
   include ActionView::Helpers::SanitizeHelper
+  include ActionView::Helpers::UrlHelper
+  include Rails.application.routes.url_helpers
 
   REFERENCE_LIMIT = 3
 
@@ -9,7 +11,25 @@ class DocumentPresenter < BasePresenter
   end
 
   def authors_together
-    authors.map(&:name).to_sentence
+    authors.map do |author|
+      if author.user
+        link_to(author.name, contributor_path(author.user)).html_safe
+      else
+        author.name
+      end
+    end.each_with_index.inject("") do |state, iter|
+      body, ix = iter
+
+      if state != ""
+        if ix == authors.count - 1
+          "#{state} and #{body}"
+        else
+          "#{state}, #{body}"
+        end
+      else
+        body
+      end
+    end.html_safe
   end
 
   def editors_together
@@ -79,7 +99,7 @@ class DocumentPresenter < BasePresenter
       result << "Translated by #{translators_together}"
     end
 
-    result.join(', ')
+    result.join(', ').html_safe
   end
 
   def dates

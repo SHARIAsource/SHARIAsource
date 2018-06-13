@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   validates :last_name, presence: true
 
   belongs_to :collaborator
+  has_one :author
   has_and_belongs_to_many :documents,
            foreign_key: 'contributor_id',
            join_table: :contributors_documents,
@@ -38,6 +39,15 @@ class User < ActiveRecord::Base
     end
 
     false
+  end
+
+  def update_author(author)
+    Author.where(user_id: self.id).update_all(user_id: nil)
+    author.update_attribute(:user_id, self.id) if author
+  end
+
+  def author_id
+    self.author.try(:id)
   end
 
   def can_review?

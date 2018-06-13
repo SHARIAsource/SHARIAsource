@@ -15,7 +15,7 @@
           tr
           - @contributor_table[:contributors].each_with_index do |contributor, contributor_index|
             tr data-depth=1
-              th scope='row'= link_to contributor.name, contributor_path(contributor)
+              th scope='row'= link_to contributor.name_with_status, contributor_path(contributor)
               - @contributor_table[:document_types].each_with_index do |document_type, document_type_index|
                 - count = @contributor_table[:counts][contributor_index][document_type_index]
                 td data-count=count

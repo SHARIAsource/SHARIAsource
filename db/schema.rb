@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180529131535) do
+ActiveRecord::Schema.define(version: 20180612152454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "attached_files", id: :serial, force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "attachable_id"
+  create_table "attached_files", force: :cascade do |t|
+    t.bigint "user_id", null: false
     t.string "attachable_type"
+    t.bigint "attachable_id"
     t.string "token"
     t.string "file"
     t.datetime "created_at", null: false
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20180529131535) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
+    t.integer "user_id"
   end
 
   create_table "authors_documents", id: false, force: :cascade do |t|
@@ -76,11 +77,13 @@ ActiveRecord::Schema.define(version: 20180529131535) do
     t.index ["referenced_id"], name: "index_document_documents_on_referenced_id"
   end
 
-  create_table "document_reviews", id: :serial, force: :cascade do |t|
-    t.integer "document_id"
-    t.integer "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "document_reviews", force: :cascade do |t|
+    t.bigint "document_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id"], name: "index_document_reviews_on_document_id"
+    t.index ["user_id"], name: "index_document_reviews_on_user_id"
   end
 
   create_table "document_type_hierarchies", id: false, force: :cascade do |t|
@@ -106,7 +109,6 @@ ActiveRecord::Schema.define(version: 20180529131535) do
     t.string "title", limit: 255
     t.integer "document_type_id"
     t.string "pdf", limit: 255
-    t.boolean "processed", default: true
     t.string "source_name", limit: 255
     t.string "source_url", limit: 255
     t.string "publisher", limit: 255
@@ -135,7 +137,7 @@ ActiveRecord::Schema.define(version: 20180529131535) do
     t.string "content_password"
     t.boolean "use_content_password", default: false
     t.boolean "reviewed", default: false
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["created_at"], name: "index_documents_on_created_at"
     t.index ["document_type_id"], name: "index_documents_on_document_type_id"
     t.index ["featured_position"], name: "index_documents_on_featured_position"
@@ -261,7 +263,7 @@ ActiveRecord::Schema.define(version: 20180529131535) do
     t.index ["named_filter_id"], name: "n_f_add_doc_nam_fil"
   end
 
-  create_table "named_filter_documents", id: :serial, force: :cascade do |t|
+  create_table "named_filter_documents", force: :cascade do |t|
     t.integer "named_filter_id"
     t.integer "document_id"
     t.index ["document_id"], name: "index_named_filter_documents_on_document_id"
@@ -277,25 +279,32 @@ ActiveRecord::Schema.define(version: 20180529131535) do
     t.index ["named_filter_id"], name: "n_f_ex_doc_nam_fil"
   end
 
-  create_table "named_filters", id: :serial, force: :cascade do |t|
+  create_table "named_filters", force: :cascade do |t|
     t.string "name"
     t.string "q"
     t.date "date_from"
     t.date "date_to"
     t.string "date_format"
-    t.integer "language_id"
-    t.integer "user_id"
-    t.integer "topic_id"
-    t.integer "theme_id"
-    t.integer "region_id"
-    t.integer "era_id"
-    t.integer "document_type_id"
-    t.integer "project_id"
+    t.bigint "language_id"
+    t.bigint "user_id"
+    t.bigint "topic_id"
+    t.bigint "theme_id"
+    t.bigint "region_id"
+    t.bigint "era_id"
+    t.bigint "document_type_id"
+    t.bigint "project_id"
     t.string "sort"
     t.integer "page"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "parent_id"
+    t.integer "priority", default: 1
+    t.boolean "invert_region_id", default: false
+    t.boolean "invert_language_id", default: false
+    t.boolean "invert_document_type_id", default: false
+    t.boolean "invert_theme_id", default: false
+    t.boolean "invert_topic_id", default: false
+    t.boolean "invert_era_id", default: false
     t.index ["document_type_id"], name: "index_named_filters_on_document_type_id"
     t.index ["era_id"], name: "index_named_filters_on_era_id"
     t.index ["language_id"], name: "index_named_filters_on_language_id"
@@ -317,7 +326,7 @@ ActiveRecord::Schema.define(version: 20180529131535) do
     t.index ["number"], name: "index_pages_on_number"
   end
 
-  create_table "projects", id: :serial, force: :cascade do |t|
+  create_table "projects", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
@@ -327,9 +336,9 @@ ActiveRecord::Schema.define(version: 20180529131535) do
     t.boolean "published"
   end
 
-  create_table "projects_users", id: :serial, force: :cascade do |t|
-    t.integer "project_id", null: false
-    t.integer "user_id", null: false
+  create_table "projects_users", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "user_id", null: false
     t.integer "sort_order", default: 1
     t.string "project_role"
     t.boolean "external_collaborator"

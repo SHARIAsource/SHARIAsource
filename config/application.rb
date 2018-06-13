@@ -25,6 +25,5 @@ module Shariasource
    #)
 
     config.autoload_paths << Rails.root.join('lib')
-    config.cache_store = :mem_cache_store
   end
 end

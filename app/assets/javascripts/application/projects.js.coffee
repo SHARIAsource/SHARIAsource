@@ -51,12 +51,13 @@ $(document).on 'ready page:load', ->
     $.ajax
       url: next_page_url
       success: (res) ->
-        search_results = res.indexOf('<div class="search-results">')
-        footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
-        $(".search-results").replaceWith(res.substring(search_results, footer_div));
-        window.history.pushState('','', this.url)
+        $('.search-results .more-results').remove()
+        search_results = $(res).find('.search-results')
+        search_results.find('.result, .more-results')
+                      .insertAfter($('.search-results .result').last())
+        $('.pagination').replaceWith(search_results.find('.pagination'))
         $('.pagination').hide()
-        return false
+    return false
 
   # handles selecting collections
   $('.additional_search').on 'click', (event) ->
