@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe Page do
+  before do
+    allow(subject).to receive(:image?).and_return(true)
+  end
+
   it { should respond_to :image }
   it { should validate_numericality_of(:number).is_greater_than(0) }
   it { should validate_numericality_of(:width) }
