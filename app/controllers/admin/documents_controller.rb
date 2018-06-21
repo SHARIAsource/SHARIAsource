@@ -55,7 +55,8 @@ class Admin::DocumentsController < AdminController
                   api.create_document({
                     images: params[:document][:ocr][:images].map { |id| { id: id } },
                     metadata: {
-                      title: @document.title
+                      title: @document.title,
+                      languages: params[:document][:ocr][:languages]
                     },
                     editor_email: current_user.email
                   })

@@ -44,6 +44,9 @@
               $('<input class="corpusbuilder-hidden" type="hidden" name="document[ocr][document_id]" value="' + doc.id + '" />')
             )
           },
+          onLanguagesPicked: function(languageCodes) {
+            console.log(languageCodes);
+          },
           onDocumentUnpicked: function() {
             clearHidden();
           },
