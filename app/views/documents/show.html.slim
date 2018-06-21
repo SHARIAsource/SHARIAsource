@@ -191,9 +191,9 @@
             = link_to 'See More', '#', class: 'js-expand-referencing'
             = link_to 'See Less', '#', class: 'js-expand-referencing', style: 'display: none;'
 
-- if @document.pages.present? and false
+- if @document.pages.present?
   = render 'documents/scan_no_text'
-- elsif @document.body.present? and false
+- elsif @document.body.present?
   = render 'documents/body_text', document: @document
 
 = corpusbuilder_document(@document)
