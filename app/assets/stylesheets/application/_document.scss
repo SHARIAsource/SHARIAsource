@@ -589,3 +589,10 @@ p.rtl {
   position: relative;
   padding: 20px;
 }
+
+.owned_document {
+   padding: 0;
+   li a {
+     color: #fdaf00;
+   }
+}

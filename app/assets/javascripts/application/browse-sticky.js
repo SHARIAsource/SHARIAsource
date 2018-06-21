@@ -1,5 +1,5 @@
 (function() {
-  $(document).on('page:change', function() {
+  $(document).on('turbolinks:load', function() {
     var $table = $('.browse-table-stick')
     var $topLevels = $table.find('tr[data-depth=0]')
 

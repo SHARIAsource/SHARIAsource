@@ -1,4 +1,4 @@
-class AddSortOrderToRegions < ActiveRecord::Migration
+class AddSortOrderToRegions < ActiveRecord::Migration[5.1]
   def up
     add_column :regions, :sort_order, :integer
     add_index :regions, :sort_order

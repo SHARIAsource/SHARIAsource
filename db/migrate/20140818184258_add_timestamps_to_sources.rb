@@ -1,4 +1,4 @@
-class AddTimestampsToSources < ActiveRecord::Migration
+class AddTimestampsToSources < ActiveRecord::Migration[5.1]
   def change
     change_table :sources do |t|
       t.timestamps

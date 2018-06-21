@@ -14,10 +14,24 @@ class ContributorsController < ApplicationController
     @regions = Region.hash_tree
     @eras = Era.hash_tree
     @document_types = DocumentType.hash_tree
+    @documents_as_editor_ids = Document.joins(:editors)
+                                       .merge(Editor.where(name: @contributor.name))
+                                       .map(&:id)
+                                       .flatten
+
+    @documents_as_author_refs_ids = Document.joins(:authors)
+                                            .merge(Author.where(name: @contributor.name))
+                                            .map(&:referenced_documents)
+                                            .map(&:ids)
+                                            .flatten
     @search = Document.search do |query|
       query.fulltext @filters.q
       query.with(:published, true)
-      query.with(:contributor_id, @filters.contributor)
+      query.any_of do |querys|
+        querys.with(:contributor_ids, @filters.contributor.first)
+        querys.with(:id, @documents_as_editor_ids) if @documents_as_editor_ids.any?
+        querys.with(:id, @documents_as_author_refs_ids) if @documents_as_author_refs_ids.any?
+      end
     end
   end
 end

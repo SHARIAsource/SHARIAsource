@@ -1,4 +1,4 @@
-class CreateCommentariesSources < ActiveRecord::Migration
+class CreateCommentariesSources < ActiveRecord::Migration[5.1]
   def change
     create_table :commentaries_sources, id: false do |t|
       t.integer :commentary_id

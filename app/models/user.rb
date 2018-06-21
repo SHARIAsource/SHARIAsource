@@ -13,8 +13,10 @@ class User < ActiveRecord::Base
   validates :last_name, presence: true
 
   belongs_to :collaborator
-  has_many :documents, foreign_key: 'contributor_id',
-    dependent: :restrict_with_error
+  has_and_belongs_to_many :documents,
+           foreign_key: 'contributor_id',
+           join_table: :contributors_documents,
+           dependent: :restrict_with_error
 
   has_many :projects_users
   has_many :projects, through: :projects_users

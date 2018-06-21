@@ -1,4 +1,4 @@
-class CreateDocumentReviews < ActiveRecord::Migration
+class CreateDocumentReviews < ActiveRecord::Migration[5.1]
   def change
     create_table :document_reviews do |t|
       t.references :document, required: true

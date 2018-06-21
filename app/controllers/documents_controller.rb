@@ -6,7 +6,8 @@ class DocumentsController < ApplicationController
       PopularityWorker.perform_in(3.months, document.id, 'decrement!')
     else
       # TODO: Display a less hostile warning message
-      raise ActiveRecord::RecordNotFound
+      flash[:notice] = "You must be signed in and authorized to see this document"
+      redirect_to '/users/login'
     end
     @document = DocumentPresenter.new document
   end

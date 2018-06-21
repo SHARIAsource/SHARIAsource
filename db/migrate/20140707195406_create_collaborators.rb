@@ -1,4 +1,4 @@
-class CreateCollaborators < ActiveRecord::Migration
+class CreateCollaborators < ActiveRecord::Migration[5.1]
   def change
     create_table :collaborators do |t|
       t.string :name

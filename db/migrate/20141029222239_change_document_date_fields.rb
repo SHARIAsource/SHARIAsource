@@ -1,4 +1,4 @@
-class ChangeDocumentDateFields < ActiveRecord::Migration
+class ChangeDocumentDateFields < ActiveRecord::Migration[5.1]
   def up
     add_column :documents, :gregorian_year, :integer
     add_column :documents, :gregorian_month, :integer

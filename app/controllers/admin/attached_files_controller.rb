@@ -1,8 +1,8 @@
 class Admin::AttachedFilesController < AdminController
 
   # TODO: Change this to verify they are contributors and logged in
-  before_filter :ensure_editor!
-  before_filter :set_attachable, only: [:create]
+  before_action :ensure_editor!
+  before_action :set_attachable, only: [:create]
 
   def create
     file_params = {

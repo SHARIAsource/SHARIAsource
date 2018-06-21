@@ -12,7 +12,7 @@
 
   li {
     float:left;
-    width:120px;
+    width:110px;
     padding-right:20px;
     line-height:1.14286;
   }
@@ -27,8 +27,15 @@
   }
 }
 
+.header-social-links {
+  position: relative;
+  bottom: 15px;
+}
+
 .header .social-links {
   float:right;
+  position: relative;
+  top: 22px;
 
   li {
     margin-left:8px;
