@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
         first_name: self.first_name,
         last_name: self.last_name
       self.update_attribute(:cb_editor_id, editor['id'])
-      editor.id
+      editor["id"]
     }.call)
   end
 
