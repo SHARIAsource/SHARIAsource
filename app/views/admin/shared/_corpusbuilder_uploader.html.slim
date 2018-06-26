@@ -17,18 +17,46 @@
         return;
       }
 
-      var clearHidden = function() {
-        $('form.edit_document input.corpusbuilder-hidden').remove();
+      // todo: refactor the following code into something nicer:
+
+      var clearHiddenImages = function() {
+        $('form.edit_document input.corpusbuilder-hidden-image').remove();
+      };
+
+      var clearHiddenLanguages = function() {
+        $('form.edit_document input.corpusbuilder-hidden-language').remove();
+      };
+
+      var clearHiddenBackend = function() {
+        $('form.edit_document input.corpusbuilder-hidden-backend').remove();
+      };
+
+      var injectLanguages = function(languages) {
+        clearHiddenLanguages();
+        for(var i = 0; i < languages.length; i++) {
+          $('form.edit_document').append(
+            $('<input class="corpusbuilder-hidden corpusbuilder-hidden-language" type="hidden" name="document[ocr][languages][]" value="' + languages[i] + '" />')
+          );
+        }
+      };
+
+      var injectBackend = function(backend) {
+        console.log("Injecting the backend", backend);
+
+        clearHiddenBackend();
+        $('form.edit_document').append(
+          $('<input class="corpusbuilder-hidden corpusbuilder-hidden-backend" type="hidden" name="document[ocr][backend]" value="' + backend + '" />')
+        )
       };
 
       var injectImages = function(images) {
-        clearHidden();
+        clearHiddenImages();
         for(var i = 0; i < images.length; i++) {
           $('form.edit_document').append(
-            $('<input class="corpusbuilder-hidden" type="hidden" name="document[ocr][images][]" value="' + images[i].id + '" />')
+            $('<input class="corpusbuilder-hidden corpusbuilder-hidden-image" type="hidden" name="document[ocr][images][]" value="' + images[i].id + '" />')
           )
           $('form.edit_document').append(
-            $('<input class="corpusbuilder-hidden" type="hidden" name="document[ocr][image_names][]" value="' + images[i].name + '" />')
+            $('<input class="corpusbuilder-hidden corpusbuilder-hidden-image" type="hidden" name="document[ocr][image_names][]" value="' + images[i].name + '" />')
           )
         }
       };
@@ -39,16 +67,21 @@
           baseUrl: '#{ request.base_url }/corpusbuilder',
           editorEmail: '#{ editor_email }',
           onDocumentPicked: function(doc) {
-            clearHidden();
+            clearHiddenImages();
+            clearHiddenLanguages();
             $('form.edit_document').append(
               $('<input class="corpusbuilder-hidden" type="hidden" name="document[ocr][document_id]" value="' + doc.id + '" />')
             )
           },
           onLanguagesPicked: function(languageCodes) {
-            console.log(languageCodes);
+            injectLanguages(languageCodes);
+          },
+          onBackendChosen: function(backend) {
+            injectBackend(backend);
           },
           onDocumentUnpicked: function() {
-            clearHidden();
+            clearHiddenImages();
+            clearHiddenLanguages();
           },
           onImagesUploaded: function(images) {
             injectImages(images);
