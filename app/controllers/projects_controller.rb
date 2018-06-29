@@ -106,6 +106,8 @@ class ProjectsController < ApplicationController
   end
 
   def allowed_to_view
+    return false if current_user.nil?
+
     allowed = true
 
     if current_user.can_edit?(@project)

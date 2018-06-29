@@ -74,10 +74,12 @@
 
   .inner
     a#projects-documents
-    = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|
-      .search-two-columns.contributor-search
-        .search-sidebar
-          = render 'searches/filters', locals: { f: f }
-        .search-results
-          - unless @filters.is_a?(NamedFilter)
-            = render 'searches/project_results', locals: { f: f }
+    - if @filters.empty?
+    - else
+      = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|
+        .search-two-columns.contributor-search
+          .search-sidebar
+            = render 'searches/filters', locals: { f: f }
+          .search-results
+            - unless @filters.is_a?(NamedFilter)
+              = render 'searches/project_results', locals: { f: f }
