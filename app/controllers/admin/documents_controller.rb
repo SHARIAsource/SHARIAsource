@@ -46,7 +46,9 @@ class Admin::DocumentsController < AdminController
       @document.index!
       flash[:notice] = 'Document created successfully'
 
-      if params[:document].has_key?(:ocr)
+      ocr_params = params[:document].fetch(:ocr, {})
+
+      if ocr_params.has_key?(:images) || ocr_params.has_key?(:document_id)
         begin
           api = Corpusbuilder::Ruby::Api.new
 
