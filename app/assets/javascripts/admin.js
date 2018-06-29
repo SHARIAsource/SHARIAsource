@@ -26,3 +26,12 @@
 // xrequire plupload-2.3.1/js/moxie
 // xrequire plupload-2.3.1/js/plupload.dev
 //= require plupload-2.3.1/js/jquery.ui.plupload/jquery.ui.plupload
+
+$(document).on('turbolinks:load', function() {
+  $(document).foundation()
+
+  if(!location.href.match('.*/admin/.*')) {
+    document.body.innerHTML = "";
+    location.reload(true);
+  }
+})

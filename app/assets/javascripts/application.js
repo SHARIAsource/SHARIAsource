@@ -26,6 +26,7 @@ $(document).on('turbolinks:load', function() {
   $(document).foundation()
 
   if(location.href.match('.*/admin/.*')) {
+    document.body.innerHTML = "";
     location.reload(true);
   }
 })
