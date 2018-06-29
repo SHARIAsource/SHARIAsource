@@ -47,6 +47,7 @@
       .ss-cb
           = check_box_tag 'all_named_search',@project.id, false, :class => 'ss-cb-input'
           = label_tag 'All', nil, class: 'named_filter_label ss-cb-label', for: 'all_named_search'
+          = label_tag 'Unselect All', nil, class: 'named_filter_label ss-cb-label unselect-all', for: 'all_named_search'
       - @project.named_filters.where(parent_id: nil).each do |filter|
         .ss-cb
           / the additional_search class below has a JavaScript click event attached to it, don't change the class name

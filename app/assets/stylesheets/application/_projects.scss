@@ -123,6 +123,15 @@ img.project-photo.scaled-photo {
   font-weight: bold;
 }
 
+.unselect-all {
+  display: block;
+  height: 32px;
+  font-weight: bold;
+  line-height: 32px;
+  color: #eba400;
+  padding-left: 20px !important;
+}
+
 input[type="checkbox"] + label.ss-cb-label {
   display: inline-block;
   margin-left: 0.25em;
