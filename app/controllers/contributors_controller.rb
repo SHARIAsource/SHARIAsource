@@ -24,6 +24,11 @@ class ContributorsController < ApplicationController
                                             .map(&:referenced_documents)
                                             .map(&:ids)
                                             .flatten
+    @documents_as_author_ids = Document.joins(:authors)
+                                       .merge(Author.where(name: @contributor.name))
+                                       .map(&:id)
+                                       .flatten
+    @filters.q += " " + @contributor.author.name if @contributor.author.present?
     @search = Document.search do |query|
       query.fulltext @filters.q
       query.with(:published, true)
@@ -31,6 +36,7 @@ class ContributorsController < ApplicationController
         querys.with(:contributor_ids, @filters.contributor.first)
         querys.with(:id, @documents_as_editor_ids) if @documents_as_editor_ids.any?
         querys.with(:id, @documents_as_author_refs_ids) if @documents_as_author_refs_ids.any?
+        querys.with(:id, @documents_as_author_ids) if @documents_as_author_ids.any?
       end
     end
   end

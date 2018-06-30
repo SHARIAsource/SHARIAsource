@@ -1,6 +1,7 @@
 class Admin::UsersController < AdminController
   before_action :ensure_elevated!
   before_action :fetch_user, only: [:edit, :update, :destroy]
+  before_action :fetch_author, only: [:update, :create]
 
   def index
     if current_user.is_admin
@@ -35,7 +36,7 @@ class Admin::UsersController < AdminController
     if params[:user][:force_password_reset]
       @user.send_reset_password_instructions
     end
-    if @user.update permitted_params
+    if @user.update(permitted_params) && @user.update_author(@author)
       flash[:notice] = 'Account updated successfully'
       redirect_to admin_users_path
     else
@@ -64,6 +65,16 @@ class Admin::UsersController < AdminController
                                  :collaborator_id, :parent_id, :disabled,
                                  :is_admin, :is_senior_scholar, :is_password_protector,
                                  :is_original_author)
+  end
+
+  def fetch_author
+    author_id = params[:user].fetch(:author_id, nil)
+
+    if author_id.present?
+      @author = Author.find(author_id)
+    else
+      @author = nil
+    end
   end
 
   def fetch_user

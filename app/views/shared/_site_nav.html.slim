@@ -3,11 +3,10 @@
     ul.site-nav
       li= link_to 'Topics & Themes', topics_path
       li= link_to 'Geographic Regions', regions_path
-      li= link_to 'Empires & Eras', eras_path
+      li= link_to 'Empires &<br /> Eras'.html_safe, eras_path
       li= link_to 'Document Types', document_types_path
       li= link_to 'Editors & Contributors', contributors_path
       li= link_to 'Special Collections', '/resources'
       li= link_to 'About SHARIAsource', '/about'
-      li= link_to 'Contributor Login', new_user_session_path if current_user.nil?
     div.header-social-links
       = render 'shared/social_media'

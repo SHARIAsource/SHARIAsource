@@ -12,3 +12,7 @@ public/assets/
 pgsql/
 apache2/
 tags
+*.swp
+*.swo
+*.swn
+*.swn

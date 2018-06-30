@@ -8,8 +8,14 @@
         .large-12.columns
           = f.input :name, autofocus: true
           = f.input :description, input_html: { class: 'wysiwyg' }
+          = f.input :published, boolean_style: :inline, label: 'Published'
           hr
           = f.association :users, collection: User.enabled.editors
+          b Filters:
+          ul
+            - @project.named_filters.each do |filter|
+              li= link_to filter.name, edit_admin_named_filter_url(filter)
+          hr
           = f.association :projects_users do |ff|
             div class="project_user_#{ff.object.user_id}"
               = ff.input :id, selected: ff.object.id, as: :hidden
