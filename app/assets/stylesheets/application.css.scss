@@ -1,5 +1,10 @@
+/*
+ *=require leaflet
+ */
+
 @import url(//fonts.googleapis.com/earlyaccess/amiri.css);
 
+@import 'global';
 @import 'normalize';
 @import 'foundation/components/forms';
 @import 'foundation/components/type';
@@ -25,3 +30,5 @@
 @import 'application/collaborator';
 @import 'application/print';
 @import 'application/projects';
+@import 'application/regions';
+@import 'application/topics';

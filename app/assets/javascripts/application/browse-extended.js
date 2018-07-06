@@ -28,7 +28,7 @@
       var $children = $(element).nextUntil('[data-depth=' + depth + ']')
       $children = $children.filter('[data-depth=' + (depth + 1) + ']')
 
-      if ($children.is('[data-extended]')) {
+      if ($children.is('[data-extended]') && $children.find('.js-expand').length === 0) {
         $children.last().after(arrowHtml(depth + 1))
       }
 

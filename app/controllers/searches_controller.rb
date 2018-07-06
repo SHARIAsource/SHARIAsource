@@ -9,6 +9,11 @@ class SearchesController < ApplicationController
     @regions = Region.hash_tree
     @eras = Era.hash_tree
     @document_types = DocumentType.hash_tree
+    @authors = User.find(@filters.contributor).map(&:author).reject(&:nil?) if @filters.contributor
+    if @authors.present?
+      indirect = Document.joins(:authors).where(authors: { id: @authors.map(&:id)}).map(&:contributor_ids).flatten.uniq
+      @filters.contributor = (@filters.contributor.map(&:to_i) + indirect).uniq
+    end
     @search = Document.search do |query|
       query.fulltext @filters.q
       query.with(:published, true)

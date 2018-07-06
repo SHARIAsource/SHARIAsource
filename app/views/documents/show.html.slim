@@ -22,7 +22,9 @@
             span= ' :: '
         span= @document.dates
 
-      h2= @document.title
+      h2
+        = @document.title
+
       = render partial: 'documents/byline', locals: { document: @document }
 
       .summary
@@ -89,6 +91,9 @@
             li
               strong Citation:
               span= @document.citation
+        .meta-expands
+          a.meta-show-more href="#" Show More
+          a.meta-show-less href="#" Show Less
 
       .meta-column.js-same-height
         ul

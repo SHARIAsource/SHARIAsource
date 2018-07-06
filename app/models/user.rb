@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   validates :last_name, presence: true
 
   belongs_to :collaborator
+  has_one :author
   has_and_belongs_to_many :documents,
            foreign_key: 'contributor_id',
            join_table: :contributors_documents,
@@ -30,8 +31,23 @@ class User < ActiveRecord::Base
   scope :editors, -> { where(is_editor: true) }
   scope :enabled, -> { where(disabled: false) }
 
-  def can_edit?(document)
-    is_editor? || self_and_descendant_ids.include?(document.contributor.id)
+  def can_edit?(object)
+    if object.is_a? Document
+      return is_editor? || self_and_descendant_ids.include?(object.contributor.id)
+    elsif object.is_a? Project
+      return is_admin || object.users.include?(self)
+    end
+
+    false
+  end
+
+  def update_author(author)
+    Author.where(user_id: self.id).update_all(user_id: nil)
+    author.update_attribute(:user_id, self.id) if author
+  end
+
+  def author_id
+    self.author.try(:id)
   end
 
   def can_review?

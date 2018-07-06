@@ -5,6 +5,12 @@
     .inner.browse-tables
       h2.section-heading.browse Browse Topics & Themes
 
+      h2.viz-title Topics
+      svg class="topic-theme-viz" id="topic-viz" height="700" width="700"
+
+      h2.viz-title Themes
+      svg class="topic-theme-viz" id="theme-viz" height="700" width="700"
+
       table.browse-table
         thead
           tr.browse-headings
@@ -34,3 +40,35 @@
 
       - if @theme_table[:themes].find{|t| t.archived }
         p= link_to 'Expand Archived Themes', '#', class: 'expand-all ss-button js-expand-themes', data: { expandtext: 'Expand Archived Themes', contracttext: 'Contract Archived Themes' }
+
+      style id="dynamic-style"
+
+      script
+        | var topics={"name":"topics","children":[]};
+        - @topic_table[:topics].each_with_index do |topic, topic_index|
+          - searchLink = url_for search_path("topic[]": topic, q: '')
+          | var topicname = "#{topic.name}".replace(/&amp;/g,"&");
+          | topics["children"].push({"name":topicname,"searchLink":'#{searchLink}',"children":[]});
+          - @topic_table[:document_types].each_with_index do |document_type, document_type_index|
+            - count = @topic_table[:counts][topic_index][document_type_index]
+            - searchLink = url_for search_path(topic: [topic.id], document_type: document_type.self_and_descendant_ids, q: '')
+            | if (#{count} > 0) {
+            |   topics["children"][topics["children"].length-1]["children"].push({"name":"#{document_type.name}","size":#{count},"searchLink":'#{searchLink}' });
+            | }
+
+      script
+        | var themes={"name":"themes","children":[]};
+        - @theme_table[:themes].each_with_index do |theme, theme_index|
+          - searchLink = url_for search_path("theme[]": theme, q: '')
+          | var themename = "#{theme.name}".replace(/&amp;/g,"&");
+          | themes["children"].push({"name":themename,"searchLink":'#{searchLink}',"children":[]});
+          - @theme_table[:document_types].each_with_index do |document_type, document_type_index|
+            - count = @theme_table[:counts][theme_index][document_type_index]
+            - searchLink = url_for search_path(theme: [theme.id], document_type: document_type.self_and_descendant_ids, q: '')
+            | if (#{count} > 0) {
+            |   themes["children"][themes["children"].length-1]["children"].push({"name":"#{document_type.name}","size":#{count},"searchLink":'#{searchLink}' });
+            | }
+
+      javascript:
+        CreateViz(themes,"#theme-viz");
+        CreateViz(topics,"#topic-viz");

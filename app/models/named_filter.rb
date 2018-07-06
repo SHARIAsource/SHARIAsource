@@ -20,4 +20,7 @@ class NamedFilter < ActiveRecord::Base
   alias :contributor :user
 
   attr_accessor :quick_create_url
+
+  default_scope { order('priority asc') }
+
 end

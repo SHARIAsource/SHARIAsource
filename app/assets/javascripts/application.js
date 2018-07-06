@@ -21,7 +21,14 @@
 //= require ./trunk8
 //= require ./waypoints/waypoints
 //= require_tree ./application/
+//= require leaflet
+//= require d3
 
 $(document).on('turbolinks:load', function() {
   $(document).foundation()
+
+  if(location.href.match('.*/admin/.*')) {
+    document.body.innerHTML = "";
+    location.reload(true);
+  }
 })

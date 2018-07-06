@@ -4,8 +4,10 @@
   .inner-wrapper
     .inner.browse-tables
       h2.section-heading.browse
-        span Browse Geographic Regions | 
+        span Browse Geographic Regions |&nbsp;
         = link_to("Browse Empires & Eras", eras_path)
+
+      div id="map"
 
       table.browse-table.browse-table-stick
         thead
@@ -30,3 +32,23 @@
               th.tcol &nbsp;
               - @region_table[:document_types].each do |document_type|
                 th.tcol== document_type.name.split(' ').join('<br>')
+
+      javascript:
+        // Need to have these variables defined before looping through region table
+        var regions = {};
+        var counts = [];
+
+      - @region_table[:regions].each_with_index do |region, region_index|
+        - if region.latitude?
+          - count = @region_table[:counts][region_index]
+          - searchLink = link_to region.name, search_path(region: region.self_and_descendant_ids, q: '')
+          javascript:
+            $(window).load( function() {
+              var sumCount = #{count}.reduce(function(sum,value){ return sum + value; }, 0);
+              addToRegions(regions,"#{region.name}",#{region.latitude},#{region.longitude},sumCount,'#{searchLink}');
+              counts.push(sumCount);
+            });
+      javascript:
+        $(window).load( function() {
+          illustrateMap(regions);
+        });

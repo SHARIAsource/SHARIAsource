@@ -12,7 +12,7 @@
 
   li {
     float:left;
-    width:110px;
+    width:128px;
     padding-right:20px;
     line-height:1.14286;
   }
@@ -35,16 +35,37 @@
 .header .social-links {
   float:right;
   position: relative;
-  top: 22px;
+  top: 16px;
 
   li {
     margin-left:8px;
   }
 
+  li:first-child {
+    margin-left: 0px;
+  }
+
+  li.login-link {
+    clear: both;
+    width: 100%;
+    text-align: center;
+    margin-top: 4px;
+    margin-left: 0px;
+    font-weight: bold;
+
+    a {
+      text-indent: 0px;
+      height: auto;
+      font-size: 13px;
+      line-height: 16px;
+      color: RGBA(243, 178, 62, 1);
+    }
+  }
+
   .twitter {
-    width:24px;
+    width:18px;
     background:url(image-path('header-twitter.svg')) 0 0 no-repeat;
-    background-size:24px 16px;
+    background-size:18px 16px;
 
     &:hover, &:focus {
       background-image:url(image-path('twitter-hover.svg'));
@@ -54,7 +75,7 @@
   .facebook {
     width:8px;
     background:url(image-path('header-facebook.svg')) 0 0 no-repeat;
-    background-size:8px 16px;
+    background-size:8px 14px;
 
     &:hover, &:focus {
       background-image:url(image-path('facebook-hover.svg'));
@@ -62,9 +83,9 @@
   }
 
   .wordpress {
-    width:24px;
+    width:16px;
     background:url(image-path('header-wordpress.svg')) 0 0 no-repeat;
-    background-size:16px 16px;
+    background-size:14px 16px;
 
     &:hover, &:focus {
       background-image:url(image-path('wordpress-hover.svg'));

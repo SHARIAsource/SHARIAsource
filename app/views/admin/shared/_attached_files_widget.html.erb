@@ -6,58 +6,70 @@
 'use strict'
 // TODO: abstract this and move the JS with the other javascript files
 
-$(function(uploader_id) {
-    var auth_token = $('input[name=authenticity_token]').val();
-    var uploader_node = $('#' + uploader_id);
-    var form_url = uploader_node.data('upload-url');
+$(document).on('turbolinks:load', function() {
+  var init = function(uploader_id) {
+      var auth_token = $('input[name=authenticity_token]').val();
+      var uploader_node = $('#' + uploader_id);
+      var form_url = uploader_node.data('upload-url');
 
-    // This is the PLupload jQuery UI widget
-    uploader_node.plupload({
-        runtimes: 'html5',
-        url: form_url,
-        max_file_count: 20,
-        filters: {
-            max_file_size: '5mb',
-            mime_types: [
-                {title : "Image files", extensions : "jpg,jpeg,png"}
-            ]
-        },
-        multipart_params: {authenticity_token: auth_token, token: auth_token},
-        autostart: true,
-        rename: false,
-        sortable: false,
-        dragdrop: true,
-        views: {
-            thumbs: true,
-            list: true,
-            active: 'list'
-        },
-        ready: function(uploader) {
-          var uploader = uploader_node.plupload('getUploader');
-          var help_text = uploader_node.find('.plupload_droptext');
-          uploader.bind("QueueChanged", function(this_uploader) {
-            if (this_uploader.files.length > 0) {
-              help_text.hide();
-            }
-            else {
-              help_text.show();
-            }
-          });
-          uploader.bind("FileUploaded", function(up, file, response) {
-            //Note: Updates the file list next to every uploader on the page because
-            //  the attached files are scoped to either the form's auth token (for
-            //  un-persisted objects) or the object's id and class name (for persisted
-            //  objects.)
-            $( ".file-list" ).html( response.response );
-          });
-        },
-        complete: function(uploader, error, file, status) {
-        },
-        error: function(uploader, error, file, status) {
-            console.log(error);
-        }
-    });
-    $('.plupload_droptext').html('Upload images here. Then drag its thumbnail from the right side into your content below.');
+      // This is the PLupload jQuery UI widget
+      uploader_node.plupload({
+          runtimes: 'html5',
+          url: form_url,
+          max_file_count: 20,
+          filters: {
+              max_file_size: '5mb',
+              mime_types: [
+                  {title : "Image files", extensions : "jpg,jpeg,png"}
+              ]
+          },
+          multipart_params: {authenticity_token: auth_token, token: auth_token},
+          autostart: true,
+          rename: false,
+          sortable: false,
+          dragdrop: true,
+          views: {
+              thumbs: true,
+              list: true,
+              active: 'list'
+          },
+          ready: function(uploader) {
+            var uploader = uploader_node.plupload('getUploader');
+            var help_text = uploader_node.find('.plupload_droptext');
+            uploader.bind("QueueChanged", function(this_uploader) {
+              if (this_uploader.files.length > 0) {
+                help_text.hide();
+              }
+              else {
+                help_text.show();
+              }
+            });
+            uploader.bind("FileUploaded", function(up, file, response) {
+              //Note: Updates the file list next to every uploader on the page because
+              //  the attached files are scoped to either the form's auth token (for
+              //  un-persisted objects) or the object's id and class name (for persisted
+              //  objects.)
+              $( ".file-list" ).html( response.response );
+            });
+          },
+          complete: function(uploader, error, file, status) {
+          },
+          error: function(uploader, error, file, status) {
+              console.log(error);
+          }
+      });
+      $('.plupload_droptext').html('Upload images here. Then drag its thumbnail from the right side into your content below.');
 
-}('<%= uploader_id%>') );
+    console.log("plupload initialized: ", uploader_id);
+  };
+  var waitAndInit = function() {
+    if(window.uploader_node !== null && window.uploader_node !== undefined && typeof uploader_node.plupload !== 'function') {
+      setTimeout(waitAndInit, 1000);
+    }
+    else {
+      init('<%= uploader_id%>');
+    }
+  };
+  waitAndInit();
+});
 </script>
