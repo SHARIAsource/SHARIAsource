@@ -18,45 +18,40 @@ $(document).on 'ready page:load', ->
      $('.show-less-description').addClass('project-hide')
      event.preventDefault()
 
-  $('#unselect_all_named_search').on 'click', (event) ->
+  $('.unselect-all').on 'click', (event) ->
+    $('#all_named_search')[0].checked = false
     check_boxes = $('.additional_search')
-    i = 0
-    filter_ids = []
-    while i < check_boxes.length
-      check_boxes[i].checked = i == 0
-      filter_ids.push check_boxes[i].value
-      i++
-    $.ajax
-     data:
-      named_filter_id: filter_ids
-     url: '/projects/' + this.value
-     success: (res) ->
-       search_results = res.indexOf('<div class="search-results">')
-       footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
-       window.history.pushState('','', this.url)
-       $(".search-results").replaceWith(res.substring(search_results, footer_div));
-       $('.pagination').hide()
-       return
+    if check_boxes.length > 0
+      for check_box in check_boxes
+        check_box.checked = false
+      $.ajax
+        url: '/projects/' + check_boxes[0].value
+        success: (res) ->
+          search_results = res.indexOf('<div class="search-results">')
+          footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
+          window.history.pushState('','', this.url)
+          $(".search-results").replaceWith(res.substring(search_results, footer_div));
+          $('.pagination').hide()
+          return
 
   $('#all_named_search').on 'click', (event) ->
     check_boxes = $('.additional_search')
     i = 0
-    filter_ids = []
-    while i < check_boxes.length
-      check_boxes[i].checked = true
-      filter_ids.push check_boxes[i].value
-      i++
+    filter_ids = [ ]
+    for check_box in check_boxes
+      check_box.checked = true
+      filter_ids.push check_box.value
     $.ajax
-     data: 
-      named_filter_id: filter_ids
-     url: '/projects/' + this.value
-     success: (res) ->
-       search_results = res.indexOf('<div class="search-results">')
-       footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
-       window.history.pushState('','', this.url)
-       $(".search-results").replaceWith(res.substring(search_results, footer_div));
-       $('.pagination').hide()
-       return
+      data:
+        named_filter_id: filter_ids
+      url: '/projects/' + this.value
+      success: (res) ->
+        search_results = res.indexOf('<div class="search-results">')
+        footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
+        window.history.pushState('','', this.url)
+        $(".search-results").replaceWith(res.substring(search_results, footer_div));
+        $('.pagination').hide()
+        return
 
   # handles pagination for search results
   $('.contributor-search').on 'click', '.ss-button', (event) ->
