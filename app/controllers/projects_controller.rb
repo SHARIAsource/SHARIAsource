@@ -106,19 +106,10 @@ class ProjectsController < ApplicationController
   end
 
   def allowed_to_view
-    return false if current_user.nil?
-
-    allowed = true
-
-    if current_user.can_edit?(@project)
-      return true
+    if current_user.nil?
+      @project.published
+    else
+      current_user.can_edit?(@project)
     end
-
-    # deny if the project is not published yet
-    if !@project.published
-      return false
-    end
-
-    allowed
   end
 end
