@@ -30,7 +30,7 @@
 $(document).on('turbolinks:load', function() {
   $(document).foundation()
 
-  if(!location.href.match('.*/admin/.*')) {
+  if(!location.href.match('.*/admin/.*') && !location.href.match('.*/users/.*')) {
     document.body.innerHTML = "";
     location.reload(true);
   }
