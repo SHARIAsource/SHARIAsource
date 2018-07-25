@@ -25,8 +25,8 @@ module Shariasource
    #config.assets.paths.concat(
    #  Compass::Frameworks::ALL.map { |f| f.stylesheets_directory }
    #)
+    config.active_job.queue_adapter = :sidekiq
 
     config.autoload_paths << Rails.root.join('lib')
-    config.cache_store = :mem_cache_store
   end
 end

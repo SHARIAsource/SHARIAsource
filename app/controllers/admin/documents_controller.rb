@@ -18,10 +18,6 @@ class Admin::DocumentsController < AdminController
   end
 
   def edit
-    unless @document.processed
-      flash[:error] = "Sorry, that document cannot be edited until after it has been processed by the system"
-      redirect_to unpublished_admin_documents_path
-    end
     @document.set_new_content_password
   end
 
@@ -89,9 +85,6 @@ class Admin::DocumentsController < AdminController
 
   def update
     update_params = permitted_params
-    if current_user.requires_approval?
-      update_params[:published] = false
-    end
 
     # create new authors
     update_params[:author_ids] = create_new_attributes update_params[:author_ids], Author if update_params[:author_ids].present?

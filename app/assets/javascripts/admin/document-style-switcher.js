@@ -8,16 +8,6 @@ $(document).on('turbolinks:load', function() {
   }
 
   function tweakSaveAndEditButton() {
-    var style = $docStyle.find(':selected').val()
-    var button = $('#new_create_and_edit')
-      if (style == 'scan' || style == 'scannotext') {
-          button.prop('title', 'This action is only available when Document Style is "No Scan"');
-          button.prop('disabled', true);
-      }
-      else {
-          button.prop('title', '');
-          button.prop('disabled', false);
-      }
   }
 
   showOrHidePanels()
