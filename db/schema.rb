@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 20180612152454) do
     t.boolean "use_content_password", default: false
     t.boolean "reviewed", default: false
     t.bigint "user_id"
+    t.string "ocr_document_id"
     t.index ["created_at"], name: "index_documents_on_created_at"
     t.index ["document_type_id"], name: "index_documents_on_document_type_id"
     t.index ["featured_position"], name: "index_documents_on_featured_position"
@@ -445,6 +446,7 @@ ActiveRecord::Schema.define(version: 20180612152454) do
     t.boolean "is_senior_scholar", default: false
     t.boolean "is_original_author", default: false
     t.boolean "is_password_protector", default: false
+    t.string "cb_editor_id"
     t.index ["collaborator_id"], name: "index_users_on_collaborator_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["is_editor"], name: "index_users_on_is_editor"
