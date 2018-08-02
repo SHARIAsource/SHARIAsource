@@ -190,6 +190,12 @@ GEM
     progress_bar (1.1.0)
       highline (~> 1.6)
       options (~> 2.3.0)
+    pry (0.10.4)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    pry-rails (0.3.6)
+      pry (>= 0.10.4)
     rack (2.0.3)
     rack-protection (2.0.0)
       rack
@@ -291,6 +297,7 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (~> 3.0)
+    slop (3.6.0)
     smart_listing (1.1.2)
       coffee-rails
       jquery-rails
@@ -383,6 +390,7 @@ DEPENDENCIES
   pdf-reader (~> 1.4.0)
   pg
   progress_bar
+  pry-rails
   rack-timeout (~> 0.0.4)
   rails (~> 5.1)
   ranked-model
