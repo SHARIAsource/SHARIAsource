@@ -20,3 +20,17 @@
 .node--leaf {
   pointer-events: none;
 }
+
+.show-hide-visuals {
+  color: $ss-color-secondary;
+  cursor: pointer;
+
+  &:before {
+    content: '>>';
+    margin-right: 8px;
+  }
+
+  &:hover {
+    color: #ebc700;
+  }
+}
