@@ -19,7 +19,7 @@
             h5= link_to project.name, project_path(project)
             = truncate(project.description, length: 250, escape: false, separator: ' ')
             = '&nbsp;'.html_safe
-            = link_to 'Show', project_path(project)
+            = link_to 'View Project', project_path(project)
 
   .inner
     = simple_form_for @filters, url: search_path, method: :get, remote: true do |f|
