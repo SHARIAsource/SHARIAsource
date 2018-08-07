@@ -24,10 +24,19 @@
 .show-hide-visuals {
   color: $ss-color-secondary;
   cursor: pointer;
+  font-family: Amiri, Times, Times New Roman, Georgia, serif;
+  font-size: 14px;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  padding-left: 20px;
 
   &:before {
-    content: '>>';
-    margin-right: 8px;
+    content: '»';
+    font-size: 2em;
+    line-height: 0.5;
+    vertical-align: top;
+    margin-right: 4px;
+    margin-left: -20px;
   }
 
   &:hover {
