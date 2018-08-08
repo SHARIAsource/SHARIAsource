@@ -2,26 +2,17 @@
   var max = 148;
 
   $(document).on('turbolinks:load', function() {
-    var metadata = $('.metadata')[0];
-    if(metadata !== null && metadata !== undefined) {
-      var maxChild = Math.max.apply(
-        null,
-        Array.from(metadata.children).
-              map(function(col) {
-                 return Math.max.apply(
-                     null,
-                     Array.from(col.children).
-                           map(function(el) { return el.offsetHeight })
-                 )
-              })
-      );
-      if(max > maxChild) {
-        $('.meta-show-more, .meta-show-less').hide();
+    setTimeout(function() {
+      var metadata = $('.metadata')[0];
+      if(metadata !== null && metadata !== undefined) {
+        if(max > $(metadata.children).height()) {
+          $('.meta-show-more, .meta-show-less').hide();
+        }
+        else {
+          $('.meta-column').css('max-height', max + 'px');
+        }
       }
-      else {
-        $('.meta-column').css('max-height', max + 'px');
-      }
-    }
+    }, 2000);
   }).on('click', '.meta-show-more', function(event) {
     $(event.target).parents('.metadata').css('max-height', 'none');
     $(event.target).parents('.metadata').find('.meta-column').css('max-height', 'none');
