@@ -20,7 +20,7 @@ class Admin::ProjectsController < AdminController
   end
 
   def update
-    if @project.update permitted_params
+    if @project.update_attributes permitted_params
       redirect_to edit_admin_project_path @project, notice: 'Project updated successfully'
     else
       flash[:error] = @project.errors.full_messages.to_sentence

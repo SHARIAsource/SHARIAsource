@@ -30,11 +30,28 @@ img.project-photo.scaled-photo {
 .show-more-description, .show-less-description, .contributor_link {
   color: $ss-color-secondary;
   cursor: pointer;
+  font-family: Amiri, Times, Times New Roman, Georgia, serif;
+  font-size: 14px;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  padding-left: 20px;
 
   &:hover {
     color: #ebc700;
   }
 }
+
+.show-more-description, .show-less-description {
+  &:before {
+    content: '»';
+    font-size: 2em;
+    line-height: 0.5;
+    vertical-align: top;
+    margin-right: 4px;
+    margin-left: -20px;
+  }
+}
+
 .project-collaborator {
   color: #660011;
   &:hover {
