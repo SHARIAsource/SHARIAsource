@@ -14,8 +14,16 @@
   }
 }
 
+.truncaters {
+  padding-left: 20px;
+
+  div {
+    float: left;
+  }
+}
+
 .project-description-short {
-  height: 105px;
+  height: 115px;
   overflow: hidden;
 }
 
