@@ -196,7 +196,7 @@
             = link_to 'See More', '#', class: 'js-expand-referencing'
             = link_to 'See Less', '#', class: 'js-expand-referencing', style: 'display: none;'
 
-- if @document.pages.present?
+- if @document.document_style != "noscan" && @document.pages.present?
   = render 'documents/scan_no_text'
 - elsif @document.body.present?
   = render 'documents/body_text', document: @document
