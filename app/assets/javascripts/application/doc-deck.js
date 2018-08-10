@@ -9,6 +9,15 @@ function loadIframePage () {
 
   if (resultParams['page']) {
     $("#myiframe").attr('src', $("#myiframe").attr('src') + '#page=' + resultParams['page']);
+    $(".current").text(resultParams['page']);
+  }
+}
+
+function updatePage(page) {
+  if(page == 1) {
+    window.location.hash = "";
+  } else {
+    window.location.hash = "page=" + page;
   }
 }
 
@@ -52,8 +61,9 @@ $( document ).ready(function() {
 
   function updatePageNumber() {
     iframe = $("#myiframe").contents();
-    current_page = $('#pageNumber', iframe).val();
-    $(".current").text(current_page);
+    currentPage = $('#pageNumber', iframe).val();
+    updatePage(currentPage);
+    $(".current").text(currentPage);
   }
 });
 
@@ -129,14 +139,6 @@ $( document ).ready(function() {
   $document.on('turbolinks:load', function() {
       initSeadragon();
   });
-
-  function updatePage(page) {
-    if(page == 1) {
-      window.location.hash = "";
-    } else {
-      window.location.hash = "page=" + page;
-    }
-  }
 
   function navigateHash(dragon) {
     var parts = window.location.hash.split("=");
