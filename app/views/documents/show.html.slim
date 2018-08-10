@@ -196,7 +196,7 @@
       a.meta-show-more href="#" Show More
       a.meta-show-less href="#" Show Less
 
-- if @document.pages.present?
+- if @document.document_style != "noscan" && @document.pages.present?
   = render 'documents/scan_no_text'
 - elsif @document.body.present?
   = render 'documents/body_text', document: @document

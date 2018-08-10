@@ -3,10 +3,14 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 ready = ->
   $('#project_user_ids').change ->
-    if $('.project_user_'+ @options[event.target.getAttribute('data-option-array-index')].value)[0]
-       $('.project_user_'+ @options[event.target.getAttribute('data-option-array-index')].value).remove()
-    $('form').submit()
-    return
+    ids = $('#project_user_ids').val() || []
+
+    to_remove = $('.project_projects_users_user_id input').filter (i, el) ->
+      !ids.includes($(el).val())
+
+    $(el).parent().parent().remove() for el in to_remove
+   #$('form').submit()
+   #return
 
 $(document).ready(ready)
 $(document).on('turbolinks:load', ready)

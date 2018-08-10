@@ -109,7 +109,7 @@ class ProjectsController < ApplicationController
     if current_user.nil?
       @project.published
     else
-      current_user.can_edit?(@project)
+      @project.published || current_user.can_edit?(@project)
     end
   end
 end
