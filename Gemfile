@@ -67,6 +67,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'spring-commands-rspec', '~> 1.0.2'
   gem 'dotenv-rails'
+  gem 'pry-rails'
 end
 
 group :test do
