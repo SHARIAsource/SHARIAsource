@@ -91,9 +91,6 @@
             li
               strong Citation:
               span= @document.citation
-        .meta-expands
-          a.meta-show-more href="#" Show More
-          a.meta-show-less href="#" Show Less
 
       .meta-column.js-same-height
         ul
@@ -195,6 +192,9 @@
           .suggest-tags
             = link_to 'See More', '#', class: 'js-expand-referencing'
             = link_to 'See Less', '#', class: 'js-expand-referencing', style: 'display: none;'
+    .meta-expands
+      a.meta-show-more href="#" Show More
+      a.meta-show-less href="#" Show Less
 
 - if @document.document_style != "noscan" && @document.pages.present?
   = render 'documents/scan_no_text'
