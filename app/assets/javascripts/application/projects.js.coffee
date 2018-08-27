@@ -7,13 +7,13 @@ $(document).on 'ready turbolinks:load', ->
   # only show part of project description text
   $('.show-less-description').addClass('project-hide') 
   $('.show-more-description').on 'click', (event) ->
-     $('.project-description').removeClass('project-description-short')
+     $('.project-content').removeClass('project-description-short')
      $('.show-more-description').addClass('project-hide')
      $('.show-less-description').removeClass('project-hide')
      event.preventDefault()
 
   $('.show-less-description').on 'click', (event) ->
-     $('.project-description').addClass('project-description-short')
+     $('.project-content').addClass('project-description-short')
      $('.show-more-description').removeClass('project-hide')
      $('.show-less-description').addClass('project-hide')
      event.preventDefault()

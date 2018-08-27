@@ -14,8 +14,16 @@
   }
 }
 
+.truncaters {
+  padding-left: 20px;
+
+  div {
+    float: left;
+  }
+}
+
 .project-description-short {
-  height: 105px;
+  height: 115px;
   overflow: hidden;
 }
 
@@ -27,7 +35,7 @@ img.project-photo.scaled-photo {
   object-fit: scale-down;
 }
 
-.show-more-description, .show-less-description, .contributor_link {
+.show-more-description, .show-less-description {
   color: $ss-color-secondary;
   cursor: pointer;
   font-family: Amiri, Times, Times New Roman, Georgia, serif;
@@ -39,6 +47,10 @@ img.project-photo.scaled-photo {
   &:hover {
     color: #ebc700;
   }
+}
+
+.contributor_link {
+  color: $ss-color-secondary;
 }
 
 .show-more-description, .show-less-description {
