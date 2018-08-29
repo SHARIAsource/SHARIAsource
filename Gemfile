@@ -54,6 +54,7 @@ gem 'awesome_print'
 gem 'leaflet-rails'
 gem "d3-rails"
 gem 'friendly_id', '~> 5.2.0'
+gem 'sanitize'
 
 group :development do
   gem 'annotate'

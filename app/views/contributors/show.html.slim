@@ -9,7 +9,7 @@
       .photo-caption
         = image_tag(@contributor.avatar.url, alt: @contributor.name)
         p= @contributor.name
-    == @contributor.about
+    == sanitize_html_fragment @contributor.about
 
     - if @contributor.projects.present?
       .projects
