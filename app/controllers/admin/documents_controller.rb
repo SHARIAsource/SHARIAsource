@@ -53,7 +53,7 @@ class Admin::DocumentsController < AdminController
                 else
                   api.create_document({
                     images: params[:document][:ocr][:images].map { |id| { id: id } },
-                    backend: params[:document][:ocr][:backend],
+                    ocr_model_ids: params[:document][:ocr][:ocr_model_ids],
                     metadata: {
                       title: @document.title,
                       languages: params[:document][:ocr][:languages]
