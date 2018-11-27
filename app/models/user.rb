@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable
 
+  scope :editors, -> { where(is_editor: true) }
+
   before_save :remove_articles
   acts_as_tree name_column: 'last_name', order: 'last_name_without_articles'
 
