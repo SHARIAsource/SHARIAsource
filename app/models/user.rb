@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
     :recoverable, :rememberable, :trackable, :validatable
 
   scope :editors, -> { where(is_editor: true) }
+  scope :admins, -> { where(is_admin: true) }
 
   before_save :remove_articles
   acts_as_tree name_column: 'last_name', order: 'last_name_without_articles'

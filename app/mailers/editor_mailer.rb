@@ -9,4 +9,13 @@ class EditorMailer < ActionMailer::Base
       cc: document.contributor.ancestors.pluck(:email)
     )
   end
+
+  def inactivity_email(user)
+    @user
+
+    mail(
+      to: user.email,
+      subject: "ShariaSource activity reminder"
+    )
+  end
 end
