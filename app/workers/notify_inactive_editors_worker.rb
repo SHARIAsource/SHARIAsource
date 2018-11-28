@@ -1,7 +1,10 @@
 class NotifyInactiveEditorsWorker
   include Sidekiq::Worker
 
-  def perform(id, action)
+  def perform
+    users.each do |user|
+      EditorMailer.inactivity_email(user).deliver
+    end
   end
 
   def users

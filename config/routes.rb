@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount Maily::Engine, at: '/maily'
   require 'sidekiq/web'
 
   devise_for :users,
