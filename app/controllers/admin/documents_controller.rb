@@ -187,6 +187,7 @@ class Admin::DocumentsController < AdminController
         document.regions.pluck(:name).join(', '),
        "<i class='fa fa-#{document.reviewed? ? 'check' : 'close'}' aria-hidden='true'></i>",
         document.updated_at.strftime("%b %e, %Y"),
+        document.created_at.strftime("%b %e, %Y"),
         render_to_string(
           partial: "/admin/documents/datatable_controls.html.slim",
           locals: {document: document},
