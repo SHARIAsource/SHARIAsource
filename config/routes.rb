@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   end
   resources :topics, only: [:index]
   resources :eras, only: [:index]
-  resources :users, only: [:show]
+  resources :users, only: [:show, :update, :index]
 
   namespace :admin do
     resources :users, only: [:index, :new, :edit, :create, :update, :destroy]
