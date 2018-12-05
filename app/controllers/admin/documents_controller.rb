@@ -75,6 +75,10 @@ class Admin::DocumentsController < AdminController
       @document.index!
       DocumentTypeCountWorker.perform_async
 
+      if @document.published
+        EditorMailer.document_published_email(@document).deliver
+      end
+
       if params[:create_and_continue]
         path = edit_admin_document_path @document
       elsif params[:create_and_edit]
