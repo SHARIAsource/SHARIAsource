@@ -48,4 +48,15 @@ class EditorMailer < ActionMailer::Base
       subject: "Your contribution has been created on the SHARIAsource portal"
     )
   end
+
+  def new_submission_email(document)
+    users = User.admins.editors.where(new_submission_email: true)
+
+    @document = document
+
+    mail(
+      to: users.map(&:email),
+      subject: "New submission has been created in ShariaSource"
+    )
+  end
 end

@@ -1,0 +1,33 @@
+<p>Hello,</p>
+
+<p>New submission has been created!</p>
+
+<table>
+  <body>
+    <tr>
+      <td>Title</td>
+      <td><%= @document.title %></td>
+    </tr>
+    <tr>
+      <td>Authors</td>
+      <td><%= @document.authors.map(&:name).join(", ") %></td>
+    </tr>
+    <tr>
+      <td>Editors</td>
+      <td><%= @document.editors.map(&:name).join(", ") %></td>
+    </tr>
+    <tr>
+      <td>Translators</td>
+      <td><%= @document.translators.map(&:name).join(", ") %></td>
+    </tr>
+    <tr>
+      <td>Contributors</td>
+      <td><%= @document.contributors.map { |u| "#{u.first_name} #{u.last_name}" }.join(", ") %></td>
+    </tr>
+    <tr>
+      <td>Submission Date</td>
+      <td><%= localize @document.created_at %></td>
+    </tr>
+  </body>
+</table>
+

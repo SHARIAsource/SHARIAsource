@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181204171608) do
+ActiveRecord::Schema.define(version: 20181205123824) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -460,6 +460,7 @@ ActiveRecord::Schema.define(version: 20181204171608) do
     t.boolean "is_original_author", default: false
     t.boolean "is_password_protector", default: false
     t.boolean "new_content_email", default: true
+    t.boolean "new_submission_email", default: true
     t.index ["collaborator_id"], name: "index_users_on_collaborator_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["is_editor"], name: "index_users_on_is_editor"
