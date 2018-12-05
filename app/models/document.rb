@@ -67,6 +67,8 @@ class Document < ActiveRecord::Base
 
   mount_uploader :word_document, WordDocumentUploader
 
+  validates :word_document, presence: true, if: -> (doc) { doc.document_style == 'noscan'  }
+
   def current_review  #TODO: private
     document_reviews.last if reviewed?
   end
