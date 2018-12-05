@@ -1,0 +1,55 @@
+= content_for :page_title, 'Documents'
+= content_for :admin_active, 'Documents'
+
+header
+  h2.left= 'Documents'
+  = link_to t('helpers.new', model: Document.model_name.human), new_admin_document_path, class: 'left small round button'
+
+hr
+
+.row
+  .columns.large-12
+    center= will_paginate @documents
+    table.display
+      thead
+        tr
+          th Title
+          th Publisher
+          th Tags
+          th Topics
+          th Contributor
+          th Language
+          th Regions
+          th Reviewed
+          th Updated
+          th Uploaded
+          th.actions Actions
+      tbody
+        - @documents.each do |document|
+          tr
+            td= document.title
+            td= document.publisher
+            td= document.tags.pluck(:name).join(', ')
+            td= document.topics.pluck(:name).join(', ')
+            td= document.contributors.map { |contributor| contributor.first_name + ' ' + contributor.last_name }.join(', ')
+            td= document.language.name
+            td= document.regions.pluck(:name).join(', ')
+            td
+              i{class='fa fa-#{document.reviewed? ? 'check' : 'close'}'}
+            td= document.updated_at.strftime("%b %e, %Y")
+            td= document.created_at.strftime("%b %e, %Y")
+            td.actions
+              ul.inline-list
+                li= link_to 'View', document_path(document), class: 'tiny radius pill button'
+                li= link_to t('edit'), edit_admin_document_path(document), class: 'tiny radius pill button'
+                - if current_user.is_editor
+                  - if document.published
+                    li= simple_form_for document, url: admin_document_path(document) do |f|
+                      = f.input_field :published, as: :hidden, value: false
+                      = f.submit 'Unpublish', class: 'tiny radius warning pill button'
+                  - else
+                    li= simple_form_for document, url: admin_document_path(document) do |f|
+                      = f.input_field :published, as: :hidden, value: true
+                      = f.submit 'Publish', class: 'tiny radius warning pill button'
+                  li= link_to t('delete'), admin_document_path(document), class: 'tiny radius alert pill button', method: :delete, data: { confirm: t('helpers.delete_confirm', model: Document.model_name.human)}
+    center= will_paginate @documents

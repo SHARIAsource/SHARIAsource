@@ -1,13 +1,9 @@
 class Admin::DocumentsController < AdminController
   before_action :fetch_document, only: [:edit, :update, :destroy]
   before_action :ensure_editor!, only: [:destroy]
+  before_action :fetch_collection, only: [ :index ]
 
-  def unpublished
-    render_index(false)
-  end
-
-  def published
-    render_index(true)
+  def index
   end
 
   def new
@@ -276,5 +272,9 @@ class Admin::DocumentsController < AdminController
     end
 
     existing + new_ids
+  end
+
+  def fetch_collection
+    @documents = Document.ransack.result.published.page(params[:page])
   end
 end
