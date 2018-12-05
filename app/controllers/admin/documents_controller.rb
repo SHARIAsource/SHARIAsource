@@ -38,6 +38,7 @@ class Admin::DocumentsController < AdminController
 
     if @document.save
       @document.index!
+      EditorMailer.document_creation_email(@document).deliver
       flash[:notice] = 'Document created successfully'
       if params[:create_and_continue]
         redirect_to new_admin_document_path

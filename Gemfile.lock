@@ -35,6 +35,8 @@ GEM
     active_attr (0.10.1)
       activemodel (>= 3.0.2, < 5.2)
       activesupport (>= 3.0.2, < 5.2)
+    active_record_union (1.3.0)
+      activerecord (>= 4.0)
     activejob (5.1.2)
       activesupport (= 5.1.2)
       globalid (>= 0.3.6)
@@ -368,6 +370,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_attr
+  active_record_union
   annotate
   autoprefixer-rails (~> 7.1.0)
   awesome_print
