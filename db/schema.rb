@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181205123824) do
+ActiveRecord::Schema.define(version: 20181205141916) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 20181205123824) do
     t.boolean "use_content_password", default: false
     t.boolean "reviewed", default: false
     t.bigint "user_id"
+    t.string "word_document"
     t.index ["created_at"], name: "index_documents_on_created_at"
     t.index ["document_type_id"], name: "index_documents_on_document_type_id"
     t.index ["featured_position"], name: "index_documents_on_featured_position"

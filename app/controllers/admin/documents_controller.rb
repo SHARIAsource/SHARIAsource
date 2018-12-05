@@ -129,7 +129,7 @@ class Admin::DocumentsController < AdminController
                  :alternate_authors, :featured_position, :reference_type_id,
                  :permission_giver, :document_style, :summary, :citation,
                  :alternate_editors, :alternate_translators, :alternate_years,
-                 :reviewed,
+                 :reviewed, :word_document,
                  :use_content_password,
                  :content_password,
                  :document_show_page,
