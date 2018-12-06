@@ -275,6 +275,12 @@ class Admin::DocumentsController < AdminController
   end
 
   def fetch_collection
-    @documents = Document.ransack.result.published.page(params[:page])
+    params[:q] ||= {}
+    params[:q][:published_eq] ||= true
+    params[:q][:s] ||= {}
+    params[:q][:s] ||= "created_at desc"
+    @q = Document.ransack(params[:q])
+    @all_documents = @q.result
+    @documents = @all_documents.page(params[:page])
   end
 end

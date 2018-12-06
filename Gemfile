@@ -55,6 +55,7 @@ gem 'leaflet-rails'
 gem "d3-rails"
 gem 'friendly_id', '~> 5.2.0'
 gem 'ransack'
+gem 'ransack_chronic'
 
 group :development do
   gem 'annotate'

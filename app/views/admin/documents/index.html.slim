@@ -7,49 +7,91 @@ header
 
 hr
 
-.row
-  .columns.large-12
-    center= will_paginate @documents
-    table.display
-      thead
-        tr
-          th Title
-          th Publisher
-          th Tags
-          th Topics
-          th Contributor
-          th Language
-          th Regions
-          th Reviewed
-          th Updated
-          th Uploaded
-          th.actions Actions
-      tbody
-        - @documents.each do |document|
+= search_form_for @q, url: admin_documents_url do |f|
+  .row
+    .columns.large-12
+      .panel.filters
+          div.row
+            .columns.large-2= f.label :title_cont
+            .columns.large-4= f.search_field :title_cont
+            .columns.large-2= f.label :published_true, "Published"
+            .columns.large-1= f.radio_button :published_eq, true
+            .columns.large-2= f.label :published_false, "Unpublished"
+            .columns.large-1= f.radio_button :published_eq, false
+          div.row
+            .columns.large-2= f.label :authors_name_cont, "Author"
+            .columns.large-4= f.select :authors_name_cont, Author.select(:name).map(&:name), { include_blank: true }
+            .columns.large-2= f.label :language_name_eq, "Language"
+            .columns.large-4= f.select :language_name_eq, Language.select(:name).map(&:name), { include_blank: true }
+          div.row
+            .columns.large-2= f.label :topics_name_cont, "Topic"
+            .columns.large-4= f.select :topics_name_cont, Topic.select(:name).map(&:name), { include_blank: true }
+            .columns.large-2= f.label :themes_name_eq, "Theme"
+            .columns.large-4= f.select :themes_name_eq, Theme.select(:name).map(&:name), { include_blank: true }
+          div.row
+            .columns.large-2= f.label :regions_name_cont, "Region"
+            .columns.large-4= f.select :regions_name_cont, Region.select(:name).map(&:name), { include_blank: true }
+            .columns.large-2= f.label :document_style_eq, "Document Style"
+            .columns.large-4= f.select :document_style_eq, [ ['Scan', 'scan' ], ['Scan Without Text', 'scannotext' ], ['No Scan', 'noscan' ] ], { include_blank: true }
+          div.row
+            .columns.large-2= f.label :created_at_lt, "Submitted before"
+            .columns.large-4= f.search_field :created_at_lt, placeholder: "e. g. 1 week ago"
+            .columns.large-2= f.label :created_at_gt, "Submitted after"
+            .columns.large-4= f.search_field :created_at_gt, placeholder: "e. g. 2 weeks ago"
+          div.row
+            .columns.large-2= f.label :updated_at_lt, "Updated before"
+            .columns.large-4= f.search_field :updated_at_lt, placeholder: "e. g. 1 week ago"
+            .columns.large-2= f.label :updated_at_gt, "Updated after"
+            .columns.large-4= f.search_field :updated_at_gt, placeholder: "e. g. 2 weeks ago"
+          div.row
+            .columns.large-12
+              = f.submit class: 'button'
+              = link_to "Clear Filters", admin_documents_url, class: 'button alert'
+
+    .columns.large-12
+      center.pagination-stats
+        = "Showing #{@documents.to_a.count} of #{@all_documents.count} all"
+      center= will_paginate @documents
+      table.display
+        thead
           tr
-            td= document.title
-            td= document.publisher
-            td= document.tags.pluck(:name).join(', ')
-            td= document.topics.pluck(:name).join(', ')
-            td= document.contributors.map { |contributor| contributor.first_name + ' ' + contributor.last_name }.join(', ')
-            td= document.language.name
-            td= document.regions.pluck(:name).join(', ')
-            td
-              i{class='fa fa-#{document.reviewed? ? 'check' : 'close'}'}
-            td= document.updated_at.strftime("%b %e, %Y")
-            td= document.created_at.strftime("%b %e, %Y")
-            td.actions
-              ul.inline-list
-                li= link_to 'View', document_path(document), class: 'tiny radius pill button'
-                li= link_to t('edit'), edit_admin_document_path(document), class: 'tiny radius pill button'
-                - if current_user.is_editor
-                  - if document.published
-                    li= simple_form_for document, url: admin_document_path(document) do |f|
-                      = f.input_field :published, as: :hidden, value: false
-                      = f.submit 'Unpublish', class: 'tiny radius warning pill button'
-                  - else
-                    li= simple_form_for document, url: admin_document_path(document) do |f|
-                      = f.input_field :published, as: :hidden, value: true
-                      = f.submit 'Publish', class: 'tiny radius warning pill button'
-                  li= link_to t('delete'), admin_document_path(document), class: 'tiny radius alert pill button', method: :delete, data: { confirm: t('helpers.delete_confirm', model: Document.model_name.human)}
-    center= will_paginate @documents
+            th= sort_link @q, :title
+            th= sort_link @q, :publisher
+            th= sort_link @q, :tags_name, "Tags"
+            th= sort_link @q, :topics_name, "Topics"
+            th= sort_link @q, :contributors_last_name, "Contributors"
+            th= sort_link @q, :language_name, "Language"
+            th= sort_link @q, :regions_name, "Regions"
+            th= sort_link @q, :reviewed
+            th= sort_link @q, :updated_at, "Updated"
+            th= sort_link @q, :created_at, "Submitted", default_order: :desc
+            th.actions Actions
+        tbody
+          - @documents.each do |document|
+            tr
+              td= document.title
+              td= document.publisher
+              td= document.tags.pluck(:name).join(', ')
+              td= document.topics.pluck(:name).join(', ')
+              td= document.contributors.map { |contributor| contributor.first_name + ' ' + contributor.last_name }.join(', ')
+              td= document.language.name
+              td= document.regions.pluck(:name).join(', ')
+              td
+                i{class='fa fa-#{document.reviewed? ? 'check' : 'close'}'}
+              td= document.updated_at.strftime("%b %e, %Y")
+              td= document.created_at.strftime("%b %e, %Y")
+              td.actions
+                ul.inline-list
+                  li= link_to 'View', document_path(document), class: 'tiny radius pill button'
+                  li= link_to t('edit'), edit_admin_document_path(document), class: 'tiny radius pill button'
+                  - if current_user.is_editor
+                    - if document.published
+                      li= simple_form_for document, url: admin_document_path(document) do |f|
+                        = f.input_field :published, as: :hidden, value: false
+                        = f.submit 'Unpublish', class: 'tiny radius warning pill button'
+                    - else
+                      li= simple_form_for document, url: admin_document_path(document) do |f|
+                        = f.input_field :published, as: :hidden, value: true
+                        = f.submit 'Publish', class: 'tiny radius warning pill button'
+                    li= link_to t('delete'), admin_document_path(document), class: 'tiny radius alert pill button', method: :delete, data: { confirm: t('helpers.delete_confirm', model: Document.model_name.human)}
+      center= will_paginate @documents
