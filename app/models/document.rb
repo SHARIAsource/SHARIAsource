@@ -178,7 +178,7 @@ class Document < ActiveRecord::Base
 
   def self.filter_by_params(collection, params)
     return collection if params.nil?
-    docs = collection.search { fulltext params }
+    docs = collection.solr_search { fulltext params }
     docs.results
   end
 

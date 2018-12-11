@@ -29,7 +29,7 @@ class ContributorsController < ApplicationController
                                        .map(&:id)
                                        .flatten
     @filters.q += " " + @contributor.author.name if @contributor.author.present?
-    @search = Document.search do |query|
+    @search = Document.solr_search do |query|
       query.fulltext @filters.q
       query.with(:published, true)
       query.any_of do |querys|
