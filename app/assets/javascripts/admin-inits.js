@@ -9,8 +9,8 @@ ready = function() {
 
   tinymce.init({
     selector: 'textarea.wysiwyg',
-    toolbar: 'formatselect styleselect | bold italic underline strikethrough superscript | bullist numlist blockquote | link unlink | image media table | undo redo | ltr rtl',
-    plugins: 'link image table paste directionality media autosave',
+    toolbar: 'formatselect styleselect | bold italic underline strikethrough superscript | bullist numlist blockquote | link unlink | image media table | undo redo | ltr rtl | code',
+    plugins: 'link image table paste directionality media autosave code',
     browser_spellcheck: true,
     style_formats: [{
       title: 'Footnote',
