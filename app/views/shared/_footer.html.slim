@@ -1,28 +1,28 @@
 .inner-wrapper
   .footer
     .inner
-      h2= link_to 'SHARIAsource at Harvard Law School', root_path
+      h2= link_to 'NewAppName at Somewhere', root_path
 
       .info
         p The online portal for academic content and context on Islamic law
 
         p
-          span Islamic Legal Studies Program
+          / span Islamic Legal Studies Program
+          / br
+          / span Harvard Law School
+          / br
+          span Somewhere
           br
-          span Harvard Law School
+          span 123 Main Street
           br
-          span 102 Austin Hall
+          span Waltham, MA 02453
           br
-          span 1515 Massachusetts Avenue
+          span tel. (617) 555-5555
           br
-          span Cambridge, MA 02138
-          br
-          span tel. (617) 496-3941
-          br
-          span fax. (617) 496-2707
+          span fax. (617) 555-5555
           br
           span= 'email: '
-          = link_to 'ilsp@law.harvard.edu', 'mailto:ilsp@law.harvard.edu'
+          = link_to 'email@endpoint.com', 'mailto:email@endpoint.com'
 
         = render 'shared/social_media'
 
@@ -37,7 +37,7 @@
 
       .footer-nav
         ul
-          li= link_to 'About SHARIAsource', '/about'
+          li= link_to 'About Us', '/about'
           li= link_to 'Advanced Search', search_path
           li= link_to 'Contributor Login', new_user_session_path
           li= link_to 'Privacy Policy', '/privacy-policy'

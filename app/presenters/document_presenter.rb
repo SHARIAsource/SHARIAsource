@@ -133,7 +133,7 @@ class DocumentPresenter < BasePresenter
 
   def email_share_url(document_url)
     [
-      'mailto:?subject=SHARIAsource.com: ',
+      'mailto:?subject=NewApplicationName.com: ',
       CGI.escape("#{title} by #{author_or_contributor}"),
       '&body=',
       CGI.escape("#{title} by #{author_or_contributor}"),
@@ -221,7 +221,7 @@ class DocumentPresenter < BasePresenter
 
       [
         "https://twitter.com/share?url=#{url}",
-        '&via=SHARIAsource&text=',
+        '&via=NewAppName&text=',
         CGI.escape("#{shortened_title} by #{author_or_contributor}")
       ].join('')
     else
@@ -230,7 +230,7 @@ class DocumentPresenter < BasePresenter
 
       [
         "https://twitter.com/share?url=#{url}",
-        '&via=SHARIAsource&text=',
+        '&via=NewAppName&text=',
         CGI.escape("#{shortened_title}")
       ].join('')
     end

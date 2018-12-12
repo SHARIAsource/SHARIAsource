@@ -1,7 +1,7 @@
 xml.instruct! :xml, version: '1.0'
 xml.rss version: '2.0' do
   xml.channel do
-    xml.title 'SHARIASource'
+    xml.title 'NewAppName'
     xml.description 'The online portal for academic content and context on Islamic law'
     xml.link root_url
 
