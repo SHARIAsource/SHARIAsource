@@ -3,7 +3,7 @@
   max-width:1000px;
   min-height:352px;
   margin:0 auto;
-  background:url(image-path('footer-bg.jpg')) center 0 no-repeat;
+  background:$ss-color-primary; //url(image-path('footer-bg.jpg')) center 0 no-repeat;
   background-size:1000px 352px;
   padding-top:25px;
   padding-bottom:15px;

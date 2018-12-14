@@ -43,54 +43,69 @@ sup {
 }
 
 .ss-button {
-  display:inline-block;
-  text-align:center;
-  font-size:12px;
-  font-weight:bold;
-  text-transform:uppercase;
-  line-height:34px;
-  height:32px;
-  letter-spacing:1px;
-  border:0;
-  padding:0 10px;
-  background:url(image-path('ss-button-matrix.png')) 0 0 repeat-x;
-  color:$ss-color-secondary;
-  position:relative;
-  margin-left:7px;
+  display: inline-block;
+  border: 2px solid #008CBA;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 7px 15px;
+  border-radius: 20px;
 
-  &:before, &:after {
-    content:'';
-    position:absolute;
-    top:0;
-    bottom:0;
-    width:7px;
-  }
+  // display:inline-block;
+  // text-align:center;
+  // font-size:12px;
+  // font-weight:bold;
+  // text-transform:uppercase;
+  // line-height:34px;
+  // height:32px;
+  // letter-spacing:1px;
+  // border:0;
+  // padding:0 10px;
+  // background:url(image-path('ss-button-matrix.png')) 0 0 repeat-x;
+  // color:$ss-color-secondary;
+  // position:relative;
+  // margin-left:7px;
 
-  &:before {
-    background:url(image-path('ss-button-matrix.png')) 0 -32px no-repeat;
-    left:-7px;
-  }
+  // &:before, &:after {
+  //   content:'';
+  //   position:absolute;
+  //   top:0;
+  //   bottom:0;
+  //   width:7px;
+  // }
 
-  &:after {
-    background:url(image-path('ss-button-matrix.png')) 0 -64px no-repeat;
-    right:-7px;
-  }
+  // &:before {
+  //   background:url(image-path('ss-button-matrix.png')) 0 -32px no-repeat;
+  //   left:-7px;
+  // }
+
+  // &:after {
+  //   background:url(image-path('ss-button-matrix.png')) 0 -64px no-repeat;
+  //   right:-7px;
+  // }
 }
 
 a.ss-button, input.ss-button, button.ss-button {
+
   &:hover, &:focus {
     color:#fff;
-    background-position:0 -96px;
-    background-color:transparent;
-
-    &:before {
-      background-position: 0 -128px;
-    }
-
-    &:after {
-      background-position: 0 -160px;
-    }
+    background-color:#008CBA;
   }
+
+  // &:hover, &:focus {
+  //   color:#fff;
+  //   background-position:0 -96px;
+  //   background-color:transparent;
+
+  //   &:before {
+  //     background-position: 0 -128px;
+  //   }
+
+  //   &:after {
+  //     background-position: 0 -160px;
+  //   }
+  // }
 
 }
 

@@ -6,7 +6,8 @@
 
   .inner-wrapper {
     height:184px;
-    background:url(image-path('header-bg.jpg')) 50% 0 no-repeat;
+    // background:url(image-path('header-bg.jpg')) 100% 0 no-repeat;
+    background:$ss-color-primary;
     background-size:100% 100%;
   }
 
