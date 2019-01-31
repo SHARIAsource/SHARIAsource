@@ -3,7 +3,7 @@ class MoveDocumentsData < ActiveRecord::Migration[5.1]
     execute <<-SQL
       -- Moving authors data
       CREATE OR REPLACE FUNCTION
-      create_author(FUNC_ID integer, FUNC_NAME text)
+      create_author(FUNC_ID bigint, FUNC_NAME character varying)
       RETURNS void
       AS $$
       DECLARE
@@ -19,13 +19,11 @@ class MoveDocumentsData < ActiveRecord::Migration[5.1]
         INSERT INTO authors_documents (document_id, author_id) VALUES (FUNC_ID, A_ID);
       END $$ LANGUAGE plpgsql;
 
-      SELECT create_author(id, author) FROM documents WHERE author != '';
-
-      DROP FUNCTION create_author(FUNC_ID integer, FUNC_NAME text);
+      SELECT create_author(id :: bigint, author :: character varying) FROM documents WHERE author != '';
 
       -- Moving editors data
       CREATE OR REPLACE FUNCTION
-      create_editor(FUNC_ID integer, FUNC_NAME text)
+      create_editor(FUNC_ID bigint, FUNC_NAME character varying)
       RETURNS void
       AS $$
       DECLARE
@@ -43,11 +41,9 @@ class MoveDocumentsData < ActiveRecord::Migration[5.1]
 
       SELECT create_editor(id, editors) FROM documents WHERE editors != '';
 
-      DROP FUNCTION create_editor(FUNC_ID integer, FUNC_NAME text);
-
       -- Moving translators data
       CREATE OR REPLACE FUNCTION
-      create_translator(FUNC_ID integer, FUNC_NAME text)
+      create_translator(FUNC_ID bigint, FUNC_NAME character varying)
       RETURNS void
       AS $$
       DECLARE
@@ -65,11 +61,13 @@ class MoveDocumentsData < ActiveRecord::Migration[5.1]
 
       SELECT create_translator(id, translators) FROM documents WHERE translators != '';
 
-      DROP FUNCTION create_translator(FUNC_ID integer, FUNC_NAME text);
-
       -- Moving contributors data
       INSERT INTO contributors_documents (document_id, contributor_id)
       SELECT id, contributor_id FROM documents;
+
+      DROP FUNCTION create_author(FUNC_ID bigint, FUNC_NAME character varying);
+      DROP FUNCTION create_translator(FUNC_ID bigint, FUNC_NAME character varying);
+      DROP FUNCTION create_editor(FUNC_ID bigint, FUNC_NAME character varying);
     SQL
   end
 end

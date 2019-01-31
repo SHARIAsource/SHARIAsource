@@ -7,8 +7,11 @@ tmp/
 solr/
 config/database.yml
 config/secrets.yml
+config/sunspot.yml
 public/uploads/
 public/assets/
+vendor/bundle/
+vendor/gems/
 pgsql/
 apache2/
 tags

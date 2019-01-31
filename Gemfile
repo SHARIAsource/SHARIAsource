@@ -15,7 +15,7 @@ gem 'foreman', '~> 0.74.0'
 #see unmerged pull request https://github.com/zurb/foundation-sites/pull/8878
 #it was breaking the admin document edit form
 #gem 'foundation-rails', '~> 5.5.0'
-gem 'foundation-rails', '~> 5.5.0', path: "vendor/gems/foundation-rails-5.5.3.2"
+gem 'foundation-rails', '~> 5.5.0'
 
 gem 'pdf-reader', '~> 1.4.0'
 gem 'hijri_gem', '~> 0.4.2'
