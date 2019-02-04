@@ -62,7 +62,7 @@
           = f.input :reviewed, boolean_style: :inline, label: 'Mark Document Reviewed?'
           - if @document.reviewed?
             div
-              | Last reviewed by #{@document.reviewed_by_name} 
+              | Last reviewed by #{@document.reviewed_by_name}
               span title=@document.reviewed_at.to_time
                 | #{time_ago_in_words(@document.reviewed_at)} ago
 
@@ -118,13 +118,16 @@
           = b.input :text, label: 'Content', input_html: { class: 'wysiwyg' }
 
   .row
+    = corpusbuilder_uploader(@document)
+
+  .row
     .button-group
       = f.submit "Save and return to menu", class: 'dark_gray button'
       = f.submit "Save and continue", class: 'light_blue button', name: "create_and_continue"
       = f.submit "Save and edit", class: 'med_blue button', name: "create_and_edit", id: (@document.new_record? ? "new_create_and_edit" : "create_and_edit")
 
   javascript:
-    dataChanged = false;     // global variable flags unsaved changes      
+    dataChanged = false;     // global variable flags unsaved changes
     var form = $('.simple_form');
     form.find('input,checkbox,textarea,radio,select').on('change',function(event) { dataChanged = true})
     form.find('reset,:submit').on('click',function(event) { dataChanged = false })
@@ -133,9 +136,9 @@
       if (dataChanged) {
         if(window.confirm("Are you sure you want to leave? Your changes will be lost.")) {
           dataChanged = false;
-          return true;      
+          return true;
         } else {
           return false;
         }
       }
-    }); 
+    });

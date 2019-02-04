@@ -11,7 +11,4 @@ $(document).on('turbolinks:load', function() {
   }
 
   showOrHidePanels()
-  tweakSaveAndEditButton()
-  $docStyle.on('change.docstyleswitcher', showOrHidePanels)
-  $docStyle.on('change.docstyleswitcher', tweakSaveAndEditButton)
 })

@@ -90,6 +90,7 @@ Rails.application.routes.draw do
   authenticate :user, lambda {|u| u.is_editor? } do
     mount Sidekiq::Web => '/sidekiq'
   end
+  mount Corpusbuilder::Ruby::Engine => 'corpusbuilder'
 
   get '*slug', controller: 'misc', action: 'show'
   get "/web/viewer", :to => redirect('/web/viewer.html')

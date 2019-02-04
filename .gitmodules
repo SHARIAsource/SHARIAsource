@@ -1,0 +1,6 @@
+[submodule "corpusbuilder"]
+	path = corpusbuilder
+	url = git@github.com:berkmancenter/corpusbuilder.git
+[submodule "corpusbuilder-ruby-client"]
+	path = corpusbuilder-ruby-client
+	url = git@github.com:berkmancenter/corpusbuilder-ruby-client.git

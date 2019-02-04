@@ -609,6 +609,11 @@ p.rtl {
   direction: rtl;
 }
 
+.corpusbuilder-document-container {
+  position: relative;
+  padding: 20px;
+}
+
 .owned_document {
    padding: 0;
    li a {

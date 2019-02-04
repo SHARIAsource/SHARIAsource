@@ -1,0 +1,143 @@
+.large-12.columns
+  script src="#{ corpusbuilder_public_url }/packs/client.js"
+  link rel="stylesheet" href="#{ corpusbuilder_public_url }/packs/client.css"
+  ruby:
+    images = if params.fetch(:document, {}).fetch(:ocr, {}).has_key?(:ocr)
+      params[:document][:ocr][:images].zip(params[:document][:ocr][:image_names]).map do |arr|
+        { id: arr[0], name: arr[1] }
+      end.to_json.html_safe
+    else
+      "undefined"
+    end
+  javascript:
+    var loadUploader = function() {
+      if(window.CorpusBuilderUploader === undefined) {
+        console.log('waiting for corpus builder to load');
+        setTimeout(loadUploader, 1000);
+        return;
+      }
+
+      // todo: refactor the following code into something nicer:
+
+      var clearHiddenImages = function() {
+        $('form.edit_document input.corpusbuilder-hidden-image').remove();
+      };
+
+      var clearHiddenLanguages = function() {
+        $('form.edit_document input.corpusbuilder-hidden-language').remove();
+      };
+
+      var clearHiddenModels = function() {
+        $('form.edit_document input.corpusbuilder-hidden-model').remove();
+      };
+
+      var injectLanguages = function(languages) {
+        clearHiddenLanguages();
+        for(var i = 0; i < languages.length; i++) {
+          $('form.edit_document').append(
+            $('<input class="corpusbuilder-hidden corpusbuilder-hidden-language" type="hidden" name="document[ocr][languages][]" value="' + languages[i] + '" />')
+          );
+        }
+      };
+
+      var injectModels = function(models) {
+        clearHiddenModels();
+        for(var i = 0; i < models.length; i++) {
+          $('form.edit_document').append(
+            $('<input class="corpusbuilder-hidden corpusbuilder-hidden-model" type="hidden" name="document[ocr][ocr_model_ids][]" value="' + models[i].id + '" />')
+          );
+        }
+      };
+
+      var injectImages = function(images) {
+        clearHiddenImages();
+        for(var i = 0; i < images.length; i++) {
+          $('form.edit_document').append(
+            $('<input class="corpusbuilder-hidden corpusbuilder-hidden-image" type="hidden" name="document[ocr][images][]" value="' + images[i].id + '" />')
+          )
+          $('form.edit_document').append(
+            $('<input class="corpusbuilder-hidden corpusbuilder-hidden-image" type="hidden" name="document[ocr][image_names][]" value="' + images[i].name + '" />')
+          )
+        }
+      };
+
+      var corpusBuilderUploader = CorpusBuilderUploader.init(
+        document.getElementById('corpusbuilderuploader'),
+        {
+          baseUrl: '#{ request.base_url }/corpusbuilder',
+          editorEmail: '#{ editor_email }',
+          onDocumentPicked: function(doc) {
+            clearHiddenImages();
+            clearHiddenLanguages();
+            $('form.edit_document').append(
+              $('<input class="corpusbuilder-hidden" type="hidden" name="document[ocr][document_id]" value="' + doc.id + '" />')
+            )
+          },
+          onLanguagesPicked: function(languageCodes) {
+            injectLanguages(languageCodes);
+          },
+          onModelsPicked: function(models) {
+            injectModels(models);
+          },
+          onDocumentUnpicked: function() {
+            clearHiddenImages();
+            clearHiddenLanguages();
+          },
+          onImagesUploaded: function(images) {
+            injectImages(images);
+          }
+        }
+      );
+
+      var metadata = {
+        title: null,
+        author: null,
+        authority: null,
+        date: null,
+        editor: null,
+        licence: null,
+        notes: null,
+        publisher: null
+      };
+
+      var setImages = function(images) {
+        corpusBuilderUploader.setImages(images);
+
+        if(images !== undefined) {
+          injectImages(images);
+        }
+      }
+
+      var setMeta = function() {
+        var year = $('input#document_gregorian_year').val();
+        var month = $('input#document_gregorian_month').val();
+        var day = $('input#document_gregorian_day').val();
+
+        metadata.title = $('input#document_title').val();
+        metadata.author = $('input#document_author').val();
+        metadata.date = year + '/' + month + '/' + day;
+        metadata.editors = $('input#document_editors').val();
+        metadata.notes = $('input#document_summary').val();
+        metadata.publisher = $('input#document_publisher').val();
+
+        corpusBuilderUploader.setMetadata(metadata);
+      };
+
+      $('input#document_title').on('change', setMeta);
+      $('input#document_author').on('change', setMeta);
+      $('input#document_gregorian_year, input#document_gregorian_month, input#document_gregorian_day').on('change', setMeta);
+      $('input#document_editors').on('change', setMeta);
+      $('input#document_summary').on('change', setMeta);
+      $('input#document_publisher').on('change', setMeta);
+
+      var images = #{images};
+
+      setMeta();
+      setImages(images);
+    };
+
+    $( document ).ready(function() {
+      loadUploader();
+    });
+
+  #corpusbuilderuploader

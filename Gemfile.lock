@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/berkmancenter/corpusbuilder-ruby-client.git
+  revision: efaed8cb8f0519b334334838f08b0e48cf81efe3
+  specs:
+    corpusbuilder-ruby (0.1.0)
+      activesupport
+      rails
+      rest-client
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -109,9 +118,13 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.3)
+    domain_name (0.5.20180417)
+      unf (>= 0.0.5, < 1.0.0)
     dotenv (0.11.1)
       dotenv-deployment (~> 0.0.2)
     dotenv-deployment (0.0.2)
+    dotenv-rails (0.11.1)
+      dotenv (= 0.11.1)
     erubi (1.6.1)
     erubis (2.7.0)
     eventmachine (1.0.9.1)
@@ -139,6 +152,8 @@ GEM
     highline (1.7.8)
     hijri_gem (0.4.2)
     hitimes (1.2.5)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
     i18n (0.8.6)
     jquery-datatables-rails (3.3.0)
       actionpack (>= 3.1)
@@ -172,6 +187,7 @@ GEM
     minitest (5.10.3)
     multipart-post (2.0.0)
     mustermann (1.0.0)
+    netrc (0.11.0)
     nio4r (2.1.0)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
@@ -235,6 +251,10 @@ GEM
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
+    rest-client (2.0.2)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     rmagick (2.13.4)
     rsolr (2.0.2)
       builder (>= 2.1.2)
@@ -339,6 +359,9 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.5)
     unicorn (4.8.3)
       kgio (~> 2.6)
       rack
@@ -370,9 +393,11 @@ DEPENDENCIES
   carrierwave
   closure_tree
   coffee-rails
+  corpusbuilder-ruby!
   d3-rails
   dalli (~> 2.7.2)
   devise
+  dotenv-rails
   eventmachine (~> 1.0.4)
   factory_girl_rails
   font-awesome-sass (~> 4.3.2.1)

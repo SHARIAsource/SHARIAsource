@@ -73,6 +73,17 @@ class User < ActiveRecord::Base
     is_admin? && is_editor?
   end
 
+  def editor_id
+    @_editor_id ||= (self.cb_editor_id || -> {
+      api = Corpusbuilder::Ruby::Api.new
+      editor = api.create_editor email: self.email,
+        first_name: self.first_name,
+        last_name: self.last_name
+      self.update_attribute(:cb_editor_id, editor['id'])
+      editor["id"]
+    }.call)
+  end
+
   def self.editors
     where(is_editor: true)
   end

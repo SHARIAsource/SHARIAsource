@@ -1,8 +1,6 @@
 source 'https://rubygems.org'
 ruby '2.4.1'
 
-#gem 'compass-rails', git: 'https://github.com/Compass/compass-rails', branch: '2-0-stable'
-#gem 'compass-rails', '~> 3.0.2'
 gem 'active_attr'
 gem 'autoprefixer-rails', '~> 7.1.0'
 gem 'carrierwave'
@@ -14,9 +12,7 @@ gem 'foreman', '~> 0.74.0'
 
 #see unmerged pull request https://github.com/zurb/foundation-sites/pull/8878
 #it was breaking the admin document edit form
-#gem 'foundation-rails', '~> 5.5.0'
 gem 'foundation-rails', '~> 5.5.0'
-
 gem 'pdf-reader', '~> 1.4.0'
 gem 'hijri_gem', '~> 0.4.2'
 gem 'jquery-rails'
@@ -51,13 +47,13 @@ gem 'therubyracer', platforms: :ruby
 gem 'will_paginate', '~> 3.1'
 gem 'eventmachine', '~> 1.0.4'
 gem 'awesome_print'
+gem 'corpusbuilder-ruby', git: 'https://github.com/berkmancenter/corpusbuilder-ruby-client.git'
 gem 'leaflet-rails'
 gem "d3-rails"
 gem 'friendly_id', '~> 5.2.0'
 
 group :development do
   gem 'annotate'
-  #gem 'quiet_assets'
   gem 'spring', '~> 1.1.3'
   gem 'sunspot_solr', '~> 2.1.1'
   gem 'progress_bar'
@@ -70,6 +66,7 @@ group :development, :test do
   gem 'rb-fsevent'
   gem 'rspec-rails'
   gem 'spring-commands-rspec', '~> 1.0.2'
+  gem 'dotenv-rails'
   gem 'pry-rails'
 end
 

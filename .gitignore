@@ -19,3 +19,9 @@ tags
 *.swo
 *.swn
 *.swn
+redis/
+python/
+pip.freeze.txt
+__MACOSX/
+.ropeproject/
+bin/

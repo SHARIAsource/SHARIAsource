@@ -34,11 +34,42 @@ class Admin::DocumentsController < AdminController
     # create new translators
     document_params[:translator_ids] = create_new_attributes document_params[:translator_ids], Translator if document_params[:translator_ids].present?
 
+    document_params.delete(:ocr)
+
     @document = current_user.uploaded_documents.build document_params
 
     if @document.save
       @document.index!
       flash[:notice] = 'Document created successfully'
+
+      ocr_params = params[:document].fetch(:ocr, {})
+
+      if ocr_params.has_key?(:images) || ocr_params.has_key?(:document_id)
+        begin
+          api = Corpusbuilder::Ruby::Api.new
+
+          doc = if params[:document][:ocr].has_key?(:document_id)
+                  { "id" => params[:document][:ocr][:document_id] }
+                else
+                  api.create_document({
+                    images: params[:document][:ocr][:images].map { |id| { id: id } },
+                    ocr_model_ids: params[:document][:ocr][:ocr_model_ids],
+                    metadata: {
+                      title: @document.title,
+                      languages: params[:document][:ocr][:languages]
+                    },
+                    editor_email: current_user.email
+                  })
+                end
+
+          @document.update_attributes!(ocr_document_id: doc["id"])
+        rescue
+          flash[:error] = $!.message
+          render :new
+          return
+        end
+      end
+
       if params[:create_and_continue]
         redirect_to new_admin_document_path
       elsif params[:create_and_edit]
@@ -130,6 +161,7 @@ class Admin::DocumentsController < AdminController
                  region_ids: [], theme_ids: [], topic_ids: [], tag_ids: [],
                  referenced_document_ids: [], era_ids: [], author_ids: [],
                  editor_ids: [], translator_ids: [], contributor_ids: [],
+                 ocr: [ :images, :document_id ],
                  body_attributes: [:id, :text], pages_attributes: [
                    :id, body_attributes: [:id, :text, :hybrid_text]
                  ]
