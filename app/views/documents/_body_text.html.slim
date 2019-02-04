@@ -1,5 +1,6 @@
 .inner-wrapper style="position: relative;"
   = render(partial: 'content_password') if @document.use_content_password? && !@show_secure_content
-  .inner.document-content
-    div class="#{@document.language ? @document.language.name.downcase : 'english'}"
-      == @document.body.text if @show_secure_content || !@document.use_content_password?
+  - if @document.body.text.present? && (@show_secure_content || !@document.use_content_password?)
+    .inner.document-content
+      div class="#{@document.language ? @document.language.name.downcase : 'english'}"
+        == @document.body.text

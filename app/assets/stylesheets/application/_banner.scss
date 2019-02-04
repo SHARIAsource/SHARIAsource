@@ -19,12 +19,12 @@
 .banner-logo {
   display:block;
   width:430px;
-  height:59px;
-  margin:0 auto 32px auto;
+  height: 80px;
+  margin:0 auto 18px auto;
   text-indent:-9999px;
   overflow:hidden;
   background:url(image-path('header-logo.png')) 0 0 no-repeat;
-  background-size:430px 59px;
+  background-position: center;
 
   h1, h2 {
     margin:0;
