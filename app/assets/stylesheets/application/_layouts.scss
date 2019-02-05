@@ -1,5 +1,8 @@
 .container {
   background:$ss-color-bodybg;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 .inner-wrapper {
@@ -9,8 +12,12 @@
   background:#fff;
 }
 
+.main-content {
+  flex-grow: 2;
+}
+
 .inner {
   width:980px;
-  padding:0 10px;
-  margin:0 auto;
+  padding: 0 20px;
+  margin: 0 auto;
 }

@@ -12,6 +12,6 @@ module ApplicationHelper
   end
 
   def head_title(page_title)
-    [page_title, 'Application'].flatten.reject(&:empty?).join ' | '
+    [page_title, 'OpenITI'].flatten.reject(&:empty?).join ' | '
   end
 end

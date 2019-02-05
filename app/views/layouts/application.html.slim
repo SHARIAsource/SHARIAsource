@@ -16,6 +16,7 @@ html
       = render 'admin/admin_nav' if user_signed_in?
       = render 'shared/site_nav'
       = render 'shared/banner'
-      == yield
+      .inner-wrapper.main-content
+        == yield
       = render 'shared/footer'
       = render 'shared/preloader'

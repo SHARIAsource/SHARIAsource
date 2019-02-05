@@ -1,31 +1,37 @@
+.footer-wrapper {
+  background: $ss-color-primary;
+  width: 100%;
+  margin: 0px;
+  max-width: inherit;
+  border-top: 10px solid ($ss-color-primary + #222);
+}
+
 .footer {
   @include clearfix;
-  max-width:1000px;
-  min-height:352px;
   margin:0 auto;
   background:$ss-color-primary; //url(image-path('footer-bg.jpg')) center 0 no-repeat;
   background-size:1000px 352px;
-  padding-top:25px;
+  padding-top:15px;
   padding-bottom:15px;
   color:#fff;
 
   h2 {
     text-indent:-9999px;
     overflow:hidden;
-    width:260px;
-    height:38px;
-    background:url(image-path('footer-logo.png')) 0 0 no-repeat;
-    background-size:35px 38px;
+    width:100px;
+    height:80px;
+    background:url(image-path('header-logo.png')) 0 0 no-repeat;
+    background-size:75px 80px;
     margin:0;
+    float: left;
   }
 
   .info {
     float:left;
-    width:380px;
+    width:300px;
     padding-right:120px;
 
     p {
-      margin:18px 0;
       font-size:12px;
       line-height:1.3333;
     }
@@ -45,7 +51,7 @@
 
   .footer-nav {
     float:left;
-    width:280px;
+    width:260px;
     padding-right:60px;
     padding-top:12px;
 

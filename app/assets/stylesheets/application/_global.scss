@@ -120,3 +120,32 @@ a.ss-button, input.ss-button, button.ss-button {
 .preloads {
   display:none;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $ss-font-sans;
+}
+
+a {
+  font-family: $ss-font-sans;
+  color: $ss-color-primary;
+}
+
+$ss-color-topbar: #861216 - #333;
+
+.top-bar {
+  background: $ss-color-topbar;
+}
+
+.top-bar-section {
+  background: $ss-color-topbar;
+  ul {
+    background: $ss-color-topbar;
+    li {
+      background: $ss-color-topbar !important;
+      a {
+        background: $ss-color-topbar !important;
+        font-family: $ss-font-sans;
+      }
+    }
+  }
+}

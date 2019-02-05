@@ -1,8 +1,11 @@
-$ss-font-sans: Helvetica Neue, Helvetica, Arial, sans-serif;
-$ss-font-serif: Amiri, Times, Times New Roman, Georgia, serif;
+@import url('https://fonts.googleapis.com/css?family=Aref+Ruqaa');
+@import url('https://fonts.googleapis.com/css?family=Expletus+Sans');
 
-$ss-color-primary: #861216;
-$ss-color-secondary: #fceba1;
+$ss-font-sans: "Expletus Sans", Helvetica Neue, Helvetica, Arial, sans-serif;
+$ss-font-serif: "Aref Ruqaa", Times, Times New Roman, Georgia, serif;
+
+$ss-color-primary: #861216 - #111;
+$ss-color-secondary: #fceba1 - #555;
 $ss-color-secondarysoft: #fceba1;
 $ss-color-headerfooterlink: #fceba1;
 $ss-color-bodybg: #f0f2f1;
