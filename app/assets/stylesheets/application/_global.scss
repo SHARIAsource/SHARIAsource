@@ -44,7 +44,7 @@ sup {
 
 .ss-button {
   display: inline-block;
-  border: 2px solid #861216;
+  border: 2px solid $ss-color-primary;
   font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
@@ -90,7 +90,7 @@ a.ss-button, input.ss-button, button.ss-button {
 
   &:hover, &:focus {
     color:#fff;
-    background-color:#861216;
+    background-color: $ss-color-primary;
   }
 
   // &:hover, &:focus {
@@ -130,7 +130,7 @@ a {
   color: $ss-color-primary;
 }
 
-$ss-color-topbar: #861216 - #333;
+$ss-color-topbar: $ss-color-primary - #333;
 
 .top-bar {
   background: $ss-color-topbar;

@@ -14,8 +14,6 @@
   }
 
   .inner {
-    width: 80%;
-
     .search {
       flex-grow: 2;
 
@@ -27,10 +25,10 @@
 }
 
 .banner-logo {
-  transform: scale(1.75);
+  transform: scale(2.25) translateX(-4px) translateY(-6px);
   display:block;
   height: 50px;
-  width: 100px;
+  width: 114px;
   margin: 10px auto 10px auto;
   overflow:hidden;
   background:url(image-path('header-logo.png')) 0 0 no-repeat;
