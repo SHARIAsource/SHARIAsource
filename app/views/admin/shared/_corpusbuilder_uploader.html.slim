@@ -1,6 +1,4 @@
 .large-12.columns
-  script src="#{ corpusbuilder_public_url }/packs/client.js"
-  link rel="stylesheet" href="#{ corpusbuilder_public_url }/packs/client.css"
   ruby:
     images = if params.fetch(:document, {}).fetch(:ocr, {}).has_key?(:ocr)
       params[:document][:ocr][:images].zip(params[:document][:ocr][:image_names]).map do |arr|

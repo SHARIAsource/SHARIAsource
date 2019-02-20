@@ -1,6 +1,4 @@
 .inner-wrapper.corpusbuilder-document-container
-  script src="#{ Corpusbuilder::Ruby::Api.config.public_url }/packs/client.js"
-  link rel="stylesheet" href="#{ Corpusbuilder::Ruby::Api.config.public_url }/packs/client.css"
   javascript:
     $( document ).ready(function() {
       var documentId = '#{ @document.ocr_document_id }';
