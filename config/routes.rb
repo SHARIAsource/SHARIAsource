@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
+  get '/users' => redirect('/users/login')
+
   resource :search, only: [:show]
   resources :documents, only: [:index, :show] do
     resources :tag_suggestions, path: '/tag-suggestions', only: [:create]
