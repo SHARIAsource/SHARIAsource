@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
 
   def can_edit?(object)
     if object.is_a? Document
-      return is_editor? || self_and_descendant_ids.include?(object.contributor.id)
+      return is_editor? || object.contributors.pluck(:id).any? { |id| self_and_descendant_ids.include?(id) }
     elsif object.is_a? Project
       return is_admin || object.users.include?(self)
     end
