@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/berkmancenter/corpusbuilder-ruby-client.git
-  revision: efaed8cb8f0519b334334838f08b0e48cf81efe3
+  revision: 35b648aa114317a990c85380875d897ae6ea9d7f
   specs:
     corpusbuilder-ruby (0.1.0)
       activesupport
@@ -215,7 +215,6 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
-    rack-timeout (0.0.4)
     rails (5.1.2)
       actioncable (= 5.1.2)
       actionmailer (= 5.1.2)
@@ -415,7 +414,6 @@ DEPENDENCIES
   pg
   progress_bar
   pry-rails
-  rack-timeout (~> 0.0.4)
   rails (~> 5.1)
   ranked-model
   rb-fsevent

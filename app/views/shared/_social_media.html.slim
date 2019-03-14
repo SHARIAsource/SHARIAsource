@@ -2,3 +2,4 @@ ul.social-links
   li
     a.twitter target='_blank' href='https://twitter.com/Open_ITI' title='Twitter' Twitter
   li.login-link= link_to 'Login', new_user_session_path if current_user.nil?
+  li.signup-link= link_to 'Sign Up', new_user_registration_path if current_user.nil?

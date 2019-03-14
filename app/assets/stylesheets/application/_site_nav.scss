@@ -10,6 +10,8 @@
   font-size:14px;
   float:left;
   margin-left: 100px;
+  position: relative;
+  top: 12px;
 
   li {
     width: 105px;
@@ -38,7 +40,9 @@
 .header .social-links {
   float:right;
   position: relative;
-  top: 20px;
+  top: 12px;
+  right: 40px;
+  text-align: center;
 
   li {
     margin-left:8px;
@@ -46,9 +50,14 @@
 
   li:first-child {
     margin-left: 0px;
+    width: 100%;
   }
 
-  li.login-link {
+  li.signup-link {
+    margin-top: 0px !important;
+  }
+
+  li.login-link, li.signup-link {
     clear: both;
     width: 100%;
     text-align: center;
@@ -68,6 +77,7 @@
     width:18px;
     background:url(image-path('header-twitter.svg')) 0 0 no-repeat;
     background-size:18px 16px;
+    margin: 0 auto;
 
     &:hover, &:focus {
       background-image:url(image-path('twitter-hover.svg'));
