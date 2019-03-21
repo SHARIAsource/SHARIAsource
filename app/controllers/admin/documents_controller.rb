@@ -42,33 +42,7 @@ class Admin::DocumentsController < AdminController
       @document.index!
       flash[:notice] = 'Document created successfully'
 
-      ocr_params = params[:document].fetch(:ocr, {})
-
-      if ocr_params.has_key?(:images) || ocr_params.has_key?(:document_id)
-        begin
-          api = Corpusbuilder::Ruby::Api.new
-
-          doc = if params[:document][:ocr].has_key?(:document_id)
-                  { "id" => params[:document][:ocr][:document_id] }
-                else
-                  api.create_document({
-                    images: params[:document][:ocr][:images].map { |id| { id: id } },
-                    ocr_model_ids: params[:document][:ocr][:ocr_model_ids],
-                    metadata: {
-                      title: @document.title,
-                      languages: params[:document][:ocr][:languages]
-                    },
-                    editor_email: current_user.email
-                  })
-                end
-
-          @document.update_attributes!(ocr_document_id: doc["id"])
-        rescue
-          flash[:error] = $!.message
-          render :new
-          return
-        end
-      end
+      set_ocr_document
 
       if params[:create_and_continue]
         redirect_to new_admin_document_path
@@ -99,6 +73,13 @@ class Admin::DocumentsController < AdminController
     @document.reviewing_user = current_user if update_params[:reviewed] == '1'
 
     prev_state = @document.published
+
+    set_ocr_document
+
+    if update_params.has_key? :ocr
+      update_params.delete :ocr
+    end
+
     if @document.update update_params
       flash[:notice] = 'Document updated successfully'
 
@@ -143,6 +124,36 @@ class Admin::DocumentsController < AdminController
   end
 
   protected
+
+  def set_ocr_document
+    ocr_params = params[:document].fetch(:ocr, {})
+
+    if ocr_params.has_key?(:images) || ocr_params.has_key?(:document_id)
+      begin
+        api = Corpusbuilder::Ruby::Api.new
+
+        doc = if params[:document][:ocr].has_key?(:document_id)
+                { "id" => params[:document][:ocr][:document_id] }
+              else
+                api.create_document({
+                  images: params[:document][:ocr][:images].map { |id| { id: id } },
+                  ocr_model_ids: params[:document][:ocr][:ocr_model_ids],
+                  metadata: {
+                    title: @document.title,
+                    languages: params[:document][:ocr][:languages]
+                  },
+                  editor_email: current_user.email
+                })
+              end
+
+        @document.update_attributes!(ocr_document_id: doc["id"])
+      rescue
+        flash[:error] = $!.message
+        render :new
+        return
+      end
+    end
+  end
 
   def permitted_params
     # TODO: only include :featured_position if the current_user is allowed to manage it
