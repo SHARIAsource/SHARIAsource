@@ -9,8 +9,8 @@ ready = function() {
 
   tinymce.init({
     selector: 'textarea.wysiwyg',
-    toolbar: 'formatselect styleselect | bold italic underline strikethrough superscript | bullist numlist blockquote | link unlink | image media table | undo redo | ltr rtl',
-    plugins: 'link image table paste directionality media autosave',
+    toolbar: 'formatselect styleselect | forecolor backcolor | bold italic underline strikethrough superscript | bullist numlist blockquote | link unlink | image media table | undo redo | ltr rtl',
+    plugins: 'link image table paste directionality media autosave textcolor',
     browser_spellcheck: true,
     style_formats: [{
       title: 'Footnote',
@@ -27,8 +27,8 @@ ready = function() {
 
   tinymce.init({
     selector: 'textarea.wysiwyg-summary',
-    toolbar: 'italic link unlink | bold italic underline strikethrough superscript | bullist numlist blockquote | image media | undo redo',
-    plugins: 'link image media paste autosave',
+    toolbar: 'italic link unlink | forecolor backcolor | bold italic underline strikethrough superscript | bullist numlist blockquote | image media | undo redo',
+    plugins: 'link image media paste autosave textcolor',
     browser_spellcheck: true,
     menubar: false,
     autosave_restore_when_empty: true,
