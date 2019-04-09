@@ -9,7 +9,7 @@ ready = function() {
 
   tinymce.init({
     selector: 'textarea.wysiwyg',
-    toolbar: 'formatselect styleselect | forecolor backcolor | bold italic underline strikethrough superscript | bullist numlist blockquote | link unlink | image media table | undo redo | ltr rtl',
+    toolbar: 'formatselect styleselect | fontselect fontsizeselect | forecolor backcolor | bold italic underline strikethrough superscript | bullist numlist blockquote | link unlink | image media table | undo redo | ltr rtl',
     plugins: 'link image table paste directionality media autosave textcolor',
     browser_spellcheck: true,
     style_formats: [{
@@ -27,7 +27,7 @@ ready = function() {
 
   tinymce.init({
     selector: 'textarea.wysiwyg-summary',
-    toolbar: 'italic link unlink | forecolor backcolor | bold italic underline strikethrough superscript | bullist numlist blockquote | image media | undo redo',
+    toolbar: 'fontselect fontsizeselect | italic link unlink | forecolor backcolor | bold italic underline strikethrough superscript | bullist numlist blockquote | image media | undo redo',
     plugins: 'link image media paste autosave textcolor',
     browser_spellcheck: true,
     menubar: false,
