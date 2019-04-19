@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     get :secure_content
     get :download
   end
-  resources :contributors, only: [:index, :show]
+  resources :contributors, as: 'editors_and_contributors', only: [:index, :show]
   resources :regions, only: [:index]
   resources :document_types, path: '/document-types', only: [:index]
   resources :collaborators, only: [:index, :show]

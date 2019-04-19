@@ -16,3 +16,4 @@ tags
 *.swo
 *.swn
 *.swn
+.byebug_history

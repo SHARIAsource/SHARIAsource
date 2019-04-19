@@ -28,6 +28,6 @@
           - if item.author.present?
             span= "#{item.author}, Contributed by "
           - item.contributors.each do |contributor|
-            = link_to contributor.name, contributor_path(contributor)
+            = link_to contributor.name, editors_and_contributor_path(contributor)
       - if local_assigns.fetch(:more_link, false)
         = link_to 'More Commentary', search_path(document_type: [DocumentType.commentary_id], q: ''), class: 'ss-button'

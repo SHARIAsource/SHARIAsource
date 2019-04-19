@@ -1,6 +1,7 @@
 class ContributorsController < ApplicationController
   def index
     @contributor_table = DocumentType.contributor_counts
+    @misc_page = Misc.find_by(slug: "editors_and_contributors")
   end
 
   def show

@@ -3,6 +3,6 @@ p.byline
     span= document.byline
     span= ', Posted by '
   - document.contributors.each do |contributor|
-    = link_to contributor.name, contributor_path(contributor)
+    = link_to contributor.name, editors_and_contributor_path(contributor)
   - if !document.posted_by_author?
     span= ", #{document.published_at.to_formatted_s(:dd_month_yyyy)}"

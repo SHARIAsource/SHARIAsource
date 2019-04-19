@@ -70,6 +70,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'spring-commands-rspec', '~> 1.0.2'
   gem 'pry-rails'
+  gem 'pry-byebug'
 end
 
 group :test do
