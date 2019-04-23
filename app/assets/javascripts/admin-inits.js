@@ -29,6 +29,12 @@ ready = function() {
     selector: 'textarea.wysiwyg-summary',
     toolbar: 'fontselect fontsizeselect | italic link unlink | forecolor backcolor | bold italic underline strikethrough superscript | bullist numlist blockquote | image media | undo redo',
     plugins: 'link image media paste autosave textcolor',
+    color_map: [
+      "222222", "Black",
+      "646967", "Gray",
+      "FAA52E", "Gold",
+      "5C0113", "Crimson"
+    ],
     browser_spellcheck: true,
     menubar: false,
     autosave_restore_when_empty: true,
