@@ -3,6 +3,13 @@ var ready;
 ready = function() {
   $(document).foundation()
 
+  COLOR_MAP = [
+    "222222", "Black",
+    "646967", "Gray",
+    "FAA52E", "Gold",
+    "5C0113", "Crimson"
+  ],
+
   $('select[multiple]').select2({
     placeholder: 'Select an option'
   })
@@ -18,6 +25,7 @@ ready = function() {
       classes: 'ss-footnote'
     }],
     menubar: false,
+    color_map: COLOR_MAP,
     autosave_restore_when_empty: true,
     statusbar: false,
     paste_remove_styles: true,
@@ -29,12 +37,7 @@ ready = function() {
     selector: 'textarea.wysiwyg-summary',
     toolbar: 'fontselect fontsizeselect | italic link unlink | forecolor backcolor | bold italic underline strikethrough superscript | bullist numlist blockquote | image media | undo redo',
     plugins: 'link image media paste autosave textcolor',
-    color_map: [
-      "222222", "Black",
-      "646967", "Gray",
-      "FAA52E", "Gold",
-      "5C0113", "Crimson"
-    ],
+    color_map: COLOR_MAP,
     browser_spellcheck: true,
     menubar: false,
     autosave_restore_when_empty: true,
