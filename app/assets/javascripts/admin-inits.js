@@ -1,8 +1,6 @@
 var ready;
 
 ready = function() {
-  tinymce.remove()
-
   $(document).foundation()
 
   window.COLOR_MAP = [
@@ -52,5 +50,6 @@ ready = function() {
 $(document).on('page:change', ready);
 $(document).on('turbolinks:load', ready);
 
-$(document).on('page:receive', function() {
+$(document).on('turbolinks:before-visit', function() {
+  tinymce.remove()
 });
