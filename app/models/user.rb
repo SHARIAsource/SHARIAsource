@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   scope :admins, -> { where(is_admin: true) }
 
   before_save :remove_articles
+  before_save :clear_contributor_cache
   acts_as_tree name_column: 'last_name', order: 'last_name_without_articles'
 
   validates :first_name, presence: true
@@ -88,5 +89,9 @@ class User < ActiveRecord::Base
 
   def remove_articles
     self.last_name_without_articles = last_name.sub ARTICLES_REGEX, ''
+  end
+
+  def clear_contributor_cache
+    Rails.cache.delete 'document_type_contributor_counts'
   end
 end

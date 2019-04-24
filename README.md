@@ -11,8 +11,8 @@
 
 ## License
 
-QuestionTool is licensed under the GPL
+SHARIAsource is licensed under the GNU GPL 3.0 License.
 
 ## Copyright
 
-2017 President and Fellows of Harvard College
+2019 President and Fellows of Harvard College.
