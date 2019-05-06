@@ -50,6 +50,7 @@ gem 'corpusbuilder-ruby', git: 'https://github.com/berkmancenter/corpusbuilder-r
 gem 'leaflet-rails'
 gem "d3-rails"
 gem 'friendly_id', '~> 5.2.0'
+gem 'gaffe'
 
 group :development do
   gem 'annotate'
