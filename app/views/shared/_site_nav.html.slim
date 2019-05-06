@@ -1,7 +1,10 @@
 .inner-wrapper
   nav.inner.clearfix.header
     ul.site-nav
+      li= link_to 'About OpenITI', '/about'
+      li= link_to 'OpenITI Team', '/team'
+      li= link_to 'Acknowledgements', '/acknowledgements'
+      li= link_to 'OCR Guidelines', '/guidelines'
       li= link_to 'Editors & Contributors', contributors_path
-      li= link_to 'About Us', '/about'
     div.header-social-links
       = render 'shared/social_media'
