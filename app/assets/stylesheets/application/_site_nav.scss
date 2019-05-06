@@ -1,5 +1,5 @@
 .header {
-  padding-top: 12px;
+  padding-top: 10px;
   padding-bottom: 8px;
 }
 
@@ -9,13 +9,14 @@
   font-weight:bold;
   font-size:14px;
   float:left;
-  margin-left: 100px;
+  margin-left: 115px;
   position: relative;
   top: 12px;
 
   li {
-    width: 105px;
+    width: auto;
     padding-right:20px;
+    padding-bottom: 16px;
     line-height:1.14286;
     text-align: center;
     display: inline-block;
@@ -33,24 +34,19 @@
 }
 
 .header-social-links {
-  position: relative;
-  bottom: 15px;
+  float: right;
 }
 
 .header .social-links {
-  float:right;
-  position: relative;
-  top: 12px;
-  right: 40px;
-  text-align: center;
+  padding-top: 10px;
 
   li {
     margin-left:8px;
+    padding-right: 8px;
   }
 
   li:first-child {
     margin-left: 0px;
-    width: 100%;
   }
 
   li.signup-link {
@@ -58,10 +54,7 @@
   }
 
   li.login-link, li.signup-link {
-    clear: both;
-    width: 100%;
     text-align: center;
-    margin-top: 4px;
     margin-left: 0px;
     font-weight: bold;
 
