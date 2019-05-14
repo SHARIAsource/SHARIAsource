@@ -20,9 +20,14 @@ module Shariasource
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-   #config.assets.paths.concat(
-   #  Compass::Frameworks::ALL.map { |f| f.stylesheets_directory }
-   #)
+    # reset default x-frame-options header
+    config.action_dispatch.default_headers = {
+      'X-Frame-Options' => 'ALLOWALL'
+    }
+    
+    #config.assets.paths.concat(
+    #  Compass::Frameworks::ALL.map { |f| f.stylesheets_directory }
+    #)
     config.active_job.queue_adapter = :sidekiq
 
     config.autoload_paths << Rails.root.join('lib')
