@@ -33,21 +33,6 @@
       = f.association :language, collection: Language.all
 
   .row
-    .large-12.columns
-      h3 Content
-      = f.input :content_password, as: :hidden, input_html: {'data-password' => @document.new_content_password}
-
-  .noscan-only.panel
-    = render partial: 'content_password', locals: {document: @document, f: f}
-    .row
-      .large-12.columns
-        = render partial: 'admin/shared/attached_files', locals: {attachable: @document}
-    .row
-      .large-12.columns
-        = f.fields_for :body do |b|
-          = b.input :text, label: 'Content', input_html: { class: 'wysiwyg' }
-
-  .row
     = corpusbuilder_uploader(@document)
 
   .row
