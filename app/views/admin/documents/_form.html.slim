@@ -28,46 +28,9 @@
     - if current_user.is_editor?
       .large-4.columns
         = f.association :contributors, collection: User.order('last_name ASC'), include_blank: false
-
   .row
-    .large-12.columns
-      h3 Metadata
-
-  .row
-    .large-4.columns
-      .panel
-        = f.association :reference_type, collection: ReferenceType.all
-        = f.input :alternate_authors, label: 'Authors (long form)'
-        = f.input :alternate_titles, label: 'Title (long form)'
-        = f.input :alternate_editors, label: 'Editors (long form)'
-        = f.input :alternate_translators, label: 'Translators (long form)'
-        = f.input :publisher_location, label: 'City of Publication'
-        = f.input :publisher
-        = f.input :alternate_years
-        = f.input :volume_count, label: 'Number of Volumes'
-        = f.input :source_name
-        = f.input :source_url, label: 'Source URL', placeholder: 'http://example.com'
-        = f.input :permission_giver
-        = f.input :citation, as: :string
-        - if current_user.can_review?
-          = f.input :reviewed, boolean_style: :inline, label: 'Mark Document Reviewed?'
-          - if @document.reviewed?
-            div
-              | Last reviewed by #{@document.reviewed_by_name}
-              span title=@document.reviewed_at.to_time
-                | #{time_ago_in_words(@document.reviewed_at)} ago
-
-    .large-4.columns
-      .panel
-        = f.association :topics, collection: Topic.all
-        = f.association :themes, collection: Theme.all
-        = f.association :regions, collection: Region.all, label: 'Geographic Regions'
-        = f.association :eras, collection: Era.all, label: 'Empires & Eras'
-        = f.association :language, collection: Language.all
-        = f.association :tags, collection: Tag.all, label: 'Additional Tags'
-    .large-4.columns
-      .panel
-        = f.association :referenced_documents, collection: Document.where.not(id: @document.id)
+    .large-8.columns
+      = f.association :language, collection: Language.all
 
   .row
     .large-12.columns
