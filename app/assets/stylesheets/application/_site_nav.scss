@@ -3,6 +3,19 @@
   padding-bottom: 8px;
 }
 
+.f-dropdown {
+  position: absolute;
+  left: -99999px;
+  background: white;
+  padding: 10px;
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.5);
+  z-index: 999;
+
+  li {
+    display: block !important;
+  }
+}
+
 .site-nav {
   margin:0;
   list-style:none;
