@@ -33,6 +33,5 @@
         = image_tag(@project.photo.url, alt: @project.name, class: "project-photo #{'scaled-photo' if @project.scale_photo}")
 
   .inner.document-content.project-content.project-description-short
-    .large-2.columns
-    .large-8.columns
+    .columns
       .project-description== @project.description
