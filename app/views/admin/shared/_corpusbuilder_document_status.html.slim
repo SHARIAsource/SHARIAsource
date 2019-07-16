@@ -3,6 +3,15 @@
   link rel="stylesheet" href="#{ corpusbuilder_public_url }/packs/client.css"
   javascript:
     var loadStatus = function() {
+      var onFinished = function(isSuccess) {
+        if(isSuccess) {
+          noty({text: 'Your document has been successfully OCRed', type: 'success'});
+        }
+        else {
+          noty({text: 'There was an error when doing OCR on the uploaded document', type: 'error'});
+        }
+      }
+
       if(window.CorpusBuilderDocumentStatus === undefined) {
         setTimeout(loadStatus, 1000);
         return;
@@ -12,7 +21,8 @@
         {
           baseUrl: '#{ request.base_url }/corpusbuilder',
           editorEmail: '#{ editor_email }',
-          documentId: '#{ document.ocr_document_id }'
+          documentId: '#{ document.ocr_document_id }',
+          onFinished: onFinished
         }
       );
     };

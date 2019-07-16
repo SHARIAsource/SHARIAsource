@@ -19,6 +19,9 @@
 //= require select2-full
 //= require turbolinks
 //= require admin-inits
+//= require ./noty/jquery.noty
+//= require ./noty/layouts/topRight
+//= require ./noty/themes/relax
 //= require tinymce
 //= require smart_listing
 //= require_tree ./admin
