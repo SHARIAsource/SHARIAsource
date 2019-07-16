@@ -149,6 +149,8 @@ class Admin::DocumentsController < AdminController
               end
 
         @document.update_attributes!(ocr_document_id: doc["id"])
+
+        flash[:notice] = "#{flash[:notice]}<br />Your OCR document is processing. When it is ready, you’ll receive a notification and link to your document.”"
       rescue
         flash[:error] = $!.message
         return false
