@@ -122,8 +122,8 @@
 
   .row
     .button-group
-      = f.submit "Save and return to menu", class: 'dark_gray button'
-      = f.submit "Save and continue", class: 'light_blue button', name: "create_and_continue"
+      = f.submit "Save and go to unpublished", class: 'dark_gray button'
+      = f.submit "Save and start adding new", class: 'light_blue button', name: "create_and_continue"
       = f.submit "Save and edit", class: 'med_blue button', name: "create_and_edit", id: (@document.new_record? ? "new_create_and_edit" : "create_and_edit")
 
   javascript:
