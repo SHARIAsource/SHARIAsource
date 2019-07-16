@@ -74,43 +74,45 @@ class Admin::DocumentsController < AdminController
 
     prev_state = @document.published
 
-    set_ocr_document
+    if set_ocr_document
+      if update_params.has_key? :ocr
+        update_params.delete :ocr
+      end
 
-    if update_params.has_key? :ocr
-      update_params.delete :ocr
-    end
+      if @document.update update_params
+        flash[:notice] = 'Document updated successfully'
 
-    if @document.update update_params
-      flash[:notice] = 'Document updated successfully'
+        @document.index!
+        DocumentTypeCountWorker.perform_async
 
-      @document.index!
-      DocumentTypeCountWorker.perform_async
-
-      if params[:create_and_continue]
-        path = edit_admin_document_path @document
-      elsif params[:create_and_edit]
-        path = edit_admin_document_path @document
-      else
-        # if we unpublish a document, we want to stay on the
-        # unpublished view so that we can unpublish another if needed
-        if @document.published != prev_state
-          if @document.published
-            path = unpublished_admin_documents_path
+        if params[:create_and_continue]
+          path = edit_admin_document_path @document
+        elsif params[:create_and_edit]
+          path = edit_admin_document_path @document
+        else
+          # if we unpublish a document, we want to stay on the
+          # unpublished view so that we can unpublish another if needed
+          if @document.published != prev_state
+            if @document.published
+              path = unpublished_admin_documents_path
+            else
+              path = published_admin_documents_path
+            end
           else
             path = published_admin_documents_path
           end
-        else
-          path = published_admin_documents_path
         end
-      end
-      if permitted_params[:document_show_page]
-        redirect_back(fallback_location: root_path)
+        if permitted_params[:document_show_page]
+          redirect_back(fallback_location: root_path)
+        else
+          redirect_to path
+        end
       else
-        redirect_to path
+        flash[:error] = @document.errors.full_messages.to_sentence
+        render :edit
       end
     else
-      flash[:error] = @document.errors.full_messages.to_sentence
-      render :edit
+      render :new
     end
   end
 
@@ -149,10 +151,11 @@ class Admin::DocumentsController < AdminController
         @document.update_attributes!(ocr_document_id: doc["id"])
       rescue
         flash[:error] = $!.message
-        render :new
-        return
+        return false
       end
     end
+
+    true
   end
 
   def permitted_params
