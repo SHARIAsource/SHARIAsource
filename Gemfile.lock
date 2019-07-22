@@ -1,6 +1,5 @@
-GIT
-  remote: https://github.com/berkmancenter/corpusbuilder-ruby-client.git
-  revision: efaed8cb8f0519b334334838f08b0e48cf81efe3
+PATH
+  remote: corpusbuilder-ruby-client
   specs:
     corpusbuilder-ruby (0.1.0)
       activesupport
