@@ -1,13 +1,9 @@
 class Admin::DocumentsController < AdminController
   before_action :fetch_document, only: [:edit, :update, :destroy]
   before_action :ensure_editor!, only: [:destroy]
+  before_action :fetch_collection, only: [ :index ]
 
-  def unpublished
-    render_index(false)
-  end
-
-  def published
-    render_index(true)
+  def index
   end
 
   def new
@@ -49,7 +45,7 @@ class Admin::DocumentsController < AdminController
       elsif params[:create_and_edit]
         redirect_to edit_admin_document_path @document
       else
-        redirect_to unpublished_admin_documents_path
+        redirect_to admin_documents_path
       end
     else
       flash[:error] = @document.errors.full_messages.to_sentence
@@ -122,7 +118,7 @@ class Admin::DocumentsController < AdminController
     else
       flash[:error] = 'An error occurred while trying to delete that Document'
     end
-    redirect_to published_admin_documents_path
+    redirect_to admin_documents_path
   end
 
   protected
@@ -207,101 +203,6 @@ class Admin::DocumentsController < AdminController
     end
   end
 
-  def render_index(published)
-    respond_to do |format|
-      format.html
-      format.json { render json: response_as_json(published) }
-    end
-  end
-
-  def response_as_json(pstatus)
-    {
-      sEcho: params[:sEcho].to_i,
-      iTotalRecords: Document.where(published: pstatus).count,
-      iTotalDisplayRecords: fetch_documents(pstatus).count,
-      aaData: data(pstatus)
-    }
-  end
-
-  def data(pstatus)
-    fetch_documents(pstatus).map do |document|
-      [
-        document.title,
-        document.publisher,
-        document.tags.pluck(:name).join(', '),
-        document.topics.pluck(:name).join(', '),
-        document.contributors.map { |contributor| contributor.first_name + ' ' + contributor.last_name }.join(', '),
-        document.language.name,
-        document.regions.pluck(:name).join(', '),
-       "<i class='fa fa-#{document.reviewed? ? 'check' : 'close'}' aria-hidden='true'></i>",
-        document.updated_at.strftime("%b %e, %Y"),
-        render_to_string(
-          partial: "/admin/documents/datatable_controls.html.slim",
-          locals: {document: document},
-          layout: false
-        )
-      ]
-    end
-  end
-
-  def fetch_documents(pstatus)
-    # Memoize search results because this gets called twice in response_as_json and
-    #   produces incorrect "of $x entries" values if we capture its output there.
-    return @fetched_documents if defined?(@fetched_documents)
-
-    attrs = {published: pstatus}
-    if !current_user.is_superuser?
-      # If they are normal user, restrict search to their uploaded docs and their contributor docs
-      # Otherwise they are a superuser, so we won't restrict by user or contributor ids
-      attrs[:contributor_ids] = current_user.self_and_descendant_ids
-      attrs[:user_id] = current_user.id
-    end
-
-    search = Sunspot.search(Document) do
-      with(:published, attrs[:published])
-      fulltext(params[:sSearch]) if params[:sSearch].present?
-
-      any_of do
-        [:user_id, :contributor_ids].each do |field_name|
-          with(field_name, attrs[field_name]) if attrs[field_name]
-        end
-      end
-    end
-
-    documents = Document
-      .where(id: search.results.map(&:id))
-      .page(page)
-      .per_page(per_page)
-
-    @fetched_documents = order_documents(documents)
-  end
-
-  def page
-    params[:iDisplayStart].to_i/per_page + 1
-  end
-
-  def per_page
-    params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 10
-  end
-
-  def order_documents(docs)
-    columns = %w[title publisher tags topics contributor language regions updated_at]
-    col = columns[params[:iSortCol_0].to_i]
-    case col
-    when "title","publisher", "updated_at" then docs.order("#{col} #{sort_direction}")
-    when "topics" then docs.joins(:topics).order("topics.name #{sort_direction}")
-    when "tags" then docs.includes(:tags).order("tags.name #{sort_direction}")
-    when "contributor" then docs.joins(:contributors).order("users.last_name #{sort_direction}")
-    when "language" then docs.joins(:language).order("languages.name #{sort_direction}")
-    when "regions" then docs.joins(:regions).order("regions.name #{sort_direction}")
-    else docs.order("updated_at #{sort_direction}")
-    end
-  end
-
-  def sort_direction
-    params[:sSortDir_0] == "desc" ? "desc" : "asc"
-  end
-
   def create_new_attributes(names, model)
     new_ids = []
     existing = names.select do |single|
@@ -323,5 +224,15 @@ class Admin::DocumentsController < AdminController
     end
 
     existing + new_ids
+  end
+
+  def fetch_collection
+    params[:q] ||= {}
+    params[:q][:published_eq] ||= true
+    params[:q][:s] ||= {}
+    params[:q][:s] ||= "created_at desc"
+    @q = Document.ransack(params[:q])
+    @all_documents = @q.result
+    @documents = @all_documents.page(params[:page])
   end
 end

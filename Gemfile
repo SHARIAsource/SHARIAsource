@@ -54,6 +54,8 @@ gem 'corpusbuilder-ruby', git: 'https://github.com/berkmancenter/corpusbuilder-r
 gem 'leaflet-rails', '~> 1.3'
 gem "d3-rails", '~> 5.4'
 gem 'friendly_id', '~> 5.2'
+gem 'ransack'
+gem 'ransack_chronic'
 
 group :development do
   gem 'annotate', '~> 2.7'

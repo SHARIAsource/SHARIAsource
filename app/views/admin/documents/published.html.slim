@@ -7,7 +7,7 @@ header
 
 hr
 h3
-  span Published | 
+  span Published |&nbsp;
   = link_to "Unpublished", unpublished_admin_documents_path, class: 'document-status-nav-link'
 
 = render 'docs_table', data_source_url: published_admin_documents_url(format: "json")

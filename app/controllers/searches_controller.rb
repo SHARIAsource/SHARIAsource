@@ -14,7 +14,7 @@ class SearchesController < ApplicationController
       indirect = Document.joins(:authors).where(authors: { id: @authors.map(&:id)}).map(&:contributor_ids).flatten.uniq
       @filters.contributor = (@filters.contributor.map(&:to_i) + indirect).uniq
     end
-    @search = Document.search do |query|
+    @search = Document.solr_search do |query|
       query.fulltext @filters.q
       query.with(:published, true)
       query.with(:topic_ids, @filters.topic) if @filters.topic

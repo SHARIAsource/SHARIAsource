@@ -102,6 +102,7 @@ GEM
       timers (>= 4.1.1)
     celluloid-supervision (0.20.6)
       timers (>= 4.1.1)
+    chronic (0.10.2)
     closure_tree (6.6.0)
       activerecord (>= 4.1.0)
       with_advisory_lock (>= 3.0.0)
@@ -253,6 +254,13 @@ GEM
     rake (12.3.1)
     ranked-model (0.4.0)
       activerecord (>= 3.1.12)
+    ransack (2.1.1)
+      actionpack (>= 5.0)
+      activerecord (>= 5.0)
+      activesupport (>= 5.0)
+      i18n
+    ransack_chronic (1.1.0)
+      chronic (>= 0.6.7)
     rb-fsevent (0.10.3)
     redis (3.3.5)
     redis-namespace (1.6.0)
@@ -427,6 +435,8 @@ DEPENDENCIES
   rack-timeout (= 0.0.4)
   rails (~> 5.1)
   ranked-model (~> 0.4)
+  ransack
+  ransack_chronic
   rb-fsevent (~> 0.10)
   rmagick (~> 2.13)
   rspec-rails (~> 3.7)

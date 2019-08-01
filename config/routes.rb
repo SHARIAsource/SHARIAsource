@@ -77,12 +77,7 @@ Rails.application.routes.draw do
     resources :miscs, only: [:index, :new, :edit, :create, :update, :destroy] do
       put :sort
     end
-    resources :documents, only: [:new, :edit, :create, :update, :destroy] do
-      collection do
-        get 'published'
-        get 'unpublished'
-      end
-    end
+    resources :documents, only: [:new, :edit, :create, :update, :destroy, :index]
 
     resources :attached_files, only: [:index, :create]
   end

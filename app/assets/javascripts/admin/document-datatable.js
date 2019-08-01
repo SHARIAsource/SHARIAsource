@@ -24,7 +24,7 @@ ready = function() {
                     "searchable": false
                 },
                 {
-                    "targets": -3,
+                    "targets": -4,
                     "className": 'reviewed'
                 }]
             });
