@@ -32,9 +32,6 @@
         = f.association :contributors, collection: User.order('last_name ASC'), include_blank: false
 
   .row
-    .large-12.columns
-      = render partial: 'admin/shared/attached_files', locals: {attachable: @document}
-  .row
     .large-12.columns.end
       = f.input :summary, input_html: { rows: 4, class: 'wysiwyg-summary' }
 
@@ -111,7 +108,9 @@
     = render partial: 'content_password', locals: {document: @document, f: f}
     .row
       .large-12.columns
-        = render partial: 'admin/shared/attached_files', locals: {attachable: @document}
+        = f.input :word_document
+        - if f.object.word_document.present?
+          p= link_to f.object.word_document.file.filename, f.object.word_document.url
     .row
       .large-12.columns
         = f.fields_for :body do |b|

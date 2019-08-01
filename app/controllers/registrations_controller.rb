@@ -1,20 +1,9 @@
 class RegistrationsController < Devise::RegistrationsController
   layout 'admin'
 
-  #def new
-    # Registrations created by admin
-    #raise ActionController::RoutingError.new('Not Found')
-  #end
-
-  #def create
-    # Registrations created by admin
-    # raise ActionController::RoutingError.new('Not Found')
-  #end
-
-  #def destroy
-    # Disable account deletion until we decide how to reallocate owned items
-  #  redirect_to root_path
-  #end
+  def index
+    redirect_to :edit
+  end
 
   def update
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
@@ -47,6 +36,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   def account_update_params
     params.require(:user).permit(:email, :password, :password_confirmation,
-                                 :current_password, :accepted_terms)
+                                 :current_password, :accepted_terms, :new_content_email)
   end
 end

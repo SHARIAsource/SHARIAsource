@@ -1,6 +1,6 @@
 var ready;
 ready = function() {
-    //prevent re-init of data table, prevent loss of init when going from 
+    //prevent re-init of data table, prevent loss of init when going from
     //unpublished to pubslihed and vice versa
     if(!$("#document-datatable_filter")[0]) {
 
@@ -28,7 +28,7 @@ ready = function() {
                     "className": 'reviewed'
                 }]
             });
-    
+
         var search_box = $('#document-datatable_filter input');
         search_box.unbind();
         search_box.bind('keyup', function(e) {
@@ -36,7 +36,7 @@ ready = function() {
                 oTable.fnFilter(this.value);
             }
         });
-    
+
         $('.document-status-nav-link').bind('click', function(e) {
             e.preventDefault();
             var link = $(this).attr('href');

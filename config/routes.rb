@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount Maily::Engine, at: '/maily'
   require 'sidekiq/web'
 
   devise_for :users,
@@ -23,7 +24,7 @@ Rails.application.routes.draw do
   end
   resources :topics, only: [:index]
   resources :eras, only: [:index]
-  resources :users, only: [:show]
+  resources :users, only: [:show, :update, :index]
 
   namespace :admin do
     resources :users, only: [:index, :new, :edit, :create, :update, :destroy]
@@ -77,7 +78,12 @@ Rails.application.routes.draw do
     resources :miscs, only: [:index, :new, :edit, :create, :update, :destroy] do
       put :sort
     end
-    resources :documents, only: [:new, :edit, :create, :update, :destroy, :index]
+    resources :documents, only: [:new, :edit, :create, :update, :destroy, :index] do
+      collection do
+        get 'published'
+        get 'unpublished'
+      end
+    end
 
     resources :attached_files, only: [:index, :create]
   end

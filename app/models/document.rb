@@ -1,8 +1,8 @@
 require 'securerandom'
 
 class Document < ActiveRecord::Base
-  include HasManyAttachedFiles
   include PdfParser
+
   alias_attribute :name, :title
 
   attr_accessor :new_content_password, :reviewing_user, :document_show_page
@@ -64,6 +64,10 @@ class Document < ActiveRecord::Base
   belongs_to :reference_type
   belongs_to :language
   belongs_to :user
+
+  mount_uploader :word_document, WordDocumentUploader
+
+  validates :word_document, presence: true, if: -> (doc) { doc.document_style == 'noscan'  }
 
   def current_review  #TODO: private
     document_reviews.last if reviewed?

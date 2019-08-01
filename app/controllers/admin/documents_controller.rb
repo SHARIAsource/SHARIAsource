@@ -36,6 +36,8 @@ class Admin::DocumentsController < AdminController
 
     if @document.save
       @document.index!
+      EditorMailer.document_creation_email(@document).deliver
+      EditorMailer.new_submission_email(@document).deliver
       flash[:notice] = 'Document created successfully'
 
       set_ocr_document
@@ -80,6 +82,10 @@ class Admin::DocumentsController < AdminController
 
         @document.index!
         DocumentTypeCountWorker.perform_async
+
+        if @document.published
+          EditorMailer.document_published_email(@document).deliver
+        end
 
         if params[:create_and_continue]
           path = edit_admin_document_path @document
@@ -166,7 +172,7 @@ class Admin::DocumentsController < AdminController
                  :alternate_authors, :featured_position, :reference_type_id,
                  :permission_giver, :document_style, :summary, :citation,
                  :alternate_editors, :alternate_translators, :alternate_years,
-                 :reviewed,
+                 :reviewed, :word_document,
                  :use_content_password,
                  :content_password,
                  :document_show_page,
