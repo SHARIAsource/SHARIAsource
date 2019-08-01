@@ -58,6 +58,7 @@ gem 'ransack'
 gem 'ransack_chronic'
 gem 'eventmachine', '~> 1.0.4'
 gem 'active_record_union'
+gem 'sanitize'
 
 group :development do
   gem 'annotate', '~> 2.7'
