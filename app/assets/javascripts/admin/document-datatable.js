@@ -30,8 +30,19 @@ ready = function() {
             });
 
         var search_box = $('#document-datatable_filter input');
+
+        var updateQuery = function(link) {
+            var q = search_box.val();
+            if (!!q) {
+                link += '?sSearch=' + encodeURIComponent(q);
+            }
+            window.location.href = link;
+        };
+
         search_box.unbind();
         search_box.bind('keyup', function(e) {
+            _.debounce(updateQuery, 400)(window.location.href.replace(/\?.*/, ''));
+
             if (e.keyCode == 13) {
                 oTable.fnFilter(this.value);
             }
@@ -40,11 +51,7 @@ ready = function() {
         $('.document-status-nav-link').bind('click', function(e) {
             e.preventDefault();
             var link = $(this).attr('href');
-            var q = search_box.val();
-            if (!!q) {
-                link += '?sSearch=' + encodeURIComponent(q);
-            }
-            window.location.href = link;
+            updateQuery(link);
         });
     }
 }
