@@ -13,7 +13,7 @@ class DocumentPresenter < BasePresenter
   def authors_together
     authors.map do |author|
       if author.user
-        link_to(author.name, contributor_path(author.user)).html_safe
+        link_to(author.name, editors_and_contributor_path(author.user)).html_safe
       else
         author.name
       end

@@ -228,6 +228,9 @@ GEM
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
+    pry-byebug (3.6.0)
+      byebug (~> 10.0)
+      pry (~> 0.10)
     pry-rails (0.3.6)
       pry (>= 0.10.4)
     rack (2.0.5)
@@ -418,7 +421,6 @@ DEPENDENCIES
   awesome_print (~> 1.8)
   better_errors (~> 2.4)
   binding_of_caller (~> 0.8)
-  byebug (~> 10.0)
   capybara (~> 2.3)
   carrierwave (~> 1.2)
   closure_tree (~> 6.6)
@@ -447,7 +449,8 @@ DEPENDENCIES
   pdf-reader (~> 1.4.0)
   pg
   progress_bar (~> 1.2)
-  pry-rails (~> 0.3)
+  pry-byebug
+  pry-rails
   rack-timeout (~> 0.0.4)
   rails (~> 5.1)
   ranked-model (~> 0.4)

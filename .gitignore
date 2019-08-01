@@ -22,3 +22,4 @@ pip.freeze.txt
 __MACOSX/
 .ropeproject/
 bin/
+.byebug_history

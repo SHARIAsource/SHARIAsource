@@ -76,8 +76,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.7'
   gem 'spring-commands-rspec', '~> 1.0'
   gem 'dotenv-rails', '~> 0.11'
-  gem 'pry-rails', '~> 0.3'
-  gem 'byebug', '~> 10.0'
+  gem 'pry-rails'
+  gem 'pry-byebug'
 end
 
 group :test do

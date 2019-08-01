@@ -14,9 +14,9 @@
           .large-4.columns.project-user-container
             - if proj_user.user.avatar && proj_user.user.avatar.url && FileTest.exist?("#{Rails.root}/public/#{proj_user.user.avatar.url}")
               .large-12.columns.project-profile
-                = link_to image_tag(proj_user.user.avatar.url, alt: proj_user.user.name, class: "project-user-photo"), contributor_path(proj_user.user), title: truncate(strip_tags(proj_user.user.about), :length => 50), 'data-placement' => 'right'
+                = link_to image_tag(proj_user.user.avatar.url, alt: proj_user.user.name, class: "project-user-photo"), editors_and_contributor_path(proj_user.user), title: truncate(strip_tags(proj_user.user.about), :length => 50), 'data-placement' => 'right'
             .large-12.columns.project-profile
-              = link_to proj_user.user.name, contributor_path(proj_user.user), :class => "contributor_link"
+              = link_to proj_user.user.name, editors_and_contributor_path(proj_user.user), :class => "contributor_link"
               br
               = proj_user.project_role
               br
