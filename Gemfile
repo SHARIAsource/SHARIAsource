@@ -48,9 +48,10 @@ gem 'therubyracer', platforms: :ruby
 gem 'will_paginate', '~> 3.1'
 gem 'eventmachine', '~> 1.0.4'
 gem 'awesome_print'
-gem 'corpusbuilder-ruby', path: './corpusbuilder-ruby-client' # git: 'https://github.com/berkmancenter/corpusbuilder-ruby-client.git'
+gem 'corpusbuilder-ruby', git: 'https://github.com/berkmancenter/corpusbuilder-ruby-client.git'
 gem 'leaflet-rails'
 gem "d3-rails"
+gem 'friendly_id', '~> 5.2.0'
 
 group :development do
   gem 'annotate'

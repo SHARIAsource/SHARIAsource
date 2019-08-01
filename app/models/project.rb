@@ -1,4 +1,7 @@
 class Project < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+
   mount_uploader :photo, ImageUploader
 
   has_many :projects_users, dependent: :destroy
