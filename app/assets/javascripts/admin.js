@@ -19,6 +19,7 @@
 //= require select2-full
 //= require turbolinks
 //= require admin-inits
+//= require admin/documents
 //= require ./noty/jquery.noty
 //= require ./noty/layouts/topRight
 //= require ./noty/themes/relax
