@@ -83,42 +83,51 @@
       h3 Content
       = f.input :content_password, as: :hidden, input_html: {'data-password' => @document.new_content_password}
 
-  .scan-only.panel
-    = render partial: 'content_password', locals: {document: @document, f: f}
-    .row
-      .large-9.columns.end
-        = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
-        = @document.pdf.file.try(:identifier)
-
-    - if @document.pages.present?
-      .clearfix
-        h3 Pages
-        ul.tabs.vertical data-tab="true" data-options='deep_linking:true'
-          - @document.pages.each_with_index do |page, index|
-            li class="tab-title #{'active' if index == 0}"
-              a href="#page#{index+1}"= "Page #{index+1}"
-        .tabs-content.vertical
-          = f.fields_for :pages do |p|
-            div class="content #{'active' if p.index == 0}" id="page#{p.index+1}"
-              .row.page-preview
-                .large-8.columns.page-text-preview
-                  = p.fields_for :body do |b|
-                    = b.input :hybrid_text, label: "Page #{p.index+1} Text", input_html: { class: 'wysiwyg' }
-                .large-4.columns.page-image-preview#page-image-preview
-                  img src=p.object.image.url
-
-  .noscan-only.panel
-    = render partial: 'content_password', locals: {document: @document, f: f}
-    .row
-      .large-12.columns
-        = render partial: 'admin/shared/attached_files', locals: {attachable: @document}
-    .row
-      .large-12.columns
-        = f.fields_for :body do |b|
-          = b.input :text, label: 'Content', input_html: { class: 'wysiwyg' }
-
   .row
-    = corpusbuilder_uploader(@document)
+    .large-12.columns
+      ul.tabs(data-tab="")
+        li.tab-title.active
+          a(href="#pdf-with-ocr") PDF With OCR
+        li.tab-title
+          a(href="#pdf-only") PDF Only
+      .tabs-content
+        #pdf-with-ocr.content.active
+          = corpusbuilder_uploader(@document)
+
+        #pdf-only.content
+          .scan-only.panel
+            = render partial: 'content_password', locals: {document: @document, f: f}
+            .row
+              .large-9.columns.end
+                = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
+                = @document.pdf.file.try(:identifier)
+
+            - if @document.pages.present?
+              .clearfix
+                h3 Pages
+                ul.tabs.vertical data-tab="true" data-options='deep_linking:true'
+                  - @document.pages.each_with_index do |page, index|
+                    li class="tab-title #{'active' if index == 0}"
+                      a href="#page#{index+1}"= "Page #{index+1}"
+                .tabs-content.vertical
+                  = f.fields_for :pages do |p|
+                    div class="content #{'active' if p.index == 0}" id="page#{p.index+1}"
+                      .row.page-preview
+                        .large-8.columns.page-text-preview
+                          = p.fields_for :body do |b|
+                            = b.input :hybrid_text, label: "Page #{p.index+1} Text", input_html: { class: 'wysiwyg' }
+                        .large-4.columns.page-image-preview#page-image-preview
+                          img src=p.object.image.url
+
+          .noscan-only.panel
+            = render partial: 'content_password', locals: {document: @document, f: f}
+            .row
+              .large-12.columns
+                = render partial: 'admin/shared/attached_files', locals: {attachable: @document}
+            .row
+              .large-12.columns
+                = f.fields_for :body do |b|
+                  = b.input :text, label: 'Content', input_html: { class: 'wysiwyg' }
 
   .row
     .button-group
