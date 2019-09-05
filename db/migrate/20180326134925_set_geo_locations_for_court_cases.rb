@@ -1,4 +1,4 @@
-class SetGeoLocationsForCourtCases < ActiveRecord::Migration
+class SetGeoLocationsForCourtCases < ActiveRecord::Migration[5.1]
   def change
     docs = Document
            .joins(:document_type)
@@ -17,7 +17,7 @@ class SetGeoLocationsForCourtCases < ActiveRecord::Migration
 
     docs.each do |doc|
       states.each do |state_full, state_short|
-        if doc.author.include?(state_full) || doc.title.include?(state_full) || doc.summary.include?(state_full)
+        if doc.authors.include?(state_full) || doc.title.include?(state_full) || doc.summary.include?(state_full)
           doc.regions << Region.find_by(name: state_full)
           doc.regions << Region.find_by(name: state_short)
 
