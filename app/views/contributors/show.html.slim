@@ -4,6 +4,12 @@
   .inner
     h2.section-heading.browse= @contributor.name_with_collaborator
 
+  .inner
+    - if @contributor.biography_uses_tabs?
+      = render 'tabs', contributor: @contributor
+    - else
+      = render 'about', contributor: @contributor, content: @contributor.about
+
   .inner.document-content
     - if @contributor.avatar && @contributor.avatar.url
       .photo-caption

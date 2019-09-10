@@ -64,7 +64,7 @@ class Admin::UsersController < AdminController
                                  :last_name, :about, :avatar, :email,
                                  :collaborator_id, :parent_id, :disabled,
                                  :is_admin, :is_senior_scholar, :is_password_protector,
-                                 :is_original_author, :is_ocr_advanced)
+                                 :is_original_author, :is_ocr_advanced, :publications, :other_links)
   end
 
   def fetch_author

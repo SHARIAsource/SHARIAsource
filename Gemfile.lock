@@ -104,6 +104,10 @@ GEM
       timers (>= 4.1.1)
     celluloid-supervision (0.20.6)
       timers (>= 4.1.1)
+    chosen-rails (1.5.2)
+      coffee-rails (>= 3.2)
+      railties (>= 3.0)
+      sass-rails (>= 3.2)
     chronic (0.10.2)
     closure_tree (6.6.0)
       activerecord (>= 4.1.0)
@@ -423,6 +427,7 @@ DEPENDENCIES
   binding_of_caller (~> 0.8)
   capybara (~> 2.3)
   carrierwave (~> 1.2)
+  chosen-rails
   closure_tree (~> 6.6)
   coffee-rails (~> 4.2)
   corpusbuilder-ruby!
