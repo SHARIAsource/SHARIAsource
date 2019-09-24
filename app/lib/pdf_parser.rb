@@ -1,4 +1,4 @@
-require 'RMagick'
+require 'mini_magick'
 require 'whatlanguage'
 require 'similar_text'
 
@@ -116,7 +116,7 @@ module PdfParser
 
   # determine arabic script within a spatial bound
   def ocr_arabic_block(y_start, y_end, img_path)
-    img = Magick::Image.ping(img_path).first
+    img = MiniMagick::Image.ping(img_path).first
     block_width = img.columns # document width (pxl)
     block_height = (y_end - y_start).abs
     block = RTesseract::Mixed.new(img_path, lang: 'ara', areas: [

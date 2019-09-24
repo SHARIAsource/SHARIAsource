@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class PageImageUploader < CarrierWave::Uploader::Base
-  include CarrierWave::RMagick
+  include CarrierWave::MiniMagick
 
   storage :file
 

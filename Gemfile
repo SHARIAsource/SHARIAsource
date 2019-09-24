@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.4.1'
+ruby '2.5.3'
 
 gem 'drg', '~> 1.5'
 
@@ -27,7 +27,7 @@ gem 'rack-timeout', '~> 0.0.4'
 gem 'rails', '~> 5.1'
 gem 'ranked-model', '~> 0.4'
 gem 'dalli', '~> 2.7'
-gem 'rmagick', '~> 2.13'
+gem 'mini_magick'
 gem 'sass-rails', '~> 5.0'
 gem 'sidekiq', '~> 3.5'
 gem 'simple_form', '~> 3.5'
