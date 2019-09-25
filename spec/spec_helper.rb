@@ -72,4 +72,6 @@ RSpec.configure do |config|
   config.include Capybara::DSL
   config.include FactoryGirl::Syntax::Methods
   config.include ClosureTree::Test::Matcher
+
+  Capybara.javascript_driver = :webkit
 end

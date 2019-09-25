@@ -12,15 +12,13 @@ gem 'coffee-rails', '~> 4.2'
 gem 'devise', '~> 4.4'
 gem 'foreman', '~> 0.74'
 
-#see unmerged pull request https://github.com/zurb/foundation-sites/pull/8878
-#it was breaking the admin document edit form
 gem 'foundation-rails', '~> 5.5.0', path: "vendor/gems/foundation-rails-5.5.3.2"
-
 gem 'jquery-rails', '~> 4.3'
 gem 'jquery-ui-rails', '~> 6.0'
 gem 'maily'
 gem 'pdf-reader', '~> 1.4.0'
 gem 'hijri_gem', '~> 0.4.2'
+gem 'chosen-rails'
 gem 'kramdown', '~> 1.4.1'
 gem 'pg'
 gem 'rack-timeout', '~> 0.0.4'
@@ -82,6 +80,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara', '~> 2.3'
+  gem 'capybara', '~> 2.8'
+  gem "capybara-webkit"
   gem 'shoulda-matchers', '~> 3.1'
 end
