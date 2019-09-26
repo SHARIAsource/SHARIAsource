@@ -21,19 +21,12 @@ RUN microdnf install \
 
 RUN npm install yarn -g
 
-WORKDIR /usr/src/app
+WORKDIR /shariasource
 
 COPY Gemfile Gemfile.lock ./
 
 COPY . .
 
-ENV GEM_HOME=/usr/share/gems
-ENV PATH "$PATH:/usr/share/gems/bin"
-
-RUN echo "gem: --install-dir=/usr/share/gems --bindir /usr/share/gems/bin" > /root/.gemrc
-
-RUN /usr/src/app/bin/app_ctl --init
-
+RUN gem install bundler -v 1.15.4
 
 CMD ["./bin/rails server --port 8000"]
-

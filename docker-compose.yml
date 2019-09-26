@@ -1,0 +1,50 @@
+version: '2'
+services:
+  postgres_shariasource:
+    image: postgres:9.6.3
+    volumes:
+      - postgres_shariasource_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=zse45rdx
+      - POSTGRES_USER=shariasource
+      - POSTGRES_DB=shariasource
+    ports:
+      - "15432:5432"
+  corpusbuilder:
+    extends:
+      file: services/corpusbuilder/docker-compose.yml
+      service: corpusbuilder
+    environment:
+      - APP_DATABASE_URL=postgres_shariasource
+      - APP_DATABASE_URL=15432
+    ports:
+      - "13001:3000"
+    links:
+      - postgres_shariasource
+  shariasource:
+    build: .
+    command: ["/shariasource/bin/app_ctl", "--init", "--migrate", "--run"]
+    volumes:
+      - .:/shariasource
+      - shariasource_bundle:/shariasource/vendor
+      - shariasource_node_modules:/shariasource/node_modules
+    environment:
+      - APP_ROOT=/shariasource
+      - APP_DATABASE_URL=postgres_shariasource
+      - APP_DATABASE_URL=15432
+      - APP_DATABASE_NAME=shariasource
+      - APP_DATABASE_USER=shariasource
+      - APP_DATABASE_PASSWORD=zse45rdx
+    ports:
+      - "13000:3000"
+    links:
+      - postgres_shariasource
+volumes:
+  postgres_shariasource_data:
+  shariasource_bundle:
+  shariasource_node_modules:
+  corpusbuilder-bundle:
+  corpusbuilder-node-modules:
+  postgres-data:
+  tesseract-models:
+  kraken-models:

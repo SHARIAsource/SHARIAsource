@@ -1,0 +1,6 @@
+version: '2'
+services:
+  selenium:
+    image: retreatguru/headless-chromedriver
+    ports:
+      - "4444:4444"
