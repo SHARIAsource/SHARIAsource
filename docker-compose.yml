@@ -8,15 +8,20 @@ services:
       - POSTGRES_PASSWORD=zse45rdx
       - POSTGRES_USER=shariasource
       - POSTGRES_DB=shariasource
-    ports:
-      - "15432:5432"
+  postgres_corpusbuilder:
+    extends:
+      file: services/corpusbuilder/docker-compose.yml
+      service: postgres_corpusbuilder
+    environment:
+      - POSTGRES_PASSWORD=zse45rdx
+      - POSTGRES_USER=corpus_builder
+      - POSTGRES_DB=corpus_builder
   corpusbuilder:
     extends:
       file: services/corpusbuilder/docker-compose.yml
       service: corpusbuilder
     environment:
-      - APP_DATABASE_URL=postgres_shariasource
-      - APP_DATABASE_URL=15432
+      - APP_DATABASE_URL=postgres_corpusbuilder
     ports:
       - "13001:3000"
     links:
@@ -31,10 +36,10 @@ services:
     environment:
       - APP_ROOT=/shariasource
       - APP_DATABASE_URL=postgres_shariasource
-      - APP_DATABASE_URL=15432
       - APP_DATABASE_NAME=shariasource
       - APP_DATABASE_USER=shariasource
       - APP_DATABASE_PASSWORD=zse45rdx
+      - APP_PORT=3000
     ports:
       - "13000:3000"
     links:

@@ -81,6 +81,5 @@ end
 
 group :test do
   gem 'capybara', '~> 2.8'
-  gem "capybara-webkit"
   gem 'shoulda-matchers', '~> 3.1'
 end

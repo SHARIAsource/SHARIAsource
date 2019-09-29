@@ -86,9 +86,6 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-webkit (1.15.0)
-      capybara (>= 2.3, < 4.0)
-      json
     carrierwave (1.2.2)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
@@ -211,6 +208,7 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+    mini_magick (4.9.5)
     mini_mime (1.0.0)
     mini_portile2 (2.1.0)
     minitest (5.11.3)
@@ -296,7 +294,6 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    rmagick (2.13.4)
     rsolr (2.2.1)
       builder (>= 2.1.2)
       faraday (>= 0.9.0)
@@ -400,6 +397,8 @@ GEM
     turbolinks-source (5.1.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2019.3)
+      tzinfo (>= 1.0.0)
     uglifier (4.1.12)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
@@ -433,7 +432,6 @@ DEPENDENCIES
   better_errors (~> 2.4)
   binding_of_caller (~> 0.8)
   capybara (~> 2.8)
-  capybara-webkit
   carrierwave (~> 1.2)
   chosen-rails
   closure_tree (~> 6.6)
@@ -458,6 +456,7 @@ DEPENDENCIES
   leaflet-rails (~> 1.3)
   lodash-rails
   maily
+  mini_magick
   nokogiri (~> 1.6)
   pdf-reader (~> 1.4.0)
   pg
@@ -470,7 +469,6 @@ DEPENDENCIES
   ransack
   ransack_chronic
   rb-fsevent (~> 0.10)
-  rmagick (~> 2.13)
   rspec-rails (~> 3.7)
   rtesseract (~> 2.2)
   sanitize
@@ -492,13 +490,14 @@ DEPENDENCIES
   therubyracer (~> 0.12)
   tinymce-rails (~> 4.7)
   turbolinks (~> 5.1)
+  tzinfo-data
   uglifier (~> 4.1)
   unicorn (~> 4.8)
   whatlanguage (~> 1.0)
   will_paginate (~> 3.1)
 
 RUBY VERSION
-   ruby 2.4.1p111
+   ruby 2.5.3p105
 
 BUNDLED WITH
    1.15.4
