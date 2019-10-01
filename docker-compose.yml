@@ -1,7 +1,7 @@
 version: '2'
 services:
   postgres_shariasource:
-    image: postgres:9.6.3
+    image: postgres:11.5
     volumes:
       - postgres_shariasource_data:/var/lib/postgresql/data
     environment:
@@ -27,7 +27,7 @@ services:
     links:
       - postgres_corpusbuilder
   shariasource:
-    build: .
+    image: shariasource
     command: ["/shariasource/bin/app_ctl", "--init", "--migrate", "--run"]
     volumes:
       - .:/shariasource

@@ -27,6 +27,6 @@ COPY Gemfile Gemfile.lock ./
 
 COPY . .
 
-RUN gem install bundler -v 1.15.4
+RUN gem install bundler -v 2.0.2
 
 CMD ["./bin/rails server --port 8000"]

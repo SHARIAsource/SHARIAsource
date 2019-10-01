@@ -1,6 +1,6 @@
 class MoveDocumentsData < ActiveRecord::Migration[5.1]
   def change
-    execute <<-SQL
+    puts <<-SQL
       -- Moving authors data
       CREATE OR REPLACE FUNCTION
       create_author(FUNC_ID integer, FUNC_NAME text)

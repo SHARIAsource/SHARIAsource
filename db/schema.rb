@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20190722105642) do
     t.index ["document_id"], name: "index_authors_documents_on_document_id"
   end
 
-  create_table "bodies", id: :serial, force: :cascade do |t|
+  create_table "bodies", force: :cascade do |t|
     t.text "text"
     t.integer "page_id"
     t.integer "commentary_id"
@@ -50,13 +50,13 @@ ActiveRecord::Schema.define(version: 20190722105642) do
     t.index ["page_id"], name: "index_bodies_on_page_id"
   end
 
-  create_table "collaborators", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
-    t.string "url", limit: 255
+  create_table "collaborators", force: :cascade do |t|
+    t.string "name"
+    t.string "url"
     t.text "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string "image", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image"
     t.integer "sort_order"
     t.index ["name"], name: "index_collaborators_on_name"
     t.index ["sort_order"], name: "index_collaborators_on_sort_order"
@@ -94,10 +94,10 @@ ActiveRecord::Schema.define(version: 20190722105642) do
     t.index ["descendant_id"], name: "document_type_desc_idx"
   end
 
-  create_table "document_types", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "document_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "parent_id"
     t.integer "sort_order"
     t.index ["name"], name: "index_document_types_on_name"
@@ -105,29 +105,29 @@ ActiveRecord::Schema.define(version: 20190722105642) do
     t.index ["sort_order"], name: "index_document_types_on_sort_order"
   end
 
-  create_table "documents", id: :serial, force: :cascade do |t|
-    t.string "title", limit: 255
+  create_table "documents", force: :cascade do |t|
+    t.string "title"
     t.integer "document_type_id"
-    t.string "pdf", limit: 255
-    t.string "source_name", limit: 255
-    t.string "source_url", limit: 255
-    t.string "publisher", limit: 255
-    t.string "publisher_location", limit: 255
+    t.string "pdf"
+    t.string "source_name"
+    t.string "source_url"
+    t.string "publisher"
+    t.string "publisher_location"
     t.integer "volume_count"
-    t.string "alternate_titles", limit: 255
-    t.string "alternate_authors", limit: 255
+    t.string "alternate_titles"
+    t.string "alternate_authors"
     t.integer "language_id"
     t.integer "popular_count", default: 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "featured_position"
     t.integer "reference_type_id"
-    t.string "permission_giver", limit: 255
+    t.string "permission_giver"
     t.boolean "published", default: false
-    t.string "document_style", limit: 255, default: "scan"
-    t.string "alternate_editors", limit: 255
-    t.string "alternate_translators", limit: 255
-    t.string "alternate_years", limit: 255
+    t.string "document_style", default: "scan"
+    t.string "alternate_editors"
+    t.string "alternate_translators"
+    t.string "alternate_years"
     t.text "summary"
     t.datetime "published_at"
     t.text "citation"
@@ -166,7 +166,7 @@ ActiveRecord::Schema.define(version: 20190722105642) do
     t.index ["era_id"], name: "index_documents_eras_on_era_id"
   end
 
-  create_table "documents_regions", id: :serial, force: :cascade do |t|
+  create_table "documents_regions", force: :cascade do |t|
     t.integer "region_id"
     t.integer "document_id"
     t.index ["document_id"], name: "index_documents_regions_on_document_id"
@@ -182,7 +182,7 @@ ActiveRecord::Schema.define(version: 20190722105642) do
     t.index ["tag_id"], name: "index_documents_tags_on_tag_id"
   end
 
-  create_table "documents_themes", id: :serial, force: :cascade do |t|
+  create_table "documents_themes", force: :cascade do |t|
     t.integer "document_id"
     t.integer "theme_id"
     t.index ["document_id", "theme_id"], name: "index_documents_themes_on_document_id_and_theme_id", unique: true
@@ -217,18 +217,18 @@ ActiveRecord::Schema.define(version: 20190722105642) do
     t.index ["descendant_id"], name: "era_desc_idx"
   end
 
-  create_table "eras", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
+  create_table "eras", force: :cascade do |t|
+    t.string "name"
     t.integer "parent_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "start_year_gregorian"
     t.integer "end_year_gregorian"
     t.integer "start_year_hijri"
     t.integer "end_year_hijri"
     t.boolean "extended", default: false
-    t.string "hijri_display", limit: 255
-    t.string "gregorian_display", limit: 255
+    t.string "hijri_display"
+    t.string "gregorian_display"
     t.integer "sort_order"
     t.index ["end_year_gregorian"], name: "index_eras_on_end_year_gregorian"
     t.index ["extended"], name: "index_eras_on_extended"
@@ -250,21 +250,21 @@ ActiveRecord::Schema.define(version: 20190722105642) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
-  create_table "languages", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "languages", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "is_rtl"
     t.integer "sort_order"
     t.index ["name"], name: "index_languages_on_name", unique: true
     t.index ["sort_order"], name: "index_languages_on_sort_order"
   end
 
-  create_table "miscs", id: :serial, force: :cascade do |t|
-    t.string "slug", limit: 255
-    t.string "title", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "miscs", force: :cascade do |t|
+    t.string "slug"
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.text "body"
     t.index ["slug"], name: "index_miscs_on_slug"
   end
@@ -330,8 +330,8 @@ ActiveRecord::Schema.define(version: 20190722105642) do
     t.index ["user_id"], name: "index_named_filters_on_user_id"
   end
 
-  create_table "pages", id: :serial, force: :cascade do |t|
-    t.string "image", limit: 255
+  create_table "pages", force: :cascade do |t|
+    t.string "image"
     t.integer "document_id"
     t.integer "number"
     t.integer "width"
@@ -362,10 +362,10 @@ ActiveRecord::Schema.define(version: 20190722105642) do
     t.index ["user_id", "project_id"], name: "index_projects_users_on_user_id_and_project_id"
   end
 
-  create_table "reference_types", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "reference_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "sort_order"
     t.index ["name"], name: "index_reference_types_on_name"
     t.index ["sort_order"], name: "index_reference_types_on_sort_order"
@@ -379,11 +379,11 @@ ActiveRecord::Schema.define(version: 20190722105642) do
     t.index ["descendant_id"], name: "region_desc_idx"
   end
 
-  create_table "regions", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
+  create_table "regions", force: :cascade do |t|
+    t.string "name"
     t.integer "parent_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "sort_order"
     t.decimal "latitude", precision: 10, scale: 6
     t.decimal "longitude", precision: 10, scale: 6
@@ -392,19 +392,19 @@ ActiveRecord::Schema.define(version: 20190722105642) do
     t.index ["sort_order"], name: "index_regions_on_sort_order"
   end
 
-  create_table "tags", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "sort_order"
     t.index ["name"], name: "index_tags_on_name"
     t.index ["sort_order"], name: "index_tags_on_sort_order"
   end
 
-  create_table "themes", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "themes", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "archived", default: false
     t.integer "sort_order"
     t.index ["archived"], name: "index_themes_on_archived"
@@ -412,78 +412,3 @@ ActiveRecord::Schema.define(version: 20190722105642) do
     t.index ["sort_order"], name: "index_themes_on_sort_order"
   end
 
-  create_table "topics", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer "sort_order"
-    t.index ["name"], name: "index_topics_on_name"
-    t.index ["sort_order"], name: "index_topics_on_sort_order"
-  end
-
-  create_table "translators", force: :cascade do |t|
-    t.string "name"
-  end
-
-  create_table "user_hierarchies", id: false, force: :cascade do |t|
-    t.integer "ancestor_id", null: false
-    t.integer "descendant_id", null: false
-    t.integer "generations", null: false
-    t.index ["ancestor_id", "descendant_id", "generations"], name: "user_anc_des_udx", unique: true
-    t.index ["descendant_id"], name: "user_desc_idx"
-  end
-
-  create_table "users", id: :serial, force: :cascade do |t|
-    t.string "email", limit: 255, default: "", null: false
-    t.string "encrypted_password", limit: 255, default: "", null: false
-    t.string "reset_password_token", limit: 255
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string "current_sign_in_ip", limit: 255
-    t.string "last_sign_in_ip", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean "is_editor", default: false
-    t.string "first_name", limit: 255
-    t.string "last_name", limit: 255
-    t.string "last_name_without_articles", limit: 255
-    t.integer "collaborator_id"
-    t.integer "parent_id"
-    t.text "about"
-    t.string "avatar", limit: 255
-    t.boolean "requires_approval", default: false
-    t.boolean "disabled"
-    t.boolean "is_admin"
-    t.boolean "accepted_terms", default: false
-    t.boolean "is_senior_scholar", default: false
-    t.boolean "is_original_author", default: false
-    t.boolean "is_password_protector", default: false
-    t.string "cb_editor_id"
-    t.boolean "is_ocr_advanced", default: false
-    t.boolean "new_content_email", default: true
-    t.boolean "new_submission_email", default: true
-    t.text "publications"
-    t.text "other_links"
-    t.index ["collaborator_id"], name: "index_users_on_collaborator_id"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["is_editor"], name: "index_users_on_is_editor"
-    t.index ["last_name_without_articles"], name: "index_users_on_last_name_without_articles"
-    t.index ["parent_id"], name: "index_users_on_parent_id"
-    t.index ["requires_approval"], name: "index_users_on_requires_approval"
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  end
-
-  add_foreign_key "attached_files", "users"
-  add_foreign_key "named_filters", "document_types"
-  add_foreign_key "named_filters", "eras"
-  add_foreign_key "named_filters", "languages"
-  add_foreign_key "named_filters", "named_filters", column: "parent_id"
-  add_foreign_key "named_filters", "projects"
-  add_foreign_key "named_filters", "regions"
-  add_foreign_key "named_filters", "themes"
-  add_foreign_key "named_filters", "topics"
-  add_foreign_key "named_filters", "users"
-end
