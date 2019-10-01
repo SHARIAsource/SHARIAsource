@@ -25,7 +25,7 @@ services:
     ports:
       - "13001:3000"
     links:
-      - postgres_shariasource
+      - postgres_corpusbuilder
   shariasource:
     build: .
     command: ["/shariasource/bin/app_ctl", "--init", "--migrate", "--run"]
