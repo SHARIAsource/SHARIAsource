@@ -17,7 +17,8 @@ RUN microdnf install \
       make \
       git \
       wget \
-      GraphicsMagick
+      GraphicsMagick \
+      iproute
 
 RUN npm install yarn -g
 

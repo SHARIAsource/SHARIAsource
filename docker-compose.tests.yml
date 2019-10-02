@@ -13,6 +13,7 @@ services:
     command: ["/corpusbuilder/bin/app_ctl", "--init", "--migrate", "--run"]
   shariasource:
     build: .
+    hostname: shariasource
     links:
       - postgres_shariasource
       - corpusbuilder
