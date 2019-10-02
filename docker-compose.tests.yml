@@ -9,6 +9,8 @@ services:
       - solr-precreate
       - default
       - /opt/solr/server/solr/configsets/sunspot
+  corpusbuilder:
+    command: ["/corpusbuilder/bin/app_ctl", "--init", "--migrate", "--run"]
   shariasource:
     build: .
     links:

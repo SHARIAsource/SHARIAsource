@@ -7,3 +7,6 @@
 [submodule "services/corpusbuilder"]
 	path = services/corpusbuilder
 	url = git@github.com:berkmancenter/corpusbuilder.git
+[submodule "vendor/corpusbuilder-ruby-client"]
+	path = vendor/corpusbuilder-ruby-client
+	url = https://github.com/berkmancenter/corpusbuilder-ruby-client.git

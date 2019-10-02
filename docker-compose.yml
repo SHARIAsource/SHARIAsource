@@ -43,7 +43,7 @@ services:
     command: ["/shariasource/bin/app_ctl", "--init", "--migrate", "--run"]
     volumes:
       - .:/shariasource
-      - shariasource_bundle:/shariasource/vendor
+      - shariasource_bundle:/shariasource/vendor/bundle
       - shariasource_node_modules:/shariasource/node_modules
     environment:
       - APP_ROOT=/shariasource
@@ -54,6 +54,9 @@ services:
       - APP_PORT=3000
       - APP_SOLR_URL=solr
       - APP_SOLR_PORT=8983
+      - CORPUS_BUILDER_API_URL=corpusbuilder:3000
+      - CORPUS_BUILDER_PUBLIC_URL=corpusbuilder:3000
+      - CORPUS_BUILDER_API_VERSION=1
     ports:
       - "13000:3000"
     links:

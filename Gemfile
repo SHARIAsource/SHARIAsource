@@ -46,7 +46,7 @@ gem 'jquery-datatables-rails', '~> 3.3'
 gem 'therubyracer', '~> 0.12', platforms: :ruby
 gem 'will_paginate', '~> 3.1'
 gem 'awesome_print', '~> 1.8'
-gem 'corpusbuilder-ruby', git: 'https://github.com/berkmancenter/corpusbuilder-ruby-client.git'
+gem 'corpusbuilder-ruby', path: './vendor/corpusbuilder-ruby-client'
 gem 'leaflet-rails', '~> 1.3'
 gem "d3-rails", '~> 5.4'
 gem 'friendly_id', '~> 5.2'
