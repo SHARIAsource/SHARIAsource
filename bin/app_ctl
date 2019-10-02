@@ -11,6 +11,10 @@ if [[ "$*" == *--migrate* ]]; then
   bundle exec rails db:migrate
 fi
 
+if [[ "$*" == *--test* ]]; then
+  bundle exec rails spec
+fi
+
 if [[ "$*" == *--run* ]]; then
   bundle exec rails server -p $APP_PORT -b '0.0.0.0' --pid `pwd`/tmp/pids/`date +'%s'`.pid
 fi

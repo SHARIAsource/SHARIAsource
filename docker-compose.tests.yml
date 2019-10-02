@@ -4,3 +4,15 @@ services:
     image: retreatguru/headless-chromedriver
     ports:
       - "4444:4444"
+  solr:
+    command:
+      - solr-precreate
+      - default
+      - /opt/solr/server/solr/configsets/sunspot
+  shariasource:
+    build: .
+    links:
+      - postgres_shariasource
+      - corpusbuilder
+      - solr
+      - selenium

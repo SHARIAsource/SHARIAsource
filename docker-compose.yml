@@ -1,5 +1,17 @@
 version: '2'
 services:
+  solr:
+    image: solr:6.6.6
+    ports:
+      - "8983:8983"
+    volumes:
+      - solr-data:/opt/solr/server/solr/mycores
+      - ./services/solr:/opt/solr/server/solr/configsets/sunspot
+    restart: unless-stopped
+    command:
+      - solr-precreate
+      - default
+      - /opt/solr/server/solr/configsets/sunspot
   postgres_shariasource:
     image: postgres:11.5
     volumes:
@@ -40,10 +52,13 @@ services:
       - APP_DATABASE_USER=shariasource
       - APP_DATABASE_PASSWORD=zse45rdx
       - APP_PORT=3000
+      - APP_SOLR_URL=solr
+      - APP_SOLR_PORT=8983
     ports:
       - "13000:3000"
     links:
       - postgres_shariasource
+      - solr
 volumes:
   postgres_shariasource_data:
   shariasource_bundle:
@@ -53,3 +68,4 @@ volumes:
   postgres-data:
   tesseract-models:
   kraken-models:
+  solr-data:
