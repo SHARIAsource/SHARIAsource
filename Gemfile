@@ -1,8 +1,6 @@
 source 'https://rubygems.org'
 ruby '2.5.3'
 
-gem 'drg', '~> 1.5'
-
 gem 'active_attr', '~> 0.11'
 gem 'autoprefixer-rails', '~> 7.1'
 gem 'carrierwave', '~> 1.2'

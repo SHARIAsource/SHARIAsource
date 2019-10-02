@@ -5,8 +5,6 @@ log/
 tmp/
 .env
 solr/
-config/database.yml
-config/secrets.yml
 public/uploads/
 public/assets/
 pgsql/
@@ -19,7 +17,7 @@ tags
 redis/
 python/
 pip.freeze.txt
+vendor/bundle
 __MACOSX/
 .ropeproject/
-bin/
 .byebug_history

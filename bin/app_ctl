@@ -1,0 +1,16 @@
+#!/bin/bash -l
+
+cd /shariasource
+
+if [[ "$*" == *--init* ]]; then
+  bundle
+  yarn
+fi
+
+if [[ "$*" == *--migrate* ]]; then
+  bundle exec rails db:migrate
+fi
+
+if [[ "$*" == *--run* ]]; then
+  bundle exec rails server -p $APP_PORT -b '0.0.0.0' --pid `pwd`/tmp/pids/`date +'%s'`.pid
+fi

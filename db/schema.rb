@@ -412,3 +412,78 @@ ActiveRecord::Schema.define(version: 20190722105642) do
     t.index ["sort_order"], name: "index_themes_on_sort_order"
   end
 
+  create_table "topics", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "sort_order"
+    t.index ["name"], name: "index_topics_on_name"
+    t.index ["sort_order"], name: "index_topics_on_sort_order"
+  end
+
+  create_table "translators", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "user_hierarchies", id: false, force: :cascade do |t|
+    t.integer "ancestor_id", null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations", null: false
+    t.index ["ancestor_id", "descendant_id", "generations"], name: "user_anc_des_udx", unique: true
+    t.index ["descendant_id"], name: "user_desc_idx"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "is_editor", default: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "last_name_without_articles"
+    t.integer "collaborator_id"
+    t.integer "parent_id"
+    t.text "about"
+    t.string "avatar"
+    t.boolean "requires_approval", default: false
+    t.boolean "disabled"
+    t.boolean "is_admin"
+    t.boolean "accepted_terms", default: false
+    t.boolean "is_senior_scholar", default: false
+    t.boolean "is_original_author", default: false
+    t.boolean "is_password_protector", default: false
+    t.text "publications"
+    t.text "other_links"
+    t.string "cb_editor_id"
+    t.boolean "new_content_email", default: true
+    t.boolean "new_submission_email", default: true
+    t.boolean "is_ocr_advanced", default: false
+    t.index ["collaborator_id"], name: "index_users_on_collaborator_id"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["is_editor"], name: "index_users_on_is_editor"
+    t.index ["last_name_without_articles"], name: "index_users_on_last_name_without_articles"
+    t.index ["parent_id"], name: "index_users_on_parent_id"
+    t.index ["requires_approval"], name: "index_users_on_requires_approval"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  add_foreign_key "attached_files", "users"
+  add_foreign_key "named_filters", "document_types"
+  add_foreign_key "named_filters", "eras"
+  add_foreign_key "named_filters", "languages"
+  add_foreign_key "named_filters", "named_filters", column: "parent_id"
+  add_foreign_key "named_filters", "projects"
+  add_foreign_key "named_filters", "regions"
+  add_foreign_key "named_filters", "themes"
+  add_foreign_key "named_filters", "topics"
+  add_foreign_key "named_filters", "users"
+end

@@ -1,2 +1,4 @@
 .tiltignore
 services/corpusbuilder/db/structure.sql
+db/schema.rb
+yarn.lock

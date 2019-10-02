@@ -27,7 +27,7 @@ services:
     links:
       - postgres_corpusbuilder
   shariasource:
-    image: shariasource
+    image: ocr/shariasource
     command: ["/shariasource/bin/app_ctl", "--init", "--migrate", "--run"]
     volumes:
       - .:/shariasource
