@@ -1,4 +1,7 @@
 .tiltignore
 services/corpusbuilder/db/structure.sql
+services/corpusbuilder/yarn.lock
+services/corpusbuilder/yarn-error.log
 db/schema.rb
 yarn.lock
+Gemfile.lock
