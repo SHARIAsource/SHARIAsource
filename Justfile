@@ -1,20 +1,22 @@
-test-down:
-	docker-compose \
-    -f docker-compose.yml \
-    -f docker-compose.tests.yml \
-	  down
+# Local Variables:
+# mode: makefile
+# End:
+# vim: set ft=make :
 
-test-debug:
-	docker-compose \
+build:
+  docker-compose \
     -f docker-compose.yml \
     -f docker-compose.tests.yml \
-    run \
-    --use-aliases \
-    shariasource \
-    /bin/bash
+    build
+
+test-down:
+  docker-compose \
+    -f docker-compose.yml \
+    -f docker-compose.tests.yml \
+    down
 
 integration-test:
-	docker-compose \
+  docker-compose \
     -f docker-compose.yml \
     -f docker-compose.tests.yml \
     run \
@@ -23,28 +25,29 @@ integration-test:
     shariasource \
     --integration-test
 
-test:
-	docker-compose \
+test type="":
+  #!/usr/bin/env bash
+
+  export PARAM
+  if [[ "{{ type }}" == "" ]]; then
+    PARAM="--test"
+  else
+    PARAM="--{{ type }}-test"
+  fi
+
+  docker-compose \
     -f docker-compose.yml \
     -f docker-compose.tests.yml \
     run \
     --use-aliases \
     --entrypoint=/shariasource/bin/app_ctl \
     shariasource \
-    --test
+    $PARAM
 
-shell-corpusbuilder:
-	docker-compose \
+shell service="shariasource":
+  docker-compose \
     -f docker-compose.yml \
     -f docker-compose.tests.yml \
-		exec \
-	  corpusbuilder \
-		/bin/bash
-
-shell-shariasource:
-	docker-compose \
-    -f docker-compose.yml \
-    -f docker-compose.tests.yml \
-		exec \
-	  shariasource \
-		/bin/bash
+  	exec \
+    {{ service }} \
+  	/bin/bash

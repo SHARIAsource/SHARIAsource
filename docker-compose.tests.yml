@@ -11,6 +11,7 @@ services:
       - /opt/solr/server/solr/configsets/sunspot
   corpusbuilder:
     command: ["/corpusbuilder/bin/app_ctl", "--init", "--migrate", "--seed", "--run"]
+    build: services/corpusbuilder
   shariasource:
     build: .
     hostname: shariasource
