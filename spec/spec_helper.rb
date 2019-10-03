@@ -76,10 +76,16 @@ RSpec.configure do |config|
   config.include ClosureTree::Test::Matcher
 
   Capybara.register_driver :chrome do |app|
+    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+      chromeOptions: {
+        w3c: false
+      }
+    )
+
     Capybara::Selenium::Driver.new(app,
       :browser => :remote,
-      :desired_capabilities => :chrome,
-      :url => "http://selenium:4444"
+      :desired_capabilities => capabilities,
+      :url => "http://selenium:4444/wd/hub"
     )
   end
 

@@ -4,18 +4,29 @@ cd /shariasource
 
 function _timeout {
   set +b
-  sleep "$1" & "${@:2}" & wait -n &> /dev/null
-  kill -9 `jobs -p` &> /dev/null
+  sleep "$1" & "${@:2}" 2> /dev/null & wait -n 2> /dev/null
+  kill -s SIGINT `jobs -p` &> /dev/null
 }
 
 function wait-for-service-forever {
-  echo "Ensuring connectivity with $1 → "
+  local DESIRED_STATUS=$2
 
-  while ! printf " [ok]\n" | curl -sf $1 > /dev/null; do printf "."; sleep 1; done
+  if [[ $DESIRED_STATUS == "" ]]; then
+    DESIRED_STATUS="200"
+  fi
+
+  printf "Ensuring connectivity (as HTTP $DESIRED_STATUS) with $1 → "
+
+  while [[ $(curl -o /dev/null -w "%{http_code}" -sf $1) != $DESIRED_STATUS ]]; do
+    printf "."
+    sleep 1
+  done
+
+  printf " [ok]\n"
 }
 
 function wait-for-service {
-  _timeout 120 wait-for-service-forever $1
+  _timeout 120 wait-for-service-forever $1 $2
 }
 
 if [[ "$*" == *--init* ]]; then
@@ -29,8 +40,8 @@ fi
 
 if [[ "$*" == *--test* ]]; then
   wait-for-service $CORPUS_BUILDER_API_URL
-  wait-for-service "$APP_SOLR_URL:$APP_SOLR_PORT"
-  wait-for-service "http://selenium:4444"
+  wait-for-service "$APP_SOLR_URL:$APP_SOLR_PORT" "302"
+  wait-for-service "http://selenium:4444/wd/hub/status"
 
   bundle exec rails spec
 fi

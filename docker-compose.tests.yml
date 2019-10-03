@@ -1,7 +1,7 @@
 version: '2'
 services:
   selenium:
-    image: retreatguru/headless-chromedriver
+    image: selenium/standalone-chrome:3.141.59-vanadium
     ports:
       - "4444:4444"
   solr:
@@ -10,7 +10,7 @@ services:
       - default
       - /opt/solr/server/solr/configsets/sunspot
   corpusbuilder:
-    command: ["/corpusbuilder/bin/app_ctl", "--init", "--migrate", "--run"]
+    command: ["/corpusbuilder/bin/app_ctl", "--init", "--migrate", "--seed", "--run"]
   shariasource:
     build: .
     hostname: shariasource
