@@ -44,6 +44,20 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+  config.after(:each, type: :feature, js: true) do
+    errors = page.driver.browser.manage.logs.get(:browser)
+    if errors.present?
+      aggregate_failures 'javascript errors' do
+        errors.each do |error|
+          expect(error.level).not_to eq('SEVERE'), error.message
+          next unless error.level == 'WARNING'
+          STDERR.puts 'WARN: javascript warning'
+          STDERR.puts error.message
+        end
+      end
+    end
+  end
 end
 
 Shoulda::Matchers.configure do |config|

@@ -2,6 +2,22 @@
 
 cd /shariasource
 
+function _timeout {
+  set +b
+  sleep "$1" & "${@:2}" & wait -n &> /dev/null
+  kill -9 `jobs -p` &> /dev/null
+}
+
+function wait-for-service-forever {
+  echo "Ensuring connectivity with $1 → "
+
+  while ! printf " [ok]\n" | curl -sf $1 > /dev/null; do printf "."; sleep 1; done
+}
+
+function wait-for-service {
+  _timeout 120 wait-for-service-forever $1
+}
+
 if [[ "$*" == *--init* ]]; then
   bundle
   yarn
@@ -12,6 +28,10 @@ if [[ "$*" == *--migrate* ]]; then
 fi
 
 if [[ "$*" == *--test* ]]; then
+  wait-for-service $CORPUS_BUILDER_API_URL
+  wait-for-service "$APP_SOLR_URL:$APP_SOLR_PORT"
+  wait-for-service "http://selenium:4444"
+
   bundle exec rails spec
 fi
 
