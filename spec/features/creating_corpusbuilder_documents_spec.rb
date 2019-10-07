@@ -34,4 +34,20 @@ feature 'Creating CorpusBuilder documents' do
     expect(page).to have_css '.corpusbuilder-uploader-similar-documents-item-top-label', \
       'Add New'
   end
+
+  scenario 'Clicking on add new making the uploader show the drop area', js: true do
+    sign_in_admin
+
+    visit new_admin_document_path
+
+    fill_in "document[title]", with: "Test"
+    page.evaluate_script('$("#document_title").trigger("change")')
+
+    sleep 0.1
+
+    page.evaluate_script('$(".corpusbuilder-uploader-similar-documents-item:last-child")[0].click()')
+
+    expect(page).to have_css '.corpusbuilder-uploader-images-upload-dropzone', \
+      'Drop Files Here'
+  end
 end
