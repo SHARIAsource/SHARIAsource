@@ -12,6 +12,14 @@ services:
   corpusbuilder:
     command: ["/corpusbuilder/bin/app_ctl", "--init", "--migrate", "--seed", "--run"]
     build: services/corpusbuilder
+  postgres_shariasource:
+    image: postgres:11
+    volumes:
+      - postgres_shariasource_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=zse45rdx
+      - POSTGRES_USER=shariasource
+      - POSTGRES_DB=shariasource
   shariasource:
     build: .
     hostname: shariasource

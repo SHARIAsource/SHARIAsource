@@ -13,7 +13,7 @@ services:
       - default
       - /opt/solr/server/solr/configsets/sunspot
   postgres_shariasource:
-    image: postgres:11.5
+    image: postgres:11
     volumes:
       - postgres_shariasource_data:/var/lib/postgresql/data
     environment:

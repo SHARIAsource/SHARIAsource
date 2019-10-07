@@ -25,6 +25,26 @@ integration-test:
     shariasource \
     --integration-test
 
+migrate-test:
+  docker-compose \
+    -f docker-compose.yml \
+    -f docker-compose.tests.yml \
+    run \
+    --use-aliases \
+    --entrypoint=/shariasource/bin/app_ctl \
+    shariasource \
+    --migrate-test
+
+init:
+  docker-compose \
+    -f docker-compose.yml \
+    -f docker-compose.tests.yml \
+    run \
+    --use-aliases \
+    --entrypoint=/shariasource/bin/app_ctl \
+    shariasource \
+    --init
+
 test type="":
   #!/usr/bin/env bash
 

@@ -1,0 +1,17 @@
+production:
+  solr:
+    hostname: <%= ENV['APP_SOLR_URL'] %>
+    port: <%= ENV['APP_SOLR_PORT'] %>
+    log_level: WARNING
+
+development:
+  solr:
+    hostname: <%= ENV['APP_SOLR_URL'] %>
+    port: <%= ENV['APP_SOLR_PORT'] %>
+    log_level: INFO
+
+test:
+  solr:
+    hostname: <%= ENV['APP_SOLR_URL'] %>
+    port: <%= ENV['APP_SOLR_PORT'] %>
+    log_level: WARNING
