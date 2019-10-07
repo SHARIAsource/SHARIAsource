@@ -4,12 +4,18 @@
   .inner
     h2.section-heading.browse= @contributor.name_with_collaborator
 
+  .inner
+    - if @contributor.biography_uses_tabs?
+      = render 'tabs', contributor: @contributor
+    - else
+      = render 'about', contributor: @contributor, content: @contributor.about
+
   .inner.document-content
     - if @contributor.avatar && @contributor.avatar.url
       .photo-caption
         = image_tag(@contributor.avatar.url, alt: @contributor.name)
         p= @contributor.name
-    == @contributor.about
+    == sanitize_html_fragment @contributor.about
 
     - if @contributor.projects.present?
       .projects
@@ -17,7 +23,7 @@
         - @contributor.projects.each do |project|
           .project
             h5= link_to project.name, project_path(project)
-            = truncate(project.description, length: 250, escape: false, separator: ' ')
+            = truncate(strip_tags(project.description), length: 250, escape: false, separator: ' ')
             = '&nbsp;'.html_safe
             = link_to 'View Project', project_path(project)
 

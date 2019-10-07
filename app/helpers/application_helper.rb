@@ -14,4 +14,8 @@ module ApplicationHelper
   def head_title(page_title)
     [page_title, 'OpenITI'].flatten.reject(&:empty?).join ' | '
   end
+
+  def sanitize_html_fragment(html)
+    Sanitize.fragment(html, Sanitize::Config::RELAXED).html_safe
+  end
 end

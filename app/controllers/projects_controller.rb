@@ -34,7 +34,7 @@ class ProjectsController < ApplicationController
           selected_documents = filters.named_filter_documents
           ref_docs = selected_documents.map(&:referenced_documents).map(&:ids).flatten
         end
-        search = Document.search do |query|
+        search = Document.solr_search do |query|
           query.fulltext filters.q
           query.with(:published, true)
           query.with(:id, ref_docs) if ref_docs

@@ -1,0 +1,61 @@
+#!/bin/bash -l
+
+cd /shariasource
+
+function _timeout {
+  set +b
+  sleep "$1" & "${@:2}" 2> /dev/null & wait -n 2> /dev/null
+  kill -s SIGINT `jobs -p` &> /dev/null
+}
+
+function wait-for-service-forever {
+  local DESIRED_STATUS=$2
+
+  if [[ $DESIRED_STATUS == "" ]]; then
+    DESIRED_STATUS="200"
+  fi
+
+  printf "Ensuring HTTP $DESIRED_STATUS for $1 → "
+
+  while [[ $(curl -o /dev/null -w "%{http_code}" -sf $1) != $DESIRED_STATUS ]]; do
+    printf "."
+    sleep 1
+  done
+
+  printf " [ok]\n"
+}
+
+function wait-for-service {
+  _timeout 120 wait-for-service-forever $1 $2
+}
+
+function wait-for-test-dependencies {
+  wait-for-service $CORPUS_BUILDER_API_URL/packs/client.js
+  wait-for-service "$APP_SOLR_URL:$APP_SOLR_PORT" "302"
+  wait-for-service "http://selenium:4444/wd/hub/status"
+}
+
+if [[ "$*" == *--init* ]]; then
+  bundle
+  yarn
+fi
+
+if [[ "$*" == *--migrate* ]]; then
+  bundle exec rails db:migrate
+fi
+
+if [[ "$*" == *--integration-test* ]]; then
+  wait-for-test-dependencies
+
+  bundle exec rspec spec/features
+fi
+
+if [[ "$*" == *--test* ]]; then
+  wait-for-test-dependencies
+
+  bundle exec rspec
+fi
+
+if [[ "$*" == *--run* ]]; then
+  bundle exec rails server -p $APP_PORT -b '0.0.0.0' --pid `pwd`/tmp/pids/`date +'%s'`.pid
+fi

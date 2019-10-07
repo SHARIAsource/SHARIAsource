@@ -1,13 +1,9 @@
 class Admin::DocumentsController < AdminController
   before_action :fetch_document, only: [:edit, :update, :destroy]
   before_action :ensure_editor!, only: [:destroy]
+  before_action :fetch_collection, only: [ :index ]
 
-  def unpublished
-    render_index(false)
-  end
-
-  def published
-    render_index(true)
+  def index
   end
 
   def new
@@ -40,42 +36,18 @@ class Admin::DocumentsController < AdminController
 
     if @document.save
       @document.index!
+      EditorMailer.document_creation_email(@document).deliver
+      EditorMailer.new_submission_email(@document).deliver
       flash[:notice] = 'Document created successfully'
 
-      ocr_params = params[:document].fetch(:ocr, {})
-
-      if ocr_params.has_key?(:images) || ocr_params.has_key?(:document_id)
-        begin
-          api = Corpusbuilder::Ruby::Api.new
-
-          doc = if params[:document][:ocr].has_key?(:document_id)
-                  { "id" => params[:document][:ocr][:document_id] }
-                else
-                  api.create_document({
-                    images: params[:document][:ocr][:images].map { |id| { id: id } },
-                    ocr_model_ids: params[:document][:ocr][:ocr_model_ids],
-                    metadata: {
-                      title: @document.title,
-                      languages: params[:document][:ocr][:languages]
-                    },
-                    editor_email: current_user.email
-                  })
-                end
-
-          @document.update_attributes!(ocr_document_id: doc["id"])
-        rescue
-          flash[:error] = $!.message
-          render :new
-          return
-        end
-      end
+      set_ocr_document
 
       if params[:create_and_continue]
         redirect_to new_admin_document_path
       elsif params[:create_and_edit]
         redirect_to edit_admin_document_path @document
       else
-        redirect_to unpublished_admin_documents_path
+        redirect_to admin_documents_path
       end
     else
       flash[:error] = @document.errors.full_messages.to_sentence
@@ -99,37 +71,50 @@ class Admin::DocumentsController < AdminController
     @document.reviewing_user = current_user if update_params[:reviewed] == '1'
 
     prev_state = @document.published
-    if @document.update update_params
-      flash[:notice] = 'Document updated successfully'
 
-      @document.index!
-      DocumentTypeCountWorker.perform_async
+    if set_ocr_document
+      if update_params.has_key? :ocr
+        update_params.delete :ocr
+      end
 
-      if params[:create_and_continue]
-        path = edit_admin_document_path @document
-      elsif params[:create_and_edit]
-        path = edit_admin_document_path @document
-      else
-        # if we unpublish a document, we want to stay on the
-        # unpublished view so that we can unpublish another if needed
-        if @document.published != prev_state
-          if @document.published
-            path = unpublished_admin_documents_path
+      if @document.update update_params
+        flash[:notice] = 'Document updated successfully'
+
+        @document.index!
+        DocumentTypeCountWorker.perform_async
+
+        if @document.published
+          EditorMailer.document_published_email(@document).deliver
+        end
+
+        if params[:create_and_continue]
+          path = edit_admin_document_path @document
+        elsif params[:create_and_edit]
+          path = edit_admin_document_path @document
+        else
+          # if we unpublish a document, we want to stay on the
+          # unpublished view so that we can unpublish another if needed
+          if @document.published != prev_state
+            if @document.published
+              path = unpublished_admin_documents_path
+            else
+              path = published_admin_documents_path
+            end
           else
             path = published_admin_documents_path
           end
-        else
-          path = published_admin_documents_path
         end
-      end
-      if permitted_params[:document_show_page]
-        redirect_back(fallback_location: root_path)
+        if permitted_params[:document_show_page]
+          redirect_back(fallback_location: root_path)
+        else
+          redirect_to path
+        end
       else
-        redirect_to path
+        flash[:error] = @document.errors.full_messages.to_sentence
+        render :edit
       end
     else
-      flash[:error] = @document.errors.full_messages.to_sentence
-      render :edit
+      render :new
     end
   end
 
@@ -139,10 +124,43 @@ class Admin::DocumentsController < AdminController
     else
       flash[:error] = 'An error occurred while trying to delete that Document'
     end
-    redirect_to published_admin_documents_path
+    redirect_to admin_documents_path
   end
 
   protected
+
+  def set_ocr_document
+    ocr_params = params[:document].fetch(:ocr, {})
+
+    if ocr_params.has_key?(:images) || ocr_params.has_key?(:document_id)
+      begin
+        api = Corpusbuilder::Ruby::Api.new
+
+        doc = if params[:document][:ocr].has_key?(:document_id)
+                { "id" => params[:document][:ocr][:document_id] }
+              else
+                api.create_document({
+                  images: params[:document][:ocr][:images].map { |id| { id: id } },
+                  ocr_model_ids: params[:document][:ocr][:ocr_model_ids],
+                  metadata: {
+                    title: @document.title,
+                    languages: params[:document][:ocr][:languages]
+                  },
+                  editor_email: current_user.email
+                })
+              end
+
+        @document.update_attributes!(ocr_document_id: doc["id"])
+
+        flash[:notice] = "#{flash[:notice]}<br />Your OCR document is processing. When it is ready, you’ll receive a notification and link to your document.”"
+      rescue
+        flash[:error] = $!.message
+        return false
+      end
+    end
+
+    true
+  end
 
   def permitted_params
     # TODO: only include :featured_position if the current_user is allowed to manage it
@@ -154,7 +172,7 @@ class Admin::DocumentsController < AdminController
                  :alternate_authors, :featured_position, :reference_type_id,
                  :permission_giver, :document_style, :summary, :citation,
                  :alternate_editors, :alternate_translators, :alternate_years,
-                 :reviewed,
+                 :reviewed, :word_document,
                  :use_content_password,
                  :content_password,
                  :document_show_page,
@@ -191,101 +209,6 @@ class Admin::DocumentsController < AdminController
     end
   end
 
-  def render_index(published)
-    respond_to do |format|
-      format.html
-      format.json { render json: response_as_json(published) }
-    end
-  end
-
-  def response_as_json(pstatus)
-    {
-      sEcho: params[:sEcho].to_i,
-      iTotalRecords: Document.where(published: pstatus).count,
-      iTotalDisplayRecords: fetch_documents(pstatus).count,
-      aaData: data(pstatus)
-    }
-  end
-
-  def data(pstatus)
-    fetch_documents(pstatus).map do |document|
-      [
-        document.title,
-        document.publisher,
-        document.tags.pluck(:name).join(', '),
-        document.topics.pluck(:name).join(', '),
-        document.contributors.map { |contributor| contributor.first_name + ' ' + contributor.last_name }.join(', '),
-        document.language.name,
-        document.regions.pluck(:name).join(', '),
-       "<i class='fa fa-#{document.reviewed? ? 'check' : 'close'}' aria-hidden='true'></i>",
-        document.updated_at.strftime("%b %e, %Y"),
-        render_to_string(
-          partial: "/admin/documents/datatable_controls.html.slim",
-          locals: {document: document},
-          layout: false
-        )
-      ]
-    end
-  end
-
-  def fetch_documents(pstatus)
-    # Memoize search results because this gets called twice in response_as_json and
-    #   produces incorrect "of $x entries" values if we capture its output there.
-    return @fetched_documents if defined?(@fetched_documents)
-
-    attrs = {published: pstatus}
-    if !current_user.is_superuser?
-      # If they are normal user, restrict search to their uploaded docs and their contributor docs
-      # Otherwise they are a superuser, so we won't restrict by user or contributor ids
-      attrs[:contributor_ids] = current_user.self_and_descendant_ids
-      attrs[:user_id] = current_user.id
-    end
-
-    search = Sunspot.search(Document) do
-      with(:published, attrs[:published])
-      fulltext(params[:sSearch]) if params[:sSearch].present?
-
-      any_of do
-        [:user_id, :contributor_ids].each do |field_name|
-          with(field_name, attrs[field_name]) if attrs[field_name]
-        end
-      end
-    end
-
-    documents = Document
-      .where(id: search.results.map(&:id))
-      .page(page)
-      .per_page(per_page)
-
-    @fetched_documents = order_documents(documents)
-  end
-
-  def page
-    params[:iDisplayStart].to_i/per_page + 1
-  end
-
-  def per_page
-    params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 10
-  end
-
-  def order_documents(docs)
-    columns = %w[title publisher tags topics contributor language regions updated_at]
-    col = columns[params[:iSortCol_0].to_i]
-    case col
-    when "title","publisher", "updated_at" then docs.order("#{col} #{sort_direction}")
-    when "topics" then docs.joins(:topics).order("topics.name #{sort_direction}")
-    when "tags" then docs.includes(:tags).order("tags.name #{sort_direction}")
-    when "contributor" then docs.joins(:contributors).order("users.last_name #{sort_direction}")
-    when "language" then docs.joins(:language).order("languages.name #{sort_direction}")
-    when "regions" then docs.joins(:regions).order("regions.name #{sort_direction}")
-    else docs.order("updated_at #{sort_direction}")
-    end
-  end
-
-  def sort_direction
-    params[:sSortDir_0] == "desc" ? "desc" : "asc"
-  end
-
   def create_new_attributes(names, model)
     new_ids = []
     existing = names.select do |single|
@@ -307,5 +230,15 @@ class Admin::DocumentsController < AdminController
     end
 
     existing + new_ids
+  end
+
+  def fetch_collection
+    params[:q] ||= {}
+    params[:q][:published_eq] ||= true
+    params[:q][:s] ||= {}
+    params[:q][:s] ||= "created_at desc"
+    @q = Document.ransack(params[:q])
+    @all_documents = @q.result
+    @documents = @all_documents.page(params[:page])
   end
 end

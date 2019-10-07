@@ -5,6 +5,8 @@ require 'rspec/rails'
 require 'shoulda/matchers'
 require 'closure_tree/test/matcher'
 
+HOST = `ip route| grep $(ip route |grep default | awk '{ print $5 }') | grep -v "default" | awk '/scope/ { print $9 }'`.gsub("\n", "")
+
 RSpec.configure do |config|
   # The settings below are suggested to provide a good initial experience
   # with RSpec, but feel free to customize to your heart's content.
@@ -72,4 +74,25 @@ RSpec.configure do |config|
   config.include Capybara::DSL
   config.include FactoryGirl::Syntax::Methods
   config.include ClosureTree::Test::Matcher
+
+  Capybara.register_driver :chrome do |app|
+    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+      chromeOptions: {
+        w3c: false
+      }
+    )
+
+    Capybara::Selenium::Driver.new(app,
+      :browser => :remote,
+      :desired_capabilities => capabilities,
+      :url => "http://selenium:4444/wd/hub"
+    )
+  end
+
+  Capybara.server_port = "3000"
+  Capybara.server_host = HOST
+  Capybara.app_host = "http://#{HOST}:3000"
+  Capybara.run_server = true
+
+  Capybara.javascript_driver = :chrome
 end

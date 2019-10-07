@@ -1,0 +1,76 @@
+version: '2'
+services:
+  solr:
+    image: solr:6.6.6
+    ports:
+      - "8983:8983"
+    volumes:
+      - solr-data:/opt/solr/server/solr/mycores
+      - ./services/solr:/opt/solr/server/solr/configsets/sunspot
+    restart: unless-stopped
+    command:
+      - solr-precreate
+      - default
+      - /opt/solr/server/solr/configsets/sunspot
+  postgres_shariasource:
+    image: postgres:11.5
+    volumes:
+      - postgres_shariasource_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=zse45rdx
+      - POSTGRES_USER=shariasource
+      - POSTGRES_DB=shariasource
+  postgres_corpusbuilder:
+    extends:
+      file: services/corpusbuilder/docker-compose.yml
+      service: postgres_corpusbuilder
+    environment:
+      - POSTGRES_PASSWORD=zse45rdx
+      - POSTGRES_USER=corpus_builder
+      - POSTGRES_DB=corpus_builder
+  corpusbuilder:
+    extends:
+      file: services/corpusbuilder/docker-compose.yml
+      service: corpusbuilder
+    environment:
+      - APP_DATABASE_URL=postgres_corpusbuilder
+    ports:
+      - "13001:3000"
+    links:
+      - postgres_corpusbuilder
+  shariasource:
+    image: ocr/shariasource
+    command: ["/shariasource/bin/app_ctl", "--init", "--migrate", "--run"]
+    volumes:
+      - .:/shariasource
+      - shariasource_bundle:/shariasource/vendor/bundle
+      - shariasource_node_modules:/shariasource/node_modules
+    environment:
+      - APP_ROOT=/shariasource
+      - APP_DATABASE_URL=postgres_shariasource
+      - APP_DATABASE_NAME=shariasource
+      - APP_DATABASE_USER=shariasource
+      - APP_DATABASE_PASSWORD=zse45rdx
+      - APP_PORT=3000
+      - APP_SOLR_URL=solr
+      - APP_SOLR_PORT=8983
+      - CORPUS_BUILDER_API_URL=http://corpusbuilder:3000
+      - CORPUS_BUILDER_PUBLIC_URL=http://corpusbuilder:3000
+      - CORPUS_BUILDER_API_VERSION=1
+      - CORPUS_BUILDER_SHARIA_SOURCE_APP_ID=00000000-0000-0000-0000-000000000000
+      - CORPUS_BUILDER_SHARIA_SOURCE_TOKEN=$$2a$$08$$2rbUqU/KBR9ErNMlTZ29n.TWXe0a7OhwCbO25QQv.xpVuLS5r5SJ.
+    ports:
+      - "13000:3000"
+    links:
+      - postgres_shariasource
+      - solr
+volumes:
+  postgres_shariasource_data:
+  shariasource_bundle:
+  shariasource_node_modules:
+  corpusbuilder-bundle:
+  corpusbuilder-node-modules:
+  postgres-data:
+  tesseract-models:
+  kraken-models:
+  solr-data:

@@ -15,6 +15,7 @@
         = f.input :is_senior_scholar, boolean_style: :inline, label: 'Senior Scholar'
         = f.input :is_original_author, boolean_style: :inline, label: 'Original Author'
         = f.input :is_password_protector, boolean_style: :inline, label: 'Can Password Protect Content?'
+        = f.input :is_ocr_advanced, boolean_style: :inline, label: 'Has access to advanced OCR'
         = f.input :requires_approval, boolean_style: :inline
         = f.input :accepted_terms, boolean_style: :inline, label: 'Accepted TOS', disabled: true
         = f.input :disabled, boolean_style: :inline
@@ -31,6 +32,13 @@
   .row
     .large-12.columns
       = f.input :about, input_html: { class: 'wysiwyg' }
+  .row
+    .large-12.columns
+      = f.input :publications, input_html: { class: 'wysiwyg' }
+  .row
+    .large-12.columns
+      = f.input :other_links, input_html: { class: 'wysiwyg' }
+
   .row
     .large-12.columns
       = f.submit class: 'round button'

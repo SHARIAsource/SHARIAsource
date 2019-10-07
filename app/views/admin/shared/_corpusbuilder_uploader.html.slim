@@ -64,6 +64,7 @@
         {
           baseUrl: '#{ request.base_url }/corpusbuilder',
           editorEmail: '#{ editor_email }',
+          #{ current_user.is_ocr_advanced? ? 'backends: undefined,' : 'backends: ["tesseract"], '.html_safe}
           onDocumentPicked: function(doc) {
             clearHiddenImages();
             clearHiddenLanguages();

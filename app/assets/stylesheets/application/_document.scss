@@ -27,8 +27,6 @@
   &:before {
     content:'»';
     font-size:2em;
-    line-height:0.5;
-    vertical-align:top;
     margin-right:4px;
     margin-left:-20px;
   }
@@ -209,7 +207,7 @@
   @include clearfix;
   width:1004px;
   overflow: hidden;
-  max-height: 152px;
+  //max-height: 152px;
   margin-left:-14px;
 }
 
@@ -275,7 +273,6 @@
 
     a {
       line-height:1;
-      vertical-align:top;
     }
 
     .hidden-ref {

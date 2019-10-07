@@ -14,5 +14,5 @@
                 - collaborator.users.each_with_index do |user, index|
                   - if index > 0
                     = ", "
-                  = link_to user.name, contributor_path(user)
+                  = link_to user.name, editors_and_contributor_path(user)
               p.commentary-count= "#{collaborator.commentary_count} #{'commentary'.pluralize(collaborator.commentary_count)} posted"

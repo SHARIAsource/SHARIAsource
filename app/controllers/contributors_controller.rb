@@ -1,6 +1,7 @@
 class ContributorsController < ApplicationController
   def index
     @contributor_table = DocumentType.contributor_counts
+    @misc_page = Misc.find_by(slug: "editors_and_contributors")
   end
 
   def show
@@ -29,7 +30,7 @@ class ContributorsController < ApplicationController
                                        .map(&:id)
                                        .flatten
     @filters.q += " " + @contributor.author.name if @contributor.author.present?
-    @search = Document.search do |query|
+    @search = Document.solr_search do |query|
       query.fulltext @filters.q
       query.with(:published, true)
       query.any_of do |querys|

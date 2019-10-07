@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180810131110) do
+ActiveRecord::Schema.define(version: 20190722105642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(version: 20180810131110) do
     t.boolean "reviewed", default: false
     t.bigint "user_id"
     t.string "ocr_document_id"
+    t.string "word_document"
     t.index ["created_at"], name: "index_documents_on_created_at"
     t.index ["document_type_id"], name: "index_documents_on_document_type_id"
     t.index ["featured_position"], name: "index_documents_on_featured_position"
@@ -460,7 +461,12 @@ ActiveRecord::Schema.define(version: 20180810131110) do
     t.boolean "is_senior_scholar", default: false
     t.boolean "is_original_author", default: false
     t.boolean "is_password_protector", default: false
+    t.text "publications"
+    t.text "other_links"
     t.string "cb_editor_id"
+    t.boolean "new_content_email", default: true
+    t.boolean "new_submission_email", default: true
+    t.boolean "is_ocr_advanced", default: false
     t.index ["collaborator_id"], name: "index_users_on_collaborator_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["is_editor"], name: "index_users_on_is_editor"

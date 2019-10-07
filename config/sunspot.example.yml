@@ -1,20 +1,17 @@
 production:
   solr:
-    hostname: localhost
-    port: 8983
+    hostname: <%= ENV['APP_SOLR_URL'] %>
+    port: <%= ENV['APP_SOLR_PORT'] %>
     log_level: WARNING
-    path: /solr/shariasource-production
 
 development:
   solr:
-    hostname: localhost
-    port: 8983
+    hostname: <%= ENV['APP_SOLR_URL'] %>
+    port: <%= ENV['APP_SOLR_PORT'] %>
     log_level: INFO
-    path: /solr/shariasource-development-1
 
 test:
   solr:
-    hostname: localhost
-    port: 8983
+    hostname: <%= ENV['APP_SOLR_URL'] %>
+    port: <%= ENV['APP_SOLR_PORT'] %>
     log_level: WARNING
-    path: /solr/shariasource-test-1

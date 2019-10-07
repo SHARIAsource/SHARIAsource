@@ -1,6 +1,4 @@
-var ready;
-ready = function() {
-    //prevent re-init of data table, prevent loss of init when going from 
+var ready = function() {
     //unpublished to pubslihed and vice versa
     if(!$("#document-datatable_filter")[0]) {
 
@@ -24,27 +22,34 @@ ready = function() {
                     "searchable": false
                 },
                 {
-                    "targets": -3,
+                    "targets": -4,
                     "className": 'reviewed'
                 }]
             });
-    
+
         var search_box = $('#document-datatable_filter input');
-        search_box.unbind();
-        search_box.bind('keyup', function(e) {
-            if (e.keyCode == 13) {
-                oTable.fnFilter(this.value);
-            }
-        });
-    
-        $('.document-status-nav-link').bind('click', function(e) {
-            e.preventDefault();
-            var link = $(this).attr('href');
+
+        var updateQuery = function(link) {
             var q = search_box.val();
             if (!!q) {
                 link += '?sSearch=' + encodeURIComponent(q);
             }
             window.location.href = link;
+        };
+
+        search_box.unbind();
+        search_box.bind('keyup', function(e) {
+            _.debounce(updateQuery, 400)(window.location.href.replace(/\?.*/, ''));
+
+            if (e.keyCode == 13) {
+                oTable.fnFilter(this.value);
+            }
+        });
+
+        $('.document-status-nav-link').bind('click', function(e) {
+            e.preventDefault();
+            var link = $(this).attr('href');
+            updateQuery(link);
         });
     }
 }

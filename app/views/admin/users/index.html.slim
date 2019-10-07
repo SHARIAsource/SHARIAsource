@@ -28,6 +28,8 @@ table
               li.label.radius.secondary Accepted TOS
             - if user.disabled?
               li.label.radius.secondary Disabled
+            - if user.is_ocr_advanced?
+              li.label.radius.secondary OCR Advanced
         td.actions
           ul.inline-list
             li= link_to t('edit'), edit_admin_user_path(user), class: 'tiny radius pill button'

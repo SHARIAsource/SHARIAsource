@@ -13,12 +13,16 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require lodash
 //= require dataTables/jquery.dataTables
 //= require dataTables/jquery.dataTables.foundation
 //= require foundation
 //= require select2-full
 //= require turbolinks
 //= require admin-inits
+//= require ./noty/jquery.noty
+//= require ./noty/layouts/topRight
+//= require ./noty/themes/relax
 //= require tinymce
 //= require smart_listing
 //= require_tree ./admin
