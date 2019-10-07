@@ -4,6 +4,8 @@ services:
     image: selenium/standalone-chrome:3.141.59-vanadium
     ports:
       - "4444:4444"
+    volumes:
+      - ./spec/support/files:/shariasource/spec/support/files
   solr:
     command:
       - solr-precreate
