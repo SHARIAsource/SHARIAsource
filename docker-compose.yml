@@ -28,6 +28,14 @@ services:
       - POSTGRES_PASSWORD=zse45rdx
       - POSTGRES_USER=corpus_builder
       - POSTGRES_DB=corpus_builder
+  corpusbuilder_background_jobs:
+    extends:
+      file: services/corpusbuilder/docker-compose.yml
+      service: corpusbuilder_background_jobs
+    environment:
+      - APP_DATABASE_URL=postgres_corpusbuilder
+    links:
+      - postgres_corpusbuilder
   corpusbuilder:
     extends:
       file: services/corpusbuilder/docker-compose.yml
@@ -38,6 +46,7 @@ services:
       - "13001:3000"
     links:
       - postgres_corpusbuilder
+      - corpusbuilder_background_jobs
   shariasource:
     image: ocr/shariasource
     command: ["/shariasource/bin/app_ctl", "--init", "--migrate", "--run"]

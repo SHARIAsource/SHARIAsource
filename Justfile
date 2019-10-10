@@ -3,11 +3,15 @@
 # End:
 # vim: set ft=make :
 
-build:
-  docker-compose \
-    -f docker-compose.yml \
-    -f docker-compose.tests.yml \
-    build
+build extra="":
+  #!/usr/bin/env bash
+
+  export EXTRA
+  if [[ "{{ extra }}" == "test" ]]; then
+    EXTRA="-f docker-compose.tests.yml"
+  fi
+
+  docker-compose -f docker-compose.yml $EXTRA build
 
 test-down:
   docker-compose \

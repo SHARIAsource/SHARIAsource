@@ -1,9 +1,10 @@
 version: '2'
 services:
   selenium:
-    image: selenium/standalone-chrome:3.141.59-vanadium
+    image: selenium/standalone-chrome-debug:3.141.59-vanadium
     ports:
       - "4444:4444"
+      - "5900:5900"
     volumes:
       - ./spec/support/files:/shariasource/spec/support/files
   solr:
@@ -11,6 +12,9 @@ services:
       - solr-precreate
       - default
       - /opt/solr/server/solr/configsets/sunspot
+  corpusbuilder_background_jobs:
+    command: ["/corpusbuilder/bin/app_ctl", "--jobs"]
+    build: services/corpusbuilder
   corpusbuilder:
     command: ["/corpusbuilder/bin/app_ctl", "--init", "--migrate", "--seed", "--run"]
     build: services/corpusbuilder

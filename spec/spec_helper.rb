@@ -78,7 +78,7 @@ RSpec.configure do |config|
   Capybara.register_driver :chrome do |app|
     capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
       chromeOptions: {
-        w3c: false
+        w3c: false,
       }
     )
 
