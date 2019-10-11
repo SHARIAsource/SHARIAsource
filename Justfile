@@ -13,22 +13,6 @@ build extra="":
 
   docker-compose -f docker-compose.yml $EXTRA build
 
-test-down:
-  docker-compose \
-    -f docker-compose.yml \
-    -f docker-compose.tests.yml \
-    down
-
-integration-test:
-  docker-compose \
-    -f docker-compose.yml \
-    -f docker-compose.tests.yml \
-    run \
-    --use-aliases \
-    --entrypoint=/shariasource/bin/app_ctl \
-    shariasource \
-    --integration-test
-
 migrate-test:
   docker-compose \
     -f docker-compose.yml \
@@ -52,6 +36,14 @@ init:
 test type="":
   #!/usr/bin/env bash
 
+  if [[ "{{type }}" == "down" ]]; then
+    docker-compose \
+      -f docker-compose.yml \
+      -f docker-compose.tests.yml \
+      down
+    exit 0
+  fi
+
   export PARAM
   if [[ "{{ type }}" == "" ]]; then
     PARAM="--test"
@@ -68,10 +60,22 @@ test type="":
     shariasource \
     $PARAM
 
-shell service="shariasource":
+repl service="shariasource":
+  #!/usr/bin/env bash
+
   docker-compose \
     -f docker-compose.yml \
     -f docker-compose.tests.yml \
-  	exec \
+    exec \
     {{ service }} \
-  	/bin/bash
+    /{{ service }}/bin/app_ctl --repl
+
+shell service="shariasource":
+  #!/usr/bin/env bash
+
+  docker-compose \
+    -f docker-compose.yml \
+    -f docker-compose.tests.yml \
+    exec \
+    {{ service }} \
+    /bin/bash
