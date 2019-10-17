@@ -2,6 +2,9 @@ require 'rails_helper'
 
 feature 'Creating CorpusBuilder documents' do
   scenario 'Creating a proper OCR document from multi-paged PDF', js: true do
+    create :document_type, name: "Book"
+    create :language, name: "Arabic"
+
     sign_in_admin
 
     visit new_admin_document_path
@@ -39,9 +42,30 @@ feature 'Creating CorpusBuilder documents' do
 
     page.evaluate_script('$(".corpusbuilder-languages-input ul li")[0].dispatchEvent(new Event("mousedown", { bubbles: true }))')
 
-    sleep 1
+    Timeout::timeout(2*60, Timeout::Error, "Couldn't find the OCR backend select") do
+      while page.evaluate_script('$(".corpusbuilder-uploader-model-selection-item-list-item").length') == 0
+        sleep 1
+      end
+    end
 
     expect(page).to have_css '.corpusbuilder-uploader-model-selection-item-list-item', \
       'Arabic'
+
+    find(:css, ".corpusbuilder-uploader-model-selection-item-actions input[type=checkbox]").set(true)
+
+    find('#document_document_type_id').find(:xpath, 'option[2]').select_option
+    find('#document_language_id').find(:xpath, 'option[2]').select_option
+
+    find("#new_create_and_edit").click
+
+    expect(page).to have_content("Document created successfully")
+
+    Timeout::timeout(2*60, Timeout::Error, "Couldn't find the OCR backend select") do
+      while page.evaluate_script('$(".corpusbuilder-success").length') == 0
+        sleep 1
+      end
+    end
+
+    expect(page).to have_content("Document has been successfully processed")
   end
 end

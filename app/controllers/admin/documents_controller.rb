@@ -36,8 +36,12 @@ class Admin::DocumentsController < AdminController
 
     if @document.save
       @document.index!
-      EditorMailer.document_creation_email(@document).deliver
-      EditorMailer.new_submission_email(@document).deliver
+
+      if !Rails.env.test?
+        EditorMailer.document_creation_email(@document).deliver
+        EditorMailer.new_submission_email(@document).deliver
+      end
+
       flash[:notice] = 'Document created successfully'
 
       set_ocr_document
