@@ -12,7 +12,11 @@ feature 'Creating CorpusBuilder documents' do
     fill_in "document[title]", with: "Test"
     page.evaluate_script('$("#document_title").trigger("change")')
 
-    sleep 0.1
+    Timeout::timeout(2*60, Timeout::Error, "Couldn't find the similar documents") do
+      while page.evaluate_script('$(".corpusbuilder-uploader-similar-documents-item:last-child").length') == 0
+        sleep 1
+      end
+    end
 
     page.evaluate_script('$(".corpusbuilder-uploader-similar-documents-item:last-child")[0].click()')
     page.evaluate_script('$(".corpusbuilder-uploader-images-upload-dropzone input").css("display", "inline")')
