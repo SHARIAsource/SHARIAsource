@@ -1,5 +1,11 @@
 version: '2'
 services:
+  redis:
+    image: bitnami/redis:5.0.5
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "6379:6379"
   solr:
     image: solr:6.6.6
     ports:
@@ -43,7 +49,7 @@ services:
     environment:
       - APP_DATABASE_URL=postgres_corpusbuilder
     ports:
-      - "13001:3000"
+      - "13001:13001"
     links:
       - postgres_corpusbuilder
       - corpusbuilder_background_jobs
@@ -63,16 +69,19 @@ services:
       - APP_PORT=3000
       - APP_SOLR_URL=solr
       - APP_SOLR_PORT=8983
-      - CORPUS_BUILDER_API_URL=http://corpusbuilder:3000
-      - CORPUS_BUILDER_PUBLIC_URL=http://corpusbuilder:3000
+      - CORPUS_BUILDER_API_URL=http://corpusbuilder:13001
+      - CORPUS_BUILDER_PUBLIC_URL=http://localhost:13001
       - CORPUS_BUILDER_API_VERSION=1
       - CORPUS_BUILDER_SHARIA_SOURCE_APP_ID=00000000-0000-0000-0000-000000000000
       - CORPUS_BUILDER_SHARIA_SOURCE_TOKEN=$$2a$$08$$2rbUqU/KBR9ErNMlTZ29n.TWXe0a7OhwCbO25QQv.xpVuLS5r5SJ.
+      - REDIS_URL=redis://redis:6379
+      - REDIS_PROVIDER=REDIS_URL
     ports:
       - "13000:3000"
     links:
       - postgres_shariasource
       - solr
+      - redis
 volumes:
   postgres_shariasource_data:
   shariasource_bundle:

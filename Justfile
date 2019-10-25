@@ -33,6 +33,13 @@ init:
     shariasource \
     --init
 
+up:
+  #!/usr/bin/env bash
+
+  docker-compose \
+    -f docker-compose.yml \
+    up
+
 test type="":
   #!/usr/bin/env bash
 
