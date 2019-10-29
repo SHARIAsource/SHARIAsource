@@ -18,7 +18,8 @@ feature 'Viewing CorpusBuilder documents' do
 
     visit document_path(id: document.id)
 
-    sleep 60
+    sleep 10
+    byebug
 
     Timeout::timeout(2*60, Timeout::Error, "Couldn't find the CB UI") do
       while page.evaluate_script('$(".corpusbuilder-document-page").length') < 2

@@ -123,7 +123,6 @@ GEM
     d3-rails (5.4.0)
       railties (>= 3.1)
     dalli (2.7.6)
-    database_cleaner (1.7.0)
     debug_inspector (0.0.3)
     devise (4.7.1)
       bcrypt (~> 3.0)
@@ -239,12 +238,16 @@ GEM
     pry-rails (0.3.6)
       pry (>= 0.10.4)
     public_suffix (4.0.1)
+    puma (4.2.1)
+      nio4r (~> 2.0)
     rack (2.0.3)
     rack-protection (2.0.0)
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rack-timeout (0.0.4)
+    rack_request_blocker (1.0.0)
+      concurrent-ruby (~> 1.0)
     rails (5.1.2)
       actioncable (= 5.1.2)
       actionmailer (= 5.1.2)
@@ -444,7 +447,6 @@ DEPENDENCIES
   corpusbuilder-ruby!
   d3-rails (~> 5.4)
   dalli (~> 2.7)
-  database_cleaner
   devise (~> 4.4)
   dotenv-rails (~> 0.11)
   eventmachine (~> 1.0.4)
@@ -468,7 +470,9 @@ DEPENDENCIES
   progress_bar (~> 1.2)
   pry-byebug
   pry-rails
+  puma
   rack-timeout (~> 0.0.4)
+  rack_request_blocker
   rails (~> 5.1)
   ranked-model (~> 0.4)
   ransack

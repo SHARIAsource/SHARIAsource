@@ -31,7 +31,7 @@ services:
       - APP_DATABASE_URL=postgres_corpusbuilder
       - TESSDATA_PREFIX=/home/corpusbuilder/tesseract/tessdata
       - KRAKEN_DATA_PREFIX=/home/corpusbuilder/.config/kraken
-      - RAILS_ENV=test
+        #- RAILS_ENV=test
   postgres_shariasource:
     image: postgres:11
     volumes:
@@ -54,7 +54,7 @@ services:
       - APP_DATABASE_NAME=shariasource
       - APP_DATABASE_USER=shariasource
       - APP_DATABASE_PASSWORD=zse45rdx
-      - APP_PORT=3000
+      - APP_PORT=3001
       - APP_SOLR_URL=solr
       - APP_SOLR_PORT=8983
       - CORPUS_BUILDER_API_URL=http://corpusbuilder:3000

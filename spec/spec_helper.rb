@@ -70,7 +70,7 @@ RSpec.configure do |config|
 
   ActiveRecord::Migration.maintain_test_schema!
 
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
   config.include Capybara::DSL
   config.include FactoryGirl::Syntax::Methods
   config.include ClosureTree::Test::Matcher
@@ -89,6 +89,12 @@ RSpec.configure do |config|
     )
   end
 
+  Capybara.register_server :concurrent_puma do |app, port, host|
+    require 'rack/handler/puma'
+    Rack::Handler::Puma.run(app, Host: host, Port: port, Threads: "4:8")
+  end
+
+  Capybara.server = :concurrent_puma
   Capybara.server_port = "3000"
   Capybara.server_host = HOST
   Capybara.app_host = "http://#{HOST}:3000"

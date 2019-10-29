@@ -8,7 +8,14 @@ module Features
     end
 
     def sign_in_admin
-      user = create(:user, accepted_terms: true, is_admin: true, is_editor: true)
+      user = create(
+        :user,
+        accepted_terms: true,
+        is_admin: true,
+        is_editor: true,
+        email: "test@corpusbuilder.org"
+      )
+
       visit new_user_session_path
       fill_in 'Email', with: user.email
       fill_in 'Password', with: user.password

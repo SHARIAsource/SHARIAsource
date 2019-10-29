@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.5.3'
 
+gem 'puma'
 gem 'active_attr', '~> 0.11'
 gem 'autoprefixer-rails', '~> 7.1'
 gem 'carrierwave', '~> 1.2'
@@ -81,5 +82,5 @@ group :test do
   gem 'capybara', '~> 2.8'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 3.1'
-  gem 'database_cleaner'
+  gem "rack_request_blocker"
 end
