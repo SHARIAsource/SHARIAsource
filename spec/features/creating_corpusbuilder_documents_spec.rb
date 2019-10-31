@@ -10,7 +10,7 @@ feature 'Creating CorpusBuilder documents' do
     visit new_admin_document_path
 
     fill_in "document[title]", with: "Test"
-    page.evaluate_script('$("#document_title").trigger("change")')
+    page.evaluate_script('$("#document_title").trigger("change") && 0')
 
     Timeout::timeout(2*60, Timeout::Error, "Couldn't find the similar documents") do
       while page.evaluate_script('$(".corpusbuilder-uploader-similar-documents-item:last-child").length') == 0
@@ -19,12 +19,12 @@ feature 'Creating CorpusBuilder documents' do
     end
 
     page.evaluate_script('$(".corpusbuilder-uploader-similar-documents-item:last-child")[0].click()')
-    page.evaluate_script('$(".corpusbuilder-uploader-images-upload-dropzone input").css("display", "inline")')
+    page.evaluate_script('$(".corpusbuilder-uploader-images-upload-dropzone input").css("display", "inline" ) && 0')
 
     find('.corpusbuilder-uploader-images-upload-dropzone input', visible: false).send_keys \
       Rails.root.join('spec', 'support', 'files', 'abhath_pdf_test.pdf')
 
-    page.evaluate_script('$(".corpusbuilder-uploader-images-upload-dropzone input").trigger("change")')
+    page.evaluate_script('$(".corpusbuilder-uploader-images-upload-dropzone input").trigger("change") && 0')
 
     sleep 0.1
 

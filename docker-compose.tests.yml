@@ -7,6 +7,9 @@ services:
       - "5900:5900"
     volumes:
       - ./spec/support/files:/shariasource/spec/support/files
+      - /dev/shm:/dev/shm
+    environment:
+      - JAVA_OPTS=-Xmx4048m
   solr:
     command:
       - solr-precreate

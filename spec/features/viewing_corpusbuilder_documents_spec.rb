@@ -4,7 +4,7 @@ feature 'Viewing CorpusBuilder documents' do
   let :document do
     create :document,
       title: "Abhath",
-      ocr_document_id: "669e1334-ec0e-4127-b7d5-b9214b758cab",
+      ocr_document_id: "89fabadc-2593-4f02-b272-53287b05a920",
       published: true
   end
 
@@ -17,9 +17,6 @@ feature 'Viewing CorpusBuilder documents' do
     sign_in_admin
 
     visit document_path(id: document.id)
-
-    sleep 10
-    byebug
 
     Timeout::timeout(2*60, Timeout::Error, "Couldn't find the CB UI") do
       while page.evaluate_script('$(".corpusbuilder-document-page").length') < 2

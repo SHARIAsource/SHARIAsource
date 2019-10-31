@@ -75,6 +75,10 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include ClosureTree::Test::Matcher
 
+  browser_options = ::Selenium::WebDriver::Chrome::Options.new()
+  browser_options.add_argument('no-sandbox')
+  browser_options.add_argument('disable-gpu')
+
   Capybara.register_driver :chrome do |app|
     capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
       chromeOptions: {
@@ -83,9 +87,10 @@ RSpec.configure do |config|
     )
 
     Capybara::Selenium::Driver.new(app,
-      :browser => :remote,
+      :browser => :chrome,
       :desired_capabilities => capabilities,
-      :url => "http://selenium:4444/wd/hub"
+      :url => "http://selenium:4444/wd/hub",
+      options: browser_options
     )
   end
 
@@ -99,6 +104,7 @@ RSpec.configure do |config|
   Capybara.server_host = HOST
   Capybara.app_host = "http://#{HOST}:3000"
   Capybara.run_server = true
+  Capybara.threadsafe = true
 
   Capybara.javascript_driver = :chrome
 end
