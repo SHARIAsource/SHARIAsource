@@ -25,7 +25,27 @@ feature 'Viewing CorpusBuilder documents' do
     end
   end
 
-  scenario "logging in as master branch owner user sees the Edit button"
+  scenario "logging in as master branch owner user sees the Edit button" do
+    sign_in_admin
 
-  scenario "logging in not as master branch owner user doesn't see the Edit button"
+    visit document_path(id: document.id)
+
+    Timeout::timeout(2*60, Timeout::Error, "Couldn't find the CB edit button") do
+      while page.evaluate_script('$(".corpusbuilder-button-edit").length') < 1
+        sleep 2
+      end
+    end
+  end
+
+  scenario "logging in not as master branch owner user doesn't see the Edit button" do
+    sign_in_admin "other-admin@example.com"
+
+    visit document_path(id: document.id)
+
+    Timeout::timeout(2*3, Timeout::Error, "Found the CB edit button when it shouldnt") do
+      while page.evaluate_script('$(".corpusbuilder-button-edit").length') >= 1
+        sleep 2
+      end
+    end
+  end
 end

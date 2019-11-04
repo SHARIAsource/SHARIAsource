@@ -7,7 +7,7 @@ module Features
       click_button 'Sign up'
     end
 
-    def sign_in_admin
+    def sign_in_admin(email="test@corpusbuilder.org")
       user = create(
         :user,
         accepted_terms: true,
