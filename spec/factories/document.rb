@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :document do
-    contributors { [FactoryGirl.create(:user)] }
+    contributors { [FactoryBot.create(:user)] }
     document_type
     language
     title 'Test Document'

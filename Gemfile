@@ -69,7 +69,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'factory_girl_rails', '~> 4.9'
+  gem 'factory_bot_rails'
   gem 'rb-fsevent', '~> 0.10'
   gem 'rspec-rails', '~> 3.7'
   gem 'spring-commands-rspec', '~> 1.0'

@@ -12,62 +12,47 @@ feature 'Creating CorpusBuilder documents' do
     fill_in "document[title]", with: "Test"
     page.evaluate_script('$("#document_title").trigger("change") && 0')
 
-    Timeout::timeout(2*60, Timeout::Error, "Couldn't find the similar documents") do
-      while page.evaluate_script('$(".corpusbuilder-uploader-similar-documents-item:last-child").length') == 0
-        sleep 1
-      end
+    wait_to "find the similar documents" do
+      js!('$(".corpusbuilder-uploader-similar-documents-item:last-child").length') == 0
     end
 
-    page.evaluate_script('$(".corpusbuilder-uploader-similar-documents-item:last-child")[0].click()')
-    page.evaluate_script('$(".corpusbuilder-uploader-images-upload-dropzone input").css("display", "inline" ) && 0')
+    js!('$(".corpusbuilder-uploader-similar-documents-item:last-child")[0].click()')
+    js!('$(".corpusbuilder-uploader-images-upload-dropzone input").css("display", "inline" ) && 0')
 
     find('.corpusbuilder-uploader-images-upload-dropzone input', visible: false).send_keys \
       Rails.root.join('spec', 'support', 'files', 'abhath_pdf_test.pdf')
 
-    page.evaluate_script('$(".corpusbuilder-uploader-images-upload-dropzone input").trigger("change") && 0')
+    js!('$(".corpusbuilder-uploader-images-upload-dropzone input").trigger("change") && 0')
+    js!('$(".corpusbuilder-uploader-images-upload-buttons button")[1].click()')
 
-    sleep 0.1
-
-    page.evaluate_script('$(".corpusbuilder-uploader-images-upload-buttons button")[1].click()')
-
-    Timeout::timeout(2*60, Timeout::Error, "Couldn't find the OCR backend select") do
-      while page.evaluate_script('$(".corpusbuilder-uploader-images-ready-backend").length') == 0
-        sleep 1
-      end
+    wait_to "find the OCR backend select" do
+      js!('$(".corpusbuilder-uploader-images-ready-backend").length') == 0
     end
 
-    page.evaluate_script('window._node = $(".corpusbuilder-languages-input input[type=text]")[0]')
-    page.evaluate_script('Object.getOwnPropertyDescriptor(window._node.__proto__, "value").set.call(window._node, "Arab")')
-    page.evaluate_script('window._node.dispatchEvent(new Event("input", { bubbles: true }))')
+    set_input_value ".corpusbuilder-languages-input input[type=text]", "Arab"
 
-    sleep 1
+    wait_to "find the languages to choose from" do
+      js!('$(".corpusbuilder-languages-input ul li").length') == 0
+    end
 
-    assert page.evaluate_script('$(".corpusbuilder-languages-input ul li").length') > 0
+    js!('$(".corpusbuilder-languages-input ul li")[0].dispatchEvent(new Event("mousedown", { bubbles: true }))')
 
-    page.evaluate_script('$(".corpusbuilder-languages-input ul li")[0].dispatchEvent(new Event("mousedown", { bubbles: true }))')
-
-    Timeout::timeout(2*60, Timeout::Error, "Couldn't find the OCR backend select") do
-      while page.evaluate_script('$(".corpusbuilder-uploader-model-selection-item-list-item").length') == 0
-        sleep 1
-      end
+    wait_to "find the OCR backend select" do
+      js!('$(".corpusbuilder-uploader-model-selection-item-list-item").length') == 0
     end
 
     expect(page).to have_css '.corpusbuilder-uploader-model-selection-item-list-item', \
       'Arabic'
 
     find(:css, ".corpusbuilder-uploader-model-selection-item-actions input[type=checkbox]").set(true)
-
     find('#document_document_type_id').find(:xpath, 'option[2]').select_option
     find('#document_language_id').find(:xpath, 'option[2]').select_option
-
     find("#new_create_and_edit").click
 
     expect(page).to have_content("Document created successfully")
 
-    Timeout::timeout(2*60, Timeout::Error, "Couldn't find the OCR backend select") do
-      while page.evaluate_script('$(".corpusbuilder-success").length') == 0
-        sleep 1
-      end
+    wait_to "find the success message", seconds: 90 do
+      js!('$(".corpusbuilder-success").length') == 0
     end
 
     expect(page).to have_content("Document has been successfully processed")

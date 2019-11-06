@@ -13,6 +13,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, :type => :controller
   config.include Features::SessionHelpers, :type => :feature
   config.include Features::CorpusbuilderHelpers, :type => :feature
+  config.include Features::InteractionHelpers, :type => :feature
 
   config.use_transactional_fixtures = false
 

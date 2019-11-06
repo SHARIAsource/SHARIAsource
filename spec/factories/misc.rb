@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :misc do
     slug "misc"
     title "Misc Page"

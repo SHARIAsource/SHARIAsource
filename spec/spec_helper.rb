@@ -72,7 +72,7 @@ RSpec.configure do |config|
 
   config.use_transactional_fixtures = false
   config.include Capybara::DSL
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include ClosureTree::Test::Matcher
 
   browser_options = ::Selenium::WebDriver::Chrome::Options.new()
