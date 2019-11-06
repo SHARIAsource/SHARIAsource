@@ -96,7 +96,7 @@ RSpec.configure do |config|
 
   Capybara.register_server :concurrent_puma do |app, port, host|
     require 'rack/handler/puma'
-    Rack::Handler::Puma.run(app, Host: host, Port: port, Threads: "4:8")
+    Rack::Handler::Puma.run(app, Host: host, Port: port, Threads: "4:8", Silent: true)
   end
 
   Capybara.server = :concurrent_puma
