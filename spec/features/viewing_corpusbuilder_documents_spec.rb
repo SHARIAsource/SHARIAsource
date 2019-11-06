@@ -56,4 +56,26 @@ feature 'Viewing CorpusBuilder documents' do
 
     ensure_line_contains 1, "test"
   end
+
+  scenario "edited data resides in the working revision until it is committed", js: true do
+    sign_in_admin
+
+    visit document_path(id: document.id)
+
+    turn_edit_mode
+
+    begin_edit_line 1
+    edit_word 1, "test"
+    save_line
+
+    ensure_line_contains 1, "test"
+
+    turn_edit_mode_off
+
+    ensure_line_doesnt_contain 1, "test"
+
+    commit_changes
+
+    ensure_line_contains 1, "test"
+  end
 end

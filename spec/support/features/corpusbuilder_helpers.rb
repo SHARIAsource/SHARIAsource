@@ -20,6 +20,22 @@ module Features
       end
     end
 
+    def turn_edit_mode_off
+      wait_to "find the edit button" do
+        js!(
+          '$(".corpusbuilder-viewer:nth-child(1) .corpusbuilder-button-edit").length'
+        ) == 0
+      end
+
+      js!('$(".corpusbuilder-viewer:nth-child(1) .corpusbuilder-button-edit")[0].click()')
+
+      wait_to "not find the edit lines" do
+        js!(
+          '$(".corpusbuilder-viewer:nth-child(1) .corpusbuilder-document-line-editing").length'
+        ) != 0
+      end
+    end
+
     def begin_edit_line(number)
       js!(
         "$(\".corpusbuilder-viewer:nth-child(1) .corpusbuilder-document-line-editing:nth-child(#{number})\").click()"
@@ -53,6 +69,22 @@ module Features
       wait_to "find the '#{txt}' in line #{number}" do
         js!("$(\".corpusbuilder-viewer:nth-child(1) .corpusbuilder-document-line:nth-child(#{number})\").text().match(/#{txt}/)").nil?
       end
+    end
+
+    def ensure_line_doesnt_contain(number, txt)
+      wait_to "not find the '#{txt}' in line #{number}" do
+        !js!("$(\".corpusbuilder-viewer:nth-child(1) .corpusbuilder-document-line:nth-child(#{number})\").text().match(/#{txt}/)").nil?
+      end
+    end
+
+    def commit_changes
+      js!("$('.corpusbuilder-button-version')[0].click()")
+
+      wait_to "find the commit button" do
+        js!("$('.dd-menu-items button:contains(Commit)').length") == 0
+      end
+
+      js!("$('.dd-menu-items button:contains(Commit)')[0].click()")
     end
   end
 end
