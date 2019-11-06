@@ -35,7 +35,7 @@ services:
       - TESSDATA_PREFIX=/home/corpusbuilder/tesseract/tessdata
       - KRAKEN_DATA_PREFIX=/home/corpusbuilder/.config/kraken
       - EAGER_LOAD=1
-        #- RAILS_ENV=test
+      - TESTS_API=1
   postgres_shariasource:
     image: postgres:11
     volumes:

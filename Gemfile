@@ -58,6 +58,7 @@ gem 'active_record_union'
 gem 'sanitize'
 gem 'lodash-rails'
 gem 'tzinfo-data'
+gem 'rest-client'
 
 group :development do
   gem 'annotate', '~> 2.7'

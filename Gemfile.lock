@@ -478,6 +478,7 @@ DEPENDENCIES
   ransack
   ransack_chronic
   rb-fsevent (~> 0.10)
+  rest-client
   rspec-rails (~> 3.7)
   rtesseract (~> 2.2)
   sanitize

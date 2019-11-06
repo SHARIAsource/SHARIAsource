@@ -3,6 +3,8 @@ require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
+require 'rest-client'
+
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
@@ -24,6 +26,11 @@ RSpec.configure do |config|
     Document.delete_all
     DocumentType.delete_all
     Language.delete_all
+  end
+
+  config.before(:each, type: :feature, js: true) do
+    RestClient.post "#{ENV['CORPUS_BUILDER_API_URL']}/api/tests/clean", {}
+    RestClient.post "#{ENV['CORPUS_BUILDER_API_URL']}/api/tests/prepare", {}
   end
 
   config.after(:each, type: :feature, js: true) do
