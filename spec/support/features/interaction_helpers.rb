@@ -1,7 +1,7 @@
 module Features
   module InteractionHelpers
     def wait_to(message, seconds: 20, interval: 2, &block)
-      Timeout::timeout(seconds, Timeout::Error, message.humanize) do
+      Timeout::timeout(seconds, Timeout::Error, "Failed waiting to #{message}") do
         while block.call
           sleep interval
         end

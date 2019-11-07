@@ -13,6 +13,10 @@ module Features
 
       js!('$(".corpusbuilder-viewer:nth-child(1) .corpusbuilder-button-edit")[0].click()')
 
+      ensure_edit_mode
+    end
+
+    def ensure_edit_mode
       wait_to "find the edit lines" do
         js!(
           '$(".corpusbuilder-viewer:nth-child(1) .corpusbuilder-document-line-editing").length'
@@ -77,14 +81,22 @@ module Features
       end
     end
 
-    def commit_changes
+    def choose_version_menu_item(title)
       js!("$('.corpusbuilder-button-version')[0].click()")
 
-      wait_to "find the commit button" do
-        js!("$('.dd-menu-items button:contains(Commit)').length") == 0
+      wait_to "find the #{title.downcase} button" do
+        js!("$('.dd-menu-items button:contains(#{title})').length") == 0
       end
 
-      js!("$('.dd-menu-items button:contains(Commit)')[0].click()")
+      js!("$('.dd-menu-items button:contains(#{title})')[0].click()")
+    end
+
+    def commit_changes
+      choose_version_menu_item "Commit"
+    end
+
+    def reset_changes
+      choose_version_menu_item "Reset Changes"
     end
   end
 end
