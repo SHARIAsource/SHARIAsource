@@ -81,14 +81,33 @@ module Features
       end
     end
 
+    def new_branch(name)
+      choose_version_menu_item "New Branch"
+
+      wait_to "find the new branch window" do
+        js!("$('.corpusbuilder-new-branch-window').length") == 0
+      end
+
+      set_input_value(
+        ".corpusbuilder-new-branch-window input",
+        name
+      )
+
+      js!("$('.corpusbuilder-new-branch-window button:contains(#{title})').click()")
+    end
+
     def choose_version_menu_item(title)
-      js!("$('.corpusbuilder-button-version')[0].click()")
+      wait_to "find the version menu" do
+        js!("$('.corpusbuilder-button-version').length") == 0
+      end
+
+      js!("$('.corpusbuilder-button-version').click()")
 
       wait_to "find the #{title.downcase} button" do
         js!("$('.dd-menu-items button:contains(#{title})').length") == 0
       end
 
-      js!("$('.dd-menu-items button:contains(#{title})')[0].click()")
+      js!("$('.dd-menu-items button:contains(#{title})').click()")
     end
 
     def commit_changes

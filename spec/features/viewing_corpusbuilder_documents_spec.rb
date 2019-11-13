@@ -96,4 +96,16 @@ feature 'Viewing CorpusBuilder documents' do
     ensure_edit_mode
     ensure_line_doesnt_contain 1, "test"
   end
+
+  scenario "'new branch' creates a new branch with the current user being the owner", js: true do
+    sign_in_admin "other-admin@example.com"
+
+    visit document_path(id: document.id)
+
+    new_branch 'development'
+
+    wait_to "find the CB edit button" do
+      js!('$(".corpusbuilder-button-edit").length') < 1
+    end
+  end
 end
