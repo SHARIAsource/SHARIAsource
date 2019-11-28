@@ -96,12 +96,44 @@ module Features
       js!("$('.corpusbuilder-new-branch-window button:contains(#{title})').click()")
     end
 
-    def choose_version_menu_item(title)
+    def click_version_menu
       wait_to "find the version menu" do
         js!("$('.corpusbuilder-button-version').length") == 0
       end
 
       js!("$('.corpusbuilder-button-version').click()")
+    end
+
+    def mouseover_menu(title)
+      wait_to "find the '#{title.downcase}' button" do
+        js!("$('.dd-menu-items button:contains(#{title})').length") == 0
+      end
+
+      js! <<-JS
+        $('.dd-menu-items button:contains(#{title})').parent()[0].dispatchEvent(
+          new MouseEvent(
+            'mouseover',
+            {
+              'view': window,
+              'bubbles': true,
+              'cancelable': true
+            }
+          )
+        )
+      JS
+    end
+
+    def click_branch_button(branch)
+      js! <<-JS
+        $('button:contains(Branch: #{branch})').
+          parent().
+          find('ul li button:contains(#{branch})').
+          click()
+      JS
+    end
+
+    def choose_version_menu_item(title)
+      click_version_menu
 
       wait_to "find the #{title.downcase} button" do
         js!("$('.dd-menu-items button:contains(#{title})').length") == 0
@@ -116,6 +148,12 @@ module Features
 
     def reset_changes
       choose_version_menu_item "Reset Changes"
+    end
+
+    def switch_branch(branch)
+      click_version_menu
+      mouseover_menu "Branch"
+      click_branch_button branch
     end
   end
 end

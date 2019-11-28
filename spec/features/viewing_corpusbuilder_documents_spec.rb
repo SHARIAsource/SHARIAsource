@@ -107,5 +107,11 @@ feature 'Viewing CorpusBuilder documents' do
     wait_to "find the CB edit button" do
       js!('$(".corpusbuilder-button-edit").length') < 1
     end
+
+    switch_branch 'development'
+
+    wait_to "find the CB UI" do
+      js!('$(".corpusbuilder-document-page").length') < 2
+    end
   end
 end
