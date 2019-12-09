@@ -114,4 +114,29 @@ feature 'Viewing CorpusBuilder documents' do
       js!('$(".corpusbuilder-document-page").length') < 2
     end
   end
+
+  scenario "the diff view shows the difference between the branches", js: true do
+    sign_in_admin
+
+    visit document_path(id: document.id)
+
+    new_branch "development"
+
+    turn_edit_mode
+    begin_edit_line 1
+    edit_word 1, "test"
+    save_line
+    turn_edit_mode_off
+    commit_changes
+
+    turn_diff_mode
+
+    choose_diff_branch "development"
+
+    wait_to "find the diff line" do
+      js!('$(".corpusbuilder-diff").length') < 1
+    end
+
+    ensure_line_contains 1, "test"
+  end
 end

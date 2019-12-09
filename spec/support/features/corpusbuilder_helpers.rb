@@ -4,50 +4,73 @@ module Features
       expect(page).to have_css '.corpusbuilder-uploader-title', 'Scans of documents to OCR'
     end
 
-    def turn_edit_mode
+    def turn_diff_mode(which: :left)
+      choose_menu_item "Changes And Merging", menu: "view", which: which
+
+      wait_to "find the diff view options" do
+        js!(
+          '$(".corpusbuilder-diff-options").length'
+        ) < 1
+      end
+    end
+
+    def choose_diff_branch(branch)
+      js! "$('.corpusbuilder-diff-options-branches button').click()"
+      js! "$('.corpusbuilder-diff-options-branches button:contains(#{branch})').click()"
+    end
+
+    def turn_edit_mode(which: :right)
+      pane = which == :right ? 1 : 0
+
       wait_to "find the edit button" do
         js!(
-          '$(".corpusbuilder-viewer:nth-child(1) .corpusbuilder-button-edit").length'
+          "$('.corpusbuilder-viewer')[#{pane}].find('.corpusbuilder-button-edit').length"
         ) == 0
       end
 
-      js!('$(".corpusbuilder-viewer:nth-child(1) .corpusbuilder-button-edit")[0].click()')
+      js!("$('.corpusbuilder-viewer')[#{pane}].find('.corpusbuilder-button-edit')[0].click()")
 
       ensure_edit_mode
     end
 
-    def ensure_edit_mode
+    def ensure_edit_mode(which: :right)
+      pane = which == :right ? 1 : 0
+
       wait_to "find the edit lines" do
         js!(
-          '$(".corpusbuilder-viewer:nth-child(1) .corpusbuilder-document-line-editing").length'
+          "$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-document-line-editing').length"
         ) == 0
       end
     end
 
-    def turn_edit_mode_off
+    def turn_edit_mode_off(which: :right)
+      pane = which == :right ? 1 : 0
+
       wait_to "find the edit button" do
         js!(
-          '$(".corpusbuilder-viewer:nth-child(1) .corpusbuilder-button-edit").length'
+          "$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-button-edit').length"
         ) == 0
       end
 
-      js!('$(".corpusbuilder-viewer:nth-child(1) .corpusbuilder-button-edit")[0].click()')
+      js!("$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-button-edit')[0].click()")
 
       wait_to "not find the edit lines" do
         js!(
-          '$(".corpusbuilder-viewer:nth-child(1) .corpusbuilder-document-line-editing").length'
+          "$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-document-line-editing').length"
         ) != 0
       end
     end
 
-    def begin_edit_line(number)
+    def begin_edit_line(number, which: :right)
+      pane = which == :right ? 1 : 0
+
       js!(
-        "$(\".corpusbuilder-viewer:nth-child(1) .corpusbuilder-document-line-editing:nth-child(#{number})\").click()"
+        "$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-document-line-editing:nth-child(#{number})').click()"
       )
 
       wait_to "find the editor box" do
         js!(
-          '$(".corpusbuilder-viewer:nth-child(1) .corpusbuilder-inline-editor-shell").length'
+          "$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-inline-editor-shell').length"
         ) == 0
       end
     end
@@ -60,7 +83,7 @@ module Features
 
     def edit_word(number, txt)
       set_input_value(
-        ".corpusbuilder-viewer:nth-child(1) .corpusbuilder-inline-editor-input:nth-child(#{number})",
+        ".corpusbuilder-inline-editor-input:nth-child(#{number})",
         txt
       )
     end
@@ -81,8 +104,8 @@ module Features
       end
     end
 
-    def new_branch(name)
-      choose_version_menu_item "New Branch"
+    def new_branch(name, which: :right)
+      choose_menu_item "New Branch", which: which
 
       wait_to "find the new branch window" do
         js!("$('.corpusbuilder-new-branch-window').length") == 0
@@ -93,24 +116,34 @@ module Features
         name
       )
 
-      js!("$('.corpusbuilder-new-branch-window button:contains(#{title})').click()")
+      js!("$('.corpusbuilder-new-branch-window button').click()")
     end
 
-    def click_version_menu
-      wait_to "find the version menu" do
-        js!("$('.corpusbuilder-button-version').length") == 0
+    def click_menu(menu, which: :right)
+      pane = which == :right ? 1 : 0
+
+      wait_to "find the #{menu} menu" do
+        js!("$($('.corpusbuilder-button-#{menu}')[#{pane}]).length") < 1
       end
 
-      js!("$('.corpusbuilder-button-version').click()")
+      js!("$($('.corpusbuilder-button-#{menu}')[#{pane}]).click()")
     end
 
-    def mouseover_menu(title)
+    def click_view_menu(which: :right)
+      click_menu "view", which: which
+    end
+
+    def click_version_menu(which: :right)
+      click_menu "version", which: which
+    end
+
+    def mouseover_menu(title, which: :right)
       wait_to "find the '#{title.downcase}' button" do
         js!("$('.dd-menu-items button:contains(#{title})').length") == 0
       end
 
       js! <<-JS
-        $('.dd-menu-items button:contains(#{title})').parent()[0].dispatchEvent(
+        $('.dd-menu-items button:contains(#{title}:)').parent()[0].dispatchEvent(
           new MouseEvent(
             'mouseover',
             {
@@ -123,7 +156,7 @@ module Features
       JS
     end
 
-    def click_branch_button(branch)
+    def click_branch_button(branch, which: :right)
       js! <<-JS
         $('button:contains(Branch: #{branch})').
           parent().
@@ -132,28 +165,30 @@ module Features
       JS
     end
 
-    def choose_version_menu_item(title)
-      click_version_menu
+    def choose_menu_item(title, menu: "version", which: :right)
+      pane = which == :right ? 1 : 0
+
+      click_menu menu, which: which
 
       wait_to "find the #{title.downcase} button" do
-        js!("$('.dd-menu-items button:contains(#{title})').length") == 0
+        js!("$($('.corpusbuilder-viewer')[#{pane}]).find('.dd-menu-items button:contains(#{title})').length") == 0
       end
 
-      js!("$('.dd-menu-items button:contains(#{title})').click()")
+      js!("$($('.corpusbuilder-viewer')[#{pane}]).find('.dd-menu-items button:contains(#{title})').click()")
     end
 
-    def commit_changes
-      choose_version_menu_item "Commit"
+    def commit_changes(which: :right)
+      choose_menu_item "Commit", which: which
     end
 
-    def reset_changes
-      choose_version_menu_item "Reset Changes"
+    def reset_changes(which: :right)
+      choose_menu_item "Reset Changes", which: which
     end
 
-    def switch_branch(branch)
-      click_version_menu
-      mouseover_menu "Branch"
-      click_branch_button branch
+    def switch_branch(branch, which: :right)
+      click_version_menu which: which
+      mouseover_menu "Branch", which: which
+      click_branch_button branch, which: which
     end
   end
 end
