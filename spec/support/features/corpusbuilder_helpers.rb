@@ -24,13 +24,14 @@ module Features
 
       wait_to "find the edit button" do
         js!(
-          "$('.corpusbuilder-viewer')[#{pane}].find('.corpusbuilder-button-edit').length"
+          "$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-button-edit').length"
         ) == 0
       end
 
-      js!("$('.corpusbuilder-viewer')[#{pane}].find('.corpusbuilder-button-edit')[0].click()")
+      js!("$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-button-edit').click()")
 
-      ensure_edit_mode
+      ensure_edit_mode which: which
+    rescue Selenium::WebDriver::Error::StaleElementReferenceError => e
     end
 
     def ensure_edit_mode(which: :right)
@@ -52,7 +53,7 @@ module Features
         ) == 0
       end
 
-      js!("$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-button-edit')[0].click()")
+      js!("$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-button-edit').click()")
 
       wait_to "not find the edit lines" do
         js!(
@@ -63,6 +64,12 @@ module Features
 
     def begin_edit_line(number, which: :right)
       pane = which == :right ? 1 : 0
+
+      wait_to "find the editor line" do
+        js!(
+          "$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-document-line-editing:nth-child(#{number})').length"
+        ) == 0
+      end
 
       js!(
         "$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-document-line-editing:nth-child(#{number})').click()"
@@ -88,19 +95,25 @@ module Features
       )
     end
 
-    def save_line
-      js!("$('.corpusbuilder-viewer:nth-child(1) .corpusbuilder-inline-editor-buttons-aside button:contains(Save)')[0].click()")
+    def save_line(which: :right)
+      pane = which == :right ? 1 : 0
+
+      js!("$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-inline-editor-buttons-aside button:contains(Save)')[0].click()")
     end
 
-    def ensure_line_contains(number, txt)
+    def ensure_line_contains(number, txt, which: :right)
+      pane = which == :right ? 1 : 0
+
       wait_to "find the '#{txt}' in line #{number}" do
-        js!("$(\".corpusbuilder-viewer:nth-child(1) .corpusbuilder-document-line:nth-child(#{number})\").text().match(/#{txt}/)").nil?
+        js!("$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-document-line:nth-child(#{number})').text().match(/#{txt}/)").nil?
       end
     end
 
-    def ensure_line_doesnt_contain(number, txt)
+    def ensure_line_doesnt_contain(number, txt, which: :right)
+      pane = which == :right ? 1 : 0
+
       wait_to "not find the '#{txt}' in line #{number}" do
-        !js!("$(\".corpusbuilder-viewer:nth-child(1) .corpusbuilder-document-line:nth-child(#{number})\").text().match(/#{txt}/)").nil?
+        !js!("$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-document-line:nth-child(#{number})').text().match(/#{txt}/)").nil?
       end
     end
 

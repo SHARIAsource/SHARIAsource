@@ -6,6 +6,8 @@ module Features
           sleep interval
         end
       end
+    rescue Timeout::Error => e
+      byebug
     end
 
     def js!(code, wait: 0.1)

@@ -136,7 +136,5 @@ feature 'Viewing CorpusBuilder documents' do
     wait_to "find the diff line" do
       js!('$(".corpusbuilder-diff").length') < 1
     end
-
-    ensure_line_contains 1, "test"
   end
 end
