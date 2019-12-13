@@ -5,13 +5,37 @@ module Features
     end
 
     def turn_diff_mode(which: :left)
+      pane = which == :right ? 1 : 0
+
       choose_menu_item "Changes And Merging", menu: "view", which: which
 
       wait_to "find the diff view options" do
         js!(
-          '$(".corpusbuilder-diff-options").length'
+          "$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-diff-options').length"
         ) < 1
       end
+    end
+
+    def merge_branch(which: :left)
+      pane = which == :right ? 1 : 0
+
+      wait_to "find the merge button" do
+        js!(
+          "$('.corpusbuilder-diff-options button:contains(Merge)').length"
+        ) < 1
+      end
+
+      js! "$('.corpusbuilder-diff-options button:contains(Merge)').click()"
+
+      wait_to "find the merge confirmation window" do
+        js! "$('.corpusbuilder-diff-options button:contains(Merge)').click()"
+
+        js!(
+          "$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-merge-branches-window').length"
+        ) < 1
+      end
+
+      js! "$('.corpusbuilder-merge-branches-window button:contains(Merge Now)').click()"
     end
 
     def choose_diff_branch(branch)
@@ -31,17 +55,28 @@ module Features
       js!("$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-button-edit').click()")
 
       ensure_edit_mode which: which
-    rescue Selenium::WebDriver::Error::StaleElementReferenceError => e
+    rescue Selenium::WebDriver::Error::StaleElementReferenceError
+      retry
     end
 
     def ensure_edit_mode(which: :right)
       pane = which == :right ? 1 : 0
+      ran = false
 
       wait_to "find the edit lines" do
-        js!(
+        js!("$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-button-edit').click()") if ran
+
+        result = js!(
           "$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-document-line-editing').length"
         ) == 0
+
+        ran = true
+
+        result
       end
+
+    rescue Selenium::WebDriver::Error::StaleElementReferenceError
+      retry
     end
 
     def turn_edit_mode_off(which: :right)
@@ -60,6 +95,7 @@ module Features
           "$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-document-line-editing').length"
         ) != 0
       end
+    rescue Selenium::WebDriver::Error::StaleElementReferenceError => e
     end
 
     def begin_edit_line(number, which: :right)
@@ -139,7 +175,10 @@ module Features
         js!("$($('.corpusbuilder-button-#{menu}')[#{pane}]).length") < 1
       end
 
-      js!("$($('.corpusbuilder-button-#{menu}')[#{pane}]).click()")
+      wait_to "find menu items" do
+        js!("$($('.corpusbuilder-button-#{menu}')[#{pane}]).click()")
+        js!("$($('.corpusbuilder-button-#{menu}')[#{pane}]).parent().find('li').length") < 1
+      end
     end
 
     def click_view_menu(which: :right)
@@ -181,9 +220,9 @@ module Features
     def choose_menu_item(title, menu: "version", which: :right)
       pane = which == :right ? 1 : 0
 
-      click_menu menu, which: which
-
       wait_to "find the #{title.downcase} button" do
+        click_menu menu, which: which
+
         js!("$($('.corpusbuilder-viewer')[#{pane}]).find('.dd-menu-items button:contains(#{title})').length") == 0
       end
 
