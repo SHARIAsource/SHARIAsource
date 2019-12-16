@@ -141,4 +141,42 @@ feature 'Viewing CorpusBuilder documents' do
 
     ensure_line_contains 1, "test", which: :left
   end
+
+  scenario "merge conflicts are shown properly", js: true do
+    sign_in_admin
+
+    visit document_path(id: document.id)
+
+    make_viewers_mirrored
+
+    new_branch "left", which: :left
+    turn_edit_mode which: :left
+    begin_edit_line 1, which: :left
+    edit_word 1, "left"
+    save_line which: :left
+    turn_edit_mode_off which: :left
+    commit_changes which: :left
+
+    new_branch "right", which: :right
+    turn_edit_mode which: :right
+    begin_edit_line 1, which: :right
+    edit_word 1, "test"
+    save_line which: :right
+    turn_edit_mode_off which: :right
+    commit_changes which: :right
+
+    turn_diff_mode which: :left
+
+    choose_diff_branch "right"
+
+    wait_to "find the diff line" do
+      js!('$(".corpusbuilder-diff").length') < 1
+    end
+
+    merge_branch which: :left
+
+    wait_to "find merge conflict message" do
+      js!('$(".corpusbuilder-viewer-status-conflict-message .warning:contains(Merge Conflict!)").length') < 1
+    end
+  end
 end

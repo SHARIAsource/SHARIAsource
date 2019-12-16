@@ -242,6 +242,10 @@ module Features
       mouseover_menu "Branch", which: which
       click_branch_button branch, which: which
     end
+
+    def make_viewers_mirrored
+      js!('$(".corpusbuilder-button:contains(Follow Page)").click()')
+    end
   end
 end
 
