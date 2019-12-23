@@ -95,7 +95,7 @@ module Features
           "$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-document-line-editing').length"
         ) != 0
       end
-    rescue Selenium::WebDriver::Error::StaleElementReferenceError => e
+    rescue Selenium::WebDriver::Error::StaleElementReferenceError
     end
 
     def begin_edit_line(number, which: :right)
@@ -245,6 +245,30 @@ module Features
 
     def make_viewers_mirrored
       js!('$(".corpusbuilder-button:contains(Follow Page)").click()')
+    end
+
+    def click_merge_conflict(conflict_ix, which: :right)
+      pane = which == :right ? 1 : 0
+
+      js! "$($($('.corpusbuilder-viewer')[#{conflict_ix}]).find('.corpusbuilder-highlight-line-clickable')[#{pane}]).click()"
+    end
+
+    def get_diff_value(version: :before, which: :left)
+      pane = which == :right ? 1 : 0
+      input = version == :after ? 1 : 0
+
+      js!("$($($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-diff-input-wrapper input')[#{input}]).val()")
+    end
+
+    def show_conflicts(which: :left)
+      pane = which == :right ? 1 : 0
+
+      js! "$($('.corpusbuilder-viewer')[#{pane}]).find('.corpusbuilder-viewer-status-conflict-message button').click()"
+
+      wait_to "find merge conflicts" do
+        js!('$(".corpusbuilder-highlight-line-conflict").length') < 1
+      end
+    rescue Selenium::WebDriver::Error::StaleElementReferenceError
     end
   end
 end

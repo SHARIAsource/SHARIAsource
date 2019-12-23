@@ -178,5 +178,19 @@ feature 'Viewing CorpusBuilder documents' do
     wait_to "find merge conflict message" do
       js!('$(".corpusbuilder-viewer-status-conflict-message .warning:contains(Merge Conflict!)").length') < 1
     end
+
+    click_merge_conflict 1, which: :left
+
+    show_conflicts
+
+    wait_to "find merge conflict diff" do
+      js! "$('.corpusbuilder-highlight-line-conflict').click()"
+      js!('$(".corpusbuilder-diff-preview").length') < 1
+    end
+
+    wait_to "find merge conflict values" do
+      get_diff_value(version: :before, which: :left) != "test" ||
+        get_diff_value(version: :after, which: :left) != "left"
+    end
   end
 end
