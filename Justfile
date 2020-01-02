@@ -14,6 +14,10 @@ build extra="":
   docker-compose -f docker-compose.yml $EXTRA build
 
 migrate-test:
+  #!/usr/bin/env bash
+
+  export CURRENT_UID=$(id -u):$(id -g)
+
   docker-compose \
     -f docker-compose.yml \
     -f docker-compose.tests.yml \
@@ -24,6 +28,10 @@ migrate-test:
     --migrate-test
 
 init:
+  #!/usr/bin/env bash
+
+  export CURRENT_UID=$(id -u):$(id -g)
+
   docker-compose \
     -f docker-compose.yml \
     -f docker-compose.tests.yml \
@@ -36,12 +44,37 @@ init:
 up:
   #!/usr/bin/env bash
 
+  export CURRENT_UID=$(id -u):$(id -g)
+
   docker-compose \
     -f docker-compose.yml \
     up
 
+down:
+  #!/usr/bin/env bash
+
+  export CURRENT_UID=$(id -u):$(id -g)
+
+  docker-compose \
+    -f docker-compose.yml \
+    down
+
+copy-tesseract-models:
+  #!/usr/bin/env bash
+
+  docker-compose \
+    -f docker-compose.yml \
+    run \
+    --user=0 \
+    --use-aliases \
+    --entrypoint=/corpusbuilder/bin/app_ctl \
+    corpusbuilder \
+    "--copy-tesseract-models"
+
 test type="":
   #!/usr/bin/env bash
+
+  export CURRENT_UID=$(id -u):$(id -g)
 
   if [[ "{{type }}" == "down" ]]; then
     docker-compose \
@@ -62,6 +95,16 @@ test type="":
     -f docker-compose.yml \
     -f docker-compose.tests.yml \
     run \
+    --user=0 \
+    --use-aliases \
+    --entrypoint=/corpusbuilder/bin/app_ctl \
+    corpusbuilder \
+    "--copy-tesseract-models"
+
+  docker-compose \
+    -f docker-compose.yml \
+    -f docker-compose.tests.yml \
+    run \
     --use-aliases \
     --entrypoint=/shariasource/bin/app_ctl \
     shariasource \
@@ -69,6 +112,8 @@ test type="":
 
 repl service="shariasource":
   #!/usr/bin/env bash
+
+  export CURRENT_UID=$(id -u):$(id -g)
 
   docker-compose \
     -f docker-compose.yml \
@@ -79,6 +124,8 @@ repl service="shariasource":
 
 shell service="shariasource":
   #!/usr/bin/env bash
+
+  export CURRENT_UID=$(id -u):$(id -g)
 
   docker-compose \
     -f docker-compose.yml \

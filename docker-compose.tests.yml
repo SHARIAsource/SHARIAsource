@@ -34,7 +34,7 @@ services:
       - APP_DATABASE_URL=postgres_corpusbuilder
       - TESSDATA_PREFIX=/home/corpusbuilder/tesseract/tessdata
       - KRAKEN_DATA_PREFIX=/home/corpusbuilder/.config/kraken
-      - EAGER_LOAD=1
+      - EAGER_LOAD=0
       - TESTS_API=1
   postgres_shariasource:
     image: postgres:11

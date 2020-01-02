@@ -2,6 +2,7 @@ version: '2'
 services:
   redis:
     image: bitnami/redis:5.0.5
+    user: ${CURRENT_UID}
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
@@ -55,6 +56,7 @@ services:
       - corpusbuilder_background_jobs
   shariasource:
     image: ocr/shariasource
+    user: ${CURRENT_UID}
     command: ["/shariasource/bin/app_ctl", "--init", "--migrate", "--run"]
     volumes:
       - .:/shariasource

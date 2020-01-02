@@ -60,6 +60,10 @@ if [[ "$*" == *--test* ]]; then
   bundle exec rspec
 fi
 
+if [[ "$*" == *--repl* ]]; then
+  bundle exec rails c
+fi
+
 if [[ "$*" == *--run* ]]; then
   bundle exec rails server -p $APP_PORT -b '0.0.0.0' --pid `pwd`/tmp/pids/`date +'%s'`.pid
 fi
