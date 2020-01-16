@@ -10,7 +10,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'devise', '~> 4.4'
 gem 'foreman', '~> 0.74'
 
-gem 'foundation-rails', '~> 5.5.0'#, path: "vendor/gems/foundation-rails-5.5.3.2"
+gem 'foundation-rails', '~> 5.5.0'
 gem 'jquery-rails', '~> 4.3'
 gem 'jquery-ui-rails', '~> 6.0'
 gem 'maily'
@@ -46,7 +46,7 @@ gem 'jquery-datatables-rails', '~> 3.3'
 gem 'therubyracer', '~> 0.12', platforms: :ruby
 gem 'will_paginate', '~> 3.1'
 gem 'awesome_print', '~> 1.8'
-gem 'corpusbuilder-ruby', path: './vendor/corpusbuilder-ruby-client'
+gem 'corpusbuilder-ruby', :git => 'https://github.com/berkmancenter/corpusbuilder-ruby-client.git'
 gem 'leaflet-rails', '~> 1.3'
 gem "d3-rails", '~> 5.4'
 gem 'friendly_id', '~> 5.2'

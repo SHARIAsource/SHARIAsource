@@ -4,13 +4,10 @@ services:
     image: bitnami/redis:5.0.5
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
-    volumes:
-      - redis-tmp:/opt/bitnami/redis/tmp
-      - redis-logs:/opt/bitnami/redis/logs
   solr:
     image: solr:6.6.6
     volumes:
-      - solr-data:/opt/solr/server/solr/mycores
+      - ./vendor/volumes/solr-data:/opt/solr/server/solr/mycores
       - ./services/solr/sunspot:/opt/solr/server/solr/configsets/sunspot
     restart: unless-stopped
     command:
@@ -20,7 +17,7 @@ services:
   postgres_shariasource:
     image: postgres:11
     volumes:
-      - postgres_shariasource_data:/var/lib/postgresql/data
+      - ./vendor/volumes/postgres-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=zse45rdx
       - POSTGRES_USER=shariasource
@@ -58,8 +55,8 @@ services:
     command: ["/shariasource/bin/app_ctl", "--init", "--migrate", "--run"]
     volumes:
       - .:/shariasource
-      - shariasource_bundle:/shariasource/vendor/bundle
-      - shariasource_node_modules:/shariasource/node_modules
+      - ./vendor/volumes/bundle:/shariasource/vendor/bundle
+      - ./vendor/volumes/node_modules:/shariasource/node_modules
     environment:
       - APP_ROOT=/shariasource
       - APP_DATABASE_URL=postgres_shariasource
@@ -83,15 +80,3 @@ services:
       - postgres_shariasource
       - solr
       - redis
-volumes:
-  postgres_shariasource_data:
-  shariasource_bundle:
-  shariasource_node_modules:
-  corpusbuilder-bundle:
-  corpusbuilder-node-modules:
-  postgres-data:
-  tesseract-models:
-  kraken-models:
-  solr-data:
-  redis-tmp:
-  redis-logs:

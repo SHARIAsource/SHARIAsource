@@ -1,5 +1,6 @@
-PATH
-  remote: vendor/corpusbuilder-ruby-client
+GIT
+  remote: https://github.com/berkmancenter/corpusbuilder-ruby-client.git
+  revision: 5162065ac9dcb578a0cc77b09ca157b1bf5fd633
   specs:
     corpusbuilder-ruby (0.1.0)
       activesupport
