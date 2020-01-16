@@ -4,15 +4,11 @@ services:
     image: bitnami/redis:5.0.5
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
-    ports:
-      - "6379:6379"
     volumes:
       - redis-tmp:/opt/bitnami/redis/tmp
       - redis-logs:/opt/bitnami/redis/logs
   solr:
     image: solr:6.6.6
-    ports:
-      - "8983:8983"
     volumes:
       - solr-data:/opt/solr/server/solr/mycores
       - ./services/solr/sunspot:/opt/solr/server/solr/configsets/sunspot
@@ -70,6 +66,7 @@ services:
       - APP_DATABASE_NAME=shariasource
       - APP_DATABASE_USER=shariasource
       - APP_DATABASE_PASSWORD=zse45rdx
+      - APP_DATABASE_PORT=5432
       - APP_PORT=3000
       - APP_SOLR_URL=solr
       - APP_SOLR_PORT=8983
