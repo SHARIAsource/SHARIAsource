@@ -3,6 +3,11 @@
 # End:
 # vim: set ft=make :
 
+ps:
+  #!/usr/bin/env bash
+
+  docker-compose ps
+
 build extra="":
   #!/usr/bin/env bash
 
@@ -40,6 +45,16 @@ init:
     --entrypoint=/shariasource/bin/app_ctl \
     shariasource \
     --init
+
+up-local:
+  #!/usr/bin/env bash
+
+  export CURRENT_UID=$(id -u):$(id -g)
+
+  docker-compose \
+    -f docker-compose.yml \
+    -f docker-compose.local.yml \
+    up
 
 up:
   #!/usr/bin/env bash
@@ -110,6 +125,11 @@ test type="":
     shariasource \
     $PARAM
 
+logs service="shariasource":
+  #!/usr/bin/env bash
+
+  docker-compose logs {{ service }}
+
 repl service="shariasource":
   #!/usr/bin/env bash
 
@@ -117,10 +137,17 @@ repl service="shariasource":
 
   docker-compose \
     -f docker-compose.yml \
-    -f docker-compose.tests.yml \
     exec \
     {{ service }} \
     /{{ service }}/bin/app_ctl --repl
+
+db-dump service="shariasource":
+  #!/usr/bin/env bash
+
+  docker-compose \
+    exec \
+    postgres_{{ service }} \
+    /bin/bash -c 'PGPASSWORD="$POSTGRES_PASSWORD" pg_dump -U $POSTGRES_USER -h 0.0.0.0 $POSTGRES_DB'
 
 shell service="shariasource":
   #!/usr/bin/env bash
@@ -129,7 +156,6 @@ shell service="shariasource":
 
   docker-compose \
     -f docker-compose.yml \
-    -f docker-compose.tests.yml \
     exec \
     {{ service }} \
     /bin/bash

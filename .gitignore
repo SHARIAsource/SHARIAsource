@@ -22,3 +22,4 @@ vendor/bundle
 __MACOSX/
 .ropeproject/
 .byebug_history
+docker-compose.local.yml

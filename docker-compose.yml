@@ -2,11 +2,13 @@ version: '2'
 services:
   redis:
     image: bitnami/redis:5.0.5
-    user: ${CURRENT_UID}
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
       - "6379:6379"
+    volumes:
+      - redis-tmp:/opt/bitnami/redis/tmp
+      - redis-logs:/opt/bitnami/redis/logs
   solr:
     image: solr:6.6.6
     ports:
@@ -55,7 +57,7 @@ services:
       - postgres_corpusbuilder
       - corpusbuilder_background_jobs
   shariasource:
-    image: ocr/shariasource
+    build: .
     user: ${CURRENT_UID}
     command: ["/shariasource/bin/app_ctl", "--init", "--migrate", "--run"]
     volumes:
@@ -94,3 +96,5 @@ volumes:
   tesseract-models:
   kraken-models:
   solr-data:
+  redis-tmp:
+  redis-logs:
