@@ -2,12 +2,14 @@ version: '2'
 services:
   redis:
     image: bitnami/redis:5.0.5
+    restart: always
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
   solr:
     image: solr:6.6.6
+    restart: always
     volumes:
-      - ./vendor/volumes/solr-data:/opt/solr/server/solr/mycores
+      - solr-data:/opt/solr/server/solr/mycores
       - ./services/solr/sunspot:/opt/solr/server/solr/configsets/sunspot
     restart: unless-stopped
     command:
@@ -16,8 +18,9 @@ services:
       - /opt/solr/server/solr/configsets/sunspot
   postgres_shariasource:
     image: postgres:11
+    restart: always
     volumes:
-      - ./vendor/volumes/postgres-data:/var/lib/postgresql/data
+      - shariasource-postgres-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=zse45rdx
       - POSTGRES_USER=shariasource
@@ -52,6 +55,7 @@ services:
   shariasource:
     build: .
     user: ${CURRENT_UID}
+    restart: always
     command: ["/shariasource/bin/app_ctl", "--init", "--migrate", "--run"]
     volumes:
       - .:/shariasource
@@ -80,3 +84,7 @@ services:
       - postgres_shariasource
       - solr
       - redis
+volumes:
+  solr-data:
+  shariasource-postgres-data:
+  corpusbuilder-postgres-data:
