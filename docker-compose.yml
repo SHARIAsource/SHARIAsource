@@ -79,6 +79,7 @@ services:
       - REDIS_URL=redis://redis:6379
       - REDIS_PROVIDER=REDIS_URL
       - SECRET_KEY_BASE=4515a7c0-83d6-4b2e-9631-471a90d70ae1
+      - HOME=/shariasource
     ports:
       - "13000:3000"
     links:
