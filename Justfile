@@ -46,23 +46,20 @@ init:
     shariasource \
     --init
 
-up-local:
-  #!/usr/bin/env bash
-
-  export CURRENT_UID=$(id -u):$(id -g)
-
-  docker-compose \
-    -f docker-compose.yml \
-    -f docker-compose.local.yml \
-    up
-
 up:
   #!/usr/bin/env bash
 
   export CURRENT_UID=$(id -u):$(id -g)
 
+  export EXTRA
+  if [[ -f "docker-compose.local.yml" ]]; then
+    EXTRA="-f docker-compose.local.yml"
+    echo -e "\u001b[30;1mIncluding docker-compose.local.yml\u001b[0m"
+  fi
+
   docker-compose \
     -f docker-compose.yml \
+    $EXTRA \
     up
 
 down:
@@ -70,15 +67,29 @@ down:
 
   export CURRENT_UID=$(id -u):$(id -g)
 
+  export EXTRA
+  if [[ -f "docker-compose.local.yml" ]]; then
+    EXTRA="-f docker-compose.local.yml"
+    echo -e "\u001b[30;1mIncluding docker-compose.local.yml\u001b[0m"
+  fi
+
   docker-compose \
     -f docker-compose.yml \
+    $EXTRA \
     down
 
 copy-tesseract-models:
   #!/usr/bin/env bash
 
+  export EXTRA
+  if [[ -f "docker-compose.local.yml" ]]; then
+    EXTRA="-f docker-compose.local.yml"
+    echo -e "\u001b[30;1mIncluding docker-compose.local.yml\u001b[0m"
+  fi
+
   docker-compose \
     -f docker-compose.yml \
+    $EXTRA \
     run \
     --user=0 \
     --use-aliases \
@@ -128,15 +139,31 @@ test type="":
 logs service="shariasource":
   #!/usr/bin/env bash
 
-  docker-compose logs {{ service }}
+  export EXTRA
+  if [[ -f "docker-compose.local.yml" ]]; then
+    EXTRA="-f docker-compose.local.yml"
+    echo -e "\u001b[30;1mIncluding docker-compose.local.yml\u001b[0m"
+  fi
+
+  docker-compose \
+    -f docker-compose.yml \
+    $EXTRA \
+    logs {{ service }}
 
 repl service="shariasource":
   #!/usr/bin/env bash
 
   export CURRENT_UID=$(id -u):$(id -g)
 
+  export EXTRA
+  if [[ -f "docker-compose.local.yml" ]]; then
+    EXTRA="-f docker-compose.local.yml"
+    echo -e "\u001b[30;1mIncluding docker-compose.local.yml\u001b[0m"
+  fi
+
   docker-compose \
     -f docker-compose.yml \
+    $EXTRA \
     exec \
     {{ service }} \
     /{{ service }}/bin/app_ctl --repl
@@ -144,7 +171,15 @@ repl service="shariasource":
 db-dump service="shariasource":
   #!/usr/bin/env bash
 
+  export EXTRA
+  if [[ -f "docker-compose.local.yml" ]]; then
+    EXTRA="-f docker-compose.local.yml"
+    echo -e "\u001b[30;1mIncluding docker-compose.local.yml\u001b[0m"
+  fi
+
   docker-compose \
+    -f docker-compose.yml \
+    $EXTRA \
     exec \
     postgres_{{ service }} \
     /bin/bash -c 'PGPASSWORD="$POSTGRES_PASSWORD" pg_dump -U $POSTGRES_USER -h 0.0.0.0 $POSTGRES_DB'
@@ -154,8 +189,15 @@ shell service="shariasource":
 
   export CURRENT_UID=$(id -u):$(id -g)
 
+  export EXTRA
+  if [[ -f "docker-compose.local.yml" ]]; then
+    EXTRA="-f docker-compose.local.yml"
+    echo -e "\u001b[30;1mIncluding docker-compose.local.yml\u001b[0m"
+  fi
+
   docker-compose \
     -f docker-compose.yml \
+    $EXTRA \
     exec \
     {{ service }} \
     /bin/bash
