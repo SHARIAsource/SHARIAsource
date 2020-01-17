@@ -1,0 +1,16 @@
+version: '2'
+services:
+  postgres_corpusbuilder:
+    environment:
+      - POSTGRES_DB=corpus_builder_staging
+  postgres_shariasource:
+    environment:
+      - POSTGRES_DB=shariasource_staging
+  corpusbuilder:
+    environment:
+      - RAILS_ENV=staging
+  shariasource:
+    environment:
+      - RAILS_ENV=staging
+      - APP_DATABASE_NAME=shariasource_staging
+

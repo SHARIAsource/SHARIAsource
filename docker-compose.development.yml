@@ -1,0 +1,14 @@
+version: '2'
+services:
+  postgres_corpusbuilder:
+    environment:
+      - POSTGRES_DB=corpus_builder_development
+  postgres_shariasource:
+    environment:
+      - POSTGRES_DB=shariasource_development
+  corpusbuilder:
+    environment:
+      - RAILS_ENV=development
+  shariasource:
+    environment:
+      - RAILS_ENV=development
