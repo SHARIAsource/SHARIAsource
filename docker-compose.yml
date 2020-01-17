@@ -78,6 +78,7 @@ services:
       - CORPUS_BUILDER_SHARIA_SOURCE_TOKEN=$$2a$$08$$2rbUqU/KBR9ErNMlTZ29n.TWXe0a7OhwCbO25QQv.xpVuLS5r5SJ.
       - REDIS_URL=redis://redis:6379
       - REDIS_PROVIDER=REDIS_URL
+      - SECRET_KEY_BASE=4515a7c0-83d6-4b2e-9631-471a90d70ae1
     ports:
       - "13000:3000"
     links:
