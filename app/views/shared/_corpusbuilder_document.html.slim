@@ -5,7 +5,7 @@
       CorpusBuilder.init(
         document.getElementById('corpusbuilder'),
         {
-          baseUrl: '#{ request.base_url }/corpusbuilder',
+          baseUrl: location.protocol + '//' + location.host + '/corpusbuilder',
           directUrl: '#{ Corpusbuilder::Ruby::Api.config.public_url }',
           documentId: documentId,
           showImage: true,

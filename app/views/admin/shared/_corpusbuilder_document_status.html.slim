@@ -17,7 +17,7 @@
       var corpusBuilderStatuis = CorpusBuilderDocumentStatus.init(
         document.getElementById('corpusbuilderuploader'),
         {
-          baseUrl: '#{ request.base_url }/corpusbuilder',
+          baseUrl: location.protocol + '//' + location.host + '/corpusbuilder',
           editorEmail: '#{ editor_email }',
           documentId: '#{ document.ocr_document_id }',
           onFinished: onFinished
