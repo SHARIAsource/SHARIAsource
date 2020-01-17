@@ -12,3 +12,4 @@ services:
   shariasource:
     environment:
       - RAILS_ENV=development
+      - APP_DATABASE_NAME=shariasource_development
