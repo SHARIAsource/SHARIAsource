@@ -168,6 +168,30 @@ repl service="shariasource":
     {{ service }} \
     /{{ service }}/bin/app_ctl --repl
 
+db-load service="shariasource" file="":
+  #!/usr/bin/env bash
+
+  if [[ ! -f "{{ file }}" ]]; then
+    echo "Given file: '{{ file }}' doesn't exist!"
+    exit 1
+  fi
+
+  export EXTRA
+  if [[ -f "docker-compose.local.yml" ]]; then
+    EXTRA="-f docker-compose.local.yml"
+    echo -e "\u001b[30;1mIncluding docker-compose.local.yml\u001b[0m"
+  fi
+
+  container_id=$(docker-compose ps -q postgres_shariasource | head -n1)
+  docker cp {{ file }} $container_id:/load.sql
+
+  docker-compose \
+    -f docker-compose.yml \
+    $EXTRA \
+    exec \
+    postgres_{{ service }} \
+    /bin/bash -c 'PGPASSWORD="$POSTGRES_PASSWORD" cat /load.sql | psql -U $POSTGRES_USER -h 0.0.0.0 $POSTGRES_DB'
+
 db-dump service="shariasource":
   #!/usr/bin/env bash
 

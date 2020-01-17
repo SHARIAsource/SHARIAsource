@@ -23,3 +23,4 @@ __MACOSX/
 .byebug_history
 docker-compose.local.yml
 /vendor/volumes
+yarn-error.log
