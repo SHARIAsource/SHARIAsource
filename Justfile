@@ -3,11 +3,13 @@
 # End:
 # vim: set ft=make :
 
+# List the running containers
 ps:
   #!/usr/bin/env bash
 
   docker-compose ps
 
+# Build container images
 build extra="":
   #!/usr/bin/env bash
 
@@ -21,6 +23,7 @@ build extra="":
     $EXTRA \
     build
 
+# Migrate the testing database schema
 migrate-test:
   #!/usr/bin/env bash
 
@@ -35,6 +38,7 @@ migrate-test:
     shariasource \
     --migrate-test
 
+# Initialize the ShariaSource container for the tests
 init:
   #!/usr/bin/env bash
 
@@ -49,6 +53,7 @@ init:
     shariasource \
     --init
 
+# Start all the services
 up mode="development":
   #!/usr/bin/env bash
 
@@ -68,6 +73,7 @@ up mode="development":
     $EXTRA \
     up
 
+# Tear all the services down
 down mode="development":
   #!/usr/bin/env bash
 
@@ -85,6 +91,7 @@ down mode="development":
     $EXTRA \
     down
 
+# Copy built in Tesseract models to have the running container able to find them
 copy-tesseract-models:
   #!/usr/bin/env bash
 
@@ -104,6 +111,7 @@ copy-tesseract-models:
     corpusbuilder \
     "--copy-tesseract-models"
 
+# Run the testing suite
 test type="":
   #!/usr/bin/env bash
 
@@ -143,6 +151,7 @@ test type="":
     shariasource \
     $PARAM
 
+# Examine the logs
 logs service="shariasource":
   #!/usr/bin/env bash
 
@@ -157,6 +166,7 @@ logs service="shariasource":
     $EXTRA \
     logs {{ service }}
 
+# Run the Rails console
 repl service="shariasource":
   #!/usr/bin/env bash
 
@@ -175,6 +185,7 @@ repl service="shariasource":
     {{ service }} \
     /{{ service }}/bin/app_ctl --repl
 
+# Load the database dump
 db-load service="shariasource" file="":
   #!/usr/bin/env bash
 
@@ -200,6 +211,7 @@ db-load service="shariasource" file="":
     /bin/bash -c 'PGPASSWORD="$POSTGRES_PASSWORD" cat /load.sql | psql -U $POSTGRES_USER -h 0.0.0.0 $POSTGRES_DB'
 
 
+# Run the psql
 psql service="shariasource":
   #!/usr/bin/env bash
 
@@ -216,6 +228,7 @@ psql service="shariasource":
     postgres_{{ service }} \
     /bin/bash -c 'PGPASSWORD="$POSTGRES_PASSWORD" psql -U $POSTGRES_USER -h 0.0.0.0 $POSTGRES_DB'
 
+# Dump the database to stdout as SQL
 db-dump service="shariasource":
   #!/usr/bin/env bash
 
@@ -232,6 +245,7 @@ db-dump service="shariasource":
     postgres_{{ service }} \
     /bin/bash -c 'PGPASSWORD="$POSTGRES_PASSWORD" pg_dump -U $POSTGRES_USER -h 0.0.0.0 $POSTGRES_DB'
 
+# Run a Rails task
 rails service="shariasource" mode="development" task="-T":
   #!/usr/bin/env bash
 
@@ -253,6 +267,7 @@ rails service="shariasource" mode="development" task="-T":
     {{ service }} \
     bundle exec rails {{ task }}
 
+# Run the shell inside the container
 shell service="shariasource":
   #!/usr/bin/env bash
 
