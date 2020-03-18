@@ -186,8 +186,29 @@
   }
 
   input[type="checkbox"], input[type="radio"] {
-    position:absolute;
-    left:-9999px;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    padding-left: 20px;
+    position: relative;
+    outline: none !important;
+  }
+
+  input[type="radio"]:before {
+      content: " ";
+      display: block;
+      position: absolute;
+      left: 0px;
+      top: 2px;
+      width: 12px;
+      height: 12px;
+      background: #e7e9e8;
+      border: 2px solid #fff;
+  }
+
+  input[type="radio"]:checked:before {
+    background: #eba400;
+    border: 1px solid #e7e9e8;
   }
 
   select[multiple] {
