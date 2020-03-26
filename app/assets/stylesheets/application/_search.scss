@@ -580,3 +580,7 @@
     text-transform:capitalize;
   }
 }
+
+.search_filters_date_format span:nth-child(2) {
+  display: none;
+}

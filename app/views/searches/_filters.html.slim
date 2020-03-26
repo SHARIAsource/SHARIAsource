@@ -26,7 +26,12 @@
         .date-block
           = f.input :date_to, label: 'To:', placeholder:'dd/mm/yyyy', input_html: { name: :date_to } if f.object.date_to
         .date-block.format
-          = f.input :date_format, as: :radio_buttons, collection: [['AH', 'ah'], ['CE', 'ce']], item_wrapper_class: 'radio-label', input_html: { name: 'date_format'}, label: false
+          = f.input :date_format,
+            as: :radio_buttons,
+            collection: [['All', ''], ['AH', 'ah'], ['CE', 'ce']],
+            item_wrapper_class: 'radio-label',
+            input_html: { name: 'date_format'},
+            label: false
 
   .filter-language.js-same-height
     .filter-block.is-contracted
