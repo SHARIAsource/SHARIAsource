@@ -1,5 +1,8 @@
 ul.social-links
   li
-    a.twitter target='_blank' href='https://twitter.com/Open_ITI' title='Twitter' Twitter
+    a.twitter href='https://twitter.com/shariasource' title='Twitter' Twitter
+  li
+    a.facebook href='https://www.facebook.com/SHARIAsource.at.HARVARD/' title='Facebook' Facebook
+  li
+    a.wordpress href='https://shariasourceblog.wordpress.com/' title='SHARIAsource Blog' Blog
   li.login-link= link_to 'Login', new_user_session_path if current_user.nil?
-  li.signup-link= link_to 'Sign Up', new_user_registration_path if current_user.nil?

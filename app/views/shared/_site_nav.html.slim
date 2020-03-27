@@ -1,17 +1,12 @@
 .inner-wrapper
   nav.inner.clearfix.header
     ul.site-nav
-      li= link_to 'About OpenITI', '/about'
-      li= link_to 'OpenITI Team', '/team'
-      li
-        a href='/projects' data-dropdown="projects-drop" data-options="is_hover:true; hover_timeout:5000"
-          = "Projects"
-        ul#projects-drop.f-dropdown data-dropdown-content="" aria-hidden="true" tabindex="-1"
-          - Project.published.each do |project|
-            li
-              = link_to project.name, "/projects/#{project.slug}"
-
-      li= link_to 'Acknowledgements', '/acknowledgements'
-      li= link_to 'OCR Guidelines', '/guidelines'
+      li= link_to 'Topics & Themes', topics_path
+      li= link_to 'Geographic Regions', regions_path
+      li= link_to 'Empires &<br /> Eras'.html_safe, eras_path
+      li= link_to 'Document Types', document_types_path
+      li= link_to 'Editors & Contributors', contributors_path
+      li= link_to 'Special Collections', '/resources'
+      li= link_to 'About SHARIAsource', '/about'
     div.header-social-links
       = render 'shared/social_media'
