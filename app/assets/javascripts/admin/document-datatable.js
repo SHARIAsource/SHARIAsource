@@ -1,4 +1,6 @@
-var ready = function() {
+var ready;
+ready = function() {
+    //prevent re-init of data table, prevent loss of init when going from
     //unpublished to pubslihed and vice versa
     if(!$("#document-datatable_filter")[0]) {
 

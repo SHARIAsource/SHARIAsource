@@ -27,6 +27,8 @@
   &:before {
     content:'»';
     font-size:2em;
+    line-height:0.5;
+    vertical-align:top;
     margin-right:4px;
     margin-left:-20px;
   }
@@ -197,6 +199,7 @@
 .metadata-inner {
   width:980px;
   margin:0 auto;
+  padding-bottom: 32px;
 
   @media screen and (max-width:1020px) {
     overflow:hidden;
@@ -207,7 +210,7 @@
   @include clearfix;
   width:1004px;
   overflow: hidden;
-  //max-height: 152px;
+  max-height: 152px;
   margin-left:-14px;
 }
 
@@ -273,6 +276,7 @@
 
     a {
       line-height:1;
+      vertical-align:top;
     }
 
     .hidden-ref {
@@ -317,6 +321,7 @@
   width:740px;
   margin:0 auto;
   padding:10px 10px 42px 10px;
+  min-height:500px;
   @include clearfix;
 
   p, ul, ol, {

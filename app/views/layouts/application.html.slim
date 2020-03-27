@@ -7,8 +7,6 @@ html
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'vendor/modernizr', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
-    script src="#{ Corpusbuilder::Ruby::Api.config.public_url }/packs/client.js"
-    link rel="stylesheet" href="#{ Corpusbuilder::Ruby::Api.config.public_url }/packs/client.css"
     = yield(:head)
     = csrf_meta_tags
     = auto_discovery_link_tag :rss, documents_url
@@ -18,7 +16,6 @@ html
       = render 'admin/admin_nav' if user_signed_in?
       = render 'shared/site_nav'
       = render 'shared/banner'
-      .inner-wrapper.main-content
-        == yield
+      == yield
       = render 'shared/footer'
       = render 'shared/preloader'

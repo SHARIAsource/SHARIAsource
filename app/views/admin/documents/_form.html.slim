@@ -1,7 +1,9 @@
 = simple_form_for @document, url: form_url, html: { class: 'edit_document' } do |f|
   .row
-    .large-8.columns
+    .large-4.columns
       = f.input :title, autofocus: true
+    .large-4.columns
+      = f.input :document_style, as: :select, collection: [['Scan with Text', 'scan'], ['Scan without Text', 'scannotext'], ['No Scan', 'noscan']], include_blank: false
     .large-4.columns
       = f.association :document_type, collection: DocumentType.all
 
@@ -28,9 +30,91 @@
     - if current_user.is_editor?
       .large-4.columns
         = f.association :contributors, collection: User.order('last_name ASC'), include_blank: false
+
   .row
-    .large-8.columns
-      = f.association :language, collection: Language.all
+    .large-12.columns.end
+      = f.input :summary, input_html: { rows: 4, class: 'wysiwyg-summary' }
+
+  .row
+    .large-12.columns
+      h3 Metadata
+
+  .row
+    .large-4.columns
+      .panel
+        = f.association :reference_type, collection: ReferenceType.all
+        = f.input :alternate_authors, label: 'Authors (long form)'
+        = f.input :alternate_titles, label: 'Title (long form)'
+        = f.input :alternate_editors, label: 'Editors (long form)'
+        = f.input :alternate_translators, label: 'Translators (long form)'
+        = f.input :publisher_location, label: 'City of Publication'
+        = f.input :publisher
+        = f.input :alternate_years
+        = f.input :volume_count, label: 'Number of Volumes'
+        = f.input :source_name
+        = f.input :source_url, label: 'Source URL', placeholder: 'http://example.com'
+        = f.input :permission_giver
+        = f.input :citation, as: :string
+        - if current_user.can_review?
+          = f.input :reviewed, boolean_style: :inline, label: 'Mark Document Reviewed?'
+          - if @document.reviewed?
+            div
+              | Last reviewed by #{@document.reviewed_by_name}
+              span title=@document.reviewed_at.to_time
+                | #{time_ago_in_words(@document.reviewed_at)} ago
+
+    .large-4.columns
+      .panel
+        = f.association :topics, collection: Topic.all
+        = f.association :themes, collection: Theme.all
+        = f.association :regions, collection: Region.all, label: 'Geographic Regions'
+        = f.association :eras, collection: Era.all, label: 'Empires & Eras'
+        = f.association :language, collection: Language.all
+        = f.association :tags, collection: Tag.all, label: 'Additional Tags'
+    .large-4.columns
+      .panel
+        = f.association :referenced_documents, collection: Document.where.not(id: @document.id)
+
+  .row
+    .large-12.columns
+      h3 Content
+      = f.input :content_password, as: :hidden, input_html: {'data-password' => @document.new_content_password}
+
+  .scan-only.panel
+    = render partial: 'content_password', locals: {document: @document, f: f}
+    .row
+      .large-9.columns.end
+        = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
+        = @document.pdf.file.try(:identifier)
+
+    - if @document.pages.present?
+      .clearfix
+        h3 Pages
+        ul.tabs.vertical data-tab="true" data-options='deep_linking:true'
+          - @document.pages.each_with_index do |page, index|
+            li class="tab-title #{'active' if index == 0}"
+              a href="#page#{index+1}"= "Page #{index+1}"
+        .tabs-content.vertical
+          = f.fields_for :pages do |p|
+            div class="content #{'active' if p.index == 0}" id="page#{p.index+1}"
+              .row.page-preview
+                .large-8.columns.page-text-preview
+                  = p.fields_for :body do |b|
+                    = b.input :hybrid_text, label: "Page #{p.index+1} Text", input_html: { class: 'wysiwyg' }
+                .large-4.columns.page-image-preview#page-image-preview
+                  img src=p.object.image.url
+
+  .noscan-only.panel
+    = render partial: 'content_password', locals: {document: @document, f: f}
+    .row
+      .large-12.columns
+        = f.input :word_document
+        - if f.object.word_document.present?
+          p= link_to f.object.word_document.file.filename, f.object.word_document.url
+    .row
+      .large-12.columns
+        = f.fields_for :body do |b|
+          = b.input :text, label: 'Content', input_html: { class: 'wysiwyg' }
 
   .row
     = corpusbuilder_uploader(@document)

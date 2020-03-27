@@ -1,19 +1,6 @@
 .header {
-  padding-top: 10px;
-  padding-bottom: 8px;
-}
-
-.f-dropdown {
-  position: absolute;
-  left: -99999px;
-  background: white;
-  padding: 10px;
-  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.5);
-  z-index: 999;
-
-  li {
-    display: block !important;
-  }
+  padding-top:20px;
+  padding-bottom:12px;
 }
 
 .site-nav {
@@ -22,18 +9,12 @@
   font-weight:bold;
   font-size:14px;
   float:left;
-  margin-left: 115px;
-  position: relative;
-  top: 12px;
 
   li {
-    width: auto;
+    float:left;
+    width:128px;
     padding-right:20px;
-    padding-bottom: 16px;
     line-height:1.14286;
-    text-align: center;
-    display: inline-block;
-    vertical-align: middle;
   }
 
   a {
@@ -47,27 +28,28 @@
 }
 
 .header-social-links {
-  float: right;
+  position: relative;
+  bottom: 15px;
 }
 
 .header .social-links {
-  padding-top: 10px;
+  float:right;
+  position: relative;
+  top: 16px;
 
   li {
     margin-left:8px;
-    padding-right: 8px;
   }
 
   li:first-child {
     margin-left: 0px;
   }
 
-  li.signup-link {
-    margin-top: 0px !important;
-  }
-
-  li.login-link, li.signup-link {
+  li.login-link {
+    clear: both;
+    width: 100%;
     text-align: center;
+    margin-top: 4px;
     margin-left: 0px;
     font-weight: bold;
 
@@ -84,7 +66,6 @@
     width:18px;
     background:url(image-path('header-twitter.svg')) 0 0 no-repeat;
     background-size:18px 16px;
-    margin: 0 auto;
 
     &:hover, &:focus {
       background-image:url(image-path('twitter-hover.svg'));

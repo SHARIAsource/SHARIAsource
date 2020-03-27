@@ -1,49 +1,33 @@
 (function() {
   var max = 148;
 
-  var hideOverlaps = function() {
-    var metadata = $('.metadata')[0];
-
-    if(metadata !== null && metadata !== undefined) {
-      var mainBox = metadata.getBoundingClientRect();
-      var bottom = mainBox.top + mainBox.height;
-
-      $('.metadata *:not(:has(*)), .metadata li').each((_, el) => {
-        var box = el.getBoundingClientRect();
-        var itemBottom = box.top + box.height;
-
-        if( itemBottom > bottom) {
-          $(el).hide().addClass('item-hidden');
-        }
-      });
-    }
-
-    $('.meta-show-more').show();
-    $('.meta-show-less').hide();
-
-    return false;
-  };
-
   $(document).on('turbolinks:load', function() {
-    $('.metadata').height(max);
-    setTimeout(hideOverlaps, 500);
-    return false;
-  });
+    setTimeout(function() {
+      var metadata = $('.metadata')[0];
+      if(metadata !== null && metadata !== undefined) {
+        if(max > $(metadata.children).height()) {
+          $('.meta-show-more, .meta-show-less').hide();
+        }
+        else {
+          $('.meta-column').css('max-height', max + 'px');
+        }
+      }
+    }, 2000);
+  }).on('click', '.meta-show-more', function(event) {
+    $(event.target).parents('.metadata-inner').find('.metadata').css('max-height', 'none');
+    $(event.target).parents('.metadata-inner').find('.metadata').find('.meta-column').css('max-height', 'none');
+    $(event.target).parents('.metadata-inner').find('.meta-show-less').show();
+    $(event.target).hide();
+    $(document).trigger('sameheight:refresh');
+    event.preventDefault()
 
-  $(document).on('click', '.meta-show-more', function() {
-    $('.metadata').height('auto');
-    $('.metadata .item-hidden').show().removeClass('item-hidden');
-
-    $('.meta-show-more').hide();
-    $('.meta-show-less').show();
-
-    return false;
-  });
-
-  $(document).on('click', '.meta-show-less', function() {
-    $('.metadata').height(max);
-    setTimeout(hideOverlaps, 1);
-    return false;
-  });
+  }).on('click', '.meta-show-less', function(event) {
+    $(event.target).parents('.metadata-inner').find('.metadata').css('max-height', max + 'px');
+    $(event.target).parents('.metadata-inner').find('.metadata').find('.meta-column').css('max-height', max + 'px');
+    $(event.target).parents('.metadata-inner').find('.meta-show-more').show();
+    $(event.target).hide();
+    $(document).trigger('sameheight:refresh');
+    event.preventDefault()
+  })
 }())
 

@@ -2,8 +2,7 @@
 
 .row
   .large-6.large-centered.columns
-    h3 Sign in
-    .alert-box.info If you would like a OpenITI CorpusBuilder account, please email openiti@umd.edu with a brief description of the project you want to carry out. If approved, login credentials will be sent to you
+    h2 Sign in
     = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
       = f.input :email, autofocus: true
       = f.input :password

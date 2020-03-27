@@ -1,10 +1,6 @@
-.main-content > .inner-wrapper:last-child .home-block {
-  border-bottom: none !important;
-}
-
 .home-block {
   @include clearfix;
-  padding-top:8px;
+  padding-top:4px;
   padding-bottom:20px;
   border-bottom:4px solid $ss-color-bodybg;
 
@@ -100,19 +96,8 @@
   text-transform:uppercase;
   color:$ss-color-secondary;
   font-weight:bold;
-  margin:8px 0 8px 0;
+  margin:8px 0 16px 0;
   letter-spacing:1px;
-}
-
-.home-block-heading:before {
-  content: '';
-  width: 12px;
-  height:12px;
-  display: inline-block;
-  background: $ss-color-secondary;
-  opacity: 0.15;
-  margin-right: 4px;
-  transform: translateY(1px);
 }
 
 .home-collaborators {

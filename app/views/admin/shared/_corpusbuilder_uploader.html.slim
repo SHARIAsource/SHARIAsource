@@ -1,4 +1,6 @@
 .large-12.columns
+  script src="#{ corpusbuilder_public_url }/packs/client.js"
+  link rel="stylesheet" href="#{ corpusbuilder_public_url }/packs/client.css"
   ruby:
     images = if params.fetch(:document, {}).fetch(:ocr, {}).has_key?(:ocr)
       params[:document][:ocr][:images].zip(params[:document][:ocr][:image_names]).map do |arr|
@@ -62,7 +64,7 @@
       var corpusBuilderUploader = CorpusBuilderUploader.init(
         document.getElementById('corpusbuilderuploader'),
         {
-          baseUrl: location.protocol + '//' + location.host + '/corpusbuilder',
+          baseUrl: '#{ request.base_url }/corpusbuilder',
           editorEmail: '#{ editor_email }',
           #{ current_user.is_ocr_advanced? ? 'backends: undefined,' : 'backends: ["tesseract"], '.html_safe}
           onDocumentPicked: function(doc) {
