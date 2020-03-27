@@ -9,7 +9,7 @@
 .footer {
   @include clearfix;
   margin:0 auto;
-  background:$ss-color-primary; //url(image-path('footer-bg.jpg')) center 0 no-repeat;
+  background:url(image-path('footer-bg.jpg')) center 0 no-repeat;
   background-size:1000px 352px;
   padding-top:15px;
   padding-bottom:15px;
