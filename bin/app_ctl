@@ -36,7 +36,7 @@ function wait-for-test-dependencies {
 }
 
 if [[ "$*" == *--init* ]]; then
-  bundle install
+  bundle
   yarn
 fi
 
@@ -52,6 +52,24 @@ if [[ "$*" == *--integration-test* ]]; then
   wait-for-test-dependencies
 
   bundle exec rspec spec/features
+fi
+
+if [[ "$*" == *--controllers-test* ]]; then
+  wait-for-test-dependencies
+
+  bundle exec rspec spec/controllers
+fi
+
+if [[ "$*" == *--models-test* ]]; then
+  wait-for-test-dependencies
+
+  bundle exec rspec spec/models
+fi
+
+if [[ "$*" == *--views-test* ]]; then
+  wait-for-test-dependencies
+
+  bundle exec rspec spec/views
 fi
 
 if [[ "$*" == *--test* ]]; then
