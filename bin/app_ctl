@@ -36,7 +36,7 @@ function wait-for-test-dependencies {
 }
 
 if [[ "$*" == *--init* ]]; then
-  bundle
+  bundle install
   yarn
 fi
 

@@ -3,11 +3,17 @@ services:
   redis:
     image: bitnami/redis:5.0.5
     restart: always
+    dns:
+      - 8.8.8.8
+    network_mode: "bridge"
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
   solr:
-    image: solr:6.6.6
+    image: solr:8.4
     restart: always
+    dns:
+      - 8.8.8.8
+    network_mode: "bridge"
     volumes:
       - solr-data:/opt/solr/server/solr/mycores
       - ./services/solr/sunspot:/opt/solr/server/solr/configsets/sunspot
@@ -19,6 +25,9 @@ services:
   postgres_shariasource:
     image: postgres:11
     restart: always
+    dns:
+      - 8.8.8.8
+    network_mode: "bridge"
     volumes:
       - shariasource-postgres-data:/var/lib/postgresql/data
     environment:
@@ -29,6 +38,9 @@ services:
     extends:
       file: services/corpusbuilder/docker-compose.yml
       service: postgres_corpusbuilder
+    dns:
+      - 8.8.8.8
+    network_mode: "bridge"
     environment:
       - POSTGRES_PASSWORD=zse45rdx
       - POSTGRES_USER=corpus_builder
@@ -37,6 +49,9 @@ services:
     extends:
       file: services/corpusbuilder/docker-compose.yml
       service: corpusbuilder_background_jobs
+    dns:
+      - 8.8.8.8
+    network_mode: "bridge"
     environment:
       - APP_DATABASE_URL=postgres_corpusbuilder
     links:
@@ -49,6 +64,9 @@ services:
       - APP_DATABASE_URL=postgres_corpusbuilder
     ports:
       - "13001:13001"
+    dns:
+      - 8.8.8.8
+    network_mode: "bridge"
     links:
       - postgres_corpusbuilder
       - corpusbuilder_background_jobs
@@ -56,6 +74,9 @@ services:
     build: .
     user: ${CURRENT_UID}
     restart: always
+    dns:
+      - 8.8.8.8
+    network_mode: "bridge"
     command: ["/shariasource/bin/app_ctl", "--init", "--migrate", "--run"]
     volumes:
       - .:/shariasource
