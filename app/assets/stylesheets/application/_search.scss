@@ -581,6 +581,6 @@
   }
 }
 
-.search_filters_date_format span:nth-child(2) {
+.named_filter_date_format span:nth-child(2), .search_filters_date_format span:nth-child(2) {
   display: none;
 }
