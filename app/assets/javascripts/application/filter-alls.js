@@ -106,7 +106,7 @@
       var $children = $checked.closest('label').next().find('input')
       var $opts = $multiples.find('option')
       var $selOpts = $opts.filter(':selected')
-      var hasChecked = $checked.length && $checked.length !== $checkboxes.length
+      var hasChecked = $checked.length && $checked.length !== $checkboxes.length && $checked.val() != ""
       var hasSelected = $selOpts.length && $selOpts.length != $opts.length
 
       $checked.closest('.check-label').addClass('checked')
