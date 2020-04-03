@@ -104,7 +104,7 @@
       .filter-content
         = render 'searches/all'
         ul.filter-hierarchy
-          = render partial: 'searches/hierarchy', locals: { hash: @regions, field_name: :region, input_name: 'region[]', f: f }
+          = render partial: 'searches/hierarchy', locals: { hash: @regions, field_name: :region, input_name: 'region[]', collapse_level: 2, f: f }
 
   .filter-eras.js-same-height
     .filter-block.is-contracted

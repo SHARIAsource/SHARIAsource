@@ -584,3 +584,18 @@
 .search_filters_date_format span:nth-child(2) {
   display: none;
 }
+
+.collapsed {
+  display: none;
+}
+
+.toggle-collapse {
+  display: block;
+  height: 32px;
+  line-height: 32px;
+  color: #eba400;
+  font-family: Amiri, Times, Times New Roman, Georgia, serif;
+  font-weight: bold;
+  font-size: 0.8em;
+  margin-left: 20px;
+}
