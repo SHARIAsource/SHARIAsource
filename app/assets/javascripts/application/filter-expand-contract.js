@@ -33,6 +33,8 @@
     else {
       $ul.addClass('collapsed')
       $el.text($el.data('title'))
+
+      $el.parent().find('input[type=checkbox]:checked').parent().click()
     }
   });
 
@@ -71,7 +73,6 @@
 
     $filterHeader = $('.filter-header')
     $expand.removeClass('is-contracted')
-    $expand.find('.filter-content').slideToggle(300)
     checkExpandContractAll()
     $document.trigger('filtersummary:refresh')
   })
