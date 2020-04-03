@@ -21,6 +21,7 @@
     event.preventDefault()
   })
 
+
   $document.on('click', '.filter-block .expand-contract', function(event) {
     var $block = $(this).closest('.filter-block')
 
