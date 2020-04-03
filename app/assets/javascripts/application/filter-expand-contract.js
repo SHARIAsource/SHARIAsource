@@ -21,6 +21,20 @@
     event.preventDefault()
   })
 
+  $document.on('click', '.toggle-collapse', function(event) {
+    var $el = $(event.currentTarget)
+
+    var $ul = $($el.parent().find('ul')[0])
+
+    if($ul.hasClass('collapsed')) {
+      $ul.removeClass('collapsed')
+      $el.text($el.data('alt-title'))
+    }
+    else {
+      $ul.addClass('collapsed')
+      $el.text($el.data('title'))
+    }
+  });
 
   $document.on('click', '.filter-block .expand-contract', function(event) {
     var $block = $(this).closest('.filter-block')
