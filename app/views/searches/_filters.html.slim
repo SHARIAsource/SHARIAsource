@@ -21,10 +21,11 @@
         a.expand-contract href='#'Date
       .filter-content
         = render 'searches/all'
-        .date-block
-          = f.input :date_from, label: 'From:', placeholder: 'dd/mm/yyyy', input_html: { name: :date_from } if f.object.date_from
-        .date-block
-          = f.input :date_to, label: 'To:', placeholder:'dd/mm/yyyy', input_html: { name: :date_to } if f.object.date_to
+        .clearfix
+          .date-block
+            = f.input :date_from, label: 'From:', placeholder: 'dd/mm/yyyy', input_html: { name: :date_from }, as: :native_date
+          .date-block
+            = f.input :date_to, label: 'To:', placeholder:'dd/mm/yyyy', input_html: { name: :date_to }, as: :native_date
         .date-block.format
           = f.input :date_format,
             as: :radio_buttons,

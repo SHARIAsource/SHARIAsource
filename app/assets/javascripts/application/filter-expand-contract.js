@@ -50,7 +50,7 @@
     var $blocks = $('.filter-block')
     var $checked = $blocks.find(checkedSelector)
     var $selected = $blocks.find('option:selected')
-    var $filled = $blocks.find('input[type="text"]').filter(function() {
+    var $filled = $blocks.find('input[type="text"], input[type=date]').filter(function() {
       return !!$(this).val()
     })
     var $expand = $checked.add($selected).add($filled).closest('.filter-block')
