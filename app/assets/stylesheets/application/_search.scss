@@ -376,7 +376,7 @@
 
   .filter-date {
     float:left;
-    width:478px;
+    width:350px;
     padding:0 10px 10px 0;
   }
 
@@ -446,7 +446,6 @@
     &.format {
       margin-right:0;
       width:130px;
-      padding-top:38px;
     }
   }
 }
@@ -602,4 +601,13 @@
 
 input[type=date]:invalid {
   border: 1px solid red;
+}
+
+.all-dates {
+  float: left;
+  width: 100px;
+}
+
+.clearfix {
+  clear: both;
 }
