@@ -24,7 +24,7 @@
   $document.on('click', '.toggle-collapse', function(event) {
     var $el = $(event.currentTarget)
 
-    var $ul = $($el.parent().find('ul')[0])
+    var $ul = $($el.parent().find('ul'))
 
     if($ul.hasClass('collapsed')) {
       $ul.removeClass('collapsed')
