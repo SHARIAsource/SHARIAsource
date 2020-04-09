@@ -599,3 +599,7 @@
   font-size: 0.8em;
   margin-left: 20px;
 }
+
+input[type=date]:invalid {
+  border: 1px solid red;
+}
