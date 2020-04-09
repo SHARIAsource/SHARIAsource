@@ -227,6 +227,12 @@
     }
 
     &.filter-hierarchy {
+      > li {
+        position: relative;
+      }
+    }
+
+    &.filter-hierarchy {
       > li > label {
         font-weight:bold;
         color:$ss-color-heading;
@@ -595,8 +601,11 @@
   color: #eba400;
   font-family: Amiri, Times, Times New Roman, Georgia, serif;
   font-weight: bold;
-  font-size: 0.8em;
+  font-size: 1.2em;
   margin-left: 20px;
+  position: absolute;
+  top: -2px;
+  right: 0px;
 }
 
 input[type=date]:invalid {
