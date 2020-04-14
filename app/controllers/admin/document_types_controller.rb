@@ -1,4 +1,6 @@
 class Admin::DocumentTypesController < AdminController
+  include ActionView::Helpers::UrlHelper
+
   before_action :ensure_editor!
   before_action :fetch_document_type, only: [:edit, :update, :destroy]
 
@@ -35,11 +37,23 @@ class Admin::DocumentTypesController < AdminController
   end
 
   def destroy
-    if @document_type.destroy
-      flash[:notice] = 'Document Type deleted successfully'
+    if @document_type.documents.count == 0
+      if @document_type.destroy
+        flash[:notice] = 'Document Type deleted successfully'
+      else
+        flash[:error] = @document_type.errors.full_messages.join(", ")
+      end
     else
-      flash[:error] = 'An error occurred while trying to delete that document type'
+      links = @document_type.documents.first(3).map do |document|
+        link_to document.name, admin_document_path(document)
+      end
+      flash[:error] = "Cannot delete this document type as there are documents linked: <br />#{links.join("&nbsp;|&nbsp;")}"
+
+      if @document_type.documents.count > links.count
+        flash[:error] += " (+ #{@document_type.documents.count - links.count} other)"
+      end
     end
+
     redirect_to admin_document_types_path
   end
 
