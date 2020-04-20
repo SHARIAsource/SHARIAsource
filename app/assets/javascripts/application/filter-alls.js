@@ -5,7 +5,7 @@
     var $block = $(block)
     var $checkboxes = $block.find('li input[type="checkbox"]')
     var $radioboxes = $block.find('input[type="radio"]')
-    var $texts = $block.find('input[type="text"]')
+    var $texts = $block.find('input[type="text"],input[type="date"]')
     var $all = $block.find('.all input[type="checkbox"]')
     var $multiples = $block.find('select[multiple]')
 

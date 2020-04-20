@@ -10,6 +10,8 @@
     if (!$('.filter-block.is-contracted').length) {
       $filterHeader.addClass('all-expanded')
     }
+
+    $('.filter-block:not(.is-contracted) .filter-content').slideToggle(300)
   }
   $document.on('click', '.summary-expand-contract', function(event) {
     var $block = $(this).closest('.summary-block')

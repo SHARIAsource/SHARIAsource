@@ -31,9 +31,17 @@
             label: false
         .clearfix
           .date-block
-            = f.input :date_from, label: 'From:', placeholder: 'dd/mm/yyyy', input_html: { name: :date_from }, as: :native_date
+            = f.input :date_from,
+              label: 'From:',
+              placeholder: 'dd/mm/yyyy',
+              input_html: { name: :date_from, value: params[:date_from] },
+              as: :native_date
           .date-block
-            = f.input :date_to, label: 'To:', placeholder:'dd/mm/yyyy', input_html: { name: :date_to }, as: :native_date
+            = f.input :date_to,
+              label: 'To:',
+              placeholder:'dd/mm/yyyy',
+              input_html: { name: :date_to, value: params[:date_to] },
+              as: :native_date
 
   .filter-language.js-same-height
     .filter-block.is-contracted
