@@ -186,8 +186,29 @@
   }
 
   input[type="checkbox"], input[type="radio"] {
-    position:absolute;
-    left:-9999px;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    padding-left: 20px;
+    position: relative;
+    outline: none !important;
+  }
+
+  input[type="radio"]:before {
+      content: " ";
+      display: block;
+      position: absolute;
+      left: 0px;
+      top: 2px;
+      width: 12px;
+      height: 12px;
+      background: #e7e9e8;
+      border: 2px solid #fff;
+  }
+
+  input[type="radio"]:checked:before {
+    background: #eba400;
+    border: 1px solid #e7e9e8;
   }
 
   select[multiple] {
@@ -203,6 +224,12 @@
     ul {
       list-style:none;
       margin-left:20px;
+    }
+
+    &.filter-hierarchy {
+      li {
+        position: relative;
+      }
     }
 
     &.filter-hierarchy {
@@ -355,7 +382,7 @@
 
   .filter-date {
     float:left;
-    width:478px;
+    width:350px;
     padding:0 10px 10px 0;
   }
 
@@ -425,7 +452,6 @@
     &.format {
       margin-right:0;
       width:130px;
-      padding-top:38px;
     }
   }
 }
@@ -558,4 +584,39 @@
   .name {
     text-transform:capitalize;
   }
+}
+
+.named_filter_date_format span:nth-child(2), .search_filters_date_format span:nth-child(2) {
+  display: none;
+}
+
+.collapsed {
+  display: none;
+}
+
+.toggle-collapse {
+  display: block;
+  height: 32px;
+  line-height: 32px;
+  color: #eba400;
+  font-family: Amiri, Times, Times New Roman, Georgia, serif;
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-left: 20px;
+  position: absolute;
+  top: -2px;
+  right: 0px;
+}
+
+input[type=date]:invalid {
+  border: 1px solid red;
+}
+
+.all-dates {
+  float: left;
+  width: 100px;
+}
+
+.clearfix {
+  clear: both;
 }

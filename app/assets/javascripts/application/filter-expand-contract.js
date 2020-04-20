@@ -10,6 +10,8 @@
     if (!$('.filter-block.is-contracted').length) {
       $filterHeader.addClass('all-expanded')
     }
+
+    $('.filter-block:not(.is-contracted) .filter-content').slideToggle(300)
   }
   $document.on('click', '.summary-expand-contract', function(event) {
     var $block = $(this).closest('.summary-block')
@@ -20,6 +22,23 @@
 
     event.preventDefault()
   })
+
+  $document.on('click', '.toggle-collapse', function(event) {
+    var $el = $(event.currentTarget)
+
+    var $ul = $($el.parent().find('ul'))
+
+    if($ul.hasClass('collapsed')) {
+      $ul.removeClass('collapsed')
+      $el.text($el.data('alt-title'))
+    }
+    else {
+      $ul.addClass('collapsed')
+      $el.text($el.data('title'))
+
+      $el.parent().find('input[type=checkbox]:checked').parent().click()
+    }
+  });
 
   $document.on('click', '.filter-block .expand-contract', function(event) {
     var $block = $(this).closest('.filter-block')
@@ -49,14 +68,13 @@
     var $blocks = $('.filter-block')
     var $checked = $blocks.find(checkedSelector)
     var $selected = $blocks.find('option:selected')
-    var $filled = $blocks.find('input[type="text"]').filter(function() {
+    var $filled = $blocks.find('input[type="text"], input[type=date]').filter(function() {
       return !!$(this).val()
     })
     var $expand = $checked.add($selected).add($filled).closest('.filter-block')
 
     $filterHeader = $('.filter-header')
     $expand.removeClass('is-contracted')
-    $expand.find('.filter-content').slideToggle(300)
     checkExpandContractAll()
     $document.trigger('filtersummary:refresh')
   })

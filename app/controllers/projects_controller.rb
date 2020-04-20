@@ -61,7 +61,7 @@ class ProjectsController < ApplicationController
   end
 
   def fetch_data
-    @project = Project.find params[:id]
+    @project = Project.friendly.find params[:id]
     @languages = Language.rank(:sort_order)
     @languages = Language.rank(:sort_order)
     @contributors = User.joins(:documents).distinct
@@ -109,7 +109,7 @@ class ProjectsController < ApplicationController
     if current_user.nil?
       @project.published
     else
-      current_user.can_edit?(@project)
+      @project.published || current_user.can_edit?(@project)
     end
   end
 end

@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
            join_table: :contributors_documents,
            dependent: :restrict_with_error
 
-  has_many :projects_users
+  has_many :projects_users, dependent: :destroy
   has_many :projects, through: :projects_users
 
   # NOTE: Contributor was implemented first and it stole the 'has_many :documents' association

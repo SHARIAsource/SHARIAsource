@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180612152454) do
+ActiveRecord::Schema.define(version: 20180810131110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -236,6 +236,18 @@ ActiveRecord::Schema.define(version: 20180612152454) do
     t.index ["start_year_gregorian"], name: "index_eras_on_start_year_gregorian"
   end
 
+  create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
   create_table "languages", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.datetime "created_at"
@@ -334,6 +346,8 @@ ActiveRecord::Schema.define(version: 20180612152454) do
     t.string "photo"
     t.boolean "scale_photo"
     t.boolean "published"
+    t.string "slug"
+    t.index ["slug"], name: "index_projects_on_slug", unique: true
   end
 
   create_table "projects_users", force: :cascade do |t|

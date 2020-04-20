@@ -53,6 +53,7 @@ gem 'eventmachine', '~> 1.0.4'
 gem 'awesome_print'
 gem 'leaflet-rails'
 gem "d3-rails"
+gem 'friendly_id', '~> 5.2.0'
 
 group :development do
   gem 'annotate'

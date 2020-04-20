@@ -20,13 +20,28 @@
       h3
         a.expand-contract href='#'Date
       .filter-content
-        = render 'searches/all'
-        .date-block
-          = f.input :date_from, label: 'From:', placeholder: 'dd/mm/yyyy', input_html: { name: :date_from } if f.object.date_from
-        .date-block
-          = f.input :date_to, label: 'To:', placeholder:'dd/mm/yyyy', input_html: { name: :date_to } if f.object.date_to
+        .all-dates
+          = render 'searches/all'
         .date-block.format
-          = f.input :date_format, as: :radio_buttons, collection: [['AH', 'ah'], ['CE', 'ce']], item_wrapper_class: 'radio-label', input_html: { name: 'date_format'}, label: false
+          = f.input :date_format,
+            as: :radio_buttons,
+            collection: [['All', ''], ['AH', 'ah'], ['CE', 'ce']],
+            item_wrapper_class: 'radio-label',
+            input_html: { name: 'date_format'},
+            label: false
+        .clearfix
+          .date-block
+            = f.input :date_from,
+              label: 'From:',
+              placeholder: 'dd/mm/yyyy',
+              input_html: { name: :date_from, value: params[:date_from] },
+              as: :native_date
+          .date-block
+            = f.input :date_to,
+              label: 'To:',
+              placeholder:'dd/mm/yyyy',
+              input_html: { name: :date_to, value: params[:date_to] },
+              as: :native_date
 
   .filter-language.js-same-height
     .filter-block.is-contracted
@@ -35,14 +50,15 @@
       .filter-content
         = render 'searches/all'
         ul
-          - @languages.each do |language|
-            li
+          - @languages.each_with_index do |language, ix|
+            li class=("extended" if ix > 2)
               label.check-label
                 - if f.object.language.is_a? Language
                   input type='checkbox' name='language[]' value=language.id checked=(f.object.language && f.object.language.id == language.id)
                 - else
                   input type='checkbox' name='language[]' value=language.id checked=(f.object.language && f.object.language.include?(language.id.to_s))
                 = language.name
+        a.filter-extend-toggle data-expandtext='Expand Full List' data-contracttext='Hide Expanded List' href='#' Expand Full List
 
   .filter-contributor.js-same-height
     .filter-block.is-contracted
@@ -99,7 +115,7 @@
       .filter-content
         = render 'searches/all'
         ul.filter-hierarchy
-          = render partial: 'searches/hierarchy', locals: { hash: @regions, field_name: :region, input_name: 'region[]', f: f }
+          = render partial: 'searches/hierarchy', locals: { hash: @regions, field_name: :region, input_name: 'region[]',  collapse_level: 2, f: f }
 
   .filter-eras.js-same-height
     .filter-block.is-contracted
