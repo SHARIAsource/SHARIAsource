@@ -64,15 +64,20 @@ class SearchesController < ApplicationController
   def parse_dates
     dates = [@filters.date_from, @filters.date_to].map do |date|
       if date.present?
+        if date[/\//].present?
         parts = date.split '/'
-        if parts.length < 4
-          parts.reverse!.map!(&:to_i)
-          (3 - parts.length).times { parts.push(1) }
+          if parts.length == 3
+            parts.reverse!.map!(&:to_i)
+            if parts[1] > 12
+              parts[1..2] = parts[1..2].reverse
+            end
+          end
           DateTime.new(*parts)
+        else
+          DateTime.parse(date)
         end
       end
     end
-    dates[1] = dates[1] + 1.day if dates[1]
     dates
   end
 end
