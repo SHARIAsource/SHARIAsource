@@ -8,7 +8,7 @@ class DocumentType < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   validates :sort_order, numericality: true
 
-  has_many :documents
+  has_many :documents, dependent: :restrict_with_error
 
   ranks :sort_order, with_same: :parent_id
 
