@@ -4,6 +4,8 @@ module AdminHelper
   end
 
   def corpusbuilder_uploader(document)
+    return nil unless ENV['CORPUSBUILDER_ENABLE']
+
     if document.ocr_document_id.present?
       render partial: "admin/shared/corpusbuilder_document_status", locals: {
         corpusbuilder_public_url: Corpusbuilder::Ruby::Api.config.public_url,
