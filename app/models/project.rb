@@ -9,5 +9,6 @@ class Project < ActiveRecord::Base
   has_many :named_filters
 
   validates :name, presence: true
+  validates :slug, uniqueness: true
   accepts_nested_attributes_for :projects_users, :allow_destroy => true
 end

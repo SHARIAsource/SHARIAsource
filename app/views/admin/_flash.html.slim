@@ -15,5 +15,5 @@
   .row
     .small-12.columns
       .alert-box.alert data-alert='true'
-        = flash[:error]
+        = flash[:error].html_safe
         a.close href='#' &times;

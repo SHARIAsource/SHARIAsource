@@ -1,3 +1,5 @@
+- level ||= 1
+- collapse_level ||= -1
 - hash.map do |item, children|
   li class=('extended' if item.attributes.fetch('extended', false))
     label.check-label
@@ -9,6 +11,9 @@
         - else
           input type='checkbox' name=input_name value=item.id checked=(f.object.public_send(field_name) && f.object.public_send(field_name).include?(item.id.to_s))
       = item.name
+
+    - if children.size > 0 && collapse_level != -1 && (level == collapse_level || children.values.first.keys.count == 0)
+      a.toggle-collapse data-alt-title="«" data-title="»" »
     - if children.size > 0
-      ul
-        = render partial: 'searches/hierarchy', locals: { hash: children, field_name: field_name, input_name: input_name, f: f }
+      ul class=("collapsed" if collapse_level != -1 && (level == collapse_level || children.values.first.keys.count == 0))
+        = render partial: 'searches/hierarchy', locals: { hash: children, field_name: field_name, input_name: input_name, collapse_level: collapse_level, level: level+1, f: f }

@@ -4,13 +4,17 @@
   var FilterBlock = function(block) {
     var $block = $(block)
     var $checkboxes = $block.find('li input[type="checkbox"]')
-    var $texts = $block.find('input[type="text"]')
+    var $radioboxes = $block.find('input[type="radio"]')
+    var $texts = $block.find('input[type="text"],input[type="date"]')
     var $all = $block.find('.all input[type="checkbox"]')
     var $multiples = $block.find('select[multiple]')
 
     function handleAllChanges() {
       $all.on('change.filter', function(event) {
         $checkboxes.prop('checked', false)
+        if($radioboxes.length > 0) {
+          $radioboxes[0].checked = true
+        }
         $checkboxes.parent().removeClass('checked soft')
         $all.prop('checked', true)
         $all.parent().addClass('checked')
@@ -79,6 +83,14 @@
     }
 
     function handleDateChanges() {
+      $radioboxes.on('change', function(event) {
+        if($(event.currentTarget).val() != "") {
+          if($all[0].checked) {
+            $all.prop('checked', false)
+            $all.closest('label').removeClass('checked')
+          }
+        }
+      })
       $texts.on('keyup.filter', function(event) {
         var val = ''
         $texts.each(function() {
@@ -90,11 +102,11 @@
     }
 
     function checkInitialStates() {
-      var $checked = $checkboxes.filter(':checked')
+      var $checked = ($checkboxes.length > 0 ? $checkboxes : $radioboxes).filter(':checked')
       var $children = $checked.closest('label').next().find('input')
       var $opts = $multiples.find('option')
       var $selOpts = $opts.filter(':selected')
-      var hasChecked = $checked.length && $checked.length !== $checkboxes.length
+      var hasChecked = $checked.length && $checked.length !== $checkboxes.length && $checked.val() != ""
       var hasSelected = $selOpts.length && $selOpts.length != $opts.length
 
       $checked.closest('.check-label').addClass('checked')
