@@ -45,7 +45,7 @@ class Admin::DocumentTypesController < AdminController
       end
     else
       links = @document_type.documents.first(3).map do |document|
-        link_to document.name, admin_document_path(document)
+        link_to document.name, edit_admin_document_path(document)
       end
       flash[:error] = "Cannot delete this document type as there are documents linked: <br />#{links.join("&nbsp;|&nbsp;")}"
 
