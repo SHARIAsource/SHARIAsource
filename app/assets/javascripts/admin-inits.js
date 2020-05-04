@@ -36,7 +36,7 @@ ready = function() {
 
   tinymce.init({
     selector: 'textarea.wysiwyg-summary',
-    plugins: 'link image media paste autosave code',
+    plugins: 'link image media paste autosave code textcolor',
     toolbar: 'fontselect fontsizeselect | italic link unlink | forecolor backcolor | bold italic underline strikethrough superscript | bullist numlist blockquote | image media | undo redo',
     color_map: COLOR_MAP,
     browser_spellcheck: true,
