@@ -164,7 +164,7 @@
         - if referencing.present?
           ul.hidden-ref-list
             - referencing.each_with_index do |d, idx|
-              - link = link_to d.title_with_author, document_path(d.object)
+              - link = link_to d.title_with_author.html_safe, document_path(d.object)
               - if idx > display_limit
                 li.hidden-ref= link
               - else
