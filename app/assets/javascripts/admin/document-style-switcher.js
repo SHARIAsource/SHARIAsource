@@ -10,5 +10,9 @@ $(document).on('turbolinks:load', function() {
   function tweakSaveAndEditButton() {
   }
 
+  $('#document_document_style').on('change', function() {
+    showOrHidePanels()
+  });
+
   showOrHidePanels()
 })
