@@ -92,17 +92,7 @@ class Admin::DocumentsController < AdminController
         elsif params[:create_and_edit]
           path = edit_admin_document_path @document
         else
-          # if we unpublish a document, we want to stay on the
-          # unpublished view so that we can unpublish another if needed
-          if @document.published != prev_state
-            if @document.published
-              path = unpublished_admin_documents_path
-            else
-              path = published_admin_documents_path
-            end
-          else
-            path = published_admin_documents_path
-          end
+          path = admin_documents_path
         end
         if permitted_params[:document_show_page]
           redirect_back(fallback_location: root_path)
