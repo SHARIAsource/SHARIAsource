@@ -1,6 +1,2 @@
 .inner.document-content
-  - if @contributor.avatar.try(:url)
-    .photo-caption
-      = image_tag(@contributor.avatar.url, alt: @contributor.name)
-      p= @contributor.name
   == content

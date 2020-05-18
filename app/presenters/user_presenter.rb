@@ -28,9 +28,12 @@ class UserPresenter < BasePresenter
   def get_syllabi
     doc_type = DocumentType.find_by_name "Islamic Law Teaching"
     syllabus = ReferenceType.find_by_name "Syllabus"
-    Document.where(contributor_id: id,
-                   reference_type_id: syllabus,
-                   document_type_id: doc_type)
+    Document.joins(:contributors).
+             where(reference_type_id: syllabus,
+                   document_type_id: doc_type).
+             where(users: {
+               id: id
+             })
   end
 
   def sections_with_content
