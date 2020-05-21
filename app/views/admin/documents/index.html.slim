@@ -50,7 +50,7 @@ hr
 
     .columns.large-12
       center.pagination-stats
-        = "Showing #{@documents.to_a.count} of #{@all_documents.count} all"
+        = "Showing #{@documents.size} of #{@all_documents.count} all"
       center= will_paginate @documents
       table.display
         thead

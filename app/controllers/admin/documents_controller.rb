@@ -229,6 +229,6 @@ class Admin::DocumentsController < AdminController
     params[:q][:s] ||= "created_at desc"
     @q = Document.ransack(params[:q])
     @all_documents = @q.result
-    @documents = @all_documents.page(params[:page])
+    @documents = @all_documents.paginate(page: params[:page])
   end
 end

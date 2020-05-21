@@ -461,12 +461,12 @@ ActiveRecord::Schema.define(version: 20190722105642) do
     t.boolean "is_senior_scholar", default: false
     t.boolean "is_original_author", default: false
     t.boolean "is_password_protector", default: false
-    t.text "publications"
-    t.text "other_links"
     t.string "cb_editor_id"
     t.boolean "new_content_email", default: true
     t.boolean "new_submission_email", default: true
     t.boolean "is_ocr_advanced", default: false
+    t.text "publications"
+    t.text "other_links"
     t.index ["collaborator_id"], name: "index_users_on_collaborator_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["is_editor"], name: "index_users_on_is_editor"
