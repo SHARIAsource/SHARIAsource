@@ -2,7 +2,11 @@
 
 .inner-wrapper
   .inner.browse-tables
-    h2.section-heading.browse Browse Contributors
+    h2.section-heading.browse Browse Editors and Contributors
+
+    - if @misc_page.present?
+      .inner.document-content{style= "min-height: 0px; padding-bottom: 0px"}
+        = @misc_page.body.html_safe
 
     table.browse-table
       thead
