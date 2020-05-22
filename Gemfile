@@ -34,7 +34,7 @@ gem 'sinatra', '~> 2.0', require: nil
 gem 'slim-rails', '~> 3.1'
 gem 'sprig', '~> 0.1'
 gem 'sunspot_rails', '~> 2.3'
-gem 'tinymce-rails', '~> 4.7'
+gem 'tinymce-rails', '~> 5.3'
 gem 'turbolinks', '~> 5.1'
 gem 'uglifier', '~> 4.1'
 gem 'unicorn', '~> 4.8'

@@ -407,7 +407,7 @@ GEM
     tilt (2.0.8)
     timers (4.1.2)
       hitimes
-    tinymce-rails (4.7.13)
+    tinymce-rails (5.3.0)
       railties (>= 3.1.1)
     ttfunk (1.5.1)
     turbolinks (5.1.1)
@@ -505,7 +505,7 @@ DEPENDENCIES
   sunspot_rails (~> 2.3)
   sunspot_solr (~> 2.1)
   therubyracer (~> 0.12)
-  tinymce-rails (~> 4.7)
+  tinymce-rails (~> 5.3)
   turbolinks (~> 5.1)
   uglifier (~> 4.1)
   unicorn (~> 4.8)
