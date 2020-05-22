@@ -16,7 +16,7 @@ ready = function() {
 
   tinymce.init({
     selector: 'textarea.wysiwyg',
-    toolbar: 'formatselect styleselect | fontselect fontsizeselect | forecolor backcolor | bold italic underline strikethrough superscript | bullist numlist blockquote | link unlink | image media table | undo redo | ltr rtl',
+    toolbar: 'formatselect styleselect | fontselect fontsizeselect | forecolor backcolor | bold italic underline strikethrough superscript | bullist numlist blockquote | link unlink | image media table | undo redo | ltr rtl | code',
     plugins: 'link image table paste directionality media autosave code',
     browser_spellcheck: true,
     style_formats: [{
@@ -37,7 +37,7 @@ ready = function() {
   tinymce.init({
     selector: 'textarea.wysiwyg-summary',
     plugins: 'link image media paste autosave code textcolor',
-    toolbar: 'fontselect fontsizeselect | italic link unlink | forecolor backcolor | bold italic underline strikethrough superscript | bullist numlist blockquote | image media | undo redo',
+    toolbar: 'fontselect fontsizeselect | italic link unlink | forecolor backcolor | bold italic underline strikethrough superscript | bullist numlist blockquote | image media | undo redo | code',
     color_map: COLOR_MAP,
     browser_spellcheck: true,
     menubar: false,
