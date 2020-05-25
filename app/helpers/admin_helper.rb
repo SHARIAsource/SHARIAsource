@@ -3,8 +3,12 @@ module AdminHelper
     [page_title, 'SHARIAsource Admin'].flatten.reject(&:empty?).join ' | '
   end
 
+  def corpusbuilder_available?
+    ENV.has_key?('CORPUSBUILDER_ENABLE')
+  end
+
   def corpusbuilder_uploader(document)
-    return nil unless ENV['CORPUSBUILDER_ENABLE']
+    return nil if !corpusbuilder_available?
 
     if document.ocr_document_id.present?
       render partial: "admin/shared/corpusbuilder_document_status", locals: {
