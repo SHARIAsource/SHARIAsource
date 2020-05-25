@@ -19,6 +19,9 @@
         = f.input :requires_approval, boolean_style: :inline
         = f.input :accepted_terms, boolean_style: :inline, label: 'Accepted TOS', disabled: true
         = f.input :disabled, boolean_style: :inline
+
+        - if @user.is_admin? && @user.is_editor?
+          = f.input :new_submission_email, boolean_style: :inline, label: 'Notify me when a new submission has been uploaded'
     .large-6.columns
       = f.input :avatar, as: :file, label: 'Photo', input_html: { accept: 'image/png,image/jpg,image/gif' }
       = f.hidden_field :avatar_cache

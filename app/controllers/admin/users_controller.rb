@@ -36,12 +36,20 @@ class Admin::UsersController < AdminController
     if params[:user][:force_password_reset]
       @user.send_reset_password_instructions
     end
-    if @user.update(permitted_params) && @user.update_author(@author)
-      flash[:notice] = 'Account updated successfully'
-      redirect_to admin_users_path
-    else
-      flash[:error] = @user.errors.full_messages.to_sentence
-      render :edit
+
+    User.transaction do
+      if @user.update(permitted_params)
+        if @author.nil? || @user.update_author(@author)
+          flash[:notice] = 'Account updated successfully'
+          redirect_to admin_users_path
+        else
+          flash[:error] = @author.errors.full_messages.to_sentence
+          render :edit
+        end
+      else
+        flash[:error] = @user.errors.full_messages.to_sentence
+        render :edit
+      end
     end
   end
 
@@ -64,7 +72,8 @@ class Admin::UsersController < AdminController
                                  :last_name, :about, :avatar, :email,
                                  :collaborator_id, :parent_id, :disabled,
                                  :is_admin, :is_senior_scholar, :is_password_protector,
-                                 :is_original_author, :is_ocr_advanced, :publications, :other_links)
+                                 :is_original_author, :is_ocr_advanced, :publications, :other_links,
+                                 :new_submission_email)
   end
 
   def fetch_author
