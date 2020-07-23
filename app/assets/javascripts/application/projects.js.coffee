@@ -5,7 +5,7 @@ $(document).on 'ready turbolinks:load', ->
   $('.pagination').hide()
 
   # only show part of project description text
-  $('.show-less-description').addClass('project-hide') 
+  $('.show-less-description').addClass('project-hide')
   $('.show-more-description').on 'click', (event) ->
      $('.project-content').removeClass('project-description-short')
      $('.show-more-description').addClass('project-hide')
@@ -17,6 +17,22 @@ $(document).on 'ready turbolinks:load', ->
      $('.show-more-description').removeClass('project-hide')
      $('.show-less-description').addClass('project-hide')
      event.preventDefault()
+
+    description_min_height = $(".project-description > p").outerHeight(true) + $(".large-8.columns > .project-header").outerHeight(true);
+    filters_min_height = $(".large-4.columns").outerHeight(true);
+    min_height = Math.max(description_min_height, filters_min_height);
+    $(".project-content").css('min-height', min_height);
+
+    $("<style>")
+        .prop("type", "text/css")
+        .html("#project_description { min-height: #{min_height}px !important;}")
+        .appendTo("head");
+
+    $(".project-content").attr("id", "project_description");
+
+    para_count = $(".project-description > p").length;
+    if para_count <= 1
+    	$(".row.truncaters").hide()
 
   $('.unselect-all').on 'click', (event) ->
     $('#all_named_search')[0].checked = false
@@ -99,7 +115,7 @@ $(document).on 'ready turbolinks:load', ->
       filter_ids.push checked_boxes[i].value
       i++
     if checked_boxes.length < 1
-      window.history.pushState('','', window.location.href.split('?')[0]) 
+      window.history.pushState('','', window.location.href.split('?')[0])
       location.reload()
       ### TODO implement following Ajax request. Due to the urgency of the projects
           page and how the pagination works with the filters and searches the page
@@ -109,11 +125,11 @@ $(document).on 'ready turbolinks:load', ->
         success: (res) ->
           search_results = res.indexOf('<div class="search-results">')
           footer_div = res.indexOf('<div class="inner-wrapper"><div class="footer">')
-          window.history.pushState('','', this.url) 
+          window.history.pushState('','', this.url)
           $(".search-results").replaceWith(res.substring(search_results, footer_div));
           $('.pagination').hide()
           $.ajax
-            url: this.url 
+            url: this.url
             success: (res) ->
               search_sidebar = res.indexOf('<div class="search-sidebar">')
               search_results = res.indexOf('class="search-results">')
@@ -123,7 +139,7 @@ $(document).on 'ready turbolinks:load', ->
       ###
     else
       $.ajax
-        data: 
+        data:
          named_filter_id: filter_ids
         url: '/projects/' + $('#project_id').val()
         success: (res) ->
@@ -133,7 +149,7 @@ $(document).on 'ready turbolinks:load', ->
           $(".search-results").replaceWith(res.substring(search_results, footer_div))
           $('.pagination').hide()
           $.ajax
-            url: this.url 
+            url: this.url
             success: (res) ->
               search_sidebar = res.indexOf('<div class="search-sidebar">')
               search_results = res.indexOf('class="search-results">')
