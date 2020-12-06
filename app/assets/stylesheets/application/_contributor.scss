@@ -27,7 +27,7 @@
 #contributors-table td:nth-child(odd){
   background: white;
 }
-#contributors-table th[scope="col"]:nth-child(even), #contributors-tablee th.tcol:nth-child(even) {
+#contributors-table th[scope="col"]:nth-child(even), #contributors-table th.tcol:nth-child(even) {
   background: #f0f2f1;
 }
 #contributors-table th[scope="col"]:nth-child(odd), #contributors-table th.tcol:nth-child(odd) {
@@ -38,4 +38,7 @@
 }
 .desc::after {
   content: " ▾"
+}
+#contributors-table tbody tr th, #contributors-table tbody tr td{
+  color: #646967;
 }
