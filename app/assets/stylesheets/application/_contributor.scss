@@ -8,3 +8,34 @@
     display:none;
   }
 }
+
+#contributors-table th, #contributors-table td {
+  width: initial;
+}
+#table-term-start, #table-term-end {
+  width: 55px !important;
+}
+#table-name {
+  width: 100px !important;
+}
+#contemporary-primary-sources {
+  width: 95px !important;
+}
+#contributors-table td:nth-child(even) {
+  background: #f0f2f1;
+}
+#contributors-table td:nth-child(odd){
+  background: white;
+}
+#contributors-table th[scope="col"]:nth-child(even), #contributors-tablee th.tcol:nth-child(even) {
+  background: #f0f2f1;
+}
+#contributors-table th[scope="col"]:nth-child(odd), #contributors-table th.tcol:nth-child(odd) {
+  background: white;
+}
+.asc::after {
+  content: " ▴"
+}
+.desc::after {
+  content: " ▾"
+}

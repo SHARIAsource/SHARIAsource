@@ -4,17 +4,22 @@
   .inner.browse-tables
     h2.section-heading.browse Browse Contributors
 
-    table.browse-table
+    table.browse-table id='contributors-table'
       thead
         tr.browse-headings
-          th scope='col' &nbsp;
+          th.sortable id='table-name' scope='col' Name
+          th.sortable id='table-role' scope='col' Role
+          th.sortable id='table-term-start' scope='col' Term Start
+          th.sortable id='table-term-end' scope='col' Term End
           - @contributor_table[:document_types].each do |document_type|
-            th scope='col'== document_type.name.split(' ').join('<br>')
+            th id=document_type.name.downcase.split(' ').join('-') scope='col'== document_type.name.split(' ').join('<br>')
       tbody
-        tr
         - @contributor_table[:contributors].each_with_index do |contributor, contributor_index|
           tr data-depth=1
-            th scope='row'= link_to contributor.name_with_status, contributor_path(contributor.id)
+            th data-sort=contributor.last_name scope='row'= link_to contributor.name, contributor_path(contributor.id)
+            td data-sort=contributor.role_title = contributor.role_title
+            td data-sort=contributor.term_start_year = contributor.term_start_year
+            td data-sort=contributor.term_end_year = contributor.term_end_year
             - @contributor_table[:document_types].each_with_index do |document_type, document_type_index|
               - count = @contributor_table[:counts][contributor_index][document_type_index]
               td data-count=count
