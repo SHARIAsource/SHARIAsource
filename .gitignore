@@ -16,3 +16,9 @@ tags
 *.swo
 *.swn
 *.swn
+
+shariasource.dump
+shariasource.sql
+sunspot-solr.pid
+public/assets.tar.gz
+.ruby-version

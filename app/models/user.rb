@@ -22,6 +22,7 @@ class User < ActiveRecord::Base
 
   has_many :projects_users, dependent: :destroy
   has_many :projects, through: :projects_users
+  belongs_to :role
 
   # NOTE: Contributor was implemented first and it stole the 'has_many :documents' association
   has_many :uploaded_documents, foreign_key: 'user_id', class_name: 'Document',
@@ -80,6 +81,11 @@ class User < ActiveRecord::Base
 
   def self.enabled
     where(disabled: false)
+  end
+
+  def role_title
+    role = Role.find(role_id)
+    role.title 
   end
 
   private

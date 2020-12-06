@@ -1,4 +1,5 @@
 class UserPresenter < BasePresenter
+
   def name_with_collaborator
     [name_with_status, collaborator && collaborator.name].compact.join(', ')
   end

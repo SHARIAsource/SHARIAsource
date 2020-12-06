@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180810131110) do
+ActiveRecord::Schema.define(version: 20201205205012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "attached_files", force: :cascade do |t|
-    t.bigint "user_id", null: false
+  create_table "attached_files", id: :serial, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "attachable_id"
     t.string "attachable_type"
-    t.bigint "attachable_id"
     t.string "token"
     t.string "file"
     t.datetime "created_at", null: false
@@ -77,13 +77,11 @@ ActiveRecord::Schema.define(version: 20180810131110) do
     t.index ["referenced_id"], name: "index_document_documents_on_referenced_id"
   end
 
-  create_table "document_reviews", force: :cascade do |t|
-    t.bigint "document_id"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["document_id"], name: "index_document_reviews_on_document_id"
-    t.index ["user_id"], name: "index_document_reviews_on_user_id"
+  create_table "document_reviews", id: :serial, force: :cascade do |t|
+    t.integer "document_id"
+    t.integer "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "document_type_hierarchies", id: false, force: :cascade do |t|
@@ -137,7 +135,9 @@ ActiveRecord::Schema.define(version: 20180810131110) do
     t.string "content_password"
     t.boolean "use_content_password", default: false
     t.boolean "reviewed", default: false
-    t.bigint "user_id"
+    t.integer "user_id"
+    t.string "ocr_document_id"
+    t.string "word_document"
     t.index ["created_at"], name: "index_documents_on_created_at"
     t.index ["document_type_id"], name: "index_documents_on_document_type_id"
     t.index ["featured_position"], name: "index_documents_on_featured_position"
@@ -275,7 +275,7 @@ ActiveRecord::Schema.define(version: 20180810131110) do
     t.index ["named_filter_id"], name: "n_f_add_doc_nam_fil"
   end
 
-  create_table "named_filter_documents", force: :cascade do |t|
+  create_table "named_filter_documents", id: :serial, force: :cascade do |t|
     t.integer "named_filter_id"
     t.integer "document_id"
     t.index ["document_id"], name: "index_named_filter_documents_on_document_id"
@@ -291,20 +291,20 @@ ActiveRecord::Schema.define(version: 20180810131110) do
     t.index ["named_filter_id"], name: "n_f_ex_doc_nam_fil"
   end
 
-  create_table "named_filters", force: :cascade do |t|
+  create_table "named_filters", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "q"
     t.date "date_from"
     t.date "date_to"
     t.string "date_format"
-    t.bigint "language_id"
-    t.bigint "user_id"
-    t.bigint "topic_id"
-    t.bigint "theme_id"
-    t.bigint "region_id"
-    t.bigint "era_id"
-    t.bigint "document_type_id"
-    t.bigint "project_id"
+    t.integer "language_id"
+    t.integer "user_id"
+    t.integer "topic_id"
+    t.integer "theme_id"
+    t.integer "region_id"
+    t.integer "era_id"
+    t.integer "document_type_id"
+    t.integer "project_id"
     t.string "sort"
     t.integer "page"
     t.datetime "created_at", null: false
@@ -338,7 +338,7 @@ ActiveRecord::Schema.define(version: 20180810131110) do
     t.index ["number"], name: "index_pages_on_number"
   end
 
-  create_table "projects", force: :cascade do |t|
+  create_table "projects", id: :serial, force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
@@ -347,12 +347,13 @@ ActiveRecord::Schema.define(version: 20180810131110) do
     t.boolean "scale_photo"
     t.boolean "published"
     t.string "slug"
+    t.text "attribution"
     t.index ["slug"], name: "index_projects_on_slug", unique: true
   end
 
-  create_table "projects_users", force: :cascade do |t|
-    t.bigint "project_id", null: false
-    t.bigint "user_id", null: false
+  create_table "projects_users", id: :serial, force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.integer "user_id", null: false
     t.integer "sort_order", default: 1
     t.string "project_role"
     t.boolean "external_collaborator"
@@ -388,6 +389,12 @@ ActiveRecord::Schema.define(version: 20180810131110) do
     t.index ["name"], name: "index_regions_on_name"
     t.index ["parent_id"], name: "index_regions_on_parent_id"
     t.index ["sort_order"], name: "index_regions_on_sort_order"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tags", id: :serial, force: :cascade do |t|
@@ -459,6 +466,13 @@ ActiveRecord::Schema.define(version: 20180810131110) do
     t.boolean "is_senior_scholar", default: false
     t.boolean "is_original_author", default: false
     t.boolean "is_password_protector", default: false
+    t.string "cb_editor_id"
+    t.boolean "new_content_email", default: true
+    t.boolean "new_submission_email", default: true
+    t.boolean "is_ocr_advanced", default: false
+    t.integer "role_id"
+    t.integer "term_start_year"
+    t.integer "term_end_year"
     t.index ["collaborator_id"], name: "index_users_on_collaborator_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["is_editor"], name: "index_users_on_is_editor"
@@ -466,6 +480,7 @@ ActiveRecord::Schema.define(version: 20180810131110) do
     t.index ["parent_id"], name: "index_users_on_parent_id"
     t.index ["requires_approval"], name: "index_users_on_requires_approval"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["role_id"], name: "index_users_on_role_id"
   end
 
   add_foreign_key "attached_files", "users"
