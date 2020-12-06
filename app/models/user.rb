@@ -70,6 +70,10 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def name_with_role
+    "#{first_name} #{last_name}, #{role_title}"
+  end
+
   def is_superuser?
     # Short-hand method. Not really a term the business uses.
     is_admin? && is_editor?
