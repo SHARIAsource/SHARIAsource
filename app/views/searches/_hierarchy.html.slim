@@ -10,7 +10,8 @@
           input type='checkbox' name=input_name value=item.id checked=(f.object.public_send(field_name) && f.object.public_send(field_name).id == item.id)
         - else
           input type='checkbox' name=input_name value=item.id checked=(f.object.public_send(field_name) && f.object.public_send(field_name).include?(item.id.to_s))
-      = item.name
+      span
+        = item.name
 
     - if children.size > 0 && collapse_level != -1 && (level == collapse_level || children.values.first.keys.count == 0)
       a.toggle-collapse data-alt-title="«" data-title="»" »
