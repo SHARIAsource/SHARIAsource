@@ -17,3 +17,22 @@ input[type="date"]::-webkit-input-placeholder{
  .filter-content {
      display: block !important;
  }
+ #month-head {
+     width: 150px;
+ }
+ #day-head {
+     width:60px;
+ }
+ #year-head {
+     width: 100px;
+ }
+ #converter-table {
+     margin-bottom: .5rem;
+ }
+ .jd-info {
+     font-size: 14px;
+ }
+ .converter-table-body tr td {
+    //  padding-left: 2px;
+    //  padding-right: 2px;
+ }
