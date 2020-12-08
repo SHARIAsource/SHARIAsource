@@ -1,39 +1,39 @@
 // From http://www.muslimphilosophy.com/ip/hijri.htm
-document.addEventListener("turbolinks:load", function() {
+document.addEventListener("turbolinks:load", function () {
 
     function setup_and_bind() {
         setDateToToday();
-        $("#gregorian-month").on("change", function(){
+        $("#gregorian-month").on("change", function () {
             chrToIsl(0);
         });
-        $("#gregorian-day").on("change", function(){
+        $("#gregorian-day").on("change", function () {
             chrToIsl(0);
         });
-        $("#gregorian-year").on("change", function(){
+        $("#gregorian-year").on("change", function () {
             chrToIsl(0);
         });
-        $("#gregorian-year").on("keyup", function(){
+        $("#gregorian-year").on("keyup", function () {
             chrToIsl(0);
         });
-        $("#hijri-month").on("change", function(){
+        $("#hijri-month").on("change", function () {
             islToChr(0);
         });
-        $("#hijri-day").on("change", function(){
+        $("#hijri-day").on("change", function () {
             islToChr(0);
         });
-        $("#hijri-year").on("change", function(){
+        $("#hijri-year").on("change", function () {
             islToChr(0);
         });
-        $("#hijri-year").on("keyup", function(){
+        $("#hijri-year").on("keyup", function () {
             islToChr(0);
         });
     }
 
     // "gregorian" || "hijri", [yyyy, mm, dd]
-    function setter(d, system = "gregorian", index=false) {
+    function setter(d, system = "gregorian", index = false) {
         $("#" + system + "-year").val(d[0]);
         $("#" + system + "-day").val(d[2]);
-        if(index){
+        if (index) {
             $("#" + system + "-month").prop('selectedIndex', d[1]);
         } else {
             $("#" + system + "-month").val(d[1]);
@@ -63,24 +63,17 @@ document.addEventListener("turbolinks:load", function() {
             y += 1900;
         }
 
-        // document.myform.CYear.value = y;
-        // document.myform.CMonth.selectedIndex = today.getMonth();
-        // document.myform.CDay.value = today.getDate();
-        setter([y, today.getMonth(), today.getDate()], system="gregorian", index=true);
+        setter([y, today.getMonth(), today.getDate()], system = "gregorian", index = true);
         chrToIsl(0);
     }
 
     //  LEAP_GREGORIAN  --  Is a given year in the Gregorian calendar a leap year ?
-
     function leap_gregorian(year) {
         return ((year % 4) == 0) &&
             (!(((year % 100) == 0) && ((year % 400) != 0)));
     }
 
-
     //  GREGORIAN_TO_JD  --  Determine Julian day number from Gregorian calendar date
-
-
     function gregorian_to_jd(year, month, day) {
 
         var GREGORIAN_EPOCH = 1721425.5;
@@ -125,13 +118,8 @@ document.addEventListener("turbolinks:load", function() {
         month = Math.floor((((yearday + leapadj) * 12) + 373) / 367);
         day = (wjd - gregorian_to_jd(year, month, 1)) + 1;
 
-        // document.myform.CDay.value = day;
-        // document.myform.CMonth.value = month;
-        // document.myform.CYear.value = year;
         setter([year, month, day])
     }
-
-
 
     function intPart(floatNum) {
         if (floatNum < -0.0000001) {
@@ -167,13 +155,7 @@ document.addEventListener("turbolinks:load", function() {
     }
 
     function chrToIsl(NumberofDays) {
-        //alert("Month:" + document.myform.CMonth.value)
-        // d = parseInt(document.myform.CDay.value)
-        // m = parseInt(document.myform.CMonth.value)
-        // y = parseInt(document.myform.CYear.value)
-        console.log("chrToIsl");
         let d = getter("gregorian");
-        console.log(d);
         y = d[0];
         m = d[1];
         d = d[2];
@@ -186,8 +168,6 @@ document.addEventListener("turbolinks:load", function() {
         }
 
         jd = jd + NumberofDays
-        // document.myform.JD.value = jd
-        // document.myform.wd.value = weekDay(jd % 7)
         $("#jd").html(jd)
         $("#weekday").html(weekDay(jd % 7))
 
@@ -202,17 +182,10 @@ document.addEventListener("turbolinks:load", function() {
 
 
         jd_to_gregorian(jd)
-        // document.myform.HDay.value = d
-        // document.myform.HMonth.value = m
-        // document.myform.HYear.value = y
         setter([y, m, d], "hijri")
     }
 
     function islToChr(NumberofDays) {
-        // d = parseInt(document.myform.HDay.value)
-        // m = parseInt(document.myform.HMonth.value)
-        // y = parseInt(document.myform.HYear.value)
-        console.log("islToChr");
         let date = getter("hijri");
         y = date[0];
         m = date[1];
@@ -220,8 +193,6 @@ document.addEventListener("turbolinks:load", function() {
 
         jd = intPart((11 * y + 3) / 30) + 354 * y + 30 * m - intPart((m - 1) / 2) + d + 1948440 - 385
         jd = jd + NumberofDays
-        // document.myform.JD.value = jd
-        // document.myform.wd.value = weekDay(jd % 7)
         $("#jd").val(jd)
         $("#weekday").val(weekDay(jd % 7))
 
@@ -248,10 +219,6 @@ document.addEventListener("turbolinks:load", function() {
             m = j + 2 - 12 * i
             y = 4 * k + n + i - 4716
         }
-
-        // document.myform.CDay.value = d
-        // document.myform.CMonth.value = m
-        // document.myform.CYear.value = y
         setter([y, m, d], "gregorian")
     }
 
