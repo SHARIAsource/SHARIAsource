@@ -20,28 +20,23 @@
       h3
         a.expand-contract href='#'Date
       .filter-content
-        .all-dates
-          = render 'searches/all'
         .date-block.format
           = f.input :date_format,
-            as: :radio_buttons,
-            collection: [['All', ''], ['AH', 'ah'], ['CE', 'ce']],
-            item_wrapper_class: 'radio-label',
-            input_html: { name: 'date_format'},
-            label: false
+            as: :select,
+            collection: [['AH', 'ah'], ['CE', 'ce']],
+            label: 'Format:',
+            input_html: { name: 'date_format'}
         .clearfix
           .date-block
             = f.input :date_from,
-              label: 'From:',
-              placeholder: 'dd/mm/yyyy',
-              input_html: { name: :date_from, value: params[:date_from] },
-              as: :native_date
+            label: 'From:',
+            placeholder: 'dd/mm/yyyy',
+            input_html: { name: :date_from, value: params[:date_from], id:"search_filters_date_from" }
           .date-block
             = f.input :date_to,
               label: 'To:',
               placeholder:'dd/mm/yyyy',
-              input_html: { name: :date_to, value: params[:date_to] },
-              as: :native_date
+              input_html: { name: :date_to, value: params[:date_to], id:"search_filters_date_to" }
 
   .filter-language.js-same-height
     .filter-block.is-contracted

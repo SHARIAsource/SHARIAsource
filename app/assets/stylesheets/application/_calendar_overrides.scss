@@ -1,0 +1,19 @@
+.calendars-month-year {
+    padding: 0rem;
+    margin-bottom: 0px;
+}
+.calendars-month-header {
+    height: 3rem;
+}
+.calendars-ctrl {
+    background-color: #eba400;
+}
+input::-webkit-calendar-picker-indicator{
+    display: none;
+}
+input[type="date"]::-webkit-input-placeholder{ 
+    visibility: hidden !important;
+ }
+ .filter-content {
+     display: block !important;
+ }

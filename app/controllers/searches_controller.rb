@@ -66,9 +66,21 @@ class SearchesController < ApplicationController
       if date.present?
         parts = date.split '/'
         if parts.length < 4
-          parts.reverse!.map!(&:to_i)
-          (3 - parts.length).times { parts.push(1) }
-          DateTime.new(*parts)
+          # Determine the date format
+
+          # comes in as "12/31/2019", data should be sent as yyyy mm dd
+          if @filters.date_format == 'ce'
+            month = parts[0].to_i
+            day = parts[1].to_i
+            year = parts[2].to_i
+            d = [year, month, day]
+            DateTime.new(*d)
+          end
+          # comes in as "1440/09/17" (yyyy/mm/dd), no need for manipulation
+          if @filters.date_format == 'ah'
+            parts.map!(&:to_i)
+            DateTime.new(*parts)
+          end
         end
       end
     end
