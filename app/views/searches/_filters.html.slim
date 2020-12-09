@@ -25,18 +25,19 @@
             as: :select,
             collection: [['AH', 'ah'], ['CE', 'ce']],
             label: 'Format:',
-            input_html: { name: 'date_format'}
+            input_html: { name: 'date_format'},
+            selected: 'ce'
         .clearfix
           .date-block
             = f.input :date_from,
             label: 'From:',
             placeholder: 'dd/mm/yyyy',
-            input_html: { name: :date_from, value: params[:date_from], id:"search_filters_date_from" }
+            input_html: { name: :date_from, value: params[:date_from] }
           .date-block
             = f.input :date_to,
               label: 'To:',
               placeholder:'dd/mm/yyyy',
-              input_html: { name: :date_to, value: params[:date_to], id:"search_filters_date_to" }
+              input_html: { name: :date_to, value: params[:date_to] }
         .converter
           table id="converter-table"
             thead
