@@ -89,7 +89,8 @@
                   input type='checkbox' name='topic[]' value=topic.id checked=(f.object.topic && f.object.topic.id == topic.id)
                 - else
                   input type='checkbox' name='topic[]' value=topic.id checked=(f.object.topic && f.object.topic.include?(topic.id.to_s))
-                = topic.name
+                span
+                  = topic.name
     
     .filter-block.is-contracted
       h3
@@ -104,7 +105,8 @@
                   input type='checkbox' name='theme[]' value=theme.id checked=(f.object.theme && f.object.theme.id == theme.id)
                 - else
                   input type='checkbox' name='theme[]' value=theme.id checked=(f.object.theme && f.object.theme.include?(theme.id.to_s))
-                = theme.name
+                span
+                  = theme.name
         - if @themes.find{|t| t.archived }
           a.filter-extend-toggle data-expandtext='Expand Archived Themes' data-contracttext='Contract Archived Themes' href='#' Expand Archived Themes
 

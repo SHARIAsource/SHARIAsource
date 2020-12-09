@@ -84,7 +84,7 @@
       min-width: 99px;
 
       &:nth-child(even) {
-        background:$ss-color-bodybg;
+        background-color:$ss-color-bodybg;
       }
     }
 
@@ -106,7 +106,7 @@
     font-size:15px;
 
     &:nth-child(even) {
-      background:$ss-color-bodybg;
+      background-color:$ss-color-bodybg;
     }
 
     &[data-count="0"] a {

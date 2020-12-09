@@ -9,6 +9,7 @@
           = f.input :name, autofocus: true
           = f.input :slug
           = f.input :description, input_html: { class: 'wysiwyg' }
+          = f.input :attribution, input_html: { class: 'wysiwyg' }
           = f.input :published, boolean_style: :inline, label: 'Published'
           hr
           = f.association :users, collection: User.enabled.editors

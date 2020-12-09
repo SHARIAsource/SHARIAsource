@@ -19,7 +19,7 @@ class MoveDocumentsData < ActiveRecord::Migration[5.1]
         INSERT INTO authors_documents (document_id, author_id) VALUES (FUNC_ID, A_ID);
       END $$ LANGUAGE plpgsql;
 
-      SELECT create_author(id, author) FROM documents WHERE author != '';
+      SELECT create_author(id::integer, author::text) FROM documents WHERE author != '';
 
       DROP FUNCTION create_author(FUNC_ID integer, FUNC_NAME text);
 
@@ -41,7 +41,7 @@ class MoveDocumentsData < ActiveRecord::Migration[5.1]
         INSERT INTO documents_editors (document_id, editor_id) VALUES (FUNC_ID, A_ID);
       END $$ LANGUAGE plpgsql;
 
-      SELECT create_editor(id, editors) FROM documents WHERE editors != '';
+      SELECT create_editor(id::integer, editors::text) FROM documents WHERE editors != '';
 
       DROP FUNCTION create_editor(FUNC_ID integer, FUNC_NAME text);
 
@@ -63,7 +63,7 @@ class MoveDocumentsData < ActiveRecord::Migration[5.1]
         INSERT INTO documents_translators (document_id, translator_id) VALUES (FUNC_ID, A_ID);
       END $$ LANGUAGE plpgsql;
 
-      SELECT create_translator(id, translators) FROM documents WHERE translators != '';
+      SELECT create_translator(id::integer, translators::text) FROM documents WHERE translators != '';
 
       DROP FUNCTION create_translator(FUNC_ID integer, FUNC_NAME text);
 

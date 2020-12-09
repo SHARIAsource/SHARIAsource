@@ -31,6 +31,10 @@
     .large-6.columns
       - if @project.photo && @project.photo.url
         = image_tag(@project.photo.url, alt: @project.name, class: "project-photo #{'scaled-photo' if @project.scale_photo}")
+  
+  -if @project.attribution
+    .row
+      .large-6.columns.project-attribution== @project.attribution
 
   .inner.document-content.project-content.project-description-short
     .large-8.columns
