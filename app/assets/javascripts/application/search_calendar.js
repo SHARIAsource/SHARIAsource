@@ -13,8 +13,8 @@ document.addEventListener("turbolinks:load", function() {
     }
 
     $('#search_filters_date_format').change(function () {
-        let calendar_type_code = $(this).val();
-        let calendar_type = convertShortcode(calendar_type_code);
+        var calendar_type_code = $(this).val();
+        var calendar_type = convertShortcode(calendar_type_code);
         var calendar = $.calendars.instance(calendar_type);
 
         var convert = function (value) {

@@ -41,9 +41,9 @@ document.addEventListener("turbolinks:load", function () {
     }
 
     function getter(system, part = null) {
-        let year = parseInt($("#" + system + "-year").val());
-        let month = parseInt($("#" + system + "-month").val());
-        let day = parseInt($("#" + system + "-day").val());
+        var year = parseInt($("#" + system + "-year").val());
+        var month = parseInt($("#" + system + "-month").val());
+        var day = parseInt($("#" + system + "-day").val());
 
         if (part == "day") {
             return day;
@@ -155,7 +155,7 @@ document.addEventListener("turbolinks:load", function () {
     }
 
     function chrToIsl(NumberofDays) {
-        let d = getter("gregorian");
+        var d = getter("gregorian");
         y = d[0];
         m = d[1];
         d = d[2];
@@ -186,7 +186,7 @@ document.addEventListener("turbolinks:load", function () {
     }
 
     function islToChr(NumberofDays) {
-        let date = getter("hijri");
+        var date = getter("hijri");
         y = date[0];
         m = date[1];
         d = date[2];
