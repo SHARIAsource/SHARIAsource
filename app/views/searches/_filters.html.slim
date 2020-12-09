@@ -23,10 +23,9 @@
         .date-block.format
           = f.input :date_format,
             as: :select,
-            collection: [['AH', 'ah'], ['CE', 'ce']],
+            collection: [['All', ''],['AH', 'ah'], ['CE', 'ce']],
             label: 'Format:',
-            input_html: { name: 'date_format'},
-            selected: 'ce'
+            input_html: { name: 'date_format', value: params[:date_format]}
         .clearfix
           .date-block
             = f.input :date_from,
