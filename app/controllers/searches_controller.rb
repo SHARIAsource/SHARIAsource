@@ -1,11 +1,7 @@
 class SearchesController < ApplicationController
   def show
     @filters = SearchFilters.new permitted_params
-    p @filters
     date_from, date_to = parse_dates
-    puts "DATES"
-    p date_from
-    p date_to
     @languages = Language.rank(:sort_order)
     @contributors = User.joins(:documents).distinct
     @topics = Topic.all
@@ -69,7 +65,6 @@ class SearchesController < ApplicationController
     dates = [@filters.date_from, @filters.date_to].map do |date|
       if date.present?
         parts = date.split '/'
-        p parts
         if parts.length < 4
           # Determine the date format
           # comes in as "12/31/2019", data should be sent as yyyy mm dd
@@ -78,31 +73,18 @@ class SearchesController < ApplicationController
             day = parts[1].to_i
             year = parts[2].to_i
             d = [year, month, day]
-            puts "ce"
-            p d
             reformatted = DateTime.new(*d)
-            p reformatted
           end
           # comes in as "1440/09/17" (yyyy/mm/dd), no need for manipulation, but need to pass as hijri
           if @filters.date_format == 'ah'
             parts.map!(&:to_i)
-            puts "ah"
-            p parts
             reformatted = DateTime.new(*parts)
-            p reformatted
           end
-          # parts.reverse!.map!(&:to_i)
-          # (3 - parts.length).times { parts.push(1) }
-          # p parts
-          # p DateTime.new(*parts)
-          # DateTime.new(*parts)
           reformatted
         end
       end
     end
     dates[1] = dates[1] + 1.day if dates[1]
-    puts "END DATES"
-    p dates
     dates
   end
 end
