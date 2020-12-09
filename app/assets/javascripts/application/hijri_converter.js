@@ -30,7 +30,9 @@ document.addEventListener("turbolinks:load", function () {
     }
 
     // "gregorian" || "hijri", [yyyy, mm, dd]
-    function setter(d, system = "gregorian", index = false) {
+    function setter(d, system, index) {
+        if(system === undefined) system = "gregorian";
+        if(index === undefined) index = false;
         $("#" + system + "-year").val(d[0]);
         $("#" + system + "-day").val(d[2]);
         if (index) {
@@ -40,7 +42,7 @@ document.addEventListener("turbolinks:load", function () {
         }
     }
 
-    function getter(system, part = null) {
+    function getter(system, part) {
         var year = parseInt($("#" + system + "-year").val());
         var month = parseInt($("#" + system + "-month").val());
         var day = parseInt($("#" + system + "-day").val());
@@ -63,7 +65,7 @@ document.addEventListener("turbolinks:load", function () {
             y += 1900;
         }
 
-        setter([y, today.getMonth(), today.getDate()], system = "gregorian", index = true);
+        setter([y, today.getMonth(), today.getDate()], "gregorian", true);
         chrToIsl(0);
     }
 
@@ -118,7 +120,7 @@ document.addEventListener("turbolinks:load", function () {
         month = Math.floor((((yearday + leapadj) * 12) + 373) / 367);
         day = (wjd - gregorian_to_jd(year, month, 1)) + 1;
 
-        setter([year, month, day])
+        setter([year, month, day], "gregorian", false)
     }
 
     function intPart(floatNum) {
