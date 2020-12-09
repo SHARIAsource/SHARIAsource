@@ -23,6 +23,13 @@
 //= require_tree ./application/
 //= require leaflet
 //= require d3
+// = require jquery.calendars.package-2.1.0/js/jquery.plugin.js
+// = require jquery.calendars.package-2.1.0/js/jquery.calendars.js
+// = require jquery.calendars.package-2.1.0/js/jquery.calendars.plus.js
+// = require jquery.calendars.package-2.1.0/js/jquery.calendars.picker.js
+// = require jquery.calendars.package-2.1.0/js/jquery.calendars.islamic.js
+
+
 
 $(document).on('turbolinks:load', function() {
   $(document).foundation()
