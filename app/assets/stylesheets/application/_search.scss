@@ -131,7 +131,7 @@
     line-height:1.1486;
 
     .unselect-all {
-      display: block;
+      display: inline;
       height: 32px;
       line-height: 32px;
       color: #eba400;
@@ -433,14 +433,14 @@
 
   .filter-eras {
     float:left;
-    width:360px;
+    width:328px;
     border-right:4px solid $ss-color-borders;
     padding:0 10px 0 10px;
   }
 
   .filter-document-types {
     float:left;
-    width:178px;
+    width:210px;
     padding:0 0 0 10px;
   }
 

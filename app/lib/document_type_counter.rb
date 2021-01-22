@@ -62,7 +62,8 @@ class DocumentTypeCounter
   end
 
   def self.contributor_counts
-    roots = DocumentType.roots.select(:id, :name)
+    roots = DocumentType.roots.where.not(name: ['Expert Analysis', 'Policy Papers', 'Sources By School', 'Secondary Sources']).select(:id, :name)
+    # roots = DocumentType.roots.select(:id, :name)
     contributors = User.where("disabled = FALSE OR disabled IS NULL").joins(:documents).distinct
     {
       contributors: contributors.map { |c| UserPresenter.new(c) },

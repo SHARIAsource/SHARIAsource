@@ -36,3 +36,13 @@ input[type="date"]::-webkit-input-placeholder{
      padding-left: 4px;
      padding-right: 4px;
  }
+ .weekday, .jd {
+     display: inline;
+ }
+ .jd {
+     float: right;
+ }
+ #hijri-credit {
+     font-size: 12px;
+     font-style: italic;
+ }
