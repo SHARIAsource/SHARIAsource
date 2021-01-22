@@ -16,7 +16,6 @@
       tbody
         - @contributor_table[:contributors].each_with_index do |contributor, contributor_index|
           tr data-depth=1
-            / th data-sort=contributor.last_name scope='row' = link_to(raw(contributor.name + '<br/>' + '(' + contributor.term_start_year.to_s + ' - ' + contributor.term_end_year.to_s + ')'), contributor_path(contributor.id))
             th data-sort=contributor.last_name scope='row' = link_to(raw(contributor.name + '<br/>' + contributor.role_and_term), contributor_path(contributor.id))
             td data-sort=contributor.role_title = contributor.role_title
             td data-sort=contributor.term_start_year = contributor.term_start_year
