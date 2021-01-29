@@ -13,6 +13,8 @@
 
     $('.filter-block:not(.is-contracted) .filter-content').slideToggle(300)
   }
+
+  // Result summary
   $document.on('click', '.summary-expand-contract', function(event) {
     var $block = $(this).closest('.summary-block')
     $block.toggleClass('is-contracted')
@@ -23,6 +25,7 @@
     event.preventDefault()
   })
 
+  // Geographic areas side arrow
   $document.on('click', '.toggle-collapse', function(event) {
     var $el = $(event.currentTarget)
 
@@ -40,8 +43,10 @@
     }
   });
 
+  // Filter block titles
   $document.on('click', '.filter-block .expand-contract', function(event) {
     var $block = $(this).closest('.filter-block')
+    console.log($block);
 
     if ($('.search-full-width').length) {
       return false;

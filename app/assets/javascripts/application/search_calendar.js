@@ -40,8 +40,8 @@ document.addEventListener("turbolinks:load", function() {
     });
 
     // Onload
-    $('.filter-date .filter-block .filter-content').show();
     var calendar = $.calendars.instance('gregorian');
+    $('.filter-date .filter-content').hide();
     $("#search_filters_date_from").calendarsPicker({calender: calendar});
     $("#search_filters_date_to").calendarsPicker({calender: calendar});
 });
