@@ -5,7 +5,7 @@ gem 'drg', '~> 1.5'
 
 gem 'active_attr', '~> 0.11'
 gem 'autoprefixer-rails', '~> 7.1'
-gem 'carrierwave', '~> 1.2'
+gem 'carrierwave', '~> 2.1'
 gem 'select2-rails', '~> 4.0'
 gem 'closure_tree', '~> 6.6'
 gem 'coffee-rails', '~> 4.2'
