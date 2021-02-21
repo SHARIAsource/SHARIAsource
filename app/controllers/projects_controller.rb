@@ -70,6 +70,8 @@ class ProjectsController < ApplicationController
     @regions = Region.hash_tree
     @eras = Era.hash_tree
     @document_types = DocumentType.hash_tree
+    @main_editors = @project.projects_users.where.not(project_role: ["Research Assistant", "Student Editor"])
+    @acknowledged_users = @project.projects_users.where(project_role: "Research Assistant").or(@project.projects_users.where(project_role: "Student Editor"))
   end
 
   def permitted_params
@@ -112,4 +114,5 @@ class ProjectsController < ApplicationController
       @project.published || current_user.can_edit?(@project)
     end
   end
+
 end

@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
 
   before_save :remove_articles
   before_save :clear_contributor_cache
+  # before_save :default_values
+
   acts_as_tree name_column: 'last_name', order: 'last_name_without_articles'
 
   validates :first_name, presence: true
@@ -118,4 +120,10 @@ class User < ActiveRecord::Base
   def clear_contributor_cache
     Rails.cache.delete 'document_type_contributor_counts'
   end
+
+  # def default_values
+  #   # Was trying to use this for setting avatar; instead set a default_url in image_uploader.rb https://github.com/carrierwaveuploader/carrierwave#providing-a-default-url
+  #   puts 'DEFAULT VALUES'
+  #   puts self.avatar
+  # end
 end

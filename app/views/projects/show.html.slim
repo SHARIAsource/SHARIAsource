@@ -9,25 +9,54 @@
 
   .row
     .large-6.columns
-      - @project.projects_users.sort_by {|proj_user| proj_user.try(:sort_order) || 6}.each do |proj_user|
-        .project-user-data
-          .large-4.columns.project-user-container
-            - if proj_user.user.avatar && proj_user.user.avatar.url && FileTest.exist?("#{Rails.root}/public/#{proj_user.user.avatar.url}")
-              .large-12.columns.project-profile
-                = link_to image_tag(proj_user.user.avatar.url, alt: proj_user.user.name, class: "project-user-photo"), contributor_path(proj_user.user), title: truncate(strip_tags(proj_user.user.about), :length => 50), 'data-placement' => 'right'
-            .large-12.columns.project-profile
-              = link_to proj_user.user.name, contributor_path(proj_user.user), :class => "contributor_link"
-              br
-              = proj_user.project_role
-              br
-              - if proj_user.user.collaborator.present?
-                - if proj_user.user.collaborator.name.downcase != "independent researcher"
-                  - collaborator_link = (proj_user.external_collaborator && proj_user.user.collaborator.url.present?)  ? proj_user.user.collaborator.url : collaborator_path(proj_user.user.collaborator)
-                  = link_to proj_user.user.collaborator.name, collaborator_link, :class => 'project-collaborator'
-                - else
-                  = proj_user.user.collaborator.name
-              - else
-                <span>&nbsp;</span>
+      .row
+        .large-12.columns
+          / - @project.projects_users.sort_by {|proj_user| proj_user.try(:sort_order) || 6}.each do |proj_user|
+          - @main_editors.sort_by {|proj_user| proj_user.try(:sort_order) || 6}.each do |proj_user|
+            .project-user-data.main-editors
+              .large-4.columns.project-user-container
+                - if proj_user.user.avatar && proj_user.user.avatar.url # && FileTest.exist?("#{Rails.root}/public/#{proj_user.user.avatar.url}")
+                  .large-12.columns.project-profile
+                    = link_to image_tag(proj_user.user.avatar.url, alt: proj_user.user.name, class: "project-user-photo"), contributor_path(proj_user.user), title: truncate(strip_tags(proj_user.user.about), :length => 50), 'data-placement' => 'right'
+                .large-12.columns.project-profile
+                  = link_to proj_user.user.name, contributor_path(proj_user.user), :class => "contributor_link"
+                  br
+                  = proj_user.project_role
+                  br
+                  - if proj_user.user.collaborator.present?
+                    - if proj_user.user.collaborator.name.downcase != "independent researcher"
+                      - collaborator_link = (proj_user.external_collaborator && proj_user.user.collaborator.url.present?)  ? proj_user.user.collaborator.url : collaborator_path(proj_user.user.collaborator)
+                      = link_to proj_user.user.collaborator.name, collaborator_link, :class => 'project-collaborator'
+                    - else
+                      = proj_user.user.collaborator.name
+                  - else
+                    <span>&nbsp;</span>
+      - if @acknowledged_users.length > 0
+        .row
+          .large-12.columns
+            h5#acknowledgments Acknowledgments
+            / - @main_editors.each do |p_user|
+            /   .project-user-data.main-editors
+            /     = p_user.user.name
+            - @acknowledged_users.each do |student_user|
+              .project-user-data.acknowledged-users
+                .large-3.columns.project-user-container
+                  - if student_user.user.avatar && student_user.user.avatar.url # && FileTest.exist?("#{Rails.root}/public/#{proj_user.user.avatar.url}")
+                    .large-12.columns.project-student-profile
+                      = link_to image_tag(student_user.user.avatar.url, alt: student_user.user.name, class: "student-project-user-photo"), contributor_path(student_user.user), title: truncate(strip_tags(student_user.user.about), :length => 50), 'data-placement' => 'right'
+                  .large-12.columns.project-student-profile
+                    = link_to student_user.user.name, contributor_path(student_user.user), :class => "contributor_link"
+                    br
+                    = student_user.project_role
+                    br
+                    - if student_user.user.collaborator.present?
+                      - if student_user.user.collaborator.name.downcase != "independent researcher"
+                        - collaborator_link = (student_user.external_collaborator && student_user.user.collaborator.url.present?)  ? student_user.user.collaborator.url : collaborator_path(student_user.user.collaborator)
+                        = link_to student_user.user.collaborator.name, collaborator_link, :class => 'project-collaborator'
+                      - else
+                        = student_user.user.collaborator.name
+                    - else
+                      <span>&nbsp;</span>
     .large-6.columns
       - if @project.photo && @project.photo.url
         = image_tag(@project.photo.url, alt: @project.name, class: "project-photo #{'scaled-photo' if @project.scale_photo}")

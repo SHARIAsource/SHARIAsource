@@ -22,3 +22,5 @@ shariasource.sql
 sunspot-solr.pid
 public/assets.tar.gz
 .ruby-version
+
+help.md
