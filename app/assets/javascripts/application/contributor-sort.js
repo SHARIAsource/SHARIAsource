@@ -4,4 +4,5 @@ document.addEventListener("turbolinks:load", function() {
         searching: false,
         info: false
     });
+    $('#resources').html("Special Collections");
 });
