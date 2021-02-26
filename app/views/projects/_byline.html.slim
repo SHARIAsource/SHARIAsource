@@ -1,0 +1,11 @@
+p.byline
+  / - project.contributors.each do |contributor|
+  /   = link_to contributor.name, contributor_path(contributor)
+  / - if !project.posted_by_author?
+  /   span= ", #{project.published_at.to_formatted_s(:dd_month_yyyy)}"
+  span= "Edited by "
+  = project.ordered_editors.map{ |u| link_to(u.name, user_path(u))}.join(", ").html_safe
+  - if project.ordered_contributors.length > 0
+    span= ". Contributions by "
+    = project.ordered_contributors.map{ |u| link_to(u.name, user_path(u))}.join(", ").html_safe
+    span= "."

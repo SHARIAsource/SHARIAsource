@@ -1,0 +1,24 @@
+- if collection.present?
+  - featured_item = collection[0]
+  
+  .home-block
+    h2.home-block-heading= block_title
+    .featured-item
+      p.breadcrumb
+        = link_to "Special Collections", "/resources"
+        span= " :: #{featured_item.dates}"
+      - if featured_item.photo && featured_item.photo.url
+        = image_tag(featured_item.photo.url, alt: featured_item.name, class: "project-photo")
+      h3= link_to featured_item.name, url_for([featured_item.object])
+      = render partial: 'projects/byline', locals: { project: featured_item }
+
+    .aside-items
+      - collection.drop(1).each do |item|
+        h3= link_to item.name, url_for([item.object])
+        p
+          span= "Edited by "
+          = item.ordered_editors.map{ |u| link_to(u.name, user_path(u))}.join(", ").html_safe
+          - if item.ordered_contributors.length > 0
+            span= ". Contributions by "
+            = item.ordered_contributors.map{ |u| link_to(u.name, user_path(u))}.join(", ").html_safe
+            span= "."
