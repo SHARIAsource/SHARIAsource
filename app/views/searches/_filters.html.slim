@@ -26,134 +26,26 @@
             collection: [['All', ''],['AH', 'ah'], ['CE', 'ce']],
             label: 'Format:',
             input_html: { name: 'date_format', value: params[:date_format]}
+        / .date-block.format
+        /   label class="select optional control-label" Format:
+        /   input type="radio" name='date_format' value='ce' checked=true id='ce' class="date_format check-label"
+        /     label for='ce' CE
+        /   input type="radio" name='date_format' value='ah' id='ah' class="date_format check-label"
+        /     label for='ah' AH
         .clearfix
           .date-block
             = f.input :date_from,
             label: 'From:',
-            placeholder: 'dd/mm/yyyy',
+            placeholder: 'mm/dd/yyyy',
             input_html: { name: :date_from, value: params[:date_from] }
           .date-block
             = f.input :date_to,
               label: 'To:',
-              placeholder:'dd/mm/yyyy',
+              placeholder:'mm/dd/yyyy',
               input_html: { name: :date_to, value: params[:date_to] }
-        .converter
-          table id="converter-table"
-            thead
-              tr
-                th
-                th id="month-head" Month
-                th id="day-head" Day
-                th id="year-head" Year
-            tbody class="converter-table-body"
-              tr
-                td Gregorian
-                td
-                  select id="gregorian-month"
-                    option value=1 January (1)
-                    option value=2 February (2)
-                    option value=3 March (3)
-                    option value=4 April (4)
-                    option value=5 May (5)
-                    option value=6 June (6)
-                    option value=7 July (7)
-                    option value=8 August (8)
-                    option value=9 September (9)
-                    option value=10 October (10)
-                    option value=11 November (11)
-                    option value=12 December (12)
-                td
-                  select id="gregorian-day"
-                    option value=1 1
-                    option value=2 2
-                    option value=3 3
-                    option value=4 4
-                    option value=5 5
-                    option value=6 6
-                    option value=7 7
-                    option value=8 8
-                    option value=9 9
-                    option value=10 10
-                    option value=11 11
-                    option value=12 12
-                    option value=13 13
-                    option value=14 14
-                    option value=15 15
-                    option value=16 16
-                    option value=17 17
-                    option value=18 18
-                    option value=19 19
-                    option value=20 20
-                    option value=21 21
-                    option value=22 22
-                    option value=23 23
-                    option value=24 24
-                    option value=25 25
-                    option value=26 26
-                    option value=27 27
-                    option value=28 28
-                    option value=29 29
-                    option value=30 30
-                    option value=31 31
-                td
-                  input id="gregorian-year"
-              tr
-                td Hijri
-                td
-                  select id="hijri-month"
-                    option value=1 Muharram (1)
-                    option value=2 Safar (2)
-                    option value=3 Rabi I (3)
-                    option value=4 Rabi II (4)
-                    option value=5 Jumada I (5)
-                    option value=6 Jumada II (6)
-                    option value=7 Rajab (7)
-                    option value=8 Sha'ban (8)
-                    option value=9 Ramadan (9)
-                    option value=10 Shawwal (10)
-                    option value=11 Dhu'l Qa'dah (11)
-                    option value=12 Dhu'l Hijja (12)
-                td
-                  select id="hijri-day"
-                    option value=1 1
-                    option value=2 2
-                    option value=3 3
-                    option value=4 4
-                    option value=5 5
-                    option value=6 6
-                    option value=7 7
-                    option value=8 8
-                    option value=9 9
-                    option value=10 10
-                    option value=11 11
-                    option value=12 12
-                    option value=13 13
-                    option value=14 14
-                    option value=15 15
-                    option value=16 16
-                    option value=17 17
-                    option value=18 18
-                    option value=19 19
-                    option value=20 20
-                    option value=21 21
-                    option value=22 22
-                    option value=23 23
-                    option value=24 24
-                    option value=25 25
-                    option value=26 26
-                    option value=27 27
-                    option value=28 28
-                    option value=29 29
-                    option value=30 30
-                td
-                  input id="hijri-year"
-          .jd-info
-            .weekday
-              span Day of the Week: 
-              span id="weekday"
-            .jd
-              span Julian Day: 
-              span id="jd"
+          div id="other-date-format"
+            .date-info id="today-date"
+            .date-info id="range-date"
               
   .filter-language.js-same-height
     .filter-block.is-contracted
