@@ -17,31 +17,11 @@ input[type="date"]::-webkit-input-placeholder{
  .search-full-width .filter-content {
      display: block !important;
  }
- #month-head {
-     width: 150px;
- }
- #day-head {
-     width:60px;
- }
- #year-head {
-     width: 100px;
- }
- #converter-table {
-     margin-bottom: .5rem;
- }
- .jd-info {
+
+ .date-info {
      font-size: 14px;
  }
- .converter-table-body tr td {
-     padding-left: 4px;
-     padding-right: 4px;
- }
- .weekday, .jd {
-     display: inline;
- }
- .jd {
-     float: right;
- }
+
  #hijri-credit {
      font-size: 12px;
      font-style: italic;

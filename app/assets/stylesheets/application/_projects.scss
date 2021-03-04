@@ -83,8 +83,8 @@ img.project-photo.scaled-photo {
 }
 
 .student-project-user-photo {
-  height: 88px;
-  width: 88px;
+  height: 36px;
+  width: 36px;
   object-fit: cover;
   margin-bottom: 2px;
 }
@@ -93,6 +93,15 @@ img.project-photo.scaled-photo {
   height: 130px;
   width: 520px;
   object-fit: cover;
+}
+
+.project-student-image-wrap {
+  float: left;
+  padding-right: 5px;
+}
+
+.project-student-row {
+  margin-left: 0px !important;
 }
 
 
@@ -151,8 +160,8 @@ img.project-photo.scaled-photo {
 }
 
 .project-student-profile {
-  padding: 0;
   font-size: 10px;
+  line-height: 12px;
 }
 
 .project-user-container {

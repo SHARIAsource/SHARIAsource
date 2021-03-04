@@ -40,11 +40,10 @@
             /     = p_user.user.name
             - @acknowledged_users.each do |student_user|
               .project-user-data.acknowledged-users
-                .large-3.columns.project-user-container
-                  - if student_user.user.avatar && student_user.user.avatar.url # && FileTest.exist?("#{Rails.root}/public/#{proj_user.user.avatar.url}")
-                    .large-12.columns.project-student-profile
-                      = link_to image_tag(student_user.user.avatar.url, alt: student_user.user.name, class: "student-project-user-photo"), contributor_path(student_user.user), title: truncate(strip_tags(student_user.user.about), :length => 50), 'data-placement' => 'right'
-                  .large-12.columns.project-student-profile
+                .large-6.columns.project-user-container.project-student-profile
+                  .row.project-student-row
+                    - if student_user.user.avatar && student_user.user.avatar.url # && FileTest.exist?("#{Rails.root}/public/#{proj_user.user.avatar.url}")
+                      = link_to image_tag(student_user.user.avatar.url, alt: student_user.user.name, class: "student-project-user-photo"), contributor_path(student_user.user), title: truncate(strip_tags(student_user.user.about), :length => 50), 'data-placement' => 'right', :class => 'project-student-image-wrap'
                     = link_to student_user.user.name, contributor_path(student_user.user), :class => "contributor_link"
                     br
                     = student_user.project_role
