@@ -5,7 +5,7 @@ class HomePresenter
     @recent = Document.published.latest.limit(3).map do |d|
       DocumentPresenter.new d
     end
-    @popular = Document.published.popular.limit(3).map do |d|
+    @popular = Document.published.popular.within_last_eighteen.limit(3).map do |d|
       DocumentPresenter.new d
     end
     @featured = Document.published.featured.map do |d| 

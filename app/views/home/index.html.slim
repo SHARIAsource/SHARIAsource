@@ -5,8 +5,5 @@
   .inner
     = render partial: 'home/three_item_block', locals: { block_title: 'Popular Documents', collection: @home_presenter.popular }
 .inner-wrapper
-  .inner
-    = render partial: 'home/three_item_block', locals: { block_title: 'Recent Documents', collection: @home_presenter.recent }
-.inner-wrapper
   .inner 
     = render partial: 'home/project_block', locals: { block_title: 'Featured Special Collections', collection: @home_presenter.projects }

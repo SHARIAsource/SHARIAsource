@@ -206,6 +206,10 @@ class Document < ActiveRecord::Base
     where(published: false)
   end
 
+  def self.within_last_eighteen
+    where("documents.published_at > ?", (Date.today - 540))
+  end
+
   def log_review
     if changes['reviewed'] == [false, true]
       raise 'Cannot mark document as reviewed without a reviewing_user' unless reviewing_user
