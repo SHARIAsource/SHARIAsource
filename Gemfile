@@ -54,6 +54,7 @@ gem 'awesome_print'
 gem 'leaflet-rails'
 gem "d3-rails"
 gem 'friendly_id', '~> 5.2.0'
+gem 'google-analytics-rails', '1.1.1'
 
 group :development do
   gem 'annotate'

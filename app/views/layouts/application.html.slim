@@ -10,6 +10,7 @@ html
     = yield(:head)
     = csrf_meta_tags
     = auto_discovery_link_tag :rss, documents_url
+    = analytics_init if GoogleAnalytics.valid_tracker?
 
   body
     .container

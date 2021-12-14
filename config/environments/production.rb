@@ -96,4 +96,7 @@ Rails.application.configure do
   config.action_mailer.default_options = {
     from: ENV['SS_ACTION_MAILER_DEFAULT_FROM']
   }
+
+  # Google Analytics config
+  GA.tracker = ENV['GOOGLE_ANALYTICS_PROPERTY_ID']
 end
