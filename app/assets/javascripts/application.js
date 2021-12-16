@@ -34,6 +34,9 @@
 $(document).on('turbolinks:load', function() {
   $(document).foundation()
 
+  // Google Analytics
+  gtag('config', 'G-7GTRWL3LSC', {'page_location': event.data.url});
+
   if(location.href.match('.*/admin/.*')) {
     document.body.innerHTML = "";
     location.reload(true);

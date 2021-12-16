@@ -8,6 +8,7 @@ html
     = javascript_include_tag 'vendor/modernizr', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = yield(:head)
+    = render 'shared/google_analytics'
     = csrf_meta_tags
     = auto_discovery_link_tag :rss, documents_url
 
