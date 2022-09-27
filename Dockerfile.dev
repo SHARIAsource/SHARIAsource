@@ -1,0 +1,34 @@
+FROM --platform=linux/amd64 ruby:2.7.6
+
+RUN apt-get update
+RUN apt-get install -y python2
+# RUN apt-get install -y nginx postgresql nano openssh-server git
+
+ENV RAILS_ROOT /var/www/app
+RUN mkdir -p $RAILS_ROOT
+
+WORKDIR $RAILS_ROOT
+
+# Add Rails gems
+COPY Gemfile Gemfile
+COPY Gemfile.lock Gemfile.lock
+
+RUN gem install bundler:1.16.1
+
+# When bundle update: ibv8 requires python 2 to be installed in order to build, but is currently not available (RuntimeError)
+# https://github.com/avvo/docker-ruby/issues/3
+# RUN ln -s /usr/bin/python2.7 /usr/bin/python2 # This didn't work
+# This didn't work either: By using --with-system-v8, you have chosen to use the version of V8 found on your system and *not* the one that is bundled with the libv8 rubygem. However, your system version of v8 could not be located. 
+# RUN gem install -N libv8 -v '3.16.14.19' -- --with-system-v8 \
+#  && bundle config --global build.libv8 --with-system-v8
+
+RUN bundle _1.16.1_ update
+# RUN bundle _1.16.1_ install
+
+# RUN gem install bundler
+
+COPY . .
+
+EXPOSE 3000 3001
+
+RUN rake start

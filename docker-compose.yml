@@ -1,0 +1,14 @@
+version: '3.1'
+
+services:
+  rails:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: shariasource-rails
+    working_dir: /app
+    # volumes:
+    #   - .:/app
+    ports:
+      - "3001:3001"
+    command: bundle exec rails s -p 3001 -b '0.0.0.0'
