@@ -31,7 +31,7 @@ gem 'rmagick', '~> 2.13'
 gem 'sass-rails', '~> 5.0'
 gem 'sidekiq', '~> 3.5'
 gem 'simple_form', '~> 3.5'
-gem 'sinatra', '~> 2.0', require: nil
+gem 'sinatra', '~> 2.2', require: nil
 gem 'slim-rails', '~> 3.1'
 gem 'sprig', '~> 0.1'
 gem 'sunspot_rails', '~> 2.3'
