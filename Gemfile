@@ -3,7 +3,7 @@ ruby '2.4.1'
 
 gem 'drg', '~> 1.5'
 
-gem 'active_attr', '~> 0.11'
+gem 'active_attr', '~> 0.15'
 gem 'autoprefixer-rails', '~> 7.1'
 gem 'carrierwave', '~> 1.2'
 gem 'select2-rails', '~> 4.0'
