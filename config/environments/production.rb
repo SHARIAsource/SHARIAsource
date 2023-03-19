@@ -23,7 +23,7 @@ Rails.application.configure do
   config.serve_static_assets = false
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+  # config.assets.js_compressor = :uglifier #try to comment this out to see if ES6 will work - https://github.com/browserify-rails/browserify-rails/issues/137
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
@@ -79,21 +79,39 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  
+  # Email config
+  #config.action_mailer.delivery_method = :smtp
+  #config.action_mailer.default_url_options = {
+  #  host: ENV['SS_ACTION_MAILER_DEFAULT_URL_HOST']
+  #}
+  #config.default_url_options = {
+  #  host: ENV['SS_ACTION_MAILER_DEFAULT_URL_HOST']
+  #}
+  #config.action_mailer.smtp_settings = {
+  #  address: ENV['SS_SMTP_ADDRESS'],
+  #  port: ENV['SS_SMTP_PORT'],
+  #  domain: ENV['SS_SMTP_DOMAIN'] || ENV['LOCAL_DOMAIN'],
+  #  openssl_verify_mode: ENV['SS_SMTP_OPENSSL_VERIFY_MODE'],
+  #  enable_starttls_auto: ENV['SS_SMTP_ENABLE_STARTTLS_AUTO'] || true,
+  #}
+  #config.action_mailer.default_options = {
+  #  from: ENV['SS_ACTION_MAILER_DEFAULT_FROM']
+  #}
 
+  # Set up SendGrid
+  ActionMailer::Base.smtp_settings = {
+    :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
+    :password => Rails.application.secrets.SENDGRID_API_KEY, # This is the secret sendgrid API key which was issued during API key creation
+    :domain => 'shariasource.com',
+    :address => 'smtp.sendgrid.net',
+    :port => 587,
+    :authentication => :plain,
+    :enable_starttls_auto => true
+  }
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = {
-    host: ENV['SS_ACTION_MAILER_DEFAULT_URL_HOST']
-  }
-  config.default_url_options = {
-    host: ENV['SS_ACTION_MAILER_DEFAULT_URL_HOST']
-  }
-  config.action_mailer.smtp_settings = {
-    address: ENV['SS_SMTP_ADDRESS'],
-    port: ENV['SS_SMTP_PORT'],
-    user_name: ENV['SS_SMTP_USERNAME'],
-    password: ENV['SS_SMTP_PASSWORD']
-  }
+  config.action_mailer.default_url_options ={:host => 'shariasource.com', :protocol => 'https'}
   config.action_mailer.default_options = {
-    from: ENV['SS_ACTION_MAILER_DEFAULT_FROM']
+    from: 'no-reply@shariasource.com'
   }
 end
