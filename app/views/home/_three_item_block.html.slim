@@ -23,11 +23,24 @@
 
     .aside-items
       - collection.drop(1).each do |item|
-        h3= link_to item.title, url_for([item.object])
-        p
-          - if item.author.present?
-            span= "#{item.author}, Contributed by "
-          - item.contributors.each do |contributor|
-            = link_to contributor.name, contributor_path(contributor)
+        div.aside-item
+          h3= link_to item.title, url_for([item.object])
+          p
+            - if item.author.present?
+              span= "By #{item.author}."
+            - if item.editors.length > 0
+              - if item.author.present?
+                span= " Edited by "
+              - else
+                span= "Edited by "
+              = item.editors.map{ |u| link_to(u.name, user_path(u))}.join(", ").html_safe
+              span= "."
+            - if item.contributors.length > 0
+              - if item.editors.length > 0
+                span= " Contributions by "
+              - else
+                span= "Contributions by "
+              = item.contributors.map{ |u| link_to(u.name, user_path(u))}.join(", ").html_safe
+              span= "."
       - if local_assigns.fetch(:more_link, false)
         = link_to 'Commentary', 'https://islamiclaw.blog/', class: 'ss-button'
