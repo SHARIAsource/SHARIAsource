@@ -18,6 +18,7 @@ gem 'foreman', '~> 0.74.0'
 # gem 'foundation-rails', '~> 5.5.0', path: "vendor/gems/foundation-rails-5.5.3.2"
 gem 'foundation-rails', git: 'https://github.com/foundation/foundation-rails.git', tag: 'v5.5.3.2'
 
+gem 'loofah', '~>2.19.1'
 gem 'pdf-reader', '~> 1.4.0'
 gem 'hijri_gem', '~> 0.4.2'
 gem 'jquery-rails'

@@ -197,7 +197,7 @@ GEM
     kramdown (1.4.2)
     leaflet-rails (1.9.3)
       rails (>= 4.2.0)
-    loofah (2.21.1)
+    loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -427,6 +427,7 @@ DEPENDENCIES
   jquery-ui-rails
   kramdown (~> 1.4.1)
   leaflet-rails
+  loofah (~> 2.19.1)
   nokogiri (~> 1.6.8)
   pdf-reader (~> 1.4.0)
   pg
