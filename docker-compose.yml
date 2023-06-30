@@ -11,5 +11,5 @@ services:
     #   - .:/app
     ports:
       - "3001:3001"
-    # command: bundle exec rails s -p 3001 -b '0.0.0.0'
-    command: tail -f /dev/null
+    command: bundle exec rails s -p 3001 -b '0.0.0.0'
+    # command: tail -f /dev/null
