@@ -67,7 +67,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'rb-fsevent'
   gem 'rspec-rails'
   gem 'spring-commands-rspec', '~> 1.0.2'

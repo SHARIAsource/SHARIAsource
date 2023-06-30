@@ -132,11 +132,11 @@ GEM
     erubi (1.12.0)
     eventmachine (1.0.9.1)
     execjs (2.8.1)
-    factory_girl (4.9.0)
-      activesupport (>= 3.0.0)
-    factory_girl_rails (4.9.0)
-      factory_girl (~> 4.9.0)
-      railties (>= 3.0.0)
+    factory_bot (5.2.0)
+      activesupport (>= 4.2.0)
+    factory_bot_rails (5.2.0)
+      factory_bot (~> 5.2.0)
+      railties (>= 4.2.0)
     faraday (1.10.3)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
@@ -254,8 +254,8 @@ GEM
       bundler (>= 1.3.0)
       railties (= 5.1.7)
       sprockets-rails (>= 2.0.0)
-    rails-dom-testing (2.0.3)
-      activesupport (>= 4.2.0)
+    rails-dom-testing (2.1.0)
+      activesupport (>= 5.0.0)
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.5.0)
       loofah (~> 2.19, >= 2.19.1)
@@ -416,7 +416,7 @@ DEPENDENCIES
   dalli (~> 2.7.2)
   devise
   eventmachine (~> 1.0.4)
-  factory_girl_rails
+  factory_bot_rails
   font-awesome-sass (~> 4.3.2.1)
   foreman (~> 0.74.0)
   foundation-rails!
