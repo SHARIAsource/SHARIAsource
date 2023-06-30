@@ -8,7 +8,6 @@ GIT
       sass (>= 3.3.0, < 3.5)
 
 GEM
-  remote: https://rubygems.org/
   specs:
     Ascii85 (1.0.3)
     actioncable (5.1.7)
@@ -254,8 +253,8 @@ GEM
       bundler (>= 1.3.0)
       railties (= 5.1.7)
       sprockets-rails (>= 2.0.0)
-    rails-dom-testing (2.1.0)
-      activesupport (>= 5.0.0)
+    rails-dom-testing (2.0.3)
+      activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.5.0)
       loofah (~> 2.19, >= 2.19.1)
@@ -435,6 +434,7 @@ DEPENDENCIES
   pry-rails
   rack-timeout (~> 0.0.4)
   rails (~> 5.1)
+  rails-dom-testing (~> 2.0.3)
   ranked-model
   rb-fsevent
   rmagick (~> 2.16.0)
@@ -467,4 +467,3 @@ RUBY VERSION
 
 BUNDLED WITH
    1.16.1
-   
