@@ -1,6 +1,13 @@
 # SHARIAsource
 
-## Setup steps
+## Local dev
+
+### docker-compose
+- `docker compose up --build` builds the `db` and `rails` services and starts them.
+- Put a PSQL dump from production in `database_dumps`
+- To load the data, `docker compose exec db bash` and then use pg_restore to load the data into the database: `pg_restore -U postgres -d shariasource_local /database_dumps/<EXPORTED_FILE>.dump`
+
+### other
 
 - Use `rvm` to install the version of Ruby specified in the `Gemfile`.
 - `bundle install` (or `bundle _1.16.1_ install`)

@@ -27,7 +27,7 @@ services:
     container_name: shariasource-db
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
-      - local_postgres_data_backups:/backups
+      - ./database_dumps:/backups
     ports:
       - "5432:5432"
     environment:
@@ -37,4 +37,3 @@ services:
 
 volumes:
   local_postgres_data: {}
-  local_postgres_data_backups: {}
