@@ -132,11 +132,11 @@ GEM
     erubi (1.12.0)
     eventmachine (1.0.9.1)
     execjs (2.8.1)
-    factory_bot (5.2.0)
-      activesupport (>= 4.2.0)
-    factory_bot_rails (5.2.0)
-      factory_bot (~> 5.2.0)
-      railties (>= 4.2.0)
+    factory_bot (4.11.1)
+      activesupport (>= 3.0.0)
+    factory_bot_rails (4.11.1)
+      factory_bot (~> 4.11.1)
+      railties (>= 3.0.0)
     faraday (1.10.3)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
@@ -416,7 +416,7 @@ DEPENDENCIES
   dalli (~> 2.7.2)
   devise
   eventmachine (~> 1.0.4)
-  factory_bot_rails
+  factory_bot_rails (< 5.0.0)
   font-awesome-sass (~> 4.3.2.1)
   foreman (~> 0.74.0)
   foundation-rails!

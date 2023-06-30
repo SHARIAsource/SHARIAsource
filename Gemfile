@@ -1,4 +1,3 @@
-source 'https://rubygems.org'
 ruby '2.4.1'
 
 #gem 'compass-rails', git: 'https://github.com/Compass/compass-rails', branch: '2-0-stable'
@@ -67,7 +66,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '< 5.0.0'
   gem 'rb-fsevent'
   gem 'rspec-rails'
   gem 'spring-commands-rspec', '~> 1.0.2'
