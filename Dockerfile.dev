@@ -1,8 +1,54 @@
-FROM --platform=linux/amd64 ruby:2.7.6
+# FROM --platform=linux/amd64 ruby:2.7.6
+# jessie and stretch are past EOL and can't do a normal apt-get update
+FROM --platform=linux/amd64 ruby:2.4.1-stretch 
+
+# Buster (debian 10) is the latest release for which RVM has Ruby 2.4.x binaries
+# FROM --platform=linux/amd64 debian:buster-slim
+
+# add the below archived repositories to /etc/apt/sources.list
+RUN echo -n > etc/apt/sources.list
+RUN echo "deb http://archive.debian.org/debian/ stretch main non-free contrib" >> /etc/apt/sources.list
+RUN echo "deb-src http://archive.debian.org/debian/ stretch main non-free contrib" >> /etc/apt/sources.list
+RUN echo "deb http://archive.debian.org/debian-security stretch/updates main contrib non-free" >> /etc/apt/sources.list
 
 RUN apt-get update
-RUN apt-get install -y python2
+RUN apt-get install -y apt-transport-https ca-certificates gnupg2 curl imagemagick libmagickwand-dev
+# git make gcc libssl-dev bzip2
+# install the prerequisite patches here so that rvm will install under non-root account. 
+# RUN apt-get install -y patch gawk g++ gcc make libc6-dev patch libreadline6-dev zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev
+# RUN apt-get install -y python2
 # RUN apt-get install -y nginx postgresql nano openssh-server git
+
+# RUN useradd -ms /bin/bash app
+# USER app
+
+# https://www.rosehosting.com/blog/how-to-install-ruby-on-rails-on-debian-11/
+# Import GPG key
+# RUN curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -
+# RUN curl -sSL https://get.rvm.io | bash -s stable
+# ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# RUN rvm install 2.4.1
+# RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && rvm install 2.4.1"
+
+# RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
+
+# Install Ruby 2.4.1 with RVM
+# TODO update asap
+# RUN curl -sSL https://get.rvm.io | bash -s
+# RUN /bin/bash -l -c "rvm install 2.4.1"
+# RUN /bin/bash -l -c "curl -L get.rvm.io | bash -s stable --rails"
+# RUN /bin/bash -l -c "rvm install 2.4.1"
+
+# RUN curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
+# RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+# RUN echo 'eval "$(~/.rbenv/bin/rbenv init - bash)"' >> ~/.bash_profile
+# RUN ~/.bash_profile
+# RUN rbenv global 2.4.1
+
+# RUN git clone https://github.com/rbenv/ruby-build.git
+# RUN PREFIX=/usr/local ./ruby-build/install.sh
+# RUN ruby-build 2.4.1 ~/local/ruby-2.4.1
+
 
 ENV RAILS_ROOT /var/www/app
 RUN mkdir -p $RAILS_ROOT
@@ -22,13 +68,13 @@ RUN gem install bundler:1.16.1
 # RUN gem install -N libv8 -v '3.16.14.19' -- --with-system-v8 \
 #  && bundle config --global build.libv8 --with-system-v8
 
-RUN bundle _1.16.1_ update
+# RUN bundle _1.16.1_ update
 # RUN bundle _1.16.1_ install
 
 # RUN gem install bundler
 
-COPY . .
+# COPY . .
 
-EXPOSE 3000 3001
+# EXPOSE 3000 3001
 
-RUN rake start
+# RUN rake start
