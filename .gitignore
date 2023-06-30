@@ -24,3 +24,7 @@ public/assets.tar.gz
 .ruby-version
 
 help.md
+
+database_dumps/*
+*.sql
+*.dump
