@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Loop until postgres is ready
+until pg_isready --username="$DB_USER" --host="$DB_HOST";
+do
+    echo 'Waiting for PostgreSQL to become available...'
+    sleep 1
+done
+echo 'PostgreSQL is available';
+
+if [ "$CREATE_ADMIN" == "True" ]; then
+    echo "Creating ActiveAdmin user"
+    rake db:seed
+fi
+
+if [[ "$MIGRATE" == "True" ]]; then
+    echo "Running Rails migrations"
+    rake db:migrate
+fi
+
+bundle exec rails s -p 3000 -b '0.0.0.0'

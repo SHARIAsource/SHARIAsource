@@ -8,7 +8,12 @@ RUN echo "deb-src http://archive.debian.org/debian/ stretch main non-free contri
 RUN echo "deb http://archive.debian.org/debian-security stretch/updates main contrib non-free" >> /etc/apt/sources.list
 
 RUN apt-get update
-RUN apt-get install -y apt-transport-https ca-certificates gnupg2 curl imagemagick libmagickwand-dev
+# imagemagick and libmagickwand-dev are required for the rmagick gem
+# postgresql is required for pg_isready
+RUN apt-get install -y apt-transport-https ca-certificates gnupg2 curl imagemagick libmagickwand-dev postgresql nano git
+
+# nodejs or therubyracer are required for autoprefixer-rails / execjs gems
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
 
 ENV RAILS_ROOT /var/www/app
 RUN mkdir -p $RAILS_ROOT
@@ -20,14 +25,18 @@ COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 
 RUN gem install bundler:1.16.1
-RUN bundle _1.16.1_ install
+# RUN bundle update
+RUN bundle install
+# RUN gem install bundler -v '~> 1.16.1'
 # RUN bundle _1.16.1_ update
 # RUN bundle _1.16.1_ install
 
-# RUN gem install bundler
-
 COPY . .
 
-EXPOSE 3000 3001
+EXPOSE 3000
 
-RUN rake start
+# RUN rake start
+COPY ./entrypoint /entrypoint
+RUN sed -i 's/\r$//g' /entrypoint
+RUN chmod +x /entrypoint
+CMD /entrypoint
