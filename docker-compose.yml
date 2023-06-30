@@ -6,13 +6,13 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     container_name: shariasource-rails
-    working_dir: /var/www/app
+    working_dir: /app
     volumes:
       - .:/app
     ports:
       - "3000:3000"
     # command: bundle exec rails s -p 3001 -b '0.0.0.0'
-    command: tail -F anything
+    # command: tail -F anything
     environment:
       MIGRATE: "False"
       CREATE_ADMIN: "False"

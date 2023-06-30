@@ -15,7 +15,7 @@ RUN apt-get install -y apt-transport-https ca-certificates gnupg2 curl imagemagi
 # nodejs or therubyracer are required for autoprefixer-rails / execjs gems
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
 
-ENV RAILS_ROOT /var/www/app
+ENV RAILS_ROOT /app
 RUN mkdir -p $RAILS_ROOT
 
 WORKDIR $RAILS_ROOT
