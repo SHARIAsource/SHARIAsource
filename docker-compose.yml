@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     container_name: shariasource-rails
+    image: shariasource
     working_dir: /app
     volumes:
       - .:/app
@@ -34,6 +35,17 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres_pw
       POSTGRES_DB: shariasource_local
+
+  # # TODO replace with proper Dockerized Solr
+  # sunspot:
+  #   # for now, reuses the same image as the Rails service, but runs Sunspot Solr
+  #   image: shariasource
+  #   container_name: shariasource-sunspot
+  #   depends_on: 
+  #     - rails
+  #   command: bundle exec rake sunspot:solr:run
+  #   ports:
+  #     - "8983:8983"
 
 volumes:
   local_postgres_data: {}

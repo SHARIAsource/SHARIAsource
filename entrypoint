@@ -18,4 +18,5 @@ if [[ "$MIGRATE" == "True" ]]; then
     rake db:migrate
 fi
 
+bundle exec rake sunspot:solr:start
 rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'

@@ -1,18 +1,21 @@
-FROM --platform=linux/amd64 ruby:2.4.1-stretch 
+# FROM --platform=linux/amd64 ruby:2.4.1-stretch 
+FROM --platform=linux/amd64 ruby:2.5.8-buster
 
 
 # add the below archived repositories to /etc/apt/sources.list (stretch is past EOL)
-RUN echo -n > etc/apt/sources.list
-RUN echo "deb http://archive.debian.org/debian/ stretch main non-free contrib" >> /etc/apt/sources.list
-RUN echo "deb-src http://archive.debian.org/debian/ stretch main non-free contrib" >> /etc/apt/sources.list
-RUN echo "deb http://archive.debian.org/debian-security stretch/updates main contrib non-free" >> /etc/apt/sources.list
+# RUN echo -n > etc/apt/sources.list
+# RUN echo "deb http://archive.debian.org/debian/ stretch main non-free contrib" >> /etc/apt/sources.list
+# RUN echo "deb-src http://archive.debian.org/debian/ stretch main non-free contrib" >> /etc/apt/sources.list
+# RUN echo "deb http://archive.debian.org/debian-security stretch/updates main contrib non-free" >> /etc/apt/sources.list
 
 RUN apt-get update
 # imagemagick and libmagickwand-dev are required for the rmagick gem
 # postgresql is required for pg_isready
-RUN apt-get install -y apt-transport-https ca-certificates gnupg2 curl imagemagick libmagickwand-dev postgresql nano git
+# Java (default-jre) is required for the sunspot_solr gem
+# zlib for nokogiri
+RUN apt-get install -y apt-transport-https ca-certificates gnupg2 curl imagemagick libmagickwand-dev postgresql nano git default-jre zlib1g-dev liblzma-dev patch libxslt-dev libxml2-dev gcc
 
-# nodejs or therubyracer are required for autoprefixer-rails / execjs gems
+# Javascript runtime, e.g. nodejs or therubyracer gem, are required for autoprefixer-rails / execjs gems
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
 
 ENV RAILS_ROOT /app
@@ -24,7 +27,8 @@ WORKDIR $RAILS_ROOT
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 
-RUN gem install bundler:1.16.1
+RUN gem install bundler:1.17.3
+RUN bundle config build.nokogiri --use-system-libraries
 # RUN bundle update
 RUN bundle install
 # RUN gem install bundler -v '~> 1.16.1'
@@ -33,7 +37,8 @@ RUN bundle install
 
 COPY . .
 
-EXPOSE 3000
+# Rails and Solr ports
+EXPOSE 3000 8983
 
 # RUN rake start
 COPY ./entrypoint /entrypoint
