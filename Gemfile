@@ -26,13 +26,13 @@ gem 'jquery-ui-rails'
 gem 'kramdown', '~> 1.4.1'
 gem 'pg'
 gem 'rack-timeout', '~> 0.0.4'
-gem 'rails', '~> 5.1'
+gem 'rails', '~> 5.2.8'
 gem 'ranked-model'
 gem 'dalli', '~> 2.7.2'
 gem 'rmagick', '~> 2.16.0'
 gem 'sass-rails'
 gem 'sidekiq', '< 4'
-gem 'simple_form', '~> 3.4'
+gem 'simple_form', '~> 4'
 gem 'sinatra', require: nil
 gem 'slim-rails'
 gem 'sprig', '~> 0.1.6'
@@ -55,6 +55,8 @@ gem 'awesome_print'
 gem 'leaflet-rails'
 gem "d3-rails"
 gem 'friendly_id', '~> 5.2.0'
+gem 'bootsnap', require: false
+gem 'sprockets', '~> 3.7.2'
 
 group :development do
   gem 'annotate'
@@ -64,6 +66,7 @@ group :development do
   gem 'progress_bar'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'listen'
 end
 
 group :development, :test do

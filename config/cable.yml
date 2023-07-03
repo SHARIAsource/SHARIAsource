@@ -1,0 +1,11 @@
+development:
+  adapter: async
+
+test:
+  adapter: async
+
+# TODO set up caching with Redis for prod
+# production:
+#   adapter: redis
+#   url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
+#   channel_prefix: shariasource_production
