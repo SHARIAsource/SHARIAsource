@@ -1,4 +1,4 @@
-ruby '2.6.9'
+ruby '2.6.10'
 source 'https://rubygems.org'
 
 #gem 'compass-rails', git: 'https://github.com/Compass/compass-rails', branch: '2-0-stable'
