@@ -27,7 +27,7 @@ WORKDIR $RAILS_ROOT
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 
-RUN gem install bundler:1.17.3
+RUN gem install bundler:2.4.15
 RUN bundle config build.nokogiri --use-system-libraries
 # RUN bundle update
 RUN bundle install
@@ -40,7 +40,6 @@ COPY . .
 # Rails and Solr ports
 EXPOSE 3000 8983
 
-# RUN rake start
 COPY ./entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint

@@ -7,6 +7,12 @@
 - Put a PSQL dump from production in `database_dumps`
 - To load the data, `docker compose exec db bash` and then use pg_restore to load the data into the database: `pg_restore -U postgres -d shariasource_local /database_dumps/<EXPORTED_FILE>.dump`
 
+### Updating gems
+- Change Ruby and gem versions in `Gemfile`
+- `exec` into Rails
+- `bundle update`; this will update the `Gemfile.lock` file. May need to adjust versions of gems to get them to work together.
+- Commit the `Gemfile` and `Gemfile.lock` files
+
 ### other
 
 - Use `rvm` to install the version of Ruby specified in the `Gemfile`.
@@ -17,10 +23,11 @@
 - `spring binstub --all`.
 - The first admin user must be set in the rails console. Create a user, `rails c`, and set the admin flag. Future roles can be set in-app by this admin.
 
+
 ## License
 
 SHARIAsource is licensed under the GNU GPL 3.0 License.
 
 ## Copyright
 
-2019 President and Fellows of Harvard College.
+2017-2023 President and Fellows of Harvard College.
