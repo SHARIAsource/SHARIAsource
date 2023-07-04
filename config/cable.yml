@@ -2,9 +2,9 @@ development:
   adapter: async
 
 test:
-  adapter: async
+  adapter: test
 
-# TODO set up caching with Redis for prod
+# # TODO set up caching with Redis for prod
 # production:
 #   adapter: redis
 #   url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>

@@ -12,9 +12,10 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
-Rails.application.config.assets.precompile += %w( vendor/modernizr.js admin.js admin.css mce_custom.css)
 
-# Error: ActionView::Template::Error (undefined method `start_with?' for /\.(?:svg|eot|woff|woff2|ttf)\z/:Regexp):
-# See: https://github.com/rails/sprockets/issues/632
-# If this doesn't help, try locking to sprockets 3.7.2
-# Rails.application.config.assets.precompile << ["*.svg", "*.eot", "*.woff", "*.ttf"]
+# Commented out after Rails 6.0 upgrade
+# Rails.application.config.assets.precompile += %w( vendor/modernizr.js admin.js admin.css mce_custom.css)
+# # Error: ActionView::Template::Error (undefined method `start_with?' for /\.(?:svg|eot|woff|woff2|ttf)\z/:Regexp):
+# # See: https://github.com/rails/sprockets/issues/632
+# # If this doesn't help, try locking to sprockets 3.7.2
+# # Rails.application.config.assets.precompile << ["*.svg", "*.eot", "*.woff", "*.ttf"]
