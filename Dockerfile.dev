@@ -1,12 +1,4 @@
-# FROM --platform=linux/amd64 ruby:2.4.1-stretch 
-FROM --platform=linux/amd64 ruby:2.6.10-bullseye
-
-
-# add the below archived repositories to /etc/apt/sources.list (stretch is past EOL)
-# RUN echo -n > etc/apt/sources.list
-# RUN echo "deb http://archive.debian.org/debian/ stretch main non-free contrib" >> /etc/apt/sources.list
-# RUN echo "deb-src http://archive.debian.org/debian/ stretch main non-free contrib" >> /etc/apt/sources.list
-# RUN echo "deb http://archive.debian.org/debian-security stretch/updates main contrib non-free" >> /etc/apt/sources.list
+FROM --platform=linux/amd64 ruby:2.7.8-bullseye
 
 RUN apt-get update
 # imagemagick and libmagickwand-dev are required for the rmagick gem
@@ -29,11 +21,7 @@ COPY Gemfile.lock Gemfile.lock
 
 RUN gem install bundler:2.4.15
 RUN bundle config build.nokogiri --use-system-libraries
-# RUN bundle update
 RUN bundle install
-# RUN gem install bundler -v '~> 1.16.1'
-# RUN bundle _1.16.1_ update
-# RUN bundle _1.16.1_ install
 
 COPY . .
 
