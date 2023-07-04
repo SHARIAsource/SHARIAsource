@@ -458,7 +458,7 @@ DEPENDENCIES
   progress_bar
   pry-rails
   rack-timeout (~> 0.0.4)
-  rails (~> 6.0)
+  rails (~> 6.1)
   rails-dom-testing (~> 2.0.3)
   ranked-model
   rb-fsevent
