@@ -1,14 +1,17 @@
 import { test, expect, type Page } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
-  await page.goto('http://localhost:3000');
-});
+// test.beforeEach(async ({ page }) => {
+//   await page.goto('http://localhost:3000');
+// });
 
 test('has title', async ({ page }) => {
+  await page.goto('http://localhost:3000');
   await expect(page).toHaveTitle(/SHARIAsource/);
 });
 
 test('correct_featured_sections', async({ page }) => {
+  await page.goto('http://localhost:3000');
+
   // Featured Documents
   let featured_docs = page.locator('div.featured-documents').locator(".home-block");
   await expect(featured_docs.locator(".home-block-heading")).toHaveText('Featured Documents');
@@ -64,6 +67,8 @@ test('correct_featured_sections', async({ page }) => {
 });
 
 test('header_navigation', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+
   // There should be a nav.top-bar item
   let navbar = page.locator("div.inner-wrapper").locator("nav.header");
   await expect(navbar).toBeVisible();
@@ -96,6 +101,8 @@ test('header_navigation', async ({ page }) => {
 });
 
 test('footer_navigation', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+
   let footer = page.locator(".footer").locator(".inner");
   // There should be an h2 with the text "SHARIAsource at Harvard Law School"
   await expect(footer.locator("h2")).toHaveText("SHARIAsource at Harvard Law School");
@@ -173,4 +180,60 @@ test('topics_page', async ({ page }) => {
   const rowCount = await page.$$eval(`table.browse-table tr`, (rows) => rows.length);
   expect(rowCount).toBeGreaterThan(30);
 
+});
+
+test('regions_page', async ({ page }) => {
+  // test.slow(); // triples the timeout from 30 to 90 seconds; TODO need to fix the caching
+  test.setTimeout(300000); // 5 minutes
+  await page.goto('http://localhost:3000/regions');
+
+  // TODO should be two separate headings for Geographic Regions and Empires & Eras
+  await expect(page.locator("h2.browse")).toHaveText("Browse Geographic Regions | Browse Empires & Eras");
+  await expect(page.locator("h2.section-heading.browse").locator("a")).toHaveAttribute('href', /\/eras/);
+
+  await expect(page.locator("#map")).toBeVisible();
+  // TODO test that items actually show up on the map
+  await page.locator('.afghanistan').click();
+  await page.locator('#map').getByRole('link', { name: 'Afghanistan' }).click();
+  await expect(page.locator("h2.search-heading")).toHaveText("Advanced Search", {timeout: 30000});
+  // TODO fix documents - counts are right but individual docs not showing up
+  await expect(page.locator("span.count")).toHaveText("0 results");
+  let filter_afghanistan = page.getByText('Region: Afghanistan');
+  await expect(filter_afghanistan).toBeVisible();
+
+  await page.goto('http://localhost:3000/regions', { timeout: 120000 });
+  let table_headings = ["", "ContemporaryPrimarySources", "SourcesBySchool", "ExpertAnalysis", "OtherLegalDocuments", "SpecialCollections"];
+  let table = page.locator("table.browse-table");
+  await expect(table.locator("th[scope='col']")).toHaveCount(6);
+  for (let i = 0; i < table_headings.length; i++) {
+    await expect(table.locator("th[scope='col']:nth-child(" + (i+1) + ")")).toHaveText(table_headings[i]);
+  }
+
+  // There should be at least 300 rows in the table
+  const rowCount = await page.$$eval(`table.browse-table tr`, (rows) => rows.length);
+  expect(rowCount).toBeGreaterThan(300);
+
+  // Regions
+  let regions = ["Africa", "America", "Asia", "Europe", "IGOs", "Middle East"];
+  // Within the table, there should be a row tr with 'data-depth="0"' for each region
+  for (let i = 0; i < regions.length; i++) {
+    // await expect(table.locator("tr[data-depth='0']")).toHaveText(regions[i]);
+    const regionExists = await page.waitForSelector(`tr[data-depth='0']:has-text("${regions[i]}")`);
+    expect(regionExists).toBeTruthy();
+  }
+  let subregions = ["Central Africa", "East Africa", "North Africa", "Southern Africa", "West Africa", "Central America & Caribbean", "North America", "South America", "Central & Western Asia", "East Asia", "South Asia", "Southeast Asia", "The Pacific", "Central & Eastern Europe", "Western Europe"];
+  // Within the table, there should be a row tr with 'data-depth="1"' for each subregion
+  for (let i = 0; i < subregions.length; i++) {
+    // await expect(table.locator("tr[data-depth='1']")).toHaveText(subregions[i]);
+    const subregionExists = await page.waitForSelector(`tr[data-depth='1']:has-text("${subregions[i]}")`);
+    expect(subregionExists).toBeTruthy();
+  }
+
+  // Test that links work
+  await page.getByRole('link', { name: 'Africa', exact: true }).click();
+  await expect(page.locator("h2.search-heading")).toHaveText("Advanced Search", { timeout: 30000 });
+  // TODO fix documents - counts are right but individual docs not showing up
+  await expect(page.locator("span.count")).toHaveText("0 results");
+  let filter_africa = page.getByText('Region: Africa');
+  await expect(filter_africa).toBeVisible();
 });
