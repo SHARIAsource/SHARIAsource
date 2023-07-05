@@ -28,3 +28,7 @@ help.md
 database_dumps/*
 *.sql
 *.dump
+node_modules/
+/test-results/
+/playwright-report/
+/playwright/.cache/

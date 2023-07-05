@@ -1,0 +1,25 @@
+{
+  "name": "shariasource",
+  "version": "1.0.0",
+  "description": "## Local dev",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/berkmancenter/SHARIAsource.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/berkmancenter/SHARIAsource/issues"
+  },
+  "homepage": "https://github.com/berkmancenter/SHARIAsource#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.35.1"
+  }
+}
