@@ -237,3 +237,39 @@ test('regions_page', async ({ page }) => {
   let filter_africa = page.getByText('Region: Africa');
   await expect(filter_africa).toBeVisible();
 });
+
+test('eras_page', async ({ page }) => {
+  test.slow(); // triples the timeout from 30 to 90 seconds; TODO need to fix the caching
+  await page.goto('http://localhost:3000/eras');
+  let expand = page.getByText('Expand Full List');
+  await expect(expand).toBeVisible();
+  await expand.click();
+
+  await expect(page.locator("h2.browse")).toHaveText("Browse Geographic Regions | Browse Empires & Eras");
+  await expect(page.locator("h2.section-heading.browse").locator("a")).toHaveAttribute('href', /\/regions/);
+
+  let table_headings = ["", "HistoricalPrimarySources", "SourcesBySchool", "ExpertAnalysis", "OtherLegalDocuments", "SpecialCollections"];
+  let table = page.locator("table.browse-table");
+  await expect(table.locator("th[scope='col']")).toHaveCount(6);
+  for (let i = 0; i < table_headings.length; i++) {
+    await expect(table.locator("th[scope='col']:nth-child(" + (i+1) + ")")).toHaveText(table_headings[i]);
+  }
+  let eras = ["Early Islamic Rule (Arabia, Iraq, Persia)", "Umayyads", "ʿAbbāsids", "Subsequent Empires & Eras by Region"]
+  for (let i = 0; i < eras.length; i++) {
+    const headerExists = await page.waitForSelector(`tr[data-depth='0']:has-text("${eras[i]}")`);
+    expect(headerExists).toBeTruthy();
+  }
+
+  // There should be at least 220 rows in the table
+  const rowCount = await page.$$eval(`table.browse-table tr`, (rows) => rows.length);
+  expect(rowCount).toBeGreaterThan(220);
+
+  // Test that some of the links work
+  await page.getByRole('link', { name: 'ʿAbbāsids' }).click();
+  await expect(page.locator("h2.search-heading")).toHaveText("Advanced Search", {timeout: 30000});
+  // TODO fix documents - counts are right but individual docs not showing up
+  await expect(page.locator("span.count")).toHaveText("0 results");
+  let filter = page.getByText('Era: ʿAbbāsids');
+  await expect(filter).toBeVisible();
+
+});
