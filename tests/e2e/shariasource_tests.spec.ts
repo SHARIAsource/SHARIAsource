@@ -273,3 +273,28 @@ test('eras_page', async ({ page }) => {
   await expect(filter).toBeVisible();
 
 });
+
+test('document_types_page', async ({ page }) => {
+  await page.goto('http://localhost:3000/document-types');
+  await expect(page.locator("h2.browse")).toHaveText("Browse Document Types");
+
+  // TODO redo this page layout it is a mess
+  let document_types = ["Historical Primary Sources", "Contemporary Primary Sources", "Sources By School", "Other Legal Documents", "Special Collections"];
+  for( const documentType of document_types) {
+    const liExists = await page.waitForSelector(`li.root:has-text("${documentType}")`, { timeout: 5000 });
+    expect(liExists).toBeTruthy();
+  }
+  
+  // Test that some of the links work
+  // The link's text includes "Historical Primary Sources", but isn't an exact match
+  const regex = /Historical Primary Sources/i;
+  // const link = await page.$(`a:has-text("${regex.source}")`);
+  const link = await page.$("a:has-text('Historical Primary Sources')"); // TODO fix this
+  await link.click();
+  await expect(page.locator("h2.search-heading")).toHaveText("Advanced Search", {timeout: 30000});
+  // TODO fix documents - counts are right but individual docs not showing up
+  await expect(page.locator("span.count")).toHaveText("0 results");
+  let filter = page.getByText('document type: Historical Primary Sources');
+  await expect(filter).toBeVisible();
+
+});
