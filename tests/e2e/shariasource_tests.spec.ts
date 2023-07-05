@@ -147,3 +147,30 @@ test('footer_navigation', async ({ page }) => {
   await expect(footer_nav.locator("li:nth-child(6) > a")).toHaveAttribute('href', /\/credits/);
 
 });
+
+test('topics_page', async ({ page }) => {
+  await page.goto('http://localhost:3000/topics');
+
+  // TODO should be an H1 a11y issue
+  await expect(page.locator("h2.browse")).toHaveText("Browse Topics & Themes");
+
+  await expect(page.locator("h2.viz-title")).toHaveCount(2); // Topics, Themes
+  await expect(page.locator("div.show-hide-visuals")).toHaveText("Text Search Only");
+
+  // There should be a table.browse-table with th and scope="col". The th items should have the text: Topics; Historical Primary Sources; Contemporary Primary Sources; Sources By School; Expert Analysis; Other Legal Documents; Special Collections
+  let table = page.locator("table.browse-table");
+  await expect(table.locator("th[scope='col']")).toHaveCount(7);
+  // TODO maybe fix these so we're not using <br> for the lines? Ends up looking like the below (a11y issue?)
+  await expect(table.locator("th[scope='col']:nth-child(1)")).toHaveText("Topics");
+  await expect(table.locator("th[scope='col']:nth-child(2)")).toHaveText("HistoricalPrimarySources");
+  await expect(table.locator("th[scope='col']:nth-child(3)")).toHaveText("ContemporaryPrimarySources");
+  await expect(table.locator("th[scope='col']:nth-child(4)")).toHaveText("SourcesBySchool");
+  await expect(table.locator("th[scope='col']:nth-child(5)")).toHaveText("ExpertAnalysis");
+  await expect(table.locator("th[scope='col']:nth-child(6)")).toHaveText("OtherLegalDocuments");
+  await expect(table.locator("th[scope='col']:nth-child(7)")).toHaveText("SpecialCollections");
+
+  // There should be at least 30 rows in the table
+  const rowCount = await page.$$eval(`table.browse-table tr`, (rows) => rows.length);
+  expect(rowCount).toBeGreaterThan(30);
+
+});
