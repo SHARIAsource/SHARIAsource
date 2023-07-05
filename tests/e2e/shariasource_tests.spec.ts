@@ -298,3 +298,111 @@ test('document_types_page', async ({ page }) => {
   await expect(filter).toBeVisible();
 
 });
+
+
+test('contributors_page', async ({ page }) => {
+  await page.goto('http://localhost:3000/contributors');
+  await expect(page.locator("h2.browse")).toHaveText("Browse Contributors");
+  let headings = ["Name", "Role", "Term Start", "Term End", "HistoricalPrimarySources", "ContemporaryPrimarySources", "OtherLegalDocuments", "SpecialCollections"];
+  let table = page.locator("table.browse-table");
+  await expect(table.locator("th[scope='col']")).toHaveCount(8);
+  for (let i = 0; i < headings.length; i++) {
+    await expect(table.locator("th[scope='col']:nth-child(" + (i+1) + ")")).toHaveText(headings[i]);
+  }
+  // assert that clicking on "Role" sorts the table by role
+  // TODO custom ordering
+  await page.getByRole('columnheader', { name: 'Role: activate to sort column ascending' }).click();
+  let roles = ["", "Contributor", "Editor", "Editor-in-Chief", "Staff Editor", "Student Editor"]
+  // Loop through all the table rows. Keep track of the previous role. A new row can only have a role that is the same or next in the "roles" list.
+  let prev_role = "";
+  let rows = table.locator("tr");
+  for (let i = 0; i < rows.length; i++) {
+    let role = await rows[i].locator("td:nth-child(2)").innerText();
+    expect(roles.indexOf(role)).toBeGreaterThanOrEqual(roles.indexOf(prev_role));
+    prev_role = role;
+  }
+
+  // Assert that clicking on "Name" sorts the table by name
+  // TODO names are concatenated and because there are some middle names, can't test this easily
+
+  // Assert that clicking on "Term Start" sorts the table by term start
+  await page.getByRole('columnheader', { name: 'Term Start: activate to sort column ascending' }).click();
+  // Loop through all the table rows. Keep track of the previous year. A new row can only have a year that is the same or greater than the previous year.
+  let prev_year = "";
+  rows = table.locator("tr");
+  for (let i = 0; i < rows.length; i++) {
+    let year = await rows[i].locator("td:nth-child(3)").innerText();
+    if (year !== "") {
+      expect(year).toBeGreaterThanOrEqual(prev_year);
+      prev_year = year;
+    }
+  }
+
+  // Assert that clicking on "Term End" sorts the table by term end
+  await page.getByRole('columnheader', { name: 'Term End: activate to sort column ascending' }).click();
+  // Loop through all the table rows. Keep track of the previous year. A new row can only have a year that is the same or greater than the previous year.
+  prev_year = "";
+  rows = table.locator("tr");
+  for (let i = 0; i < rows.length; i++) {
+    let year = await rows[i].locator("td:nth-child(4)").innerText();
+    if (year !== "") {
+      expect(year).toBeGreaterThanOrEqual(prev_year);
+      prev_year = year;
+    }
+  }
+
+  let doc_names = ["HistoricalPrimarySources", "ContemporaryPrimarySources", "OtherLegalDocuments", "SpecialCollections"];
+  for (let i = 0; i < doc_names.length; i++) {
+    // Click on the document type name to sort by that document type
+    await page.getByRole('columnheader', { name: doc_names[i] + ": activate to sort column ascending" }).click();
+    // Loop through all the table rows. Keep track of the previous count. A new row can only have a count that is the same or greater than the previous count.
+    let prev_count = "";
+    rows = table.locator("tr");
+    for (let j = 0; j < rows.length; j++) {
+      let count = await rows[j].locator("td:nth-child(" + (i+5) + ")").innerText();
+      if (count !== "") {
+        expect(count).toBeGreaterThanOrEqual(prev_count);
+        prev_count = count;
+      }
+    }
+  }
+
+});
+
+test('projects_and_special_collections_page', async ({ page }) => {
+  await page.goto('http://localhost:3000/resources');
+  await expect(page.locator("h2.browse")).toHaveText("Browse Projects & Special Collections");
+
+  let h3_headings = ["SHARIAsource PROJECTS", "SPECIAL COLLECTIONS", "ADDITIONAL RESOURCES: Editors' Picks"];
+  // ensure that the headings are in the right order
+  for (let i = 0; i < h3_headings.length; i++) {
+    await expect(page.locator("h3:nth-of-type(" + (i+1) + ")")).toHaveText(h3_headings[i]);
+  }
+
+  // TODO shouldn't need to test the actual text content?
+});
+
+test('about_page', async ({ page }) => {
+  await page.goto('http://localhost:3000/about');
+  await expect(page.locator("h2.browse")).toHaveText("About SHARIAsource");
+
+  let subheadings = ["Who We Are", "What We Do", "What We Cover", "How You Can Contribute"];
+  for (let i = 0; i < subheadings.length; i++) {
+    await expect(page.locator("h4:nth-of-type(" + (i+1) + ")")).toHaveText(subheadings[i]);
+  }
+
+  // TODO shouldn't need to test the actual text content?
+});
+
+test('credits_page', async ({ page }) => {
+  await page.goto('http://localhost:3000/credits');
+  const page1Promise = page.waitForEvent('popup');
+  await expect(page.locator("h2.browse")).toHaveText("Credits");
+  await page.getByRole('link', { name: 'Islamic Philosophy Online' }).click();
+  const page1 = await page1Promise;
+  await expect (page1.getByText('Conversion of Hijri A.H. (Islamic) and A. D. Christian (Gregorian) dates')).toBeVisible();
+});
+
+// TODO advanced search page
+
+// TODO logging in as admin and performing functions
