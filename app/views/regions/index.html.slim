@@ -1,4 +1,7 @@
 = content_for :page_title, 'Geographic Regions'
+= content_for :head do 
+  <meta name="turbolinks-visit-control" content="reload">
+end
 
 - cache 'region_count_view', skip_digest: true do
   .inner-wrapper
@@ -43,12 +46,14 @@
           - count = @region_table[:counts][region_index]
           - searchLink = link_to region.name, search_path(region: region.self_and_descendant_ids, q: '')
           javascript:
-            $(window).load( function() {
+            // $(window).load( function() {
+            document.addEventListener("turbolinks:load", function() {
               var sumCount = #{count}.reduce(function(sum,value){ return sum + value; }, 0);
               addToRegions(regions,"#{region.name}",#{region.latitude},#{region.longitude},sumCount,'#{searchLink}');
               counts.push(sumCount);
             });
       javascript:
-        $(window).load( function() {
+        //$(window).load( function() {
+        document.addEventListener("turbolinks:load", function() {
           illustrateMap(regions);
         });
