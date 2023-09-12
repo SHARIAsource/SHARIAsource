@@ -88,6 +88,23 @@
       }
     }
   }
+
+  .libraries {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+  }
+
+  .library {
+    flex-basis: 30%;
+
+    h3 {
+      a {
+        @include underline-hover($ss-color-heading);
+      }
+    }
+  }
 }
 
 .home-block-heading {

@@ -1,9 +1,12 @@
-.home-block 
-    h2.home-block-heading= block_title
-    .libraries
-        .library 
-            h3= link_to "Harvard Library", "https://library.harvard.edu/"
-        .library 
-            h3= link_to "Library of Congress", "https://www.loc.gov/"
-        .library 
-            h3= link_to "Hill Museum & Manuscript Library", "https://hmml.org/"
+- if libraries.present?
+    .home-block 
+        h2.home-block-heading= block_title
+        .libraries
+            - libraries.each do |library|
+                .library 
+                    h3= link_to library.name, url_for([library.object])
+                    - if library.image.file
+                        = image_tag library.image.url
+                    - if library.url
+                        p= link_to library.url, library.url
+                        

@@ -7,6 +7,13 @@
 - Put a PSQL dump from production in `database_dumps`
 - To load the data, `docker compose exec db bash` and then use pg_restore to load the data into the database: `pg_restore -U postgres -d shariasource_local /database_dumps/<EXPORTED_FILE>.dump`
 
+### Solr
+- Runs within the `rails` container `Dockerfile.dev` using `sunspot_solr` gem. `entrypoint` starts it.
+- If you aren't seeing any search results, you probably need to reindex: `docker compose exec rails bash` and then `bundle exec rake sunspot:reindex`. This usually takes 15-20 minutes.
+
+### Caching (Redis)
+- Also currently runs within the `rails` container `Dockerfile.dev` using `redis` gem. Started in the `entrypoint`.
+
 ### Updating gems
 - Change Ruby and gem versions in `Gemfile`
 - `exec` into Rails

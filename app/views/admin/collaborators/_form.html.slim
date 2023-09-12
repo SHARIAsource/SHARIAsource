@@ -5,6 +5,7 @@
         .large-12.columns
           = f.input :name, autofocus: true
           = f.input :url
+          = f.input :featured_library_position, as: :select, collection: (1..3).to_a
       .row
         .large-6.columns
           = f.input :image, as: :file, input_html: { accept: 'image/png,image/jpg,image/gif' }

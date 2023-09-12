@@ -9,4 +9,4 @@
     = render partial: 'home/project_block', locals: { block_title: 'Featured Collections', collection: @home_presenter.projects }
 .inner-wrapper 
   .inner.library-portal
-    = render partial: 'home/library_block', locals: { block_title: 'Library Portal' }
+    = render partial: 'home/library_block', locals: { block_title: 'Library Portal', libraries: @home_presenter.libraries }
