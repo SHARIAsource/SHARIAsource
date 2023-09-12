@@ -19,4 +19,6 @@ if [[ "$MIGRATE" == "True" ]]; then
 fi
 
 bundle exec rake sunspot:solr:start
+redis-server --daemonize yes
+# rails dev:cache
 rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'

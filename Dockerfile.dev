@@ -1,14 +1,14 @@
 FROM --platform=linux/amd64 ruby:2.7.8-bullseye
 
-RUN apt-get update
+RUN apt-get update --fix-missing
 # imagemagick and libmagickwand-dev are required for the rmagick gem
 # postgresql is required for pg_isready
 # Java (default-jre) is required for the sunspot_solr gem
 # zlib for nokogiri
-RUN apt-get install -y apt-transport-https ca-certificates gnupg2 curl imagemagick libmagickwand-dev postgresql nano git default-jre zlib1g-dev liblzma-dev patch libxslt-dev libxml2-dev gcc
+RUN apt-get install -y apt-transport-https ca-certificates gnupg2 curl imagemagick libmagickwand-dev postgresql nano git default-jre zlib1g-dev liblzma-dev patch libxslt-dev libxml2-dev gcc redis-server
 
 # Javascript runtime, e.g. nodejs or therubyracer gem, are required for autoprefixer-rails / execjs gems
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt-get install -y nodejs
 
 ENV RAILS_ROOT /app
 RUN mkdir -p $RAILS_ROOT

@@ -36,6 +36,13 @@ services:
       POSTGRES_PASSWORD: postgres_pw
       POSTGRES_DB: shariasource_local
 
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: shariasource-redis
+  #   ports:
+  #     - "6379:6379"
+
+  # # Currently being run in the Rails container entrypoint instead?
   # # TODO replace with proper Dockerized Solr
   # sunspot:
   #   # for now, reuses the same image as the Rails service, but runs Sunspot Solr
