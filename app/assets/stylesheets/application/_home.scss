@@ -100,6 +100,10 @@
     flex-basis: 30%;
 
     h3 {
+      font-size:26px;
+      font-weight:bold;
+      line-height:1.154;
+      margin-bottom:16px;
       a {
         @include underline-hover($ss-color-heading);
       }
