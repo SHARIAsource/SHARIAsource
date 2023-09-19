@@ -1,6 +1,4 @@
-/*
- *=require leaflet
- */
+// application.scss
 
 @import url(//fonts.googleapis.com/earlyaccess/amiri.css);
 
@@ -12,7 +10,6 @@
 @import 'foundation/components/tables';
 @import 'foundation/components/top-bar';
 @import 'dataTables/jquery.dataTables.foundation';
-@import 'font-awesome-sprockets';
 @import 'font-awesome';
 
 @import 'application/variables';
@@ -33,6 +30,8 @@
 @import 'application/regions';
 @import 'application/topics';
 @import 'application/misc';
+
+@import 'leaflet';
 
 @import 'jquery.calendars.package-2.1.0/css/smoothness.calendars.picker';
 @import 'application/calendar_overrides';

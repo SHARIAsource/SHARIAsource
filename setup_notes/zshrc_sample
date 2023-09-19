@@ -1,0 +1,32 @@
+#### Only includes relevant bits
+
+# If you come from bash you might have to change your $PATH.
+export PATH=/opt/homebrew/bin:$HOME/bin:/usr/local/bin:$PATH:$HOME/GitHub/local-scripts
+
+# Intel x86 homebrew: https://soffes.blog/homebrew-on-apple-silicon
+alias ibrew='arch -x86_64 /usr/local/bin/brew'
+
+# Not sure if this is actually needed???
+# Installing older versions of Ruby on M1: https://stackoverflow.com/questions/69012676/install-older-ruby-versions-on-a-m1-macbook
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+export LDFLAGS="-L/opt/homebrew/opt/readline/lib:$LDFLAGS"
+export CPPFLAGS="-I/opt/homebrew/opt/readline/include:$CPPFLAGS"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/readline/lib/pkgconfig:$PKG_CONFIG_PATH"
+export optflags="-Wno-error=implicit-function-declaration"
+export LDFLAGS="-L/opt/homebrew/opt/libffi/lib:$LDFLAGS"
+export CPPFLAGS="-I/opt/homebrew/opt/libffi/include:$CPPFLAGS"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/libffi/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+# Rbenv
+eval "$(rbenv init - zsh)"
+
+# Postgres.app
+export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
+
+export PATH="$HOME/.poetry/bin:$PATH"
+
+# PSQL / libpq
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+# ASDF version manager
+. /opt/homebrew/opt/asdf/libexec/asdf.sh

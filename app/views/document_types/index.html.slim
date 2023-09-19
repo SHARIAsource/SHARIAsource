@@ -8,7 +8,7 @@
       - @document_types.each_slice(2) do |column_types|
         .document-type-column
           - column_types.each do |document_type, children|
-            ul
+            ul.document-type
               li.root
                 = link_to search_path(document_type: document_type.self_and_descendant_ids, q: '') do
                   span.name= document_type.name

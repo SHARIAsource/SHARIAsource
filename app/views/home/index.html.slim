@@ -1,9 +1,12 @@
 .inner-wrapper
-  .inner
+  .inner.featured-documents
     = render partial: 'home/three_item_block', locals: { block_title: 'Featured Documents', collection: @home_presenter.featured, more_link: true }
 .inner-wrapper
-  .inner
+  .inner.popular-documents
     = render partial: 'home/three_item_block', locals: { block_title: 'Popular Documents', collection: @home_presenter.popular }
 .inner-wrapper
-  .inner 
+  .inner.featured-collections
     = render partial: 'home/project_block', locals: { block_title: 'Featured Collections', collection: @home_presenter.projects }
+.inner-wrapper 
+  .inner.library-portal
+    = render partial: 'home/library_block', locals: { block_title: 'Library Portal', libraries: @home_presenter.libraries }

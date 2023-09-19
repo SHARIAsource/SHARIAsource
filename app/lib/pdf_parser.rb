@@ -1,4 +1,4 @@
-require 'RMagick'
+require 'rmagick'
 require 'whatlanguage'
 require 'similar_text'
 

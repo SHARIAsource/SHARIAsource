@@ -1,0 +1,58 @@
+version: '3.1'
+
+services:
+  rails:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: shariasource-rails
+    image: shariasource
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    # command: bundle exec rails s -p 3001 -b '0.0.0.0'
+    # command: tail -F anything
+    environment:
+      MIGRATE: "False"
+      CREATE_ADMIN: "False"
+      RAILS_ENV: development
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASSWORD: postgres_pw
+      DATABASE_URL: postgres://postgres:postgres_pw@db:5432/shariasource_local
+  
+  db:
+    image: postgres:12.15-alpine
+    container_name: shariasource-db
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+      - ./database_dumps:/backups
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_pw
+      POSTGRES_DB: shariasource_local
+
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: shariasource-redis
+  #   ports:
+  #     - "6379:6379"
+
+  # # Currently being run in the Rails container entrypoint instead?
+  # # TODO replace with proper Dockerized Solr
+  # sunspot:
+  #   # for now, reuses the same image as the Rails service, but runs Sunspot Solr
+  #   image: shariasource
+  #   container_name: shariasource-sunspot
+  #   depends_on: 
+  #     - rails
+  #   command: bundle exec rake sunspot:solr:run
+  #   ports:
+  #     - "8983:8983"
+
+volumes:
+  local_postgres_data: {}

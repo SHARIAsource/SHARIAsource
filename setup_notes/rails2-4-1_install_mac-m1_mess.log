@@ -1,0 +1,3210 @@
+# Multiple terminals, these are the collected commands ...
+
+- Tried with rbenv; getting Ruby 2.4.1 working failed probably because of missing binaries
+- Tried with docker-compose; need to go this route eventually
+- Then tried with ASDF at Yusuf's suggestion. This eventually mostly worked
+- Getting the project to install took some extra workaround with Bundler
+
+####### LOGS / notes
+
+####### Install ASDF, I lost this part of my LOGS
+
+####### ASDF install Ruby 2.4.1
+
+asdf install ruby 2.4.1
+➜  SHARIAsource git:(feature/update-footer) ✗ asdf install ruby 2.4.1
+To follow progress, use 'tail -f /var/folders/s8/ywk_bwy97sz74g2mwkbdth880000gr/T/ruby-build.20220926151236.47066.log' or pass --verbose
+Downloading ruby-2.4.1.tar.bz2...
+-> https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.1.tar.bz2
+Installing ruby-2.4.1...
+
+WARNING: ruby-2.4.1 is past its end of life and is now unsupported.
+It no longer receives bug fixes or critical security updates.
+
+ruby-build: using readline from homebrew
+
+BUILD FAILED (macOS 12.1 using ruby-build 20220910.1)
+
+Inspect or clean up the working tree at /var/folders/s8/ywk_bwy97sz74g2mwkbdth880000gr/T/ruby-build.20220926151236.47066.9sE1k3
+Results logged to /var/folders/s8/ywk_bwy97sz74g2mwkbdth880000gr/T/ruby-build.20220926151236.47066.log
+
+Last 10 log lines:
+readline.c:79:42: note: expanded from macro 'rl_username_completion_function'
+# define rl_username_completion_function username_completion_function
+                                         ^
+/opt/homebrew/opt/readline/include/readline/readline.h:485:14: note: 'rl_username_completion_function' declared here
+extern char *rl_username_completion_function PARAMS((const char *, int));
+             ^
+1 error generated.
+make[2]: *** [readline.o] Error 1
+make[1]: *** [ext/readline/all] Error 2
+make: *** [build-ext] Error 2
+
+
+###### Tried Yusuf's instructions here: https://stackoverflow.com/questions/69012676/install-older-ruby-versions-on-a-m1-macbook
+- This was a bit destructive with openssl (causing issues with RubyGem downloads later) but ultimately seemed to work.
+- Fingers crossed it didn't break anything else in my system I have not noticed yet
+
+
+➜  SHARIAsource git:(feature/update-footer) ✗ brew uninstall --ignore-dependencies readline
+Uninstalling /opt/homebrew/Cellar/readline/8.1.2... (48 files, 1.7MB)
+➜  SHARIAsource git:(feature/update-footer) ✗ brew uninstall --ignore-dependencies openssl
+Uninstalling /opt/homebrew/Cellar/openssl@3/3.0.5... (6,444 files, 27.9MB)
+
+Warning: The following openssl@3 configuration files have not been removed!
+If desired, remove them manually with `rm -rf`:
+  /opt/homebrew/etc/openssl@3
+  /opt/homebrew/etc/openssl@3/cert.pem
+  /opt/homebrew/etc/openssl@3/ct_log_list.cnf
+  /opt/homebrew/etc/openssl@3/ct_log_list.cnf.dist
+  /opt/homebrew/etc/openssl@3/misc
+  /opt/homebrew/etc/openssl@3/misc/CA.pl
+  /opt/homebrew/etc/openssl@3/misc/tsget
+  /opt/homebrew/etc/openssl@3/misc/tsget.default
+  /opt/homebrew/etc/openssl@3/misc/tsget.pl
+  /opt/homebrew/etc/openssl@3/misc/tsget.pl.default
+  /opt/homebrew/etc/openssl@3/openssl.cnf
+  /opt/homebrew/etc/openssl@3/openssl.cnf.dist
+
+Warning: The following may be openssl@3 configuration files and have not been removed!
+If desired, remove them manually with `rm -rf`:
+  /opt/homebrew/etc/openssl@1.1
+➜  SHARIAsource git:(feature/update-footer) ✗ rm -rf /opt/homebrew/etc/openssl@1.1
+➜  SHARIAsource git:(feature/update-footer) ✗ brew uninstall --ignore-dependencies ruby-build
+Uninstalling /opt/homebrew/Cellar/ruby-build/20220125... (556 files, 278.3KB)
+➜  SHARIAsource git:(feature/update-footer) ✗ brew install -s readline
+Running `brew update --auto-update`...
+==> Auto-updated Homebrew!
+Updated 1 tap (homebrew/core).
+
+You have 11 outdated formulae and 2 outdated casks installed.
+You can upgrade them with brew upgrade
+or list them with brew outdated.
+
+Error: Cannot install under Rosetta 2 in ARM default prefix (/opt/homebrew)!
+To rerun under ARM use:
+    arch -arm64 brew install ...
+To install under x86_64, install Homebrew into /usr/local.
+➜  SHARIAsource git:(feature/update-footer) ✗ arch -arm64 brew install -s readline
+==> Downloading https://ftp.gnu.org/gnu/readline/readline-8.1-patches/readline81-001
+######################################################################## 100.0%
+==> Downloading https://ftp.gnu.org/gnu/readline/readline-8.1-patches/readline81-002
+######################################################################## 100.0%
+==> Downloading https://ftp.gnu.org/gnu/readline/readline-8.1.tar.gz
+######################################################################## 100.0%
+Warning: A newer Command Line Tools release is available.
+Update them from Software Update in System Preferences or run:
+  softwareupdate --all --install --force
+
+If that doesn't show you any updates, run:
+  sudo rm -rf /Library/Developer/CommandLineTools
+  sudo xcode-select --install
+
+Alternatively, manually download them from:
+  https://developer.apple.com/download/all/.
+You should download the Command Line Tools for Xcode 13.4.
+
+==> Patching
+==> Applying readline81-001
+patching file bind.c
+patching file patchlevel
+==> Applying readline81-002
+patching file display.c
+patching file patchlevel
+==> ./configure --prefix=/opt/homebrew/Cellar/readline/8.1.2
+==> make install
+==> Caveats
+readline is keg-only, which means it was not symlinked into /opt/homebrew,
+because macOS provides BSD libedit.
+
+For compilers to find readline you may need to set:
+  export LDFLAGS="-L/opt/homebrew/opt/readline/lib"
+  export CPPFLAGS="-I/opt/homebrew/opt/readline/include"
+
+For pkg-config to find readline you may need to set:
+  export PKG_CONFIG_PATH="/opt/homebrew/opt/readline/lib/pkgconfig"
+
+==> Summary
+🍺  /opt/homebrew/Cellar/readline/8.1.2: 48 files, 1.7MB, built in 24 seconds
+==> Running `brew cleanup readline`...
+Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+Warning: The following dependents of upgraded formulae are outdated but will not
+be upgraded because they are not bottled:
+  aws-sam-cli
+➜  SHARIAsource git:(feature/update-footer) ✗ brew config                         
+HOMEBREW_VERSION: 3.6.3-3-g520d9c3
+ORIGIN: https://github.com/Homebrew/brew
+HEAD: 520d9c3ab8cf377fab055a099889862e60033ede
+Last commit: 5 hours ago
+Core tap ORIGIN: https://github.com/Homebrew/homebrew-core
+Core tap HEAD: 85be02cdef4db5d560dca3c93d942d2883f6d5fa
+Core tap last commit: 19 minutes ago
+Core tap branch: master
+HOMEBREW_PREFIX: /opt/homebrew
+HOMEBREW_REPOSITORY: /opt/homebrew
+HOMEBREW_CELLAR: /opt/homebrew/Cellar
+HOMEBREW_CASK_OPTS: []
+HOMEBREW_MAKE_JOBS: 10
+Homebrew Ruby: 2.6.8 => /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/bin/ruby
+CPU: 10-core 64-bit westmere
+Clang: 13.0.0 build 1300
+Git: 2.30.1 => /Library/Developer/CommandLineTools/usr/bin/git
+Curl: 7.77.0 => /usr/bin/curl
+macOS: 12.1-x86_64
+CLT: 13.0.0.0.1.1627064638
+Xcode: N/A
+Rosetta 2: true
+➜  SHARIAsource git:(feature/update-footer) ✗ brew install -s openssl
+Error: Cannot install under Rosetta 2 in ARM default prefix (/opt/homebrew)!
+To rerun under ARM use:
+    arch -arm64 brew install ...
+To install under x86_64, install Homebrew into /usr/local.
+➜  SHARIAsource git:(feature/update-footer) ✗ arch -arm64 brew install -s openssl
+==> Downloading https://www.openssl.org/source/openssl-3.0.5.tar.gz
+######################################################################## 100.0%
+Warning: A newer Command Line Tools release is available.
+Update them from Software Update in System Preferences or run:
+  softwareupdate --all --install --force
+
+If that doesn't show you any updates, run:
+  sudo rm -rf /Library/Developer/CommandLineTools
+  sudo xcode-select --install
+
+Alternatively, manually download them from:
+  https://developer.apple.com/download/all/.
+You should download the Command Line Tools for Xcode 13.4.
+
+==> perl ./Configure --prefix=/opt/homebrew/Cellar/openssl@3/3.0.5 --openssldir=/opt/homebrew/etc/openssl@3 --libdir=/opt/homebrew/Cellar/openssl@3/3.0.5/lib no-ssl3 no-
+==> make
+==> make install MANDIR=/opt/homebrew/Cellar/openssl@3/3.0.5/share/man MANSUFFIX=ssl
+==> make test
+==> Caveats
+A CA file has been bootstrapped using certificates from the system
+keychain. To add additional certificates, place .pem files in
+  /opt/homebrew/etc/openssl@3/certs
+
+and run
+  /opt/homebrew/opt/openssl@3/bin/c_rehash
+
+openssl@3 is keg-only, which means it was not symlinked into /opt/homebrew,
+because macOS provides LibreSSL.
+
+If you need to have openssl@3 first in your PATH, run:
+  echo 'export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"' >> ~/.zshrc
+
+For compilers to find openssl@3 you may need to set:
+  export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
+  export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
+
+For pkg-config to find openssl@3 you may need to set:
+  export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@3/lib/pkgconfig"
+
+==> Summary
+🍺  /opt/homebrew/Cellar/openssl@3/3.0.5: 6,437 files, 27.8MB, built in 8 minutes 59 seconds
+==> Running `brew cleanup openssl@3`...
+Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+➜  SHARIAsource git:(feature/update-footer) ✗ arch -arm64 brew install -s ruby-build
+==> Downloading https://github.com/rbenv/ruby-build/archive/v20220910.1.tar.gz
+==> Downloading from https://codeload.github.com/rbenv/ruby-build/tar.gz/refs/tags/v20220910.1
+#=#=#                                                                         
+Warning: A newer Command Line Tools release is available.
+Update them from Software Update in System Preferences or run:
+  softwareupdate --all --install --force
+
+If that doesn't show you any updates, run:
+  sudo rm -rf /Library/Developer/CommandLineTools
+  sudo xcode-select --install
+
+Alternatively, manually download them from:
+  https://developer.apple.com/download/all/.
+You should download the Command Line Tools for Xcode 13.4.
+
+==> ./install.sh
+==> Caveats
+ruby-build installs a non-Homebrew OpenSSL for each Ruby version installed and these are never upgraded.
+
+To link Rubies to Homebrew's OpenSSL 1.1 (which is upgraded) add the following
+to your ~/.zshrc:
+  export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+
+Note: this may interfere with building old versions of Ruby (e.g <2.4) that use
+OpenSSL <1.1.
+==> Summary
+🍺  /opt/homebrew/Cellar/ruby-build/20220910.1: 573 files, 290.4KB, built in 3 seconds
+==> Running `brew cleanup ruby-build`...
+Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+➜  SHARIAsource git:(feature/update-footer) ✗ asdf install ruby 2.4.1
+To follow progress, use 'tail -f /var/folders/s8/ywk_bwy97sz74g2mwkbdth880000gr/T/ruby-build.20220926154040.47681.log' or pass --verbose
+Downloading ruby-2.4.1.tar.bz2...
+-> https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.1.tar.bz2
+Installing ruby-2.4.1...
+
+WARNING: ruby-2.4.1 is past its end of life and is now unsupported.
+It no longer receives bug fixes or critical security updates.
+
+ruby-build: using readline from homebrew
+
+BUILD FAILED (macOS 12.1 using ruby-build 20220910.1)
+
+Inspect or clean up the working tree at /var/folders/s8/ywk_bwy97sz74g2mwkbdth880000gr/T/ruby-build.20220926154040.47681.sOlHFx
+Results logged to /var/folders/s8/ywk_bwy97sz74g2mwkbdth880000gr/T/ruby-build.20220926154040.47681.log
+
+Last 10 log lines:
+readline.c:79:42: note: expanded from macro 'rl_username_completion_function'
+# define rl_username_completion_function username_completion_function
+                                         ^
+/opt/homebrew/opt/readline/include/readline/readline.h:485:14: note: 'rl_username_completion_function' declared here
+extern char *rl_username_completion_function PARAMS((const char *, int));
+             ^
+1 error generated.
+make[2]: *** [readline.o] Error 1
+make[1]: *** [ext/readline/all] Error 2
+make: *** [build-ext] Error 2
+
+
+################################################
+so clearly the above failed again. I also tried:
+RUBY_CFLAGS="-Wno-error=implicit-function-declaration" rbenv install 2.4.1
+- But that also failed. I think I switched to a different terminal at this point.
+- ASDF ruby 2.4.1 would install but then throw errors related to libgmp. I tried uninstalling/reinstalling GMP with brew a couple different ways but it
+looks like I ultimately just installed without it `asdf install ruby 2.4.1 --without-gmp`
+
+
+~ asdf install ruby 2.4.1
+To follow progress, use 'tail -f /var/folders/s8/ywk_bwy97sz74g2mwkbdth880000gr/T/ruby-build.20220926154417.73256.log' or pass --verbose
+Downloading ruby-2.4.1.tar.bz2...
+-> https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.1.tar.bz2
+Installing ruby-2.4.1...
+
+WARNING: ruby-2.4.1 is past its end of life and is now unsupported.
+It no longer receives bug fixes or critical security updates.
+
+ruby-build: using readline from homebrew
+Installed ruby-2.4.1 to /Users/colecrawford/.asdf/installs/ruby/2.4.1
+
+➜  ~ ruby -v
+dyld[3207]: Library not loaded: /usr/local/opt/gmp/lib/libgmp.10.dylib
+  Referenced from: /Users/colecrawford/.rbenv/versions/2.7.0/bin/ruby
+  Reason: tried: '/usr/local/opt/gmp/lib/libgmp.10.dylib' (no such file), '/usr/local/lib/libgmp.10.dylib' (no such file), '/usr/lib/libgmp.10.dylib' (no such file)
+[1]    3207 abort      ruby -v
+➜  ~ cd GitHub/SHARIAsource
+➜  SHARIAsource git:(feature/update-footer) ✗ ruby -v
+dyld[3419]: Library not loaded: /usr/local/opt/gmp/lib/libgmp.10.dylib
+  Referenced from: /Users/colecrawford/.rbenv/versions/2.4.1/bin/ruby
+  Reason: tried: '/usr/local/opt/gmp/lib/libgmp.10.dylib' (no such file), '/usr/local/lib/libgmp.10.dylib' (no such file), '/usr/lib/libgmp.10.dylib' (no such file)
+[1]    3419 abort      ruby -v
+➜  SHARIAsource git:(feature/update-footer) ✗ asdf local ruby 2.4.1
+➜  SHARIAsource git:(feature/update-footer) ✗ asdf current
+ruby            2.4.1           /Users/colecrawford/GitHub/SHARIAsource/.tool-versions
+➜  SHARIAsource git:(feature/update-footer) ✗ ruby -v
+dyld[3597]: Library not loaded: /usr/local/opt/gmp/lib/libgmp.10.dylib
+  Referenced from: /Users/colecrawford/.rbenv/versions/2.4.1/bin/ruby
+  Reason: tried: '/usr/local/opt/gmp/lib/libgmp.10.dylib' (no such file), '/usr/local/lib/libgmp.10.dylib' (no such file), '/usr/lib/libgmp.10.dylib' (no such file)
+[1]    3597 abort      ruby -v
+➜  SHARIAsource git:(feature/update-footer) ✗ asdf current
+ruby            2.4.1           /Users/colecrawford/GitHub/SHARIAsource/.tool-versions
+➜  SHARIAsource git:(feature/update-footer) ✗ rake start
+dyld[3755]: Library not loaded: /usr/local/opt/gmp/lib/libgmp.10.dylib
+  Referenced from: /Users/colecrawford/.rbenv/versions/2.4.1/bin/ruby
+  Reason: tried: '/usr/local/opt/gmp/lib/libgmp.10.dylib' (no such file), '/usr/local/lib/libgmp.10.dylib' (no such file), '/usr/lib/libgmp.10.dylib' (no such file)
+[1]    3755 abort      rake start
+➜  SHARIAsource git:(feature/update-footer) ✗ brew update && brew install gmp
+Already up-to-date.
+Warning: gmp 6.2.1_1 is already installed and up-to-date.
+To reinstall 6.2.1_1, run:
+  brew reinstall gmp
+➜  SHARIAsource git:(feature/update-footer) ✗ brew install gmp
+Warning: gmp 6.2.1_1 is already installed and up-to-date.
+To reinstall 6.2.1_1, run:
+  brew reinstall gmp
+➜  SHARIAsource git:(feature/update-footer) ✗ asdf install ruby 2.4.1 --with-opt-dir=$(brew --prefix gmp)
+ruby 2.4.1 is already installed
+➜  SHARIAsource git:(feature/update-footer) ✗ asdf uninstall ruby 2.4.1
+➜  SHARIAsource git:(feature/update-footer) ✗ asdf install ruby 2.4.1 --with-opt-dir=$(brew --prefix gmp)
+To follow progress, use 'tail -f /var/folders/s8/ywk_bwy97sz74g2mwkbdth880000gr/T/ruby-build.20220926155507.5035.log' or pass --verbose
+Downloading ruby-2.4.1.tar.bz2...
+-> https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.1.tar.bz2
+Installing ruby-2.4.1...
+
+WARNING: ruby-2.4.1 is past its end of life and is now unsupported.
+It no longer receives bug fixes or critical security updates.
+
+ruby-build: using readline from homebrew
+Installed ruby-2.4.1 to /Users/colecrawford/.asdf/installs/ruby/2.4.1
+
+➜  SHARIAsource git:(feature/update-footer) ✗ rake start
+dyld[34767]: Library not loaded: /usr/local/opt/gmp/lib/libgmp.10.dylib
+  Referenced from: /Users/colecrawford/.rbenv/versions/2.4.1/bin/ruby
+  Reason: tried: '/usr/local/opt/gmp/lib/libgmp.10.dylib' (no such file), '/usr/local/lib/libgmp.10.dylib' (no such file), '/usr/lib/libgmp.10.dylib' (no such file)
+[1]    34767 abort      rake start
+➜  SHARIAsource git:(feature/update-footer) ✗ arch -x86_64 /usr/local/homebrew/bin/brew install gmp
+arch: /usr/local/homebrew/bin/brew isn't executable
+➜  SHARIAsource git:(feature/update-footer) ✗ arch -x86_64 brew install gmp
+Warning: gmp 6.2.1_1 is already installed and up-to-date.
+To reinstall 6.2.1_1, run:
+  brew reinstall gmp
+➜  SHARIAsource git:(feature/update-footer) ✗ cd /usr/local/opt/gmp/lib/
+cd: no such file or directory: /usr/local/opt/gmp/lib/
+➜  SHARIAsource git:(feature/update-footer) ✗ cd /usr/local/opt/gmp/    
+cd: no such file or directory: /usr/local/opt/gmp/
+➜  SHARIAsource git:(feature/update-footer) ✗ cd /usr/local/opt/        
+cd: no such file or directory: /usr/local/opt/
+➜  SHARIAsource git:(feature/update-footer) ✗ cd /usr/local/lib 
+ls%                                                                                                                                                                               ➜  lib ls
+docker       psqlodbcw.so
+➜  lib cd ~/GitHub/SHARIAsource
+➜  SHARIAsource git:(feature/update-footer) ✗ nano ~/.zshrc
+➜  SHARIAsource git:(feature/update-footer) ✗ brew reinstall gmp
+==> Downloading https://ghcr.io/v2/homebrew/core/gmp/manifests/6.2.1_1
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/gmp/blobs/sha256:a43a2ae4c44d90626b835a968a32327c8b8bbf754ec1d2590f8ac656c71dace9
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:a43a2ae4c44d90626b835a968a32327c8b8bbf754ec1d2590f8ac656c71dace9?se=2022-09-26T20%3A10%3A00Z&
+######################################################################## 100.0%
+==> Reinstalling gmp 
+==> Pouring gmp--6.2.1_1.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/gmp/6.2.1_1: 21 files, 3.2MB
+==> Running `brew cleanup gmp`...
+Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+➜  SHARIAsource git:(feature/update-footer) ✗  arch -x86_64 brew reinstall gmp
+Error: Cannot install under Rosetta 2 in ARM default prefix (/opt/homebrew)!
+To rerun under ARM use:
+    arch -arm64 brew install ...
+To install under x86_64, install Homebrew into /usr/local.
+➜  SHARIAsource git:(feature/update-footer) ✗ asdf uninstall ruby 2.4.1                                  
+➜  SHARIAsource git:(feature/update-footer) ✗ asdf install ruby 2.4.1 --without-gmp                      
+To follow progress, use 'tail -f /var/folders/s8/ywk_bwy97sz74g2mwkbdth880000gr/T/ruby-build.20220926160411.37002.log' or pass --verbose
+Downloading ruby-2.4.1.tar.bz2...
+-> https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.1.tar.bz2
+Installing ruby-2.4.1...
+
+WARNING: ruby-2.4.1 is past its end of life and is now unsupported.
+It no longer receives bug fixes or critical security updates.
+
+ruby-build: using readline from homebrew
+Installed ruby-2.4.1 to /Users/colecrawford/.asdf/installs/ruby/2.4.1
+
+
+###########################
+Think this is most of the next batch. Ran into issues with Bundler / RubyGems related to OpenSSL and had to reinstall / relink. Made some .zshrc changes
+###########################
+➜  ~ cd ~/GitHub/SHARIAsource
+
+
+➜  SHARIAsource git:(feature/update-footer) ✗ rake start
+rake aborted!
+LoadError: cannot load such file -- bundler/setup
+/Users/colecrawford/GitHub/SHARIAsource/config/boot.rb:4:in `<top (required)>'
+/Users/colecrawford/GitHub/SHARIAsource/config/application.rb:1:in `<top (required)>'
+/Users/colecrawford/GitHub/SHARIAsource/Rakefile:4:in `<top (required)>'
+(See full trace by running task with --trace)
+➜  SHARIAsource git:(feature/update-footer) ✗ ruby -v
+ruby 2.4.1p111 (2017-03-22 revision 58053) [-darwin21]
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle -v
+dyld[67657]: Library not loaded: /usr/local/opt/gmp/lib/libgmp.10.dylib
+  Referenced from: /Users/colecrawford/.rbenv/versions/2.4.1/bin/ruby
+  Reason: tried: '/usr/local/opt/gmp/lib/libgmp.10.dylib' (no such file), '/usr/local/lib/libgmp.10.dylib' (no such file), '/usr/lib/libgmp.10.dylib' (no such file)
+[1]    67657 abort      bundle -v
+➜  SHARIAsource git:(feature/update-footer) ✗ gem env
+RubyGems Environment:
+  - RUBYGEMS VERSION: 2.6.11
+  - RUBY VERSION: 2.4.1 (2017-03-22 patchlevel 111) [-darwin21]
+  - INSTALLATION DIRECTORY: /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0
+  - USER INSTALLATION DIRECTORY: /Users/colecrawford/.gem/ruby/2.4.0
+  - RUBY EXECUTABLE: /Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/ruby
+  - EXECUTABLE DIRECTORY: /Users/colecrawford/.asdf/installs/ruby/2.4.1/bin
+  - SPEC CACHE DIRECTORY: /Users/colecrawford/.gem/specs
+  - SYSTEM CONFIGURATION DIRECTORY: /Users/colecrawford/.asdf/installs/ruby/2.4.1/etc
+  - RUBYGEMS PLATFORMS:
+    - ruby
+    - -darwin-21
+  - GEM PATHS:
+     - /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0
+     - /Users/colecrawford/.gem/ruby/2.4.0
+  - GEM CONFIGURATION:
+     - :update_sources => true
+     - :verbose => true
+     - :backtrace => false
+     - :bulk_threshold => 1000
+  - REMOTE SOURCES:
+     - https://rubygems.org/
+  - SHELL PATH:
+     - /Users/colecrawford/.asdf/installs/ruby/2.4.1/bin
+     - /Users/colecrawford/.asdf/shims
+     - /opt/homebrew/opt/asdf/libexec/bin
+     - /Users/colecrawford/.poetry/bin
+     - /Applications/Postgres.app/Contents/Versions/latest/bin
+     - /Users/colecrawford/.rbenv/shims
+     - /Users/colecrawford/.nvm/versions/node/v16.8.0/bin
+     - /Users/colecrawford/.sdkman/candidates/sbt/current/bin
+     - /shims
+     - /Users/colecrawford/.pyenv/shims
+     - /Users/colecrawford/bin
+     - /usr/local/bin
+     - /opt/homebrew/bin
+     - /opt/homebrew/sbin
+     - /usr/local/bin
+     - /usr/bin
+     - /bin
+     - /usr/sbin
+     - /sbin
+     - /usr/local/mysql/bin
+     - /usr/local/mysql/support-files
+     - /Users/colecrawford/GitHub/local-scripts
+➜  SHARIAsource git:(feature/update-footer) ✗ gem install bundler:1.16.1
+ERROR:  SSL verification error at depth 1: unable to get local issuer certificate (20)
+ERROR:  You must add /OU=GlobalSign Root CA - R3/O=GlobalSign/CN=GlobalSign to your local trusted store
+ERROR:  SSL verification error at depth 1: unable to get local issuer certificate (20)
+ERROR:  You must add /OU=GlobalSign Root CA - R3/O=GlobalSign/CN=GlobalSign to your local trusted store
+ERROR:  SSL verification error at depth 1: unable to get local issuer certificate (20)
+ERROR:  You must add /OU=GlobalSign Root CA - R3/O=GlobalSign/CN=GlobalSign to your local trusted store
+ERROR:  Could not find a valid gem 'bundler' (= 1.16.1), here is why:
+          Unable to download data from https://rubygems.org/ - SSL_connect returned=1 errno=0 state=error: certificate verify failed (https://api.rubygems.org/specs.4.8.gz)
+ERROR:  SSL verification error at depth 1: unable to get local issuer certificate (20)
+ERROR:  You must add /OU=GlobalSign Root CA - R3/O=GlobalSign/CN=GlobalSign to your local trusted store
+➜  SHARIAsource git:(feature/update-footer) ✗ curl -sL https://git.io/vQhWq | ruby
+Here's your Ruby and OpenSSL environment:
+
+Ruby:           2.4.1p111 (2017-03-22 revision 58053) [-darwin21]
+RubyGems:       2.6.11
+Compiled with:  OpenSSL 1.1.1q  5 Jul 2022
+Loaded version: OpenSSL 1.1.1q  5 Jul 2022
+SSL_CERT_FILE:  /opt/homebrew/etc/openssl@1.1/cert.pem
+SSL_CERT_DIR:   /opt/homebrew/etc/openssl@1.1/certs
+
+With that out of the way, let's see if you can connect to rubygems.org...
+
+Bundler connection to rubygems.org:       failed  ❌  (uninitialized constant Bundler)
+ERROR:  SSL verification error at depth 1: unable to get local issuer certificate (20)
+ERROR:  You must add /OU=GlobalSign Root CA - R3/O=GlobalSign/CN=GlobalSign to your local trusted store
+RubyGems connection to rubygems.org:      failed  ❌  (certificate verification)
+Ruby net/http connection to rubygems.org: failed  ❌
+
+Unfortunately, this Ruby can't connect to rubygems.org. 😡
+Your Ruby can't connect to rubygems.org because you are missing the certificate files OpenSSL needs to verify you are connecting to the genuine rubygems.org servers.
+➜  SHARIAsource git:(feature/update-footer) ✗ ruby -ropenssl -e 'puts OpenSSL::OPENSSL_LIBRARY_VERSION'
+OpenSSL 1.1.1q  5 Jul 2022
+➜  SHARIAsource git:(feature/update-footer) ✗ gem update --system
+ERROR:  SSL verification error at depth 1: unable to get local issuer certificate (20)
+ERROR:  You must add /OU=GlobalSign Root CA - R3/O=GlobalSign/CN=GlobalSign to your local trusted store
+ERROR:  While executing gem ... (Gem::RemoteFetcher::FetchError)
+    SSL_connect returned=1 errno=0 state=error: certificate verify failed (https://api.rubygems.org/specs.4.8.gz)
+➜  SHARIAsource git:(feature/update-footer) ✗ $ curl -Lks 'https://git.io/rg-ssl' | ruby
+
+
+zsh: command not found: $
+➜  SHARIAsource git:(feature/update-footer) ✗ curl -Lks 'https://git.io/rg-ssl' | ruby
+Here's your Ruby and OpenSSL environment:
+
+Ruby:           2.4.1p111 (2017-03-22 revision 58053) [-darwin21]
+RubyGems:       2.6.11
+Compiled with:  OpenSSL 1.1.1q  5 Jul 2022
+Loaded version: OpenSSL 1.1.1q  5 Jul 2022
+SSL_CERT_FILE:  /opt/homebrew/etc/openssl@1.1/cert.pem
+SSL_CERT_DIR:   /opt/homebrew/etc/openssl@1.1/certs
+
+With that out of the way, let's see if you can connect to rubygems.org...
+
+Bundler connection to rubygems.org:       failed  ❌  (uninitialized constant Bundler)
+ERROR:  SSL verification error at depth 1: unable to get local issuer certificate (20)
+ERROR:  You must add /OU=GlobalSign Root CA - R3/O=GlobalSign/CN=GlobalSign to your local trusted store
+RubyGems connection to rubygems.org:      failed  ❌  (certificate verification)
+Ruby net/http connection to rubygems.org: failed  ❌
+
+Unfortunately, this Ruby can't connect to rubygems.org. 😡
+Your Ruby can't connect to rubygems.org because you are missing the certificate files OpenSSL needs to verify you are connecting to the genuine rubygems.org servers.
+➜  SHARIAsource git:(feature/update-footer) ✗ gem install bundler
+ERROR:  SSL verification error at depth 1: unable to get local issuer certificate (20)
+ERROR:  You must add /OU=GlobalSign Root CA - R3/O=GlobalSign/CN=GlobalSign to your local trusted store
+ERROR:  SSL verification error at depth 1: unable to get local issuer certificate (20)
+ERROR:  You must add /OU=GlobalSign Root CA - R3/O=GlobalSign/CN=GlobalSign to your local trusted store
+ERROR:  SSL verification error at depth 1: unable to get local issuer certificate (20)
+ERROR:  You must add /OU=GlobalSign Root CA - R3/O=GlobalSign/CN=GlobalSign to your local trusted store
+ERROR:  Could not find a valid gem 'bundler' (>= 0), here is why:
+          Unable to download data from https://rubygems.org/ - SSL_connect returned=1 errno=0 state=error: certificate verify failed (https://api.rubygems.org/specs.4.8.gz)
+ERROR:  SSL verification error at depth 1: unable to get local issuer certificate (20)
+ERROR:  You must add /OU=GlobalSign Root CA - R3/O=GlobalSign/CN=GlobalSign to your local trusted store
+➜  SHARIAsource git:(feature/update-footer) ✗ gem env version
+2.6.11
+➜  SHARIAsource git:(feature/update-footer) ✗ ruby -ropen-uri -e "eval URI.open('https://git.io/vQhWq').read"
+
+-e:1:in `<main>': private method `open' called for URI:Module (NoMethodError)
+➜  SHARIAsource git:(feature/update-footer) ✗ curl -Lks 'https://git.io/vQhWq' | ruby
+Here's your Ruby and OpenSSL environment:
+
+Ruby:           2.4.1p111 (2017-03-22 revision 58053) [-darwin21]
+RubyGems:       2.6.11
+Compiled with:  OpenSSL 1.1.1q  5 Jul 2022
+Loaded version: OpenSSL 1.1.1q  5 Jul 2022
+SSL_CERT_FILE:  /opt/homebrew/etc/openssl@1.1/cert.pem
+SSL_CERT_DIR:   /opt/homebrew/etc/openssl@1.1/certs
+
+With that out of the way, let's see if you can connect to rubygems.org...
+
+Bundler connection to rubygems.org:       failed  ❌  (uninitialized constant Bundler)
+ERROR:  SSL verification error at depth 1: unable to get local issuer certificate (20)
+ERROR:  You must add /OU=GlobalSign Root CA - R3/O=GlobalSign/CN=GlobalSign to your local trusted store
+RubyGems connection to rubygems.org:      failed  ❌  (certificate verification)
+Ruby net/http connection to rubygems.org: failed  ❌
+
+Unfortunately, this Ruby can't connect to rubygems.org. 😡
+Your Ruby can't connect to rubygems.org because you are missing the certificate files OpenSSL needs to verify you are connecting to the genuine rubygems.org servers.
+➜  SHARIAsource git:(feature/update-footer) ✗ gem which rubygems
+/Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/2.4.0/rubygems.rb
+➜  SHARIAsource git:(feature/update-footer) ✗ ruby -ropenssl -e 'p OpenSSL::X509::DEFAULT_CERT_FILE'
+
+"/opt/homebrew/etc/openssl@1.1/cert.pem"
+➜  SHARIAsource git:(feature/update-footer) ✗ open /opt/homebrew/etc/openssl@1.1
+The file /opt/homebrew/etc/openssl@1.1 does not exist.
+➜  SHARIAsource git:(feature/update-footer) ✗ open /opt/homebrew/etc/           
+➜  SHARIAsource git:(feature/update-footer) ✗ brew install openssl@1.1
+==> Auto-updated Homebrew!
+Updated 1 tap (homebrew/core).
+Running `brew update --auto-update`...
+
+You have 11 outdated formulae and 2 outdated casks installed.
+You can upgrade them with brew upgrade
+or list them with brew outdated.
+
+Warning: openssl@1.1 1.1.1q is already installed and up-to-date.
+To reinstall 1.1.1q, run:
+  brew reinstall openssl@1.1
+➜  SHARIAsource git:(feature/update-footer) ✗ brew reinstall openssl@1.1
+==> Downloading https://ghcr.io/v2/homebrew/core/openssl/1.1/manifests/1.1.1q
+Already downloaded: /Users/colecrawford/Library/Caches/Homebrew/downloads/6271b05548776a2b3b124d10bd5580078ddd5ae46f9c34d37ca7cf2c26c2d8f3--openssl@1.1-1.1.1q.bottle_manifest.json
+==> Downloading https://ghcr.io/v2/homebrew/core/openssl/1.1/blobs/sha256:4e7b6cb2252c554a8e25ecae960f2fcd9a7fa742aa3fc99e6b533bb4e5d32483
+Already downloaded: /Users/colecrawford/Library/Caches/Homebrew/downloads/c17acdef55f539eb467904591b6752f039a8743290f52173dcfe519925d90373--openssl@1.1--1.1.1q.arm64_monterey.bottle.tar.gz
+==> Reinstalling openssl@1.1 
+==> Pouring openssl@1.1--1.1.1q.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/openssl@1.1/1.1.1q: 8,097 files, 18MB
+==> Running `brew cleanup openssl@1.1`...
+Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+➜  SHARIAsource git:(feature/update-footer) ✗ ruby -ropenssl -e 'p OpenSSL::X509::DEFAULT_CERT_FILE'
+
+"/opt/homebrew/etc/openssl@1.1/cert.pem"
+➜  SHARIAsource git:(feature/update-footer) ✗ curl -Lks 'https://git.io/vQhWq' | ruby               
+Here's your Ruby and OpenSSL environment:
+
+Ruby:           2.4.1p111 (2017-03-22 revision 58053) [-darwin21]
+RubyGems:       2.6.11
+Compiled with:  OpenSSL 1.1.1q  5 Jul 2022
+Loaded version: OpenSSL 1.1.1q  5 Jul 2022
+SSL_CERT_FILE:  /opt/homebrew/etc/openssl@1.1/cert.pem
+SSL_CERT_DIR:   /opt/homebrew/etc/openssl@1.1/certs
+
+With that out of the way, let's see if you can connect to rubygems.org...
+
+Bundler connection to rubygems.org:       failed  ❌  (uninitialized constant Bundler)
+RubyGems connection to rubygems.org:      success ✅
+Ruby net/http connection to rubygems.org: success ✅
+
+Although your Ruby installation and RubyGems can both connect to rubygems.org, Bundler is having trouble. The most likely way to fix this is to upgrade Bundler by running `gem install bundler`. Run this script again after doing that to make sure everything is all set. If you're still having trouble, check out the troubleshooting guide at http://ruby.to/ssl-check-failed 📦
+➜  SHARIAsource git:(feature/update-footer) ✗ gem install bundler:1.16.1
+Fetching: bundler-1.16.1.gem (100%)
+Successfully installed bundler-1.16.1
+Parsing documentation for bundler-1.16.1
+Installing ri documentation for bundler-1.16.1
+Done installing documentation for bundler after 4 seconds
+1 gem installed
+➜  SHARIAsource git:(feature/update-footer) ✗ rake start                                                     
+Your Ruby version is 2.4.1, but your Gemfile specified 2.7.6
+➜  SHARIAsource git:(feature/update-footer) ✗ rake start
+The git source https://github.com/foundation/foundation-rails.git is not yet checked out. Please run `bundle install` before trying to start your application
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle _1.16.1_ install
+dyld[72509]: Library not loaded: /usr/local/opt/gmp/lib/libgmp.10.dylib
+  Referenced from: /Users/colecrawford/.rbenv/versions/2.4.1/bin/ruby
+  Reason: tried: '/usr/local/opt/gmp/lib/libgmp.10.dylib' (no such file), '/usr/local/lib/libgmp.10.dylib' (no such file), '/usr/lib/libgmp.10.dylib' (no such file)
+[1]    72509 abort      bundle _1.16.1_ install
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle install
+dyld[72543]: Library not loaded: /usr/local/opt/gmp/lib/libgmp.10.dylib
+  Referenced from: /Users/colecrawford/.rbenv/versions/2.4.1/bin/ruby
+  Reason: tried: '/usr/local/opt/gmp/lib/libgmp.10.dylib' (no such file), '/usr/local/lib/libgmp.10.dylib' (no such file), '/usr/lib/libgmp.10.dylib' (no such file)
+[1]    72543 abort      bundle install
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle _1.16.1_ install --without-gm
+dyld[72589]: Library not loaded: /usr/local/opt/gmp/lib/libgmp.10.dylib
+  Referenced from: /Users/colecrawford/.rbenv/versions/2.4.1/bin/ruby
+  Reason: tried: '/usr/local/opt/gmp/lib/libgmp.10.dylib' (no such file), '/usr/local/lib/libgmp.10.dylib' (no such file), '/usr/lib/libgmp.10.dylib' (no such file)
+[1]    72589 abort      bundle _1.16.1_ install --without-gm
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle _1.16.1_ install --without-gmp
+dyld[72617]: Library not loaded: /usr/local/opt/gmp/lib/libgmp.10.dylib
+  Referenced from: /Users/colecrawford/.rbenv/versions/2.4.1/bin/ruby
+  Reason: tried: '/usr/local/opt/gmp/lib/libgmp.10.dylib' (no such file), '/usr/local/lib/libgmp.10.dylib' (no such file), '/usr/lib/libgmp.10.dylib' (no such file)
+[1]    72617 abort      bundle _1.16.1_ install --without-gmp
+➜  SHARIAsource git:(feature/update-footer) ✗ brew install gmp
+Warning: gmp 6.2.1_1 is already installed and up-to-date.
+To reinstall 6.2.1_1, run:
+  brew reinstall gmp
+➜  SHARIAsource git:(feature/update-footer) ✗ brew uninstall gmp
+Error: Refusing to uninstall /opt/homebrew/Cellar/gmp/6.2.1_1
+because it is required by asdf, composer, coreutils, php and php@7.4, which are currently installed.
+You can override this and force removal with:
+  brew uninstall --ignore-dependencies gmp
+➜  SHARIAsource git:(feature/update-footer) ✗ openssl version
+LibreSSL 2.8.3
+➜  SHARIAsource git:(feature/update-footer) ✗ ls -al /usr/local/Cellar/openssl*
+zsh: no matches found: /usr/local/Cellar/openssl*
+➜  SHARIAsource git:(feature/update-footer) ✗ brew linkage ruby@2.4.1
+Error: No such keg: /opt/homebrew/Cellar/ruby@2.4.1
+➜  SHARIAsource git:(feature/update-footer) ✗ brew reinstall gmp
+==> Downloading https://ghcr.io/v2/homebrew/core/gmp/manifests/6.2.1_1
+Already downloaded: /Users/colecrawford/Library/Caches/Homebrew/downloads/a1986a80dafb4e42b8372268a00d8d14aa8294154c876ba82e7ce48db06885cb--gmp-6.2.1_1.bottle_manifest.json
+==> Downloading https://ghcr.io/v2/homebrew/core/gmp/blobs/sha256:a43a2ae4c44d90626b835a968a32327c8b8bbf754ec1d2590f8ac656c71dace9
+Already downloaded: /Users/colecrawford/Library/Caches/Homebrew/downloads/89dcfca0a00ce7614bc9ff60dad07fbdd32422b83ae22c1bdb4d4746c6343e84--gmp--6.2.1_1.arm64_monterey.bottle.tar.gz
+==> Reinstalling gmp 
+==> Pouring gmp--6.2.1_1.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/gmp/6.2.1_1: 21 files, 3.2MB
+==> Running `brew cleanup gmp`...
+Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+➜  SHARIAsource git:(feature/update-footer) ✗ ls /usr/local/bin/brew 
+
+
+#########################
+- Able to actually start using bundler
+- Ran into an issue with nokogiri, had to use system libraries
+- Ran into issues with libv8 / therubyracer. Ultimately had to install Rosetta 2 Brew as ibrew. 
+
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle _1.16.1_ install              
+Fetching https://github.com/foundation/foundation-rails.git
+Fetching gem metadata from https://rubygems.org/..........
+Fetching gem metadata from https://rubygems.org/.
+Resolving dependencies.......
+Using rake 12.0.0
+Fetching Ascii85 1.0.2
+Installing Ascii85 1.0.2
+Fetching concurrent-ruby 1.0.5
+Installing concurrent-ruby 1.0.5
+Fetching i18n 0.8.6
+Installing i18n 0.8.6
+Fetching minitest 5.10.3
+Installing minitest 5.10.3
+Fetching thread_safe 0.3.6
+Installing thread_safe 0.3.6
+Fetching tzinfo 1.2.3
+Installing tzinfo 1.2.3
+Fetching activesupport 5.1.2
+Installing activesupport 5.1.2
+Fetching builder 3.2.3
+Installing builder 3.2.3
+Fetching erubi 1.6.1
+Installing erubi 1.6.1
+Fetching mini_portile2 2.1.0
+Installing mini_portile2 2.1.0
+Fetching nokogiri 1.6.8.1
+Installing nokogiri 1.6.8.1 with native extensions
+Gem::Ext::BuildError: ERROR: Failed to build gem native extension.
+
+    current directory: /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/nokogiri-1.6.8.1/ext/nokogiri
+/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/ruby -r ./siteconf20220926-75416-1iapzvk.rb extconf.rb
+checking if the C compiler accepts ... yes
+checking if the C compiler accepts -Wno-error=unused-command-line-argument-hard-error-in-future... no
+Building nokogiri using packaged libraries.
+Using mini_portile version 2.1.0
+checking for iconv.h... yes
+checking for gzdopen() in -lz... yes
+checking for iconv... yes
+************************************************************************
+IMPORTANT NOTICE:
+
+Building Nokogiri with a packaged version of libxml2-2.9.4.
+
+Team Nokogiri will keep on doing their best to provide security
+updates in a timely manner, but if this is a concern for you and want
+to use the system library instead; abort this installation process and
+reinstall nokogiri as follows:
+
+    gem install nokogiri -- --use-system-libraries
+        [--with-xml2-config=/path/to/xml2-config]
+        [--with-xslt-config=/path/to/xslt-config]
+
+If you are using Bundler, tell it to use the option:
+
+    bundle config build.nokogiri --use-system-libraries
+    bundle install
+
+Note, however, that nokogiri is not fully compatible with arbitrary
+versions of libxml2 provided by OS/package vendors.
+************************************************************************
+Extracting libxml2-2.9.4.tar.gz into tmp/arm-apple-darwin21.2.0/ports/libxml2/2.9.4... OK
+Running 'configure' for libxml2 2.9.4... OK
+Running 'compile' for libxml2 2.9.4... ERROR, review
+'/Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/nokogiri-1.6.8.1/ext/nokogiri/tmp/arm-apple-darwin21.2.0/ports/libxml2/2.9.4/compile.log' to see what
+happened. Last lines are:
+========================================================================
+    unsigned short* in = (unsigned short*) inb;
+                         ^~~~~~~~~~~~~~~~~~~~~
+encoding.c:815:27: warning: cast from 'unsigned char *' to 'unsigned short *' increases required alignment from 1 to 2 [-Wcast-align]
+    unsigned short* out = (unsigned short*) outb;
+                          ^~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+  CC       error.lo
+  CC       parserInternals.lo
+  CC       parser.lo
+  CC       tree.lo
+  CC       hash.lo
+  CC       list.lo
+  CC       xmlIO.lo
+xmlIO.c:1450:52: error: use of undeclared identifier 'LZMA_OK'
+    ret =  (__libxml2_xzclose((xzFile) context) == LZMA_OK ) ? 0 : -1;
+                                                   ^
+1 error generated.
+make[2]: *** [xmlIO.lo] Error 1
+make[1]: *** [all-recursive] Error 1
+make: *** [all] Error 2
+========================================================================
+*** extconf.rb failed ***
+Could not create Makefile due to some reason, probably lack of necessary
+libraries and/or headers.  Check the mkmf.log file for more details.  You may
+need configuration options.
+
+Provided configuration options:
+	--with-opt-dir
+	--without-opt-dir
+	--with-opt-include
+	--without-opt-include=${opt-dir}/include
+	--with-opt-lib
+	--without-opt-lib=${opt-dir}/lib
+	--with-make-prog
+	--without-make-prog
+	--srcdir=.
+	--curdir
+	--ruby=/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/$(RUBY_BASE_NAME)
+	--help
+	--clean
+	--use-system-libraries
+	--enable-static
+	--disable-static
+	--with-zlib-dir
+	--without-zlib-dir
+	--with-zlib-include
+	--without-zlib-include=${zlib-dir}/include
+	--with-zlib-lib
+	--without-zlib-lib=${zlib-dir}/lib
+	--enable-cross-build
+	--disable-cross-build
+/Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/mini_portile2-2.1.0/lib/mini_portile2/mini_portile.rb:366:in `block in execute': Failed to complete compile
+task (RuntimeError)
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/mini_portile2-2.1.0/lib/mini_portile2/mini_portile.rb:337:in `chdir'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/mini_portile2-2.1.0/lib/mini_portile2/mini_portile.rb:337:in `execute'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/mini_portile2-2.1.0/lib/mini_portile2/mini_portile.rb:111:in `compile'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/mini_portile2-2.1.0/lib/mini_portile2/mini_portile.rb:150:in `cook'
+	from extconf.rb:365:in `block (2 levels) in process_recipe'
+	from extconf.rb:258:in `block in chdir_for_build'
+	from extconf.rb:257:in `chdir'
+	from extconf.rb:257:in `chdir_for_build'
+	from extconf.rb:364:in `block in process_recipe'
+	from extconf.rb:263:in `tap'
+	from extconf.rb:263:in `process_recipe'
+	from extconf.rb:556:in `<main>'
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/nokogiri-1.6.8.1/mkmf.log
+
+extconf failed, exit code 1
+
+Gem files will remain installed in /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/nokogiri-1.6.8.1 for inspection.
+Results logged to /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/nokogiri-1.6.8.1/gem_make.out
+
+An error occurred while installing nokogiri (1.6.8.1), and Bundler cannot continue.
+Make sure that `gem install nokogiri -v '1.6.8.1'` succeeds before bundling.
+
+In Gemfile:
+  leaflet-rails was resolved to 1.3.1, which depends on
+    rails was resolved to 5.1.2, which depends on
+      actioncable was resolved to 5.1.2, which depends on
+        actionpack was resolved to 5.1.2, which depends on
+          actionview was resolved to 5.1.2, which depends on
+            rails-dom-testing was resolved to 2.0.3, which depends on
+              nokogiri
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle config build.nokogiri --use-system-libraries
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle _1.16.1_ install                            
+Fetching https://github.com/foundation/foundation-rails.git
+Fetching gem metadata from https://rubygems.org/..........
+Fetching gem metadata from https://rubygems.org/.
+Resolving dependencies.......
+Using rake 12.0.0
+Using Ascii85 1.0.2
+Using concurrent-ruby 1.0.5
+Using i18n 0.8.6
+Using minitest 5.10.3
+Using thread_safe 0.3.6
+Using tzinfo 1.2.3
+Using activesupport 5.1.2
+Using builder 3.2.3
+Using erubi 1.6.1
+Using mini_portile2 2.1.0
+Fetching nokogiri 1.6.8.1
+Installing nokogiri 1.6.8.1 with native extensions
+Fetching rails-dom-testing 2.0.3
+Installing rails-dom-testing 2.0.3
+Fetching loofah 2.0.3
+Installing loofah 2.0.3
+Fetching rails-html-sanitizer 1.0.3
+Installing rails-html-sanitizer 1.0.3
+Fetching actionview 5.1.2
+Installing actionview 5.1.2
+Fetching rack 2.0.3
+Installing rack 2.0.3
+Fetching rack-test 0.6.3
+Installing rack-test 0.6.3
+Fetching actionpack 5.1.2
+Installing actionpack 5.1.2
+Fetching nio4r 2.1.0
+Installing nio4r 2.1.0 with native extensions
+Fetching websocket-extensions 0.1.2
+Installing websocket-extensions 0.1.2
+Fetching websocket-driver 0.6.5
+Installing websocket-driver 0.6.5 with native extensions
+Fetching actioncable 5.1.2
+Installing actioncable 5.1.2
+Fetching globalid 0.4.0
+Installing globalid 0.4.0
+Fetching activejob 5.1.2
+Installing activejob 5.1.2
+Fetching mime-types-data 3.2016.0521
+Installing mime-types-data 3.2016.0521
+Fetching mime-types 3.1
+Installing mime-types 3.1
+Fetching mail 2.6.6
+Installing mail 2.6.6
+Fetching actionmailer 5.1.2
+Installing actionmailer 5.1.2
+Fetching activemodel 5.1.2
+Installing activemodel 5.1.2
+Fetching active_attr 0.10.1
+Installing active_attr 0.10.1
+Fetching arel 8.0.0
+Installing arel 8.0.0
+Fetching activerecord 5.1.2
+Installing activerecord 5.1.2
+Fetching afm 0.2.2
+Installing afm 0.2.2
+Fetching annotate 2.7.2
+Installing annotate 2.7.2
+Fetching execjs 2.7.0
+Installing execjs 2.7.0
+Fetching autoprefixer-rails 7.1.1
+Installing autoprefixer-rails 7.1.1
+Fetching awesome_print 1.7.0
+Installing awesome_print 1.7.0
+Fetching bcrypt 3.1.11
+Installing bcrypt 3.1.11 with native extensions
+Fetching coderay 1.1.1
+Installing coderay 1.1.1
+Fetching erubis 2.7.0
+Installing erubis 2.7.0
+Fetching better_errors 2.1.1
+Installing better_errors 2.1.1
+Fetching debug_inspector 0.0.3
+Installing debug_inspector 0.0.3 with native extensions
+Fetching binding_of_caller 0.7.2
+Installing binding_of_caller 0.7.2 with native extensions
+Using bundler 1.16.1
+Fetching xpath 2.1.0
+Installing xpath 2.1.0
+Fetching capybara 2.3.0
+Installing capybara 2.3.0
+Fetching carrierwave 1.1.0
+Installing carrierwave 1.1.0
+Fetching hitimes 1.2.5
+Installing hitimes 1.2.5 with native extensions
+Fetching timers 4.1.2
+Installing timers 4.1.2
+Fetching celluloid-essentials 0.20.5
+Installing celluloid-essentials 0.20.5
+Fetching celluloid-extras 0.20.5
+Installing celluloid-extras 0.20.5
+Fetching celluloid-fsm 0.20.5
+Installing celluloid-fsm 0.20.5
+Fetching celluloid-pool 0.20.5
+Installing celluloid-pool 0.20.5
+Fetching celluloid-supervision 0.20.6
+Installing celluloid-supervision 0.20.6
+Fetching celluloid 0.17.3
+Installing celluloid 0.17.3
+Fetching with_advisory_lock 3.1.0
+Installing with_advisory_lock 3.1.0
+Fetching closure_tree 6.6.0
+Installing closure_tree 6.6.0
+Fetching coffee-script-source 1.12.2
+Installing coffee-script-source 1.12.2
+Fetching coffee-script 2.4.1
+Installing coffee-script 2.4.1
+Fetching method_source 0.8.2
+Installing method_source 0.8.2
+Fetching thor 0.19.4
+Installing thor 0.19.4
+Fetching railties 5.1.2
+Installing railties 5.1.2
+Fetching coffee-rails 4.2.2
+Installing coffee-rails 4.2.2
+Fetching connection_pool 2.2.1
+Installing connection_pool 2.2.1
+Fetching d3-rails 5.4.0
+Installing d3-rails 5.4.0
+Fetching dalli 2.7.6
+Installing dalli 2.7.6
+Fetching orm_adapter 0.5.0
+Installing orm_adapter 0.5.0
+Fetching responders 2.4.0
+Installing responders 2.4.0
+Fetching warden 1.2.7
+Installing warden 1.2.7
+Fetching devise 4.3.0
+Installing devise 4.3.0
+Fetching diff-lcs 1.3
+Installing diff-lcs 1.3
+Fetching dotenv-deployment 0.0.2
+Installing dotenv-deployment 0.0.2
+Fetching dotenv 0.11.1
+Installing dotenv 0.11.1
+Fetching eventmachine 1.0.9.1
+Installing eventmachine 1.0.9.1 with native extensions
+Fetching factory_girl 4.8.0
+Installing factory_girl 4.8.0
+Fetching factory_girl_rails 4.8.0
+Installing factory_girl_rails 4.8.0
+Fetching multipart-post 2.0.0
+Installing multipart-post 2.0.0
+Fetching faraday 0.12.1
+Installing faraday 0.12.1
+Fetching sass 3.4.25
+Installing sass 3.4.25
+Fetching font-awesome-sass 4.3.2.1
+Installing font-awesome-sass 4.3.2.1
+Fetching foreman 0.74.0
+Installing foreman 0.74.0
+Using foundation-rails 5.5.3.2 from https://github.com/foundation/foundation-rails.git (at v5.5.3.2@649f360)
+Fetching friendly_id 5.2.4
+Installing friendly_id 5.2.4
+Fetching hashery 2.1.2
+Installing hashery 2.1.2
+Fetching highline 1.7.8
+Installing highline 1.7.8
+Fetching hijri_gem 0.4.2
+Installing hijri_gem 0.4.2
+Fetching jquery-rails 4.3.1
+Installing jquery-rails 4.3.1
+Fetching sprockets 3.7.1
+Installing sprockets 3.7.1
+Fetching sprockets-rails 3.2.0
+Installing sprockets-rails 3.2.0
+Fetching tilt 2.0.7
+Installing tilt 2.0.7
+Fetching sass-rails 5.0.6
+Installing sass-rails 5.0.6
+Fetching jquery-datatables-rails 3.3.0
+Installing jquery-datatables-rails 3.3.0
+Fetching jquery-ui-rails 6.0.1
+Installing jquery-ui-rails 6.0.1
+Fetching json 1.8.6
+Installing json 1.8.6 with native extensions
+Fetching kaminari 0.16.3
+Installing kaminari 0.16.3
+Fetching kgio 2.11.0
+Installing kgio 2.11.0 with native extensions
+Fetching kramdown 1.4.2
+Installing kramdown 1.4.2
+Fetching rails 5.1.2
+Installing rails 5.1.2
+Fetching leaflet-rails 1.3.1
+Installing leaflet-rails 1.3.1
+Fetching libv8 3.16.14.19
+Installing libv8 3.16.14.19 with native extensions
+Gem::Ext::BuildError: ERROR: Failed to build gem native extension.
+
+    current directory: /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/ext/libv8
+/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/ruby -r ./siteconf20220926-84076-rpgxai.rb extconf.rb
+creating Makefile
+Applying /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/patches/disable-building-tests.patch
+Applying /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/patches/disable-werror-on-osx.patch
+Applying /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/patches/disable-xcode-debugging.patch
+Applying /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/patches/do-not-imply-vfp3-and-armv7.patch
+Applying /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/patches/do-not-use-MAP_NORESERVE-on-freebsd.patch
+Applying /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/patches/do-not-use-vfp2.patch
+Applying /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/patches/fPIC-for-static.patch
+Compiling v8 for arm
+Using python 2.7.18
+Using compiler: c++ (clang version 13.0.0)
+Unable to find a compiler officially supported by v8.
+It is recommended to use GCC v4.4 or higher
+Beginning compilation. This will take some time.
+Building v8 with env CXX=c++ LINK=c++  /usr/bin/make arm.release vfp2=off vfp3=on hardfp=on ARFLAGS.target=crs werror=no
+GYP_GENERATORS=make \
+	build/gyp/gyp --generator-output="out" build/all.gyp \
+	              -Ibuild/standalone.gypi --depth=. \
+	              -Dv8_target_arch=arm \
+-S.arm  -Dv8_enable_backtrace=1 -Dv8_can_use_vfp2_instructions=false -Dv8_can_use_vfp3_instructions=true -Darm_fpu=vfpv3 -Dwerror=''
+-Dv8_use_arm_eabi_hardfloat=true
+  CXX(target) /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/vendor/v8/out/arm.release/obj.target/preparser_lib/src/allocation.o
+clang: warning: include path for libstdc++ headers not found; pass '-stdlib=libc++' on the command line to use the libc++ standard library instead [-Wstdlibcxx-not-found]
+In file included from ../src/allocation.cc:33:
+../src/utils.h:33:10: fatal error: 'climits' file not found
+#include <climits>
+         ^~~~~~~~~
+1 error generated.
+make[1]: *** [/Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/vendor/v8/out/arm.release/obj.target/preparser_lib/src/allocation.o] Error 1
+make: *** [arm.release] Error 2
+/Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/ext/libv8/location.rb:36:in `block in verify_installation!': libv8 did not install
+properly, expected binary v8 archive
+'/Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/vendor/v8/out/arm.release/obj.target/tools/gyp/libv8_base.a'to exist, but it was not
+found (Libv8::Location::Vendor::ArchiveNotFound)
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/ext/libv8/location.rb:35:in `each'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/ext/libv8/location.rb:35:in `verify_installation!'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/ext/libv8/location.rb:26:in `install!'
+	from extconf.rb:7:in `<main>'
+
+extconf failed, exit code 1
+
+Gem files will remain installed in /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19 for inspection.
+Results logged to /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/libv8-3.16.14.19/gem_make.out
+
+An error occurred while installing libv8 (3.16.14.19), and Bundler cannot continue.
+Make sure that `gem install libv8 -v '3.16.14.19'` succeeds before bundling.
+
+In Gemfile:
+  therubyracer was resolved to 0.12.3, which depends on
+    libv8
+➜  SHARIAsource git:(feature/update-footer) ✗ brew install v8@3.15
+Running `brew update --auto-update`...
+==> Auto-updated Homebrew!
+Updated 2 taps (homebrew/core and homebrew/cask).
+==> New Formulae
+bazarr
+
+You have 11 outdated formulae and 2 outdated casks installed.
+You can upgrade them with brew upgrade
+or list them with brew outdated.
+
+Warning: v8@3.15 has been deprecated because it depends on Python 2 to build!
+Error: v8@3.15: no bottle available!
+You can try to install from source with:
+  brew install --build-from-source v8@3.15
+Please note building from source is unsupported. You will encounter build
+failures with some formulae. If you experience any issues please create pull
+requests instead of asking for help on Homebrew's GitHub, Twitter or any other
+official channels.
+➜  SHARIAsource git:(feature/update-footer) ✗ arch -arm64 brew install v8@3.15
+Warning: v8@3.15 has been deprecated because it depends on Python 2 to build!
+Error: v8@3.15: no bottle available!
+You can try to install from source with:
+  brew install --build-from-source v8@3.15
+Please note building from source is unsupported. You will encounter build
+failures with some formulae. If you experience any issues please create pull
+requests instead of asking for help on Homebrew's GitHub, Twitter or any other
+official channels.
+➜  SHARIAsource git:(feature/update-footer) ✗ arch -arm64 brew install --build-from-source v8@3.15
+==> Auto-updated Homebrew!
+Updated 1 tap (homebrew/core).
+
+You have 11 outdated formulae and 2 outdated casks installed.
+You can upgrade them with brew upgrade
+or list them with brew outdated.
+
+Running `brew update --auto-update`...
+Warning: v8@3.15 has been deprecated because it depends on Python 2 to build!
+==> Cloning https://chromium.googlesource.com/external/gyp.git
+Cloning into '/Users/colecrawford/Library/Caches/Homebrew/v8@3.15--gyp--git'...
+==> Checking out revision f7bc250ccc4d619a1cf238db87e5979f89ff36d7
+HEAD is now at f7bc250c Make gyp/win32 compatible with upstream ninja.
+==> Downloading https://github.com/v8/v8/archive/3.15.11.18.tar.gz
+==> Downloading from https://codeload.github.com/v8/v8/tar.gz/refs/tags/3.15.11.18
+                        -=O=-          #     #     #     #                    
+Warning: A newer Command Line Tools release is available.
+Update them from Software Update in System Preferences or run:
+  softwareupdate --all --install --force
+
+If that doesn't show you any updates, run:
+  sudo rm -rf /Library/Developer/CommandLineTools
+  sudo xcode-select --install
+
+Alternatively, manually download them from:
+  https://developer.apple.com/download/all/.
+You should download the Command Line Tools for Xcode 13.4.
+
+==> make native -j10 library=shared snapshot=on console=readline
+Last 15 lines from /Users/colecrawford/Library/Logs/Homebrew/v8@3.15/01.make:
+In file included from ../src/conversions.cc:32:
+In file included from ../src/conversions-inl.h:42:
+In file included from ../src/platform.h:100:
+In file included from ../src/lazy-instance.h:94:
+../src/once.h:115:7: error: no matching function for call to 'Acquire_Load'
+  if (Acquire_Load(once) != ONCE_STATE_DONE) {
+      ^~~~~~~~~~~~
+../src/atomicops.h:125:10: note: candidate function not viable: no known conversion from 'v8::internal::OnceType *' (aka 'long *') to 'const volatile v8::internal::Atomic32 *' (aka 'const volatile int *') for 1st argument
+Atomic32 Acquire_Load(volatile const Atomic32* ptr);
+         ^
+2 errors generated.
+make[1]: *** [/private/tmp/v8A3.15-20220926-92584-1bh67rz/v8-3.15.11.18/out/native/obj.target/preparser_lib/src/fixed-dtoa.o] Error 1
+5 errors generated.
+make[1]: *** [/private/tmp/v8A3.15-20220926-92584-1bh67rz/v8-3.15.11.18/out/native/obj.target/preparser_lib/src/conversions.o] Error 1
+make: *** [native] Error 2
+
+Do not report this issue to Homebrew/brew or Homebrew/core!
+
+
+Error: A newer Command Line Tools release is available.
+Update them from Software Update in System Preferences or run:
+  softwareupdate --all --install --force
+
+If that doesn't show you any updates, run:
+  sudo rm -rf /Library/Developer/CommandLineTools
+  sudo xcode-select --install
+
+Alternatively, manually download them from:
+  https://developer.apple.com/download/all/.
+You should download the Command Line Tools for Xcode 13.4.
+
+Please create pull requests instead of asking for help on Homebrew's GitHub,
+Twitter or any other official channels.
+➜  SHARIAsource git:(feature/update-footer) ✗ brew install v8@3.15
+Warning: v8@3.15 has been deprecated because it depends on Python 2 to build!
+Error: v8@3.15: no bottle available!
+You can try to install from source with:
+  brew install --build-from-source v8@3.15
+Please note building from source is unsupported. You will encounter build
+failures with some formulae. If you experience any issues please create pull
+requests instead of asking for help on Homebrew's GitHub, Twitter or any other
+official channels.
+➜  SHARIAsource git:(feature/update-footer) ✗ brew install v8-315
+Warning: Use v8@3.15 instead of deprecated v8-315
+Warning: Use v8@3.15 instead of deprecated v8-315
+Warning: v8@3.15 has been deprecated because it depends on Python 2 to build!
+Error: v8@3.15: no bottle available!
+You can try to install from source with:
+  brew install --build-from-source v8@3.15
+Please note building from source is unsupported. You will encounter build
+failures with some formulae. If you experience any issues please create pull
+requests instead of asking for help on Homebrew's GitHub, Twitter or any other
+official channels.
+➜  SHARIAsource git:(feature/update-footer) ✗ brew tap homebrew/versions
+Error: homebrew/versions was deprecated. This tap is now empty and all its contents were either deleted or migrated.
+➜  SHARIAsource git:(feature/update-footer) ✗ env \ CXX=clang++ \ GYPFLAGS=-Dmac_deployment_target=10.9 \ gem install libv8 --version 3.16.14.19
+env:  gem: No such file or directory
+➜  SHARIAsource git:(feature/update-footer) ✗ env \ CXX=clang++ \ GYPFLAGS=-Dmac_deployment_target=10.9 \ gem install libv8 --version 3.16.14.19
+env:  gem: No such file or directory
+➜  SHARIAsource git:(feature/update-footer) ✗ brew install v8@3.15
+Warning: v8@3.15 has been deprecated because it depends on Python 2 to build!
+Error: v8@3.15: no bottle available!
+You can try to install from source with:
+  brew install --build-from-source v8@3.15
+Please note building from source is unsupported. You will encounter build
+failures with some formulae. If you experience any issues please create pull
+requests instead of asking for help on Homebrew's GitHub, Twitter or any other
+official channels.
+➜  SHARIAsource git:(feature/update-footer) ✗ arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+==> Checking for `sudo` access (which may request your password)...
+Password:
+==> This script will install:
+/usr/local/bin/brew
+/usr/local/share/doc/homebrew
+/usr/local/share/man/man1/brew.1
+/usr/local/share/zsh/site-functions/_brew
+/usr/local/etc/bash_completion.d/brew
+/usr/local/Homebrew
+==> The following existing directories will be made group writable:
+/usr/local/bin
+/usr/local/lib
+/usr/local/share
+==> The following existing directories will have their owner set to colecrawford:
+/usr/local/bin
+/usr/local/lib
+/usr/local/share
+==> The following existing directories will have their group set to admin:
+/usr/local/bin
+/usr/local/lib
+/usr/local/share
+==> The following new directories will be created:
+/usr/local/etc
+/usr/local/include
+/usr/local/sbin
+/usr/local/var
+/usr/local/opt
+/usr/local/share/zsh
+/usr/local/share/zsh/site-functions
+/usr/local/var/homebrew
+/usr/local/var/homebrew/linked
+/usr/local/Cellar
+/usr/local/Caskroom
+/usr/local/Frameworks
+
+Press RETURN/ENTER to continue or any other key to abort:
+==> /usr/bin/sudo /bin/chmod u+rwx /usr/local/bin /usr/local/lib /usr/local/share
+==> /usr/bin/sudo /bin/chmod g+rwx /usr/local/bin /usr/local/lib /usr/local/share
+==> /usr/bin/sudo /usr/sbin/chown colecrawford /usr/local/bin /usr/local/lib /usr/local/share
+==> /usr/bin/sudo /usr/bin/chgrp admin /usr/local/bin /usr/local/lib /usr/local/share
+==> /usr/bin/sudo /bin/mkdir -p /usr/local/etc /usr/local/include /usr/local/sbin /usr/local/var /usr/local/opt /usr/local/share/zsh /usr/local/share/zsh/site-functions /usr/local/var/homebrew /usr/local/var/homebrew/linked /usr/local/Cellar /usr/local/Caskroom /usr/local/Frameworks
+==> /usr/bin/sudo /bin/chmod ug=rwx /usr/local/etc /usr/local/include /usr/local/sbin /usr/local/var /usr/local/opt /usr/local/share/zsh /usr/local/share/zsh/site-functions /usr/local/var/homebrew /usr/local/var/homebrew/linked /usr/local/Cellar /usr/local/Caskroom /usr/local/Frameworks
+==> /usr/bin/sudo /bin/chmod go-w /usr/local/share/zsh /usr/local/share/zsh/site-functions
+==> /usr/bin/sudo /usr/sbin/chown colecrawford /usr/local/etc /usr/local/include /usr/local/sbin /usr/local/var /usr/local/opt /usr/local/share/zsh /usr/local/share/zsh/site-functions /usr/local/var/homebrew /usr/local/var/homebrew/linked /usr/local/Cellar /usr/local/Caskroom /usr/local/Frameworks
+==> /usr/bin/sudo /usr/bin/chgrp admin /usr/local/etc /usr/local/include /usr/local/sbin /usr/local/var /usr/local/opt /usr/local/share/zsh /usr/local/share/zsh/site-functions /usr/local/var/homebrew /usr/local/var/homebrew/linked /usr/local/Cellar /usr/local/Caskroom /usr/local/Frameworks
+==> /usr/bin/sudo /bin/mkdir -p /usr/local/Homebrew
+==> /usr/bin/sudo /usr/sbin/chown -R colecrawford:admin /usr/local/Homebrew
+==> Downloading and installing Homebrew...
+remote: Enumerating objects: 217010, done.
+remote: Counting objects: 100% (47/47), done.
+remote: Compressing objects: 100% (47/47), done.
+remote: Total 217010 (delta 0), reused 45 (delta 0), pack-reused 216963
+Receiving objects: 100% (217010/217010), 60.56 MiB | 42.89 MiB/s, done.
+Resolving deltas: 100% (159705/159705), done.
+From https://github.com/Homebrew/brew
+HEAD is now at 520d9c3ab Merge pull request #13926 from SMillerDev/feature/audit/complain_no_subjects
+==> Tapping homebrew/core
+remote: Enumerating objects: 1277559, done.
+remote: Counting objects: 100% (474/474), done.
+remote: Compressing objects: 100% (247/247), done.
+remote: Total 1277559 (delta 282), reused 409 (delta 227), pack-reused 1277085
+Receiving objects: 100% (1277559/1277559), 517.01 MiB | 33.53 MiB/s, done.
+Resolving deltas: 100% (881349/881349), done.
+From https://github.com/Homebrew/homebrew-core
+ * [new branch]              master     -> origin/master
+HEAD is now at 65d11ec6b84 wangle: update 2022.09.26.00 bottle.
+==> Installation successful!
+
+==> Homebrew has enabled anonymous aggregate formulae and cask analytics.
+Read the analytics documentation (and how to opt-out) here:
+  https://docs.brew.sh/Analytics
+No analytics data has been sent yet (nor will any be during this install run).
+
+==> Homebrew is run entirely by unpaid volunteers. Please consider donating:
+  https://github.com/Homebrew/brew#donations
+
+==> Next steps:
+- Run brew help to get started
+- Further documentation:
+    https://docs.brew.sh
+
+
+#######################################################################################################
+- libv8, postgres, therubyracer, imagemagick gems all had issues
+- Ultimately got this to work and needed to run rails s with `./bin/rails s` instead for some reason
+#######################################################################################################
+
+➜  SHARIAsource git:(feature/update-footer) ✗ nano ~/.zshrc
+➜  SHARIAsource git:(feature/update-footer) ✗ source ~/.zshrc
+
+➜  SHARIAsource git:(feature/update-footer) ✗ ibrew tap homebrew/versions
+Running `brew update --auto-update`...
+==> Homebrew is run entirely by unpaid volunteers. Please consider donating:
+  https://github.com/Homebrew/brew#donations
+
+==> Auto-updated Homebrew!
+Updated 1 tap (homebrew/core).
+
+Error: homebrew/versions was deprecated. This tap is now empty and all its contents were either deleted or migrated.
+➜  SHARIAsource git:(feature/update-footer) ✗ ibrew install v8-315
+Warning: Use v8@3.15 instead of deprecated v8-315
+Warning: Use v8@3.15 instead of deprecated v8-315
+Warning: v8@3.15 has been deprecated because it depends on Python 2 to build!
+==> Downloading https://ghcr.io/v2/homebrew/core/v8/3.15/manifests/3.15.11.18_1
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/v8/3.15/blobs/sha256:e8a4181b1af77730c7345d61cf38b2a0cb19135e2963d2bddf9bbcc07357e503
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:e8a4181b1af77730c7345d61cf38b2a0cb19135e2963d2bddf9bbcc07357e503?se=2022-
+######################################################################## 100.0%
+==> Pouring v8@3.15--3.15.11.18_1.monterey.bottle.tar.gz
+==> Caveats
+v8@3.15 is keg-only, which means it was not symlinked into /usr/local,
+because this is an alternate version of another formula.
+
+If you need to have v8@3.15 first in your PATH, run:
+  echo 'export PATH="/usr/local/opt/v8@3.15/bin:$PATH"' >> ~/.zshrc
+
+For compilers to find v8@3.15 you may need to set:
+  export LDFLAGS="-L/usr/local/opt/v8@3.15/lib"
+  export CPPFLAGS="-I/usr/local/opt/v8@3.15/include"
+
+==> Summary
+🍺  /usr/local/Cellar/v8@3.15/3.15.11.18_1: 25 files, 147.5MB
+==> Running `brew cleanup v8@3.15`...
+Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+➜  SHARIAsource git:(feature/update-footer) ✗ gem install libv8 -v '3.16.14.19' -- --with-system-v8
+Building native extensions with: '--with-system-v8'
+This could take a while...
+Successfully installed libv8-3.16.14.19
+Parsing documentation for libv8-3.16.14.19
+Installing ri documentation for libv8-3.16.14.19
+Done installing documentation for libv8 after 0 seconds
+1 gem installed
+➜  SHARIAsource git:(feature/update-footer) ✗ gem install therubyracer -v '0.12.3' -- --with-v8-dir=/usr/local/opt/v8@3.15
+
+Fetching: ref-2.0.0.gem (100%)
+Successfully installed ref-2.0.0
+Fetching: therubyracer-0.12.3.gem (100%)
+Building native extensions with: '--with-v8-dir=/usr/local/opt/v8@3.15'
+This could take a while...
+Successfully installed therubyracer-0.12.3
+Parsing documentation for ref-2.0.0
+Installing ri documentation for ref-2.0.0
+Parsing documentation for therubyracer-0.12.3
+Installing ri documentation for therubyracer-0.12.3
+Done installing documentation for ref, therubyracer after 0 seconds
+2 gems installed
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle _1.16.1_ install
+Fetching https://github.com/foundation/foundation-rails.git
+Fetching gem metadata from https://rubygems.org/..........
+Fetching gem metadata from https://rubygems.org/.
+Resolving dependencies......
+Using rake 12.0.0
+Using Ascii85 1.0.2
+Using concurrent-ruby 1.0.5
+Using i18n 0.8.6
+Using minitest 5.10.3
+Using thread_safe 0.3.6
+Using tzinfo 1.2.3
+Using activesupport 5.1.2
+Using builder 3.2.3
+Using erubi 1.6.1
+Using mini_portile2 2.1.0
+Using nokogiri 1.6.8.1
+Using rails-dom-testing 2.0.3
+Using loofah 2.0.3
+Using rails-html-sanitizer 1.0.3
+Using actionview 5.1.2
+Using rack 2.0.3
+Using rack-test 0.6.3
+Using actionpack 5.1.2
+Using nio4r 2.1.0
+Using websocket-extensions 0.1.2
+Using websocket-driver 0.6.5
+Using actioncable 5.1.2
+Using globalid 0.4.0
+Using activejob 5.1.2
+Using mime-types-data 3.2016.0521
+Using mime-types 3.1
+Using mail 2.6.6
+Using actionmailer 5.1.2
+Using activemodel 5.1.2
+Using active_attr 0.10.1
+Using arel 8.0.0
+Using activerecord 5.1.2
+Using afm 0.2.2
+Using annotate 2.7.2
+Using execjs 2.7.0
+Using autoprefixer-rails 7.1.1
+Using awesome_print 1.7.0
+Using bcrypt 3.1.11
+Using coderay 1.1.1
+Using erubis 2.7.0
+Using better_errors 2.1.1
+Using debug_inspector 0.0.3
+Using binding_of_caller 0.7.2
+Using bundler 1.16.1
+Using xpath 2.1.0
+Using capybara 2.3.0
+Using carrierwave 1.1.0
+Using hitimes 1.2.5
+Using timers 4.1.2
+Using celluloid-essentials 0.20.5
+Using celluloid-extras 0.20.5
+Using celluloid-fsm 0.20.5
+Using celluloid-pool 0.20.5
+Using celluloid-supervision 0.20.6
+Using celluloid 0.17.3
+Using with_advisory_lock 3.1.0
+Using closure_tree 6.6.0
+Using coffee-script-source 1.12.2
+Using coffee-script 2.4.1
+Using method_source 0.8.2
+Using thor 0.19.4
+Using railties 5.1.2
+Using coffee-rails 4.2.2
+Using connection_pool 2.2.1
+Using d3-rails 5.4.0
+Using dalli 2.7.6
+Using orm_adapter 0.5.0
+Using responders 2.4.0
+Using warden 1.2.7
+Using devise 4.3.0
+Using diff-lcs 1.3
+Using dotenv-deployment 0.0.2
+Using dotenv 0.11.1
+Using eventmachine 1.0.9.1
+Using factory_girl 4.8.0
+Using factory_girl_rails 4.8.0
+Using multipart-post 2.0.0
+Using faraday 0.12.1
+Using sass 3.4.25
+Using font-awesome-sass 4.3.2.1
+Using foreman 0.74.0
+Using foundation-rails 5.5.3.2 from https://github.com/foundation/foundation-rails.git (at v5.5.3.2@649f360)
+Using friendly_id 5.2.4
+Using hashery 2.1.2
+Using highline 1.7.8
+Using hijri_gem 0.4.2
+Using jquery-rails 4.3.1
+Using sprockets 3.7.1
+Using sprockets-rails 3.2.0
+Using tilt 2.0.7
+Using sass-rails 5.0.6
+Using jquery-datatables-rails 3.3.0
+Using jquery-ui-rails 6.0.1
+Using json 1.8.6
+Using kaminari 0.16.3
+Using kgio 2.11.0
+Using kramdown 1.4.2
+Using rails 5.1.2
+Using leaflet-rails 1.3.1
+Using libv8 3.16.14.19
+Fetching mustermann 1.0.0
+Installing mustermann 1.0.0
+Fetching options 2.3.2
+Installing options 2.3.2
+Fetching ruby-rc4 0.1.5
+Installing ruby-rc4 0.1.5
+Fetching ttfunk 1.5.1
+Installing ttfunk 1.5.1
+Fetching pdf-reader 1.4.1
+Installing pdf-reader 1.4.1
+Fetching pg 0.21.0
+Installing pg 0.21.0 with native extensions
+Gem::Ext::BuildError: ERROR: Failed to build gem native extension.
+
+    current directory: /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/pg-0.21.0/ext
+/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/ruby -r ./siteconf20220926-739-e8v28y.rb extconf.rb
+--with-pg-config=/Applications/Postgres.app/Contents/Versions/latest/bin/pg_config
+Using config values from /Applications/Postgres.app/Contents/Versions/latest/bin/pg_config
+checking for libpq-fe.h... yes
+checking for libpq/libpq-fs.h... yes
+checking for pg_config_manual.h... yes
+checking for PQconnectdb() in -lpq... no
+checking for PQconnectdb() in -llibpq... no
+checking for PQconnectdb() in -lms/libpq... no
+Can't find the PostgreSQL client library (libpq)
+*** extconf.rb failed ***
+Could not create Makefile due to some reason, probably lack of necessary
+libraries and/or headers.  Check the mkmf.log file for more details.  You may
+need configuration options.
+
+Provided configuration options:
+	--with-opt-dir
+	--without-opt-dir
+	--with-opt-include
+	--without-opt-include=${opt-dir}/include
+	--with-opt-lib
+	--without-opt-lib=${opt-dir}/lib
+	--with-make-prog
+	--without-make-prog
+	--srcdir=.
+	--curdir
+	--ruby=/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/$(RUBY_BASE_NAME)
+	--with-pg
+	--without-pg
+	--enable-windows-cross
+	--disable-windows-cross
+	--with-pg-config
+	--with-pg-dir
+	--without-pg-dir
+	--with-pg-include
+	--without-pg-include=${pg-dir}/include
+	--with-pg-lib
+	--without-pg-lib=${pg-dir}/lib
+	--with-pqlib
+	--without-pqlib
+	--with-libpqlib
+	--without-libpqlib
+	--with-ms/libpqlib
+	--without-ms/libpqlib
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/pg-0.21.0/mkmf.log
+
+extconf failed, exit code 1
+
+Gem files will remain installed in /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/pg-0.21.0 for inspection.
+Results logged to /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/pg-0.21.0/gem_make.out
+
+An error occurred while installing pg (0.21.0), and Bundler cannot continue.
+Make sure that `gem install pg -v '0.21.0'` succeeds before bundling.
+
+In Gemfile:
+  pg
+➜  SHARIAsource git:(feature/update-footer) ✗ gem install pg -v '0.21.0'
+Building native extensions.  This could take a while...
+ERROR:  Error installing pg:
+	ERROR: Failed to build gem native extension.
+
+    current directory: /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/pg-0.21.0/ext
+/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/ruby -r ./siteconf20220926-989-oistc3.rb extconf.rb
+checking for pg_config... yes
+Using config values from /Applications/Postgres.app/Contents/Versions/latest/bin/pg_config
+checking for libpq-fe.h... yes
+checking for libpq/libpq-fs.h... yes
+checking for pg_config_manual.h... yes
+checking for PQconnectdb() in -lpq... no
+checking for PQconnectdb() in -llibpq... no
+checking for PQconnectdb() in -lms/libpq... no
+Can't find the PostgreSQL client library (libpq)
+*** extconf.rb failed ***
+Could not create Makefile due to some reason, probably lack of necessary
+libraries and/or headers.  Check the mkmf.log file for more details.  You may
+need configuration options.
+
+Provided configuration options:
+	--with-opt-dir
+	--without-opt-dir
+	--with-opt-include
+	--without-opt-include=${opt-dir}/include
+	--with-opt-lib
+	--without-opt-lib=${opt-dir}/lib
+	--with-make-prog
+	--without-make-prog
+	--srcdir=.
+	--curdir
+	--ruby=/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/$(RUBY_BASE_NAME)
+	--with-pg
+	--without-pg
+	--enable-windows-cross
+	--disable-windows-cross
+	--with-pg-config
+	--without-pg-config
+	--with-pg_config
+	--without-pg_config
+	--with-pg-dir
+	--without-pg-dir
+	--with-pg-include
+	--without-pg-include=${pg-dir}/include
+	--with-pg-lib
+	--without-pg-lib=${pg-dir}/lib
+	--with-pqlib
+	--without-pqlib
+	--with-libpqlib
+	--without-libpqlib
+	--with-ms/libpqlib
+	--without-ms/libpqlib
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/pg-0.21.0/mkmf.log
+
+extconf failed, exit code 1
+
+Gem files will remain installed in /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/pg-0.21.0 for inspection.
+Results logged to /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/pg-0.21.0/gem_make.out
+➜  SHARIAsource git:(feature/update-footer) ✗ which psql
+/Applications/Postgres.app/Contents/Versions/latest/bin/psql
+➜  SHARIAsource git:(feature/update-footer) ✗ pg_config
+BINDIR = /Applications/Postgres.app/Contents/Versions/12/bin
+DOCDIR = /Applications/Postgres.app/Contents/Versions/12/share/doc/postgresql
+HTMLDIR = /Applications/Postgres.app/Contents/Versions/12/share/doc/postgresql
+INCLUDEDIR = /Applications/Postgres.app/Contents/Versions/12/include
+PKGINCLUDEDIR = /Applications/Postgres.app/Contents/Versions/12/include/postgresql
+INCLUDEDIR-SERVER = /Applications/Postgres.app/Contents/Versions/12/include/postgresql/server
+LIBDIR = /Applications/Postgres.app/Contents/Versions/12/lib
+PKGLIBDIR = /Applications/Postgres.app/Contents/Versions/12/lib/postgresql
+LOCALEDIR = /Applications/Postgres.app/Contents/Versions/12/share/locale
+MANDIR = /Applications/Postgres.app/Contents/Versions/12/share/man
+SHAREDIR = /Applications/Postgres.app/Contents/Versions/12/share/postgresql
+SYSCONFDIR = /Applications/Postgres.app/Contents/Versions/12/etc/postgresql
+PGXS = /Applications/Postgres.app/Contents/Versions/12/lib/postgresql/pgxs/src/makefiles/pgxs.mk
+CONFIGURE = '--prefix=/Applications/Postgres.app/Contents/Versions/12' '--with-includes=/Applications/Postgres.app/Contents/Versions/12/include' '--with-libraries=/Applications/Postgres.app/Contents/Versions/12/lib' '--enable-thread-safety' '--with-openssl' '--with-bonjour' '--with-libxml' '--with-libxslt' '--with-perl' '--with-tcl' '--with-python' '--with-readline' '--with-uuid=e2fs' '--with-icu' 'CFLAGS= -mmacosx-version-min=10.12' 'CXXFLAGS= -mmacosx-version-min=10.12 -mmacosx-version-min=10.12' 'ICU_CFLAGS=-I/Applications/Postgres.app/Contents/Versions/12/share/icu' 'ICU_LIBS=-licui18n -licuuc'
+CC = gcc
+CPPFLAGS = -I/Applications/Postgres.app/Contents/Versions/12/share/icu -I/Applications/Postgres.app/Contents/Versions/12/include/libxml2 -I/Applications/Postgres.app/Contents/Versions/12/include
+CFLAGS = -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -Wno-unused-command-line-argument  -mmacosx-version-min=10.12
+CFLAGS_SL = 
+LDFLAGS = -L/Applications/Postgres.app/Contents/Versions/12/lib -L/Applications/Postgres.app/Contents/Versions/12/lib -Wl,-dead_strip_dylibs
+LDFLAGS_EX = 
+LDFLAGS_SL = 
+LIBS = -lpgcommon -lpgport -lxslt -lxml2 -lssl -lcrypto -lz -lreadline -lm 
+VERSION = PostgreSQL 12.1
+➜  SHARIAsource git:(feature/update-footer) ✗ brew install libpq
+
+Running `brew update --auto-update`...
+==> Auto-updated Homebrew!
+Updated 1 tap (homebrew/core).
+
+You have 11 outdated formulae and 2 outdated casks installed.
+You can upgrade them with brew upgrade
+or list them with brew outdated.
+
+Warning: libpq 14.5 is already installed and up-to-date.
+To reinstall 14.5, run:
+  brew reinstall libpq
+➜  SHARIAsource git:(feature/update-footer) ✗ nano ~/.zshrc
+➜  SHARIAsource git:(feature/update-footer) ✗ echo 'export PATH="/opt/homebrew/opt/libpq/bin:$PATH"' >> ~/.zshrc
+➜  SHARIAsource git:(feature/update-footer) ✗ nano ~/.zshrc                                                     
+➜  SHARIAsource git:(feature/update-footer) ✗ source ~/.zshrc
+➜  SHARIAsource git:(feature/update-footer) ✗ gem install pg -v '0.21.0'                                        
+Building native extensions.  This could take a while...
+Successfully installed pg-0.21.0
+Parsing documentation for pg-0.21.0
+Installing ri documentation for pg-0.21.0
+Done installing documentation for pg after 1 seconds
+1 gem installed
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle _1.16.1_ install                                                     
+Fetching https://github.com/foundation/foundation-rails.git
+Fetching gem metadata from https://rubygems.org/..........
+Fetching gem metadata from https://rubygems.org/.
+Resolving dependencies......
+Using rake 12.0.0
+Using Ascii85 1.0.2
+Using concurrent-ruby 1.0.5
+Using i18n 0.8.6
+Using minitest 5.10.3
+Using thread_safe 0.3.6
+Using tzinfo 1.2.3
+Using activesupport 5.1.2
+Using builder 3.2.3
+Using erubi 1.6.1
+Using mini_portile2 2.1.0
+Using nokogiri 1.6.8.1
+Using rails-dom-testing 2.0.3
+Using loofah 2.0.3
+Using rails-html-sanitizer 1.0.3
+Using actionview 5.1.2
+Using rack 2.0.3
+Using rack-test 0.6.3
+Using actionpack 5.1.2
+Using nio4r 2.1.0
+Using websocket-extensions 0.1.2
+Using websocket-driver 0.6.5
+Using actioncable 5.1.2
+Using globalid 0.4.0
+Using activejob 5.1.2
+Using mime-types-data 3.2016.0521
+Using mime-types 3.1
+Using mail 2.6.6
+Using actionmailer 5.1.2
+Using activemodel 5.1.2
+Using active_attr 0.10.1
+Using arel 8.0.0
+Using activerecord 5.1.2
+Using afm 0.2.2
+Using annotate 2.7.2
+Using execjs 2.7.0
+Using autoprefixer-rails 7.1.1
+Using awesome_print 1.7.0
+Using bcrypt 3.1.11
+Using coderay 1.1.1
+Using erubis 2.7.0
+Using better_errors 2.1.1
+Using debug_inspector 0.0.3
+Using binding_of_caller 0.7.2
+Using bundler 1.16.1
+Using xpath 2.1.0
+Using capybara 2.3.0
+Using carrierwave 1.1.0
+Using hitimes 1.2.5
+Using timers 4.1.2
+Using celluloid-essentials 0.20.5
+Using celluloid-extras 0.20.5
+Using celluloid-fsm 0.20.5
+Using celluloid-pool 0.20.5
+Using celluloid-supervision 0.20.6
+Using celluloid 0.17.3
+Using with_advisory_lock 3.1.0
+Using closure_tree 6.6.0
+Using coffee-script-source 1.12.2
+Using coffee-script 2.4.1
+Using method_source 0.8.2
+Using thor 0.19.4
+Using railties 5.1.2
+Using coffee-rails 4.2.2
+Using connection_pool 2.2.1
+Using d3-rails 5.4.0
+Using dalli 2.7.6
+Using orm_adapter 0.5.0
+Using responders 2.4.0
+Using warden 1.2.7
+Using devise 4.3.0
+Using diff-lcs 1.3
+Using dotenv-deployment 0.0.2
+Using dotenv 0.11.1
+Using eventmachine 1.0.9.1
+Using factory_girl 4.8.0
+Using factory_girl_rails 4.8.0
+Using multipart-post 2.0.0
+Using faraday 0.12.1
+Using sass 3.4.25
+Using font-awesome-sass 4.3.2.1
+Using foreman 0.74.0
+Using foundation-rails 5.5.3.2 from https://github.com/foundation/foundation-rails.git (at v5.5.3.2@649f360)
+Using friendly_id 5.2.4
+Using hashery 2.1.2
+Using highline 1.7.8
+Using hijri_gem 0.4.2
+Using jquery-rails 4.3.1
+Using sprockets 3.7.1
+Using sprockets-rails 3.2.0
+Using tilt 2.0.7
+Using sass-rails 5.0.6
+Using jquery-datatables-rails 3.3.0
+Using jquery-ui-rails 6.0.1
+Using json 1.8.6
+Using kaminari 0.16.3
+Using kgio 2.11.0
+Using kramdown 1.4.2
+Using rails 5.1.2
+Using leaflet-rails 1.3.1
+Using libv8 3.16.14.19
+Using mustermann 1.0.0
+Using options 2.3.2
+Using ruby-rc4 0.1.5
+Using ttfunk 1.5.1
+Using pdf-reader 1.4.1
+Using pg 0.21.0
+Fetching pr_geohash 1.0.0
+Installing pr_geohash 1.0.0
+Fetching progress_bar 1.1.0
+Installing progress_bar 1.1.0
+Fetching slop 3.6.0
+Installing slop 3.6.0
+Fetching pry 0.10.4
+Installing pry 0.10.4
+Fetching pry-rails 0.3.6
+Installing pry-rails 0.3.6
+Fetching rack-protection 2.0.0
+Installing rack-protection 2.0.0
+Fetching rack-timeout 0.0.4
+Installing rack-timeout 0.0.4
+Fetching raindrops 0.18.0
+Installing raindrops 0.18.0 with native extensions
+Fetching ranked-model 0.4.0
+Installing ranked-model 0.4.0
+Fetching rb-fsevent 0.10.2
+Installing rb-fsevent 0.10.2
+Fetching redis 3.3.3
+Installing redis 3.3.3
+Fetching redis-namespace 1.5.3
+Installing redis-namespace 1.5.3
+Using ref 2.0.0
+Fetching rmagick 2.13.4
+Installing rmagick 2.13.4 with native extensions
+Gem::Ext::BuildError: ERROR: Failed to build gem native extension.
+
+    current directory: /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/rmagick-2.13.4/ext/RMagick
+/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/ruby -r ./siteconf20220926-5258-16xfck2.rb extconf.rb
+checking for Ruby version >= 1.8.5... yes
+checking for clang... yes
+checking for Magick-config... no
+checking for pkg-config... yes
+checking for ImageMagick version >= 6.4.9... *** extconf.rb failed ***
+Could not create Makefile due to some reason, probably lack of necessary
+libraries and/or headers.  Check the mkmf.log file for more details.  You may
+need configuration options.
+
+Provided configuration options:
+	--with-opt-dir
+	--without-opt-dir
+	--with-opt-include
+	--without-opt-include=${opt-dir}/include
+	--with-opt-lib
+	--without-opt-lib=${opt-dir}/lib
+	--with-make-prog
+	--without-make-prog
+	--srcdir=.
+	--curdir
+	--ruby=/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/$(RUBY_BASE_NAME)
+extconf.rb:154:in ``': No such file or directory - convert (Errno::ENOENT)
+	from extconf.rb:154:in `block in <main>'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/2.4.0/mkmf.rb:945:in `block in checking_for'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/2.4.0/mkmf.rb:351:in `block (2 levels) in postpone'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/2.4.0/mkmf.rb:321:in `open'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/2.4.0/mkmf.rb:351:in `block in postpone'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/2.4.0/mkmf.rb:321:in `open'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/2.4.0/mkmf.rb:347:in `postpone'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/2.4.0/mkmf.rb:944:in `checking_for'
+	from extconf.rb:151:in `<main>'
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/rmagick-2.13.4/mkmf.log
+
+extconf failed, exit code 1
+
+Gem files will remain installed in /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/rmagick-2.13.4 for inspection.
+Results logged to /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/rmagick-2.13.4/gem_make.out
+
+An error occurred while installing rmagick (2.13.4), and Bundler cannot continue.
+Make sure that `gem install rmagick -v '2.13.4'` succeeds before bundling.
+
+In Gemfile:
+  rmagick
+➜  SHARIAsource git:(feature/update-footer) ✗ gem install rmagick -v '2.13.4'
+Building native extensions.  This could take a while...
+ERROR:  Error installing rmagick:
+	ERROR: Failed to build gem native extension.
+
+    current directory: /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/rmagick-2.13.4/ext/RMagick
+/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/ruby -r ./siteconf20220926-5856-1duzgic.rb extconf.rb
+checking for Ruby version >= 1.8.5... yes
+checking for clang... yes
+checking for Magick-config... no
+checking for pkg-config... yes
+checking for ImageMagick version >= 6.4.9... *** extconf.rb failed ***
+Could not create Makefile due to some reason, probably lack of necessary
+libraries and/or headers.  Check the mkmf.log file for more details.  You may
+need configuration options.
+
+Provided configuration options:
+	--with-opt-dir
+	--without-opt-dir
+	--with-opt-include
+	--without-opt-include=${opt-dir}/include
+	--with-opt-lib
+	--without-opt-lib=${opt-dir}/lib
+	--with-make-prog
+	--without-make-prog
+	--srcdir=.
+	--curdir
+	--ruby=/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/$(RUBY_BASE_NAME)
+extconf.rb:154:in ``': No such file or directory - convert (Errno::ENOENT)
+	from extconf.rb:154:in `block in <main>'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/2.4.0/mkmf.rb:945:in `block in checking_for'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/2.4.0/mkmf.rb:351:in `block (2 levels) in postpone'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/2.4.0/mkmf.rb:321:in `open'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/2.4.0/mkmf.rb:351:in `block in postpone'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/2.4.0/mkmf.rb:321:in `open'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/2.4.0/mkmf.rb:347:in `postpone'
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/2.4.0/mkmf.rb:944:in `checking_for'
+	from extconf.rb:151:in `<main>'
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/rmagick-2.13.4/mkmf.log
+
+extconf failed, exit code 1
+
+Gem files will remain installed in /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/rmagick-2.13.4 for inspection.
+Results logged to /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/rmagick-2.13.4/gem_make.out
+➜  SHARIAsource git:(feature/update-footer) ✗ brew install imagemagick
+
+==> Downloading https://ghcr.io/v2/homebrew/core/jbig2dec/manifests/0.19
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/jbig2dec/blobs/sha256:e15376f42a9d9372fffaaf07d739458a0af5870b2ddb2f5ce91e4d88b865daf2
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:e15376f42a9d9372fffaaf07d739458a0af5870b2ddb2f5ce91e4d88b865daf2?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/libidn/manifests/1.41
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/libidn/blobs/sha256:c4a1c32197a17b25f61adecc077503661b595efa986d9c418e9a736354eee3e1
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:c4a1c32197a17b25f61adecc077503661b595efa986d9c418e9a736354eee3e1?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/little-cms2/manifests/2.13.1_1
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/little-cms2/blobs/sha256:fdad36e27253dd1615d5b9be2703b378336b908122b68fd4652d032e127caf76
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:fdad36e27253dd1615d5b9be2703b378336b908122b68fd4652d032e127caf76?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/openjpeg/manifests/2.5.0-1
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/openjpeg/blobs/sha256:ad8a83dd4260c0c6cc941a04993b19e230aba83b7c200c9c8808c41d44f2bf93
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:ad8a83dd4260c0c6cc941a04993b19e230aba83b7c200c9c8808c41d44f2bf93?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/ghostscript/manifests/10.0.0
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/ghostscript/blobs/sha256:07becfb977ec79a7cdd2b6c5298fbb3d24ba61599106d903a7e1ea51d23b3df3
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:07becfb977ec79a7cdd2b6c5298fbb3d24ba61599106d903a7e1ea51d23b3df3?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/jpeg-xl/manifests/0.7.0
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/jpeg-xl/blobs/sha256:531986bae4962e979dd69370191739a6c81f1dea5511ec7f6f2bddf954183fa6
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:531986bae4962e979dd69370191739a6c81f1dea5511ec7f6f2bddf954183fa6?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/aom/manifests/3.5.0_1
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/aom/blobs/sha256:8e185cf8b310b04bf065728d20f4395750b17a375278cff207c55de359ba1564
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:8e185cf8b310b04bf065728d20f4395750b17a375278cff207c55de359ba1564?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/libde265/manifests/1.0.8
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/libde265/blobs/sha256:e50069b8cfb753b45940ea5f95d0a44683ccfb582986947b7369d8ec404de46e
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:e50069b8cfb753b45940ea5f95d0a44683ccfb582986947b7369d8ec404de46e?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/glib/manifests/2.74.0
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/glib/blobs/sha256:08af01b696f9abfae1255324cac774c44b46820bd3c651fa141a56fa674aa22a
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:08af01b696f9abfae1255324cac774c44b46820bd3c651fa141a56fa674aa22a?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/docbook/manifests/5.1_1
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/docbook/blobs/sha256:dcab543bb0e0ae56e0aa106b61f77a111d52aa002c0418aae93f9fe6ac3cb332
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:dcab543bb0e0ae56e0aa106b61f77a111d52aa002c0418aae93f9fe6ac3cb332?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/docbook-xsl/manifests/1.79.2_1
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/docbook-xsl/blobs/sha256:b3c4423c37cd6fbe99b9e1a78a294036805bfc5291a4ff5b8a3b8b52ea50e3a5
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:b3c4423c37cd6fbe99b9e1a78a294036805bfc5291a4ff5b8a3b8b52ea50e3a5?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/gnu-getopt/manifests/2.38.1
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/gnu-getopt/blobs/sha256:5ff319b6a576b32e06c5c3227eff3d3aeb9cc4c4ecf82fe894d43b4594735ef0
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:5ff319b6a576b32e06c5c3227eff3d3aeb9cc4c4ecf82fe894d43b4594735ef0?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/xmlto/manifests/0.0.28-2
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/xmlto/blobs/sha256:2947a0d38d964b133b1452fa8277d59b333980c549141b990f3f8cbfe9db5c58
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:2947a0d38d964b133b1452fa8277d59b333980c549141b990f3f8cbfe9db5c58?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/shared-mime-info/manifests/2.2
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/shared-mime-info/blobs/sha256:6a9e8f01389c00cf8e3d3b7fbd9dc0b95d33744fcdb8bf3dca2c3db87c0d7cd1
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:6a9e8f01389c00cf8e3d3b7fbd9dc0b95d33744fcdb8bf3dca2c3db87c0d7cd1?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/x265/manifests/3.5-1
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/x265/blobs/sha256:e60559191a9aba607e512ad33ac9f66688b12837df7e6a3cf57ceae26968235b
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:e60559191a9aba607e512ad33ac9f66688b12837df7e6a3cf57ceae26968235b?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/libheif/manifests/1.13.0_1
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/libheif/blobs/sha256:83604fff14ecaac7b0a5b51ccf6edb51005874787ffb68424aa6eecdd9c58214
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:83604fff14ecaac7b0a5b51ccf6edb51005874787ffb68424aa6eecdd9c58214?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/liblqr/manifests/0.4.2_1-2
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/liblqr/blobs/sha256:fb32db288c0fd8f9c45f1de75896b354542ef6a7f5cc0a24282c3b1766acfae5
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:fb32db288c0fd8f9c45f1de75896b354542ef6a7f5cc0a24282c3b1766acfae5?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/jasper/manifests/3.0.6_2
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/jasper/blobs/sha256:8c8f086fe1649d27b4c0be5b5bcfd327a6f12b34cc77aa2b3eedb80c3d0b4e16
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:8c8f086fe1649d27b4c0be5b5bcfd327a6f12b34cc77aa2b3eedb80c3d0b4e16?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/libomp/manifests/14.0.6
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/libomp/blobs/sha256:b36b1393289e7d98fc03425b6c23a63c4f5e9290ecf0922d45e6fde2973ba8fb
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:b36b1393289e7d98fc03425b6c23a63c4f5e9290ecf0922d45e6fde2973ba8fb?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/libraw/manifests/0.20.2_3
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/libraw/blobs/sha256:8fabdbb3e0bea64967859d1566709b7a1eb20100548f8dde61300a0982f3d78c
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:8fabdbb3e0bea64967859d1566709b7a1eb20100548f8dde61300a0982f3d78c?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/imagemagick/manifests/7.1.0-49_1
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/imagemagick/blobs/sha256:c78506ba5a6b7169bba90e02fa1206bd3491758d994c0cb4ce7814304a20040e
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:c78506ba5a6b7169bba90e02fa1206bd3491758d994c0cb4ce7814304a20040e?se=2022-09-27T03%3A40%3A00Z
+######################################################################## 100.0%
+==> Installing dependencies for imagemagick: jbig2dec, libidn, little-cms2, openjpeg, ghostscript, jpeg-xl, aom, libde265, glib, docbook, docbook-xsl, gnu-getopt, xmlto, shared-mime-info, x265, libheif, liblqr, jasper, libomp and libraw
+==> Installing imagemagick dependency: jbig2dec
+==> Pouring jbig2dec--0.19.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/jbig2dec/0.19: 13 files, 420.7KB
+==> Installing imagemagick dependency: libidn
+==> Pouring libidn--1.41.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libidn/1.41: 73 files, 1MB
+==> Installing imagemagick dependency: little-cms2
+==> Pouring little-cms2--2.13.1_1.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/little-cms2/2.13.1_1: 21 files, 1.4MB
+==> Installing imagemagick dependency: openjpeg
+==> Pouring openjpeg--2.5.0.arm64_monterey.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/openjpeg/2.5.0: 527 files, 13.9MB
+==> Installing imagemagick dependency: ghostscript
+==> Pouring ghostscript--10.0.0.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/ghostscript/10.0.0: 644 files, 146.9MB
+==> Installing imagemagick dependency: jpeg-xl
+==> Pouring jpeg-xl--0.7.0.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/jpeg-xl/0.7.0: 72 files, 11.4MB
+==> Installing imagemagick dependency: aom
+==> Pouring aom--3.5.0_1.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/aom/3.5.0_1: 23 files, 8.5MB
+==> Installing imagemagick dependency: libde265
+==> Pouring libde265--1.0.8.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libde265/1.0.8: 22 files, 2.3MB
+==> Installing imagemagick dependency: glib
+==> Pouring glib--2.74.0.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/glib/2.74.0: 448 files, 21.8MB
+==> Installing imagemagick dependency: docbook
+==> Pouring docbook--5.1_1.arm64_monterey.bottle.tar.gz
+==> xmlcatalog --noout --create /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --del file:///opt/homebrew/opt/docbook/docbook/xml/4.2/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add nextCatalog  file:///opt/homebrew/opt/docbook/docbook/xml/4.2/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --del file:///opt/homebrew/opt/docbook/docbook/xml/4.1.2/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add nextCatalog  file:///opt/homebrew/opt/docbook/docbook/xml/4.1.2/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --del file:///opt/homebrew/opt/docbook/docbook/xml/4.3/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add nextCatalog  file:///opt/homebrew/opt/docbook/docbook/xml/4.3/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --del file:///opt/homebrew/opt/docbook/docbook/xml/4.4/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add nextCatalog  file:///opt/homebrew/opt/docbook/docbook/xml/4.4/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --del file:///opt/homebrew/opt/docbook/docbook/xml/4.5/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add nextCatalog  file:///opt/homebrew/opt/docbook/docbook/xml/4.5/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --del file:///opt/homebrew/opt/docbook/docbook/xml/5.0/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add nextCatalog  file:///opt/homebrew/opt/docbook/docbook/xml/5.0/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --del file:///opt/homebrew/opt/docbook/docbook/xml/5.1/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add nextCatalog  file:///opt/homebrew/opt/docbook/docbook/xml/5.1/catalog.xml /opt/homebrew/etc/xml/catalog
+🍺  /opt/homebrew/Cellar/docbook/5.1_1: 199 files, 8.9MB
+==> Installing imagemagick dependency: docbook-xsl
+==> Pouring docbook-xsl--1.79.2_1.arm64_monterey.bottle.tar.gz
+==> xmlcatalog --noout --del file:///opt/homebrew/opt/docbook-xsl/docbook-xsl/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add nextCatalog  file:///opt/homebrew/opt/docbook-xsl/docbook-xsl/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --del https://cdn.docbook.org/release/xsl-nons/1.79.2 /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add rewriteSystem https://cdn.docbook.org/release/xsl-nons/1.79.2 file:///opt/homebrew/opt/docbook-xsl/docbook-xsl /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add rewriteURI https://cdn.docbook.org/release/xsl-nons/1.79.2 file:///opt/homebrew/opt/docbook-xsl/docbook-xsl /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --del https://cdn.docbook.org/release/xsl-nons/current /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add rewriteSystem https://cdn.docbook.org/release/xsl-nons/current file:///opt/homebrew/opt/docbook-xsl/docbook-xsl /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add rewriteURI https://cdn.docbook.org/release/xsl-nons/current file:///opt/homebrew/opt/docbook-xsl/docbook-xsl /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --del http://docbook.sourceforge.net/release/xsl/1.79.2 /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add rewriteSystem http://docbook.sourceforge.net/release/xsl/1.79.2 file:///opt/homebrew/opt/docbook-xsl/docbook-xsl /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add rewriteURI http://docbook.sourceforge.net/release/xsl/1.79.2 file:///opt/homebrew/opt/docbook-xsl/docbook-xsl /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --del http://docbook.sourceforge.net/release/xsl/current /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add rewriteSystem http://docbook.sourceforge.net/release/xsl/current file:///opt/homebrew/opt/docbook-xsl/docbook-xsl /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add rewriteURI http://docbook.sourceforge.net/release/xsl/current file:///opt/homebrew/opt/docbook-xsl/docbook-xsl /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --del file:///opt/homebrew/opt/docbook-xsl/docbook-xsl-ns/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add nextCatalog  file:///opt/homebrew/opt/docbook-xsl/docbook-xsl-ns/catalog.xml /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --del https://cdn.docbook.org/release/xsl/1.79.2 /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add rewriteSystem https://cdn.docbook.org/release/xsl/1.79.2 file:///opt/homebrew/opt/docbook-xsl/docbook-xsl-ns /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add rewriteURI https://cdn.docbook.org/release/xsl/1.79.2 file:///opt/homebrew/opt/docbook-xsl/docbook-xsl-ns /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --del https://cdn.docbook.org/release/xsl/current /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add rewriteSystem https://cdn.docbook.org/release/xsl/current file:///opt/homebrew/opt/docbook-xsl/docbook-xsl-ns /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add rewriteURI https://cdn.docbook.org/release/xsl/current file:///opt/homebrew/opt/docbook-xsl/docbook-xsl-ns /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --del http://docbook.sourceforge.net/release/xsl-ns/1.79.2 /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add rewriteSystem http://docbook.sourceforge.net/release/xsl-ns/1.79.2 file:///opt/homebrew/opt/docbook-xsl/docbook-xsl-ns /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add rewriteURI http://docbook.sourceforge.net/release/xsl-ns/1.79.2 file:///opt/homebrew/opt/docbook-xsl/docbook-xsl-ns /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --del http://docbook.sourceforge.net/release/xsl-ns/current /opt/homebrew/etc/xml/catalog
+==> xmlcatalog --noout --add rewriteSystem http://docbook.sourceforge.net/release/xsl-ns/current file:///opt/homebrew/opt/docbook-xsl/docbook-xsl-ns /opt/homebrew/etc/xml/catalo
+==> xmlcatalog --noout --add rewriteURI http://docbook.sourceforge.net/release/xsl-ns/current file:///opt/homebrew/opt/docbook-xsl/docbook-xsl-ns /opt/homebrew/etc/xml/catalog
+🍺  /opt/homebrew/Cellar/docbook-xsl/1.79.2_1: 4,910 files, 94.0MB
+==> Installing imagemagick dependency: gnu-getopt
+==> Pouring gnu-getopt--2.38.1.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/gnu-getopt/2.38.1: 10 files, 211.9KB
+==> Installing imagemagick dependency: xmlto
+==> Pouring xmlto--0.0.28.arm64_monterey.bottle.2.tar.gz
+🍺  /opt/homebrew/Cellar/xmlto/0.0.28: 46 files, 175.3KB
+==> Installing imagemagick dependency: shared-mime-info
+==> Pouring shared-mime-info--2.2.arm64_monterey.bottle.tar.gz
+==> /opt/homebrew/Cellar/shared-mime-info/2.2/bin/update-mime-database /opt/homebrew/share/mime
+🍺  /opt/homebrew/Cellar/shared-mime-info/2.2: 86 files, 4.6MB
+==> Installing imagemagick dependency: x265
+==> Pouring x265--3.5.arm64_monterey.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/x265/3.5: 11 files, 6.6MB
+==> Installing imagemagick dependency: libheif
+==> Pouring libheif--1.13.0_1.arm64_monterey.bottle.tar.gz
+==> /opt/homebrew/opt/shared-mime-info/bin/update-mime-database /opt/homebrew/share/mime
+🍺  /opt/homebrew/Cellar/libheif/1.13.0_1: 25 files, 2.8MB
+==> Installing imagemagick dependency: liblqr
+==> Pouring liblqr--0.4.2_1.arm64_monterey.bottle.2.tar.gz
+🍺  /opt/homebrew/Cellar/liblqr/0.4.2_1: 113 files, 302.6KB
+==> Installing imagemagick dependency: jasper
+==> Pouring jasper--3.0.6_2.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/jasper/3.0.6_2: 44 files, 1.6MB
+==> Installing imagemagick dependency: libomp
+==> Pouring libomp--14.0.6.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libomp/14.0.6: 7 files, 1.6MB
+==> Installing imagemagick dependency: libraw
+==> Pouring libraw--0.20.2_3.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libraw/0.20.2_3: 73 files, 5.7MB
+==> Installing imagemagick
+==> Pouring imagemagick--7.1.0-49_1.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/imagemagick/7.1.0-49_1: 805 files, 30.8MB
+==> Running `brew cleanup imagemagick`...
+Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+==> Upgrading 1 dependent of upgraded formulae:
+Disable this behaviour by setting HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK.
+Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+libavif 0.10.1_1 -> 0.10.1_2
+==> Downloading https://ghcr.io/v2/homebrew/core/libavif/manifests/0.10.1_2
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/libavif/blobs/sha256:baf0787c1def41b919475ee2e959bfe3b9f67f3af03ea9063a5c536d78d5779c
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:baf0787c1def41b919475ee2e959bfe3b9f67f3af03ea9063a5c536d78d5779c?se=2022-09-27T03%3A45%3A00Z
+######################################################################## 100.0%
+==> Upgrading libavif
+  0.10.1_1 -> 0.10.1_2 
+
+==> Pouring libavif--0.10.1_2.arm64_monterey.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libavif/0.10.1_2: 19 files, 437.2KB
+==> Running `brew cleanup libavif`...
+Removing: /opt/homebrew/Cellar/libavif/0.10.1_1... (19 files, 452.7KB)
+==> Checking for dependents of upgraded formulae...
+==> No broken dependents found!
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle _1.16.1_ install                                           
+Fetching https://github.com/foundation/foundation-rails.git
+Fetching gem metadata from https://rubygems.org/..........
+Fetching gem metadata from https://rubygems.org/.
+Resolving dependencies........
+Using rake 12.0.0
+Using Ascii85 1.0.2
+Using concurrent-ruby 1.0.5
+Using i18n 0.8.6
+Using minitest 5.10.3
+Using thread_safe 0.3.6
+Using tzinfo 1.2.3
+Using activesupport 5.1.2
+Using builder 3.2.3
+Using erubi 1.6.1
+Using mini_portile2 2.1.0
+Using nokogiri 1.6.8.1
+Using rails-dom-testing 2.0.3
+Using loofah 2.0.3
+Using rails-html-sanitizer 1.0.3
+Using actionview 5.1.2
+Using rack 2.0.3
+Using rack-test 0.6.3
+Using actionpack 5.1.2
+Using nio4r 2.1.0
+Using websocket-extensions 0.1.2
+Using websocket-driver 0.6.5
+Using actioncable 5.1.2
+Using globalid 0.4.0
+Using activejob 5.1.2
+Using mime-types-data 3.2016.0521
+Using mime-types 3.1
+Using mail 2.6.6
+Using actionmailer 5.1.2
+Using activemodel 5.1.2
+Using active_attr 0.10.1
+Using arel 8.0.0
+Using activerecord 5.1.2
+Using afm 0.2.2
+Using annotate 2.7.2
+Using execjs 2.7.0
+Using autoprefixer-rails 7.1.1
+Using awesome_print 1.7.0
+Using bcrypt 3.1.11
+Using coderay 1.1.1
+Using erubis 2.7.0
+Using better_errors 2.1.1
+Using debug_inspector 0.0.3
+Using binding_of_caller 0.7.2
+Using bundler 1.16.1
+Using xpath 2.1.0
+Using capybara 2.3.0
+Using carrierwave 1.1.0
+Using hitimes 1.2.5
+Using timers 4.1.2
+Using celluloid-essentials 0.20.5
+Using celluloid-extras 0.20.5
+Using celluloid-fsm 0.20.5
+Using celluloid-pool 0.20.5
+Using celluloid-supervision 0.20.6
+Using celluloid 0.17.3
+Using with_advisory_lock 3.1.0
+Using closure_tree 6.6.0
+Using coffee-script-source 1.12.2
+Using coffee-script 2.4.1
+Using method_source 0.8.2
+Using thor 0.19.4
+Using railties 5.1.2
+Using coffee-rails 4.2.2
+Using connection_pool 2.2.1
+Using d3-rails 5.4.0
+Using dalli 2.7.6
+Using orm_adapter 0.5.0
+Using responders 2.4.0
+Using warden 1.2.7
+Using devise 4.3.0
+Using diff-lcs 1.3
+Using dotenv-deployment 0.0.2
+Using dotenv 0.11.1
+Using eventmachine 1.0.9.1
+Using factory_girl 4.8.0
+Using factory_girl_rails 4.8.0
+Using multipart-post 2.0.0
+Using faraday 0.12.1
+Using sass 3.4.25
+Using font-awesome-sass 4.3.2.1
+Using foreman 0.74.0
+Using foundation-rails 5.5.3.2 from https://github.com/foundation/foundation-rails.git (at v5.5.3.2@649f360)
+Using friendly_id 5.2.4
+Using hashery 2.1.2
+Using highline 1.7.8
+Using hijri_gem 0.4.2
+Using jquery-rails 4.3.1
+Using sprockets 3.7.1
+Using sprockets-rails 3.2.0
+Using tilt 2.0.7
+Using sass-rails 5.0.6
+Using jquery-datatables-rails 3.3.0
+Using jquery-ui-rails 6.0.1
+Using json 1.8.6
+Using kaminari 0.16.3
+Using kgio 2.11.0
+Using kramdown 1.4.2
+Using rails 5.1.2
+Using leaflet-rails 1.3.1
+Using libv8 3.16.14.19
+Using mustermann 1.0.0
+Using options 2.3.2
+Using ruby-rc4 0.1.5
+Using ttfunk 1.5.1
+Using pdf-reader 1.4.1
+Using pg 0.21.0
+Using pr_geohash 1.0.0
+Using progress_bar 1.1.0
+Using slop 3.6.0
+Using pry 0.10.4
+Using pry-rails 0.3.6
+Using rack-protection 2.0.0
+Using rack-timeout 0.0.4
+Using raindrops 0.18.0
+Using ranked-model 0.4.0
+Using rb-fsevent 0.10.2
+Using redis 3.3.3
+Using redis-namespace 1.5.3
+Using ref 2.0.0
+Fetching rmagick 2.13.4
+Installing rmagick 2.13.4 with native extensions
+Gem::Ext::BuildError: ERROR: Failed to build gem native extension.
+
+    current directory: /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/rmagick-2.13.4/ext/RMagick
+/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/ruby -r ./siteconf20220926-12644-wyvqay.rb extconf.rb
+checking for Ruby version >= 1.8.5... yes
+checking for clang... yes
+checking for Magick-config... no
+checking for pkg-config... yes
+checking for ImageMagick version >= 6.4.9... yes
+checking for stdint.h... yes
+checking for sys/types.h... yes
+checking for wand/MagickWand.h... no
+
+Can't install RMagick 2.13.4. Can't find MagickWand.h.
+*** extconf.rb failed ***
+Could not create Makefile due to some reason, probably lack of necessary
+libraries and/or headers.  Check the mkmf.log file for more details.  You may
+need configuration options.
+
+Provided configuration options:
+	--with-opt-dir
+	--without-opt-dir
+	--with-opt-include
+	--without-opt-include=${opt-dir}/include
+	--with-opt-lib
+	--without-opt-lib=${opt-dir}/lib
+	--with-make-prog
+	--without-make-prog
+	--srcdir=.
+	--curdir
+	--ruby=/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/$(RUBY_BASE_NAME)
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/rmagick-2.13.4/mkmf.log
+
+extconf failed, exit code 1
+
+Gem files will remain installed in /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/rmagick-2.13.4 for inspection.
+Results logged to /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/rmagick-2.13.4/gem_make.out
+
+An error occurred while installing rmagick (2.13.4), and Bundler cannot continue.
+Make sure that `gem install rmagick -v '2.13.4'` succeeds before bundling.
+
+In Gemfile:
+  rmagick
+➜  SHARIAsource git:(feature/update-footer) ✗ brew unlink imagemagick
+
+Unlinking /opt/homebrew/Cellar/imagemagick/7.1.0-49_1... 70 symlinks removed.
+➜  SHARIAsource git:(feature/update-footer) ✗ brew install imagemagick@6 && brew link imagemagick@6 --force
+
+==> Downloading https://ghcr.io/v2/homebrew/core/imagemagick/6/manifests/6.9.12-64_1
+######################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/imagemagick/6/blobs/sha256:53634e8b48ae68fd9ba1728b11b7b2229724750ec364de14b871428ba8caa7d7
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:53634e8b48ae68fd9ba1728b11b7b2229724750ec364de14b871428ba8caa7d7?se=2022-09-27T03%3A45%3A00Z
+######################################################################## 100.0%
+==> Pouring imagemagick@6--6.9.12-64_1.arm64_monterey.bottle.tar.gz
+==> Caveats
+imagemagick@6 is keg-only, which means it was not symlinked into /opt/homebrew,
+because this is an alternate version of another formula.
+
+If you need to have imagemagick@6 first in your PATH, run:
+  echo 'export PATH="/opt/homebrew/opt/imagemagick@6/bin:$PATH"' >> ~/.zshrc
+
+For compilers to find imagemagick@6 you may need to set:
+  export LDFLAGS="-L/opt/homebrew/opt/imagemagick@6/lib"
+  export CPPFLAGS="-I/opt/homebrew/opt/imagemagick@6/include"
+
+For pkg-config to find imagemagick@6 you may need to set:
+  export PKG_CONFIG_PATH="/opt/homebrew/opt/imagemagick@6/lib/pkgconfig"
+
+==> Summary
+🍺  /opt/homebrew/Cellar/imagemagick@6/6.9.12-64_1: 767 files, 27.3MB
+==> Running `brew cleanup imagemagick@6`...
+Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+Linking /opt/homebrew/Cellar/imagemagick@6/6.9.12-64_1... 76 symlinks created.
+
+If you need to have this software first in your PATH instead consider running:
+  echo 'export PATH="/opt/homebrew/opt/imagemagick@6/bin:$PATH"' >> ~/.zshrc
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle _1.16.1_ install                                      
+Fetching https://github.com/foundation/foundation-rails.git
+Fetching gem metadata from https://rubygems.org/..........
+Fetching gem metadata from https://rubygems.org/.
+Resolving dependencies.......
+Using rake 12.0.0
+Using Ascii85 1.0.2
+Using concurrent-ruby 1.0.5
+Using i18n 0.8.6
+Using minitest 5.10.3
+Using thread_safe 0.3.6
+Using tzinfo 1.2.3
+Using activesupport 5.1.2
+Using builder 3.2.3
+Using erubi 1.6.1
+Using mini_portile2 2.1.0
+Using nokogiri 1.6.8.1
+Using rails-dom-testing 2.0.3
+Using loofah 2.0.3
+Using rails-html-sanitizer 1.0.3
+Using actionview 5.1.2
+Using rack 2.0.3
+Using rack-test 0.6.3
+Using actionpack 5.1.2
+Using nio4r 2.1.0
+Using websocket-extensions 0.1.2
+Using websocket-driver 0.6.5
+Using actioncable 5.1.2
+Using globalid 0.4.0
+Using activejob 5.1.2
+Using mime-types-data 3.2016.0521
+Using mime-types 3.1
+Using mail 2.6.6
+Using actionmailer 5.1.2
+Using activemodel 5.1.2
+Using active_attr 0.10.1
+Using arel 8.0.0
+Using activerecord 5.1.2
+Using afm 0.2.2
+Using annotate 2.7.2
+Using execjs 2.7.0
+Using autoprefixer-rails 7.1.1
+Using awesome_print 1.7.0
+Using bcrypt 3.1.11
+Using coderay 1.1.1
+Using erubis 2.7.0
+Using better_errors 2.1.1
+Using debug_inspector 0.0.3
+Using binding_of_caller 0.7.2
+Using bundler 1.16.1
+Using xpath 2.1.0
+Using capybara 2.3.0
+Using carrierwave 1.1.0
+Using hitimes 1.2.5
+Using timers 4.1.2
+Using celluloid-essentials 0.20.5
+Using celluloid-extras 0.20.5
+Using celluloid-fsm 0.20.5
+Using celluloid-pool 0.20.5
+Using celluloid-supervision 0.20.6
+Using celluloid 0.17.3
+Using with_advisory_lock 3.1.0
+Using closure_tree 6.6.0
+Using coffee-script-source 1.12.2
+Using coffee-script 2.4.1
+Using method_source 0.8.2
+Using thor 0.19.4
+Using railties 5.1.2
+Using coffee-rails 4.2.2
+Using connection_pool 2.2.1
+Using d3-rails 5.4.0
+Using dalli 2.7.6
+Using orm_adapter 0.5.0
+Using responders 2.4.0
+Using warden 1.2.7
+Using devise 4.3.0
+Using diff-lcs 1.3
+Using dotenv-deployment 0.0.2
+Using dotenv 0.11.1
+Using eventmachine 1.0.9.1
+Using factory_girl 4.8.0
+Using factory_girl_rails 4.8.0
+Using multipart-post 2.0.0
+Using faraday 0.12.1
+Using sass 3.4.25
+Using font-awesome-sass 4.3.2.1
+Using foreman 0.74.0
+Using foundation-rails 5.5.3.2 from https://github.com/foundation/foundation-rails.git (at v5.5.3.2@649f360)
+Using friendly_id 5.2.4
+Using hashery 2.1.2
+Using highline 1.7.8
+Using hijri_gem 0.4.2
+Using jquery-rails 4.3.1
+Using sprockets 3.7.1
+Using sprockets-rails 3.2.0
+Using tilt 2.0.7
+Using sass-rails 5.0.6
+Using jquery-datatables-rails 3.3.0
+Using jquery-ui-rails 6.0.1
+Using json 1.8.6
+Using kaminari 0.16.3
+Using kgio 2.11.0
+Using kramdown 1.4.2
+Using rails 5.1.2
+Using leaflet-rails 1.3.1
+Using libv8 3.16.14.19
+Using mustermann 1.0.0
+Using options 2.3.2
+Using ruby-rc4 0.1.5
+Using ttfunk 1.5.1
+Using pdf-reader 1.4.1
+Using pg 0.21.0
+Using pr_geohash 1.0.0
+Using progress_bar 1.1.0
+Using slop 3.6.0
+Using pry 0.10.4
+Using pry-rails 0.3.6
+Using rack-protection 2.0.0
+Using rack-timeout 0.0.4
+Using raindrops 0.18.0
+Using ranked-model 0.4.0
+Using rb-fsevent 0.10.2
+Using redis 3.3.3
+Using redis-namespace 1.5.3
+Using ref 2.0.0
+Fetching rmagick 2.13.4
+Installing rmagick 2.13.4 with native extensions
+Fetching rsolr 2.0.2
+Installing rsolr 2.0.2
+Fetching rspec-support 3.6.0
+Installing rspec-support 3.6.0
+Fetching rspec-core 3.6.0
+Installing rspec-core 3.6.0
+Fetching rspec-expectations 3.6.0
+Installing rspec-expectations 3.6.0
+Fetching rspec-mocks 3.6.0
+Installing rspec-mocks 3.6.0
+Fetching rspec-rails 3.6.0
+Installing rspec-rails 3.6.0
+Fetching rtesseract 2.1.0
+Installing rtesseract 2.1.0
+Fetching seed_dump 3.2.4
+Installing seed_dump 3.2.4
+Fetching select2-rails 4.0.3
+Installing select2-rails 4.0.3
+Fetching shoulda-matchers 3.1.2
+Installing shoulda-matchers 3.1.2
+Fetching sidekiq 3.5.4
+Installing sidekiq 3.5.4
+Fetching similar_text 0.0.4
+Installing similar_text 0.0.4 with native extensions
+Fetching simple_form 3.5.0
+Installing simple_form 3.5.0
+Fetching sinatra 2.0.0
+Installing sinatra 2.0.0
+Fetching temple 0.8.0
+Installing temple 0.8.0
+Fetching slim 3.0.8
+Installing slim 3.0.8
+Fetching slim-rails 3.1.2
+Installing slim-rails 3.1.2
+Fetching smart_listing 1.1.2
+Installing smart_listing 1.1.2
+Fetching sprig 0.1.9
+Installing sprig 0.1.9
+Fetching spring 1.1.3
+Installing spring 1.1.3
+Fetching spring-commands-rspec 1.0.4
+Installing spring-commands-rspec 1.0.4
+Fetching sunspot 2.2.7
+Installing sunspot 2.2.7
+Fetching sunspot_rails 2.2.7
+Installing sunspot_rails 2.2.7
+Fetching sunspot_solr 2.1.1
+Installing sunspot_solr 2.1.1
+Using therubyracer 0.12.3
+Fetching tinymce-rails 4.6.4
+Installing tinymce-rails 4.6.4
+Fetching turbolinks-source 5.0.3
+Installing turbolinks-source 5.0.3
+Fetching turbolinks 5.0.1
+Installing turbolinks 5.0.1
+Fetching uglifier 3.2.0
+Installing uglifier 3.2.0
+Fetching unicorn 4.8.3
+Installing unicorn 4.8.3 with native extensions
+Fetching whatlanguage 1.0.6
+Installing whatlanguage 1.0.6
+Fetching will_paginate 3.1.5
+Installing will_paginate 3.1.5
+Bundle complete! 59 Gemfile dependencies, 153 gems now installed.
+Use `bundle info [gemname]` to see where a bundled gem is installed.
+Post-install message from rmagick:
+Please report any bugs. See https://github.com/gemhome/rmagick/compare/RMagick_2-13-2...master and https://github.com/rmagick/rmagick/issues/18
+➜  SHARIAsource git:(feature/update-footer) ✗ rake start
+rake aborted!
+LoadError: dlopen(/Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/therubyracer-0.12.3/lib/v8/init.bundle, 0x0009): symbol not found in flat namespace '__ZN2v810ScriptData10PreCompileEPKci' - /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/therubyracer-0.12.3/lib/v8/init.bundle
+/Users/colecrawford/GitHub/SHARIAsource/config/application.rb:7:in `<top (required)>'
+/Users/colecrawford/GitHub/SHARIAsource/Rakefile:4:in `<top (required)>'
+(See full trace by running task with --trace)
+➜  SHARIAsource git:(feature/update-footer) ✗ clang++ -v
+Apple clang version 13.0.0 (clang-1300.0.27.3)
+Target: arm64-apple-darwin21.2.0
+Thread model: posix
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+➜  SHARIAsource git:(feature/update-footer) ✗ CXX=clang++ gem install therubyracer -v "0.12.3" -- --with-v8-dir=$(arch -x86_64 brew --prefix v8@3.15)
+Building native extensions with: '--with-v8-dir=/opt/homebrew/opt/v8@3.15'
+This could take a while...
+ERROR:  Error installing therubyracer:
+	ERROR: Failed to build gem native extension.
+
+    current directory: /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/therubyracer-0.12.3/ext/v8
+/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/ruby -r ./siteconf20220926-16733-lqe8kf.rb extconf.rb --with-v8-dir=/opt/homebrew/opt/v8@3.15
+checking for -lpthread... yes
+checking for -lobjc... yes
+checking for v8.h... no
+*** extconf.rb failed ***
+Could not create Makefile due to some reason, probably lack of necessary
+libraries and/or headers.  Check the mkmf.log file for more details.  You may
+need configuration options.
+
+Provided configuration options:
+	--with-opt-dir
+	--without-opt-dir
+	--with-opt-include
+	--without-opt-include=${opt-dir}/include
+	--with-opt-lib
+	--without-opt-lib=${opt-dir}/lib
+	--with-make-prog
+	--without-make-prog
+	--srcdir=.
+	--curdir
+	--ruby=/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/$(RUBY_BASE_NAME)
+	--with-pthreadlib
+	--without-pthreadlib
+	--with-objclib
+	--without-objclib
+	--enable-debug
+	--disable-debug
+	--with-v8-dir
+	--with-v8-include
+	--without-v8-include=${v8-dir}/include
+	--with-v8-lib
+	--without-v8-lib=${v8-dir}/lib
+/Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/ext/libv8/location.rb:50:in `configure': By using --with-system-v8, you have chosen to use the version  (Libv8::Location::System::NotFoundError)
+of V8 found on your system and *not* the one that is bundled with 
+the libv8 rubygem. 
+
+However, your system version of v8 could not be located. 
+
+Please make sure your system version of v8 that is compatible 
+with 3.16.14.19 installed. You may need to use the 
+--with-v8-dir option if it is installed in a non-standard location
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/lib/libv8.rb:7:in `configure_makefile'
+	from extconf.rb:32:in `<main>'
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/therubyracer-0.12.3/mkmf.log
+
+extconf failed, exit code 1
+
+Gem files will remain installed in /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/therubyracer-0.12.3 for inspection.
+Results logged to /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/therubyracer-0.12.3/gem_make.out
+➜  SHARIAsource git:(feature/update-footer) ✗ CXX=clang++ gem install therubyracer -v "0.12.3" -- --with-v8-dir=$(arch -x86_64 brew --prefix v8@315) 
+Error: No available formula with the name "v8@315". Did you mean v8@3.15?
+Building native extensions with: '--with-v8-dir='
+This could take a while...
+ERROR:  Error installing therubyracer:
+	ERROR: Failed to build gem native extension.
+
+    current directory: /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/therubyracer-0.12.3/ext/v8
+/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/ruby -r ./siteconf20220926-17024-121w1ct.rb extconf.rb --with-v8-dir=
+checking for -lpthread... yes
+checking for -lobjc... yes
+checking for v8.h... no
+*** extconf.rb failed ***
+Could not create Makefile due to some reason, probably lack of necessary
+libraries and/or headers.  Check the mkmf.log file for more details.  You may
+need configuration options.
+
+Provided configuration options:
+	--with-opt-dir
+	--without-opt-dir
+	--with-opt-include
+	--without-opt-include=${opt-dir}/include
+	--with-opt-lib
+	--without-opt-lib=${opt-dir}/lib
+	--with-make-prog
+	--without-make-prog
+	--srcdir=.
+	--curdir
+	--ruby=/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/$(RUBY_BASE_NAME)
+	--with-pthreadlib
+	--without-pthreadlib
+	--with-objclib
+	--without-objclib
+	--enable-debug
+	--disable-debug
+	--with-v8-dir
+	--with-v8-include
+	--without-v8-include=${v8-dir}/include
+	--with-v8-lib
+	--without-v8-lib=${v8-dir}/lib
+/Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/ext/libv8/location.rb:50:in `configure': By using --with-system-v8, you have chosen to use the version  (Libv8::Location::System::NotFoundError)
+of V8 found on your system and *not* the one that is bundled with 
+the libv8 rubygem. 
+
+However, your system version of v8 could not be located. 
+
+Please make sure your system version of v8 that is compatible 
+with 3.16.14.19 installed. You may need to use the 
+--with-v8-dir option if it is installed in a non-standard location
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/lib/libv8.rb:7:in `configure_makefile'
+	from extconf.rb:32:in `<main>'
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/therubyracer-0.12.3/mkmf.log
+
+extconf failed, exit code 1
+
+Gem files will remain installed in /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/therubyracer-0.12.3 for inspection.
+Results logged to /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/therubyracer-0.12.3/gem_make.out
+➜  SHARIAsource git:(feature/update-footer) ✗ CXX=clang++ gem install therubyracer -v '0.12.3' -- --with-v8-dir=/usr/local/opt/v8@3.15
+Building native extensions with: '--with-v8-dir=/usr/local/opt/v8@3.15'
+This could take a while...
+Successfully installed therubyracer-0.12.3
+Parsing documentation for therubyracer-0.12.3
+Done installing documentation for therubyracer after 0 seconds
+1 gem installed
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle _1.16.1_ install                                                                                
+Using rake 12.0.0
+Using Ascii85 1.0.2
+Using concurrent-ruby 1.0.5
+Using i18n 0.8.6
+Using minitest 5.10.3
+Using thread_safe 0.3.6
+Using tzinfo 1.2.3
+Using activesupport 5.1.2
+Using builder 3.2.3
+Using erubi 1.6.1
+Using mini_portile2 2.1.0
+Using nokogiri 1.6.8.1
+Using rails-dom-testing 2.0.3
+Using loofah 2.0.3
+Using rails-html-sanitizer 1.0.3
+Using actionview 5.1.2
+Using rack 2.0.3
+Using rack-test 0.6.3
+Using actionpack 5.1.2
+Using nio4r 2.1.0
+Using websocket-extensions 0.1.2
+Using websocket-driver 0.6.5
+Using actioncable 5.1.2
+Using globalid 0.4.0
+Using activejob 5.1.2
+Using mime-types-data 3.2016.0521
+Using mime-types 3.1
+Using mail 2.6.6
+Using actionmailer 5.1.2
+Using activemodel 5.1.2
+Using active_attr 0.10.1
+Using arel 8.0.0
+Using activerecord 5.1.2
+Using afm 0.2.2
+Using annotate 2.7.2
+Using execjs 2.7.0
+Using autoprefixer-rails 7.1.1
+Using awesome_print 1.7.0
+Using bcrypt 3.1.11
+Using coderay 1.1.1
+Using erubis 2.7.0
+Using better_errors 2.1.1
+Using debug_inspector 0.0.3
+Using binding_of_caller 0.7.2
+Using bundler 1.16.1
+Using xpath 2.1.0
+Using capybara 2.3.0
+Using carrierwave 1.1.0
+Using hitimes 1.2.5
+Using timers 4.1.2
+Using celluloid-essentials 0.20.5
+Using celluloid-extras 0.20.5
+Using celluloid-fsm 0.20.5
+Using celluloid-pool 0.20.5
+Using celluloid-supervision 0.20.6
+Using celluloid 0.17.3
+Using with_advisory_lock 3.1.0
+Using closure_tree 6.6.0
+Using coffee-script-source 1.12.2
+Using coffee-script 2.4.1
+Using method_source 0.8.2
+Using thor 0.19.4
+Using railties 5.1.2
+Using coffee-rails 4.2.2
+Using connection_pool 2.2.1
+Using d3-rails 5.4.0
+Using dalli 2.7.6
+Using orm_adapter 0.5.0
+Using responders 2.4.0
+Using warden 1.2.7
+Using devise 4.3.0
+Using diff-lcs 1.3
+Using dotenv-deployment 0.0.2
+Using dotenv 0.11.1
+Using eventmachine 1.0.9.1
+Using factory_girl 4.8.0
+Using factory_girl_rails 4.8.0
+Using multipart-post 2.0.0
+Using faraday 0.12.1
+Using sass 3.4.25
+Using font-awesome-sass 4.3.2.1
+Using foreman 0.74.0
+Using foundation-rails 5.5.3.2 from https://github.com/foundation/foundation-rails.git (at v5.5.3.2@649f360)
+Using friendly_id 5.2.4
+Using hashery 2.1.2
+Using highline 1.7.8
+Using hijri_gem 0.4.2
+Using jquery-rails 4.3.1
+Using sprockets 3.7.1
+Using sprockets-rails 3.2.0
+Using tilt 2.0.7
+Using sass-rails 5.0.6
+Using jquery-datatables-rails 3.3.0
+Using jquery-ui-rails 6.0.1
+Using json 1.8.6
+Using kaminari 0.16.3
+Using kgio 2.11.0
+Using kramdown 1.4.2
+Using rails 5.1.2
+Using leaflet-rails 1.3.1
+Using libv8 3.16.14.19
+Using mustermann 1.0.0
+Using options 2.3.2
+Using ruby-rc4 0.1.5
+Using ttfunk 1.5.1
+Using pdf-reader 1.4.1
+Using pg 0.21.0
+Using pr_geohash 1.0.0
+Using progress_bar 1.1.0
+Using slop 3.6.0
+Using pry 0.10.4
+Using pry-rails 0.3.6
+Using rack-protection 2.0.0
+Using rack-timeout 0.0.4
+Using raindrops 0.18.0
+Using ranked-model 0.4.0
+Using rb-fsevent 0.10.2
+Using redis 3.3.3
+Using redis-namespace 1.5.3
+Using ref 2.0.0
+Using rmagick 2.13.4
+Using rsolr 2.0.2
+Using rspec-support 3.6.0
+Using rspec-core 3.6.0
+Using rspec-expectations 3.6.0
+Using rspec-mocks 3.6.0
+Using rspec-rails 3.6.0
+Using rtesseract 2.1.0
+Using seed_dump 3.2.4
+Using select2-rails 4.0.3
+Using shoulda-matchers 3.1.2
+Using sidekiq 3.5.4
+Using similar_text 0.0.4
+Using simple_form 3.5.0
+Using sinatra 2.0.0
+Using temple 0.8.0
+Using slim 3.0.8
+Using slim-rails 3.1.2
+Using smart_listing 1.1.2
+Using sprig 0.1.9
+Using spring 1.1.3
+Using spring-commands-rspec 1.0.4
+Using sunspot 2.2.7
+Using sunspot_rails 2.2.7
+Using sunspot_solr 2.1.1
+Using therubyracer 0.12.3
+Using tinymce-rails 4.6.4
+Using turbolinks-source 5.0.3
+Using turbolinks 5.0.1
+Using uglifier 3.2.0
+Using unicorn 4.8.3
+Using whatlanguage 1.0.6
+Using will_paginate 3.1.5
+Bundle complete! 59 Gemfile dependencies, 153 gems now installed.
+Use `bundle info [gemname]` to see where a bundled gem is installed.
+➜  SHARIAsource git:(feature/update-footer) ✗ rake start                                                                                             
+rake aborted!
+LoadError: dlopen(/Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/therubyracer-0.12.3/lib/v8/init.bundle, 0x0009): symbol not found in flat namespace '__ZN2v810ScriptData10PreCompileEPKci' - /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/therubyracer-0.12.3/lib/v8/init.bundle
+/Users/colecrawford/GitHub/SHARIAsource/config/application.rb:7:in `<top (required)>'
+/Users/colecrawford/GitHub/SHARIAsource/Rakefile:4:in `<top (required)>'
+(See full trace by running task with --trace)
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle remove therubyracer
+Could not find command "remove".
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle --version
+Bundler version 1.16.1
+➜  SHARIAsource git:(feature/update-footer) ✗ gem uninstall therubyracer
+Successfully uninstalled therubyracer-0.12.3
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle _1.16.1_ install   
+Fetching gem metadata from https://rubygems.org/..........
+Using rake 12.0.0
+Using Ascii85 1.0.2
+Using concurrent-ruby 1.0.5
+Using i18n 0.8.6
+Using minitest 5.10.3
+Using thread_safe 0.3.6
+Using tzinfo 1.2.3
+Using activesupport 5.1.2
+Using builder 3.2.3
+Using erubi 1.6.1
+Using mini_portile2 2.1.0
+Using nokogiri 1.6.8.1
+Using rails-dom-testing 2.0.3
+Using loofah 2.0.3
+Using rails-html-sanitizer 1.0.3
+Using actionview 5.1.2
+Using rack 2.0.3
+Using rack-test 0.6.3
+Using actionpack 5.1.2
+Using nio4r 2.1.0
+Using websocket-extensions 0.1.2
+Using websocket-driver 0.6.5
+Using actioncable 5.1.2
+Using globalid 0.4.0
+Using activejob 5.1.2
+Using mime-types-data 3.2016.0521
+Using mime-types 3.1
+Using mail 2.6.6
+Using actionmailer 5.1.2
+Using activemodel 5.1.2
+Using active_attr 0.10.1
+Using arel 8.0.0
+Using activerecord 5.1.2
+Using afm 0.2.2
+Using annotate 2.7.2
+Using execjs 2.7.0
+Using autoprefixer-rails 7.1.1
+Using awesome_print 1.7.0
+Using bcrypt 3.1.11
+Using coderay 1.1.1
+Using erubis 2.7.0
+Using better_errors 2.1.1
+Using debug_inspector 0.0.3
+Using binding_of_caller 0.7.2
+Using bundler 1.16.1
+Using xpath 2.1.0
+Using capybara 2.3.0
+Using carrierwave 1.1.0
+Using hitimes 1.2.5
+Using timers 4.1.2
+Using celluloid-essentials 0.20.5
+Using celluloid-extras 0.20.5
+Using celluloid-fsm 0.20.5
+Using celluloid-pool 0.20.5
+Using celluloid-supervision 0.20.6
+Using celluloid 0.17.3
+Using with_advisory_lock 3.1.0
+Using closure_tree 6.6.0
+Using coffee-script-source 1.12.2
+Using coffee-script 2.4.1
+Using method_source 0.8.2
+Using thor 0.19.4
+Using railties 5.1.2
+Using coffee-rails 4.2.2
+Using connection_pool 2.2.1
+Using d3-rails 5.4.0
+Using dalli 2.7.6
+Using orm_adapter 0.5.0
+Using responders 2.4.0
+Using warden 1.2.7
+Using devise 4.3.0
+Using diff-lcs 1.3
+Using dotenv-deployment 0.0.2
+Using dotenv 0.11.1
+Using eventmachine 1.0.9.1
+Using factory_girl 4.8.0
+Using factory_girl_rails 4.8.0
+Using multipart-post 2.0.0
+Using faraday 0.12.1
+Using sass 3.4.25
+Using font-awesome-sass 4.3.2.1
+Using foreman 0.74.0
+Using foundation-rails 5.5.3.2 from https://github.com/foundation/foundation-rails.git (at v5.5.3.2@649f360)
+Using friendly_id 5.2.4
+Using hashery 2.1.2
+Using highline 1.7.8
+Using hijri_gem 0.4.2
+Using jquery-rails 4.3.1
+Using sprockets 3.7.1
+Using sprockets-rails 3.2.0
+Using tilt 2.0.7
+Using sass-rails 5.0.6
+Using jquery-datatables-rails 3.3.0
+Using jquery-ui-rails 6.0.1
+Using json 1.8.6
+Using kaminari 0.16.3
+Using kgio 2.11.0
+Using kramdown 1.4.2
+Using rails 5.1.2
+Using leaflet-rails 1.3.1
+Using libv8 3.16.14.19
+Using mustermann 1.0.0
+Using options 2.3.2
+Using ruby-rc4 0.1.5
+Using ttfunk 1.5.1
+Using pdf-reader 1.4.1
+Using pg 0.21.0
+Using pr_geohash 1.0.0
+Using progress_bar 1.1.0
+Using slop 3.6.0
+Using pry 0.10.4
+Using pry-rails 0.3.6
+Using rack-protection 2.0.0
+Using rack-timeout 0.0.4
+Using raindrops 0.18.0
+Using ranked-model 0.4.0
+Using rb-fsevent 0.10.2
+Using redis 3.3.3
+Using redis-namespace 1.5.3
+Using ref 2.0.0
+Using rmagick 2.13.4
+Using rsolr 2.0.2
+Using rspec-support 3.6.0
+Using rspec-core 3.6.0
+Using rspec-expectations 3.6.0
+Using rspec-mocks 3.6.0
+Using rspec-rails 3.6.0
+Using rtesseract 2.1.0
+Using seed_dump 3.2.4
+Using select2-rails 4.0.3
+Using shoulda-matchers 3.1.2
+Using sidekiq 3.5.4
+Using similar_text 0.0.4
+Using simple_form 3.5.0
+Using sinatra 2.0.0
+Using temple 0.8.0
+Using slim 3.0.8
+Using slim-rails 3.1.2
+Using smart_listing 1.1.2
+Using sprig 0.1.9
+Using spring 1.1.3
+Using spring-commands-rspec 1.0.4
+Using sunspot 2.2.7
+Using sunspot_rails 2.2.7
+Using sunspot_solr 2.1.1
+Fetching therubyracer 0.12.3
+Installing therubyracer 0.12.3 with native extensions
+Gem::Ext::BuildError: ERROR: Failed to build gem native extension.
+
+    current directory: /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/therubyracer-0.12.3/ext/v8
+/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/ruby -r ./siteconf20220926-20133-1mbv766.rb extconf.rb
+checking for -lpthread... yes
+checking for -lobjc... yes
+checking for v8.h... no
+*** extconf.rb failed ***
+Could not create Makefile due to some reason, probably lack of necessary
+libraries and/or headers.  Check the mkmf.log file for more details.  You may
+need configuration options.
+
+Provided configuration options:
+	--with-opt-dir
+	--without-opt-dir
+	--with-opt-include
+	--without-opt-include=${opt-dir}/include
+	--with-opt-lib
+	--without-opt-lib=${opt-dir}/lib
+	--with-make-prog
+	--without-make-prog
+	--srcdir=.
+	--curdir
+	--ruby=/Users/colecrawford/.asdf/installs/ruby/2.4.1/bin/$(RUBY_BASE_NAME)
+	--with-pthreadlib
+	--without-pthreadlib
+	--with-objclib
+	--without-objclib
+	--enable-debug
+	--disable-debug
+	--with-v8-dir
+	--without-v8-dir
+	--with-v8-include
+	--without-v8-include=${v8-dir}/include
+	--with-v8-lib
+	--without-v8-lib=${v8-dir}/lib
+/Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/ext/libv8/location.rb:50:in `configure': By using --with-system-v8, you have chosen to use the version 
+(Libv8::Location::System::NotFoundError)
+of V8 found on your system and *not* the one that is bundled with 
+the libv8 rubygem. 
+
+However, your system version of v8 could not be located. 
+
+Please make sure your system version of v8 that is compatible 
+with 3.16.14.19 installed. You may need to use the 
+--with-v8-dir option if it is installed in a non-standard location
+	from /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/libv8-3.16.14.19/lib/libv8.rb:7:in `configure_makefile'
+	from extconf.rb:32:in `<main>'
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/therubyracer-0.12.3/mkmf.log
+
+extconf failed, exit code 1
+
+Gem files will remain installed in /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/gems/therubyracer-0.12.3 for inspection.
+Results logged to /Users/colecrawford/.asdf/installs/ruby/2.4.1/lib/ruby/gems/2.4.0/extensions/-darwin-21/2.4.0/therubyracer-0.12.3/gem_make.out
+
+An error occurred while installing therubyracer (0.12.3), and Bundler cannot continue.
+Make sure that `gem install therubyracer -v '0.12.3'` succeeds before bundling.
+
+In Gemfile:
+  therubyracer
+➜  SHARIAsource git:(feature/update-footer) ✗ gem uninstall therubyracer
+➜  SHARIAsource git:(feature/update-footer) ✗ bundle _1.16.1_ install   
+Using rake 12.0.0
+Using Ascii85 1.0.2
+Using concurrent-ruby 1.0.5
+Using i18n 0.8.6
+Using minitest 5.10.3
+Using thread_safe 0.3.6
+Using tzinfo 1.2.3
+Using activesupport 5.1.2
+Using builder 3.2.3
+Using erubi 1.6.1
+Using mini_portile2 2.1.0
+Using nokogiri 1.6.8.1
+Using rails-dom-testing 2.0.3
+Using loofah 2.0.3
+Using rails-html-sanitizer 1.0.3
+Using actionview 5.1.2
+Using rack 2.0.3
+Using rack-test 0.6.3
+Using actionpack 5.1.2
+Using nio4r 2.1.0
+Using websocket-extensions 0.1.2
+Using websocket-driver 0.6.5
+Using actioncable 5.1.2
+Using globalid 0.4.0
+Using activejob 5.1.2
+Using mime-types-data 3.2016.0521
+Using mime-types 3.1
+Using mail 2.6.6
+Using actionmailer 5.1.2
+Using activemodel 5.1.2
+Using active_attr 0.10.1
+Using arel 8.0.0
+Using activerecord 5.1.2
+Using afm 0.2.2
+Using annotate 2.7.2
+Using execjs 2.7.0
+Using autoprefixer-rails 7.1.1
+Using awesome_print 1.7.0
+Using bcrypt 3.1.11
+Using coderay 1.1.1
+Using erubis 2.7.0
+Using better_errors 2.1.1
+Using debug_inspector 0.0.3
+Using binding_of_caller 0.7.2
+Using bundler 1.16.1
+Using xpath 2.1.0
+Using capybara 2.3.0
+Using carrierwave 1.1.0
+Using hitimes 1.2.5
+Using timers 4.1.2
+Using celluloid-essentials 0.20.5
+Using celluloid-extras 0.20.5
+Using celluloid-fsm 0.20.5
+Using celluloid-pool 0.20.5
+Using celluloid-supervision 0.20.6
+Using celluloid 0.17.3
+Using with_advisory_lock 3.1.0
+Using closure_tree 6.6.0
+Using coffee-script-source 1.12.2
+Using coffee-script 2.4.1
+Using method_source 0.8.2
+Using thor 0.19.4
+Using railties 5.1.2
+Using coffee-rails 4.2.2
+Using connection_pool 2.2.1
+Using d3-rails 5.4.0
+Using dalli 2.7.6
+Using orm_adapter 0.5.0
+Using responders 2.4.0
+Using warden 1.2.7
+Using devise 4.3.0
+Using diff-lcs 1.3
+Using dotenv-deployment 0.0.2
+Using dotenv 0.11.1
+Using eventmachine 1.0.9.1
+Using factory_girl 4.8.0
+Using factory_girl_rails 4.8.0
+Using multipart-post 2.0.0
+Using faraday 0.12.1
+Using sass 3.4.25
+Using font-awesome-sass 4.3.2.1
+Using foreman 0.74.0
+Using foundation-rails 5.5.3.2 from https://github.com/foundation/foundation-rails.git (at v5.5.3.2@649f360)
+Using friendly_id 5.2.4
+Using hashery 2.1.2
+Using highline 1.7.8
+Using hijri_gem 0.4.2
+Using jquery-rails 4.3.1
+Using sprockets 3.7.1
+Using sprockets-rails 3.2.0
+Using tilt 2.0.7
+Using sass-rails 5.0.6
+Using jquery-datatables-rails 3.3.0
+Using jquery-ui-rails 6.0.1
+Using json 1.8.6
+Using kaminari 0.16.3
+Using kgio 2.11.0
+Using kramdown 1.4.2
+Using rails 5.1.2
+Using leaflet-rails 1.3.1
+Using mustermann 1.0.0
+Using options 2.3.2
+Using ruby-rc4 0.1.5
+Using ttfunk 1.5.1
+Using pdf-reader 1.4.1
+Using pg 0.21.0
+Using pr_geohash 1.0.0
+Using progress_bar 1.1.0
+Using slop 3.6.0
+Using pry 0.10.4
+Using pry-rails 0.3.6
+Using rack-protection 2.0.0
+Using rack-timeout 0.0.4
+Using raindrops 0.18.0
+Using ranked-model 0.4.0
+Using rb-fsevent 0.10.2
+Using redis 3.3.3
+Using redis-namespace 1.5.3
+Using rmagick 2.13.4
+Using rsolr 2.0.2
+Using rspec-support 3.6.0
+Using rspec-core 3.6.0
+Using rspec-expectations 3.6.0
+Using rspec-mocks 3.6.0
+Using rspec-rails 3.6.0
+Using rtesseract 2.1.0
+Using seed_dump 3.2.4
+Using select2-rails 4.0.3
+Using shoulda-matchers 3.1.2
+Using sidekiq 3.5.4
+Using similar_text 0.0.4
+Using simple_form 3.5.0
+Using sinatra 2.0.0
+Using temple 0.8.0
+Using slim 3.0.8
+Using slim-rails 3.1.2
+Using smart_listing 1.1.2
+Using sprig 0.1.9
+Using spring 1.1.3
+Using spring-commands-rspec 1.0.4
+Using sunspot 2.2.7
+Using sunspot_rails 2.2.7
+Using sunspot_solr 2.1.1
+Using tinymce-rails 4.6.4
+Using turbolinks-source 5.0.3
+Using turbolinks 5.0.1
+Using uglifier 3.2.0
+Using unicorn 4.8.3
+Using whatlanguage 1.0.6
+Using will_paginate 3.1.5
+Bundle complete! 58 Gemfile dependencies, 150 gems now installed.
+Use `bundle info [gemname]` to see where a bundled gem is installed.
+➜  SHARIAsource git:(feature/update-footer) ✗ rake start                
+rake aborted!
+Don't know how to build task 'start' (see --tasks)
+
+(See full trace by running task with --trace)
+➜  SHARIAsource git:(feature/update-footer) ✗ rails s
+dyld[20804]: Library not loaded: /usr/local/opt/gmp/lib/libgmp.10.dylib
+  Referenced from: /Users/colecrawford/.rbenv/versions/2.4.1/bin/ruby
+  Reason: tried: '/usr/local/opt/gmp/lib/libgmp.10.dylib' (no such file), '/usr/local/lib/libgmp.10.dylib' (no such file), '/usr/lib/libgmp.10.dylib' (no such file)
+[1]    20804 abort      rails s
+➜  SHARIAsource git:(feature/update-footer) ✗ rails s
+dyld[20836]: Library not loaded: /usr/local/opt/gmp/lib/libgmp.10.dylib
+  Referenced from: /Users/colecrawford/.rbenv/versions/2.4.1/bin/ruby
+  Reason: tried: '/usr/local/opt/gmp/lib/libgmp.10.dylib' (no such file), '/usr/local/lib/libgmp.10.dylib' (no such file), '/usr/lib/libgmp.10.dylib' (no such file)
+[1]    20836 abort      rails s
+➜  SHARIAsource git:(feature/update-footer) ✗ ls                                                
+Dockerfile.dev     Guardfile          README.md          bin                db                 help.md            public             solr               tmp
+Gemfile            LICENSE            Rakefile           config             docker-compose.yml lib                shariasource.dump  spec               vendor
+Gemfile.lock       Procfile           app                config.ru          dump.rdb           log                shariasource.sql   sunspot-solr.pid
+➜  SHARIAsource git:(feature/update-footer) ✗ ./bin/rails s
+=> Booting WEBrick
+=> Rails 5.1.2 application starting in development on http://localhost:3000
+=> Run `rails server -h` for more startup options
+[2022-09-26 23:59:22] INFO  WEBrick 1.3.1
+[2022-09-26 23:59:22] INFO  ruby 2.4.1 (2017-03-22) [-darwin21]
+[2022-09-26 23:59:22] INFO  WEBrick::HTTPServer#start: pid=20901 port=3000

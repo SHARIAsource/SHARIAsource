@@ -1,0 +1,10 @@
+- if libraries.present?
+    .home-block 
+        h2.home-block-heading= block_title
+        .libraries
+            - libraries.each do |library|
+                .library 
+                    h3= link_to library.name, library.url
+                    - if library.image.file
+                        = image_tag library.image.url
+                        

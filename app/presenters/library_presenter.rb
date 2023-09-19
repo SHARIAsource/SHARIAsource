@@ -1,0 +1,3 @@
+class LibraryPresenter < BasePresenter
+
+end
