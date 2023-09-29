@@ -20,15 +20,14 @@
 //= require ./jquery.ba-throttle-debounce
 //= require ./trunk8
 //= require ./waypoints/waypoints
-//= require_tree ./application/
-//= require leaflet
 //= require d3
-// = require jquery.calendars.package-2.1.0/js/jquery.plugin.js
-// = require jquery.calendars.package-2.1.0/js/jquery.calendars.js
-// = require jquery.calendars.package-2.1.0/js/jquery.calendars.plus.js
-// = require jquery.calendars.package-2.1.0/js/jquery.calendars.picker.js
-// = require jquery.calendars.package-2.1.0/js/jquery.calendars.islamic.js
-
+//= require leaflet
+//= require jquery.calendars.package-2.1.0/js/jquery.plugin.js
+//= require jquery.calendars.package-2.1.0/js/jquery.calendars.js
+//= require jquery.calendars.package-2.1.0/js/jquery.calendars.plus.js
+//= require jquery.calendars.package-2.1.0/js/jquery.calendars.picker.js
+//= require jquery.calendars.package-2.1.0/js/jquery.calendars.islamic.js
+//= require_tree ./application/
 
 
 $(document).on('turbolinks:load', function() {
@@ -42,3 +41,5 @@ $(document).on('turbolinks:load', function() {
     location.reload(true);
   }
 })
+
+// $(function(){ $(document).foundation(); });

@@ -25,11 +25,20 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress with a preprocessor.
-  config.assets.js_compressor = :uglifier #try to comment this out to see if ES6 will work - https://github.com/browserify-rails/browserify-rails/issues/137
+  # config.assets.js_compressor = :uglifier #try to comment this out to see if ES6 will work - https://github.com/browserify-rails/browserify-rails/issues/137
+  # config.assets.js_compressor = Uglifier.new(harmony: true)
+  config.assets.js_compressor = :terser
   # config.assets.css_compressor = :sass
+  config.tinymce.install = :copy
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
+  
+  config.assets.digest=true
+  
+  # Temp - debug Rails asset pipeline - breaks
+  # config.assets.debug = true
+  config.assets.debug = false
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = 'http://assets.example.com'
