@@ -4,7 +4,7 @@
         .libraries
             - libraries.each do |library|
                 .library 
-                    h3= link_to library.name, library.url
                     - if library.image.file
                         = image_tag library.image.url
+                    h3= link_to library.name, library.url
                         
