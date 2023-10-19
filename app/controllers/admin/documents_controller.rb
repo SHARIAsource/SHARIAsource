@@ -36,6 +36,8 @@ class Admin::DocumentsController < AdminController
 
     @document = current_user.uploaded_documents.build document_params
 
+    @document.build_body
+
     if @document.save
       @document.index!
       flash[:notice] = 'Document created successfully'

@@ -303,20 +303,23 @@ class Document < ActiveRecord::Base
 
     message = "Images successfully generated for document #{id}."
     message += " Now parsing all #{page_count} pages of text." if with_text
-    puts message
     Rails.logger.info message
 
     self.pages.destroy_all
+
+    # document body is being built in admin/documents_controller
+    # page_body = Body.new(document: self)
+    # page_body.save!
 
     pages.zip(images).each_with_index do |pair, idx|
       page, image = pair
 
       source_page = Page.new(image: (image.nil? ? image : File.open(image)), number: idx + 1)
-      source_page.build_body
+      source_page.document_id = self.id
+      source_page.build_body # creates the body for the page
 
       if with_text
         page = pages[idx]
-        puts "Firing build_text_by_hybrid for page #{idx}..."
         source_page.body.text = txt_to_html(page.text)
 
         hybrid_text = build_text_by_hybrid(page.text, image)
@@ -326,10 +329,10 @@ class Document < ActiveRecord::Base
         source_page.body.hybrid_text = NO_TEXT_MESSAGE
       end
 
-      self.pages << source_page  #This saves the source_page
+      source_page.save!
+      self.pages << source_page  # Add the source_page to the ActiveRecord association
       source_page = nil
     end
-
     self.save!
 
     clean_up_temp_images(images)
@@ -358,7 +361,7 @@ class Document < ActiveRecord::Base
   def extract_pdf_images_to_disk(options)
     page_count = options[:page_count]
     base_dir = BASE_PAGE_DIRECTORY + "/#{id}"
-    puts "Extracting to #{base_dir} (#{page_count} pages)"
+    Rails.logger.info "Extracting to #{base_dir} (#{page_count} pages)"
     FileUtils.mkdir_p(base_dir) unless Dir.exists?(base_dir)
 
     # NOTE: A larger batch size will use more memory inside the each_slice loop and
@@ -405,8 +408,8 @@ class Document < ActiveRecord::Base
     end_index = options[:end_index]
 
     convert_string = "#{pdf.current_path}[#{start_index}-#{end_index}]"
-    puts "Extracting: #{convert_string}"
 
+    # needs Ghostwriter or something like that installed
     Magick::Image.read(convert_string) do
       self.format = 'PDF'
       self.quality = 100  # has no significant effect on memory usage

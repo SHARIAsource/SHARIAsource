@@ -7,6 +7,10 @@ RUN apt-get update --fix-missing
 # zlib for nokogiri
 RUN apt-get install -y apt-transport-https ca-certificates gnupg2 curl imagemagick libmagickwand-dev postgresql nano git default-jre zlib1g-dev liblzma-dev patch libxslt-dev libxml2-dev gcc redis-server
 
+# Ghostscript is required for PDF image extraction, and the ImageMagick policy.xml needs to be updated
+# to allow it to work with PDFs: https://stackoverflow.com/questions/52998331/imagemagick-security-policy-pdf-blocking-conversion.
+# TODO add both these steps to the Dockerfile
+
 # Javascript runtime, e.g. nodejs or therubyracer gem, are required for autoprefixer-rails / execjs gems
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt-get install -y nodejs
 
