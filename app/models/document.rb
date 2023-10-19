@@ -299,7 +299,7 @@ class Document < ActiveRecord::Base
 
     # TODO: handle failures in extract_pdf_images_to_disk by adding a nil image and detecting it here
     #   Ideally, we would use a stock "this page is unavailable" image instead
-    images = extract_pdf_images_to_disk(page_count: 1)
+    images = extract_pdf_images_to_disk(page_count: page_count)
 
     message = "Images successfully generated for document #{id}."
     message += " Now parsing all #{page_count} pages of text." if with_text
