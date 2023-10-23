@@ -10,9 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-# 9/12/23: schema is trying to drop: documents.ocr_document_id, documents.word_document, users.cb_editor_id, users.new_content_email, users.new_submission_email, users.is_ocr_advanced
-
-ActiveRecord::Schema.define(version: 2023_09_12_170528) do
+ActiveRecord::Schema.define(version: 2023_10_23_041857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +30,8 @@ ActiveRecord::Schema.define(version: 2023_09_12_170528) do
   create_table "authors", force: :cascade do |t|
     t.string "name"
     t.integer "user_id"
+    t.integer "cnc_metadata_id"
+    t.jsonb "cnc_metadata_jsonb"
   end
 
   create_table "authors_documents", id: false, force: :cascade do |t|
@@ -139,8 +139,6 @@ ActiveRecord::Schema.define(version: 2023_09_12_170528) do
     t.boolean "use_content_password", default: false
     t.boolean "reviewed", default: false
     t.integer "user_id"
-    t.string "ocr_document_id"
-    t.string "word_document"
     t.index ["created_at"], name: "index_documents_on_created_at"
     t.index ["document_type_id"], name: "index_documents_on_document_type_id"
     t.index ["featured_position"], name: "index_documents_on_featured_position"
@@ -470,10 +468,6 @@ ActiveRecord::Schema.define(version: 2023_09_12_170528) do
     t.boolean "is_senior_scholar", default: false
     t.boolean "is_original_author", default: false
     t.boolean "is_password_protector", default: false
-    t.string "cb_editor_id"
-    t.boolean "new_content_email", default: true
-    t.boolean "new_submission_email", default: true
-    t.boolean "is_ocr_advanced", default: false
     t.integer "role_id"
     t.integer "term_start_year"
     t.integer "term_end_year"

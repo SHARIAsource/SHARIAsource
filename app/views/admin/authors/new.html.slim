@@ -1,0 +1,6 @@
+= content_for :page_title, 'New Author'
+= content_for :admin_active, 'Metadata'
+
+h2 New Author
+
+= render partial: 'admin/authors/form', locals: { form_url: admin_authors_path }

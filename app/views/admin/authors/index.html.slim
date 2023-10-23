@@ -1,0 +1,4 @@
+= content_for :page_title, 'Authors'
+= content_for :admin_active, 'Metadata'
+
+= render partial: 'admin/table', locals: { collection: @authors }
