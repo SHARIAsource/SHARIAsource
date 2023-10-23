@@ -21,6 +21,7 @@ nav.top-bar data-topbar='true'
             li= link_to 'Tags', admin_tags_path
             li= link_to 'Topics', admin_topics_path
             li= link_to 'Themes', admin_themes_path
+            li= link_to 'Authors', admin_authors_path
       li class=('active' if admin_active == 'Documents')
         = link_to 'Documents', published_admin_documents_path
       - if admin_signed_in?
