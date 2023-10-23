@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_10_23_041857) do
+ActiveRecord::Schema.define(version: 2023_10_23_195325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2023_10_23_041857) do
     t.integer "user_id"
     t.integer "cnc_metadata_id"
     t.jsonb "cnc_metadata_jsonb"
+    t.integer "sort_order"
   end
 
   create_table "authors_documents", id: false, force: :cascade do |t|

@@ -27,7 +27,10 @@ Rails.application.routes.draw do
   resources :users, only: [:show]
 
   namespace :admin do
-    resources :authors, only: [:index, :new, :edit, :create, :update, :destroy]
+    resources :authors, only: [:index, :new, :edit, :create, :update, :destroy] do
+      put :sort
+      put :sort_name, on: :collection
+    end
     resources :users, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :projects, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :named_filters, only: [:index, :new, :edit, :create, :update, :destroy]

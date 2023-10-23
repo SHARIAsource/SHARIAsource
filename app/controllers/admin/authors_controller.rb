@@ -55,6 +55,14 @@ class Admin::AuthorsController < AdminController
     head :ok
   end
 
+  def sort_name
+    Author.sort_by_names
+
+    respond_to do |format|
+      format.js {render inline: "location.reload();" }
+    end
+  end
+
   protected
 
   def permitted_params
