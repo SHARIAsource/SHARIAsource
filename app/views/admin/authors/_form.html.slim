@@ -4,7 +4,7 @@
     = simple_form_for @author, url: form_url do |f|
       = f.input :name, autofocus: true
       .input.string.cnc_metadata_id
-        label.string.control-label for="cnc_metadata_id" Courts and Canons Metadata Person
-        select#cncSearch type="text" placeholder="Search Courts and Canons Metadata People" name="author[cnc_metadata_id]"
+        label.string.control-label for="cncSearch" Courts and Canons Metadata Person
+        = f.select :cnc_metadata_id, [], {}, id: 'cncSearch', placeholder: "Search Courts and Canons Metadata People", data: {selected: @author.cnc_metadata_id}
       = f.hidden_field :cnc_metadata_jsonb
       = f.submit class: 'round button'

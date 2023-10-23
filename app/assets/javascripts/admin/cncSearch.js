@@ -1,6 +1,8 @@
 $(document).on('turbolinks:load', function() {
 
-    $('#cncSearch').select2({
+    var cncSearch = $('#cncSearch');
+
+    cncSearch.select2({
         ajax: {
             url: 'https://staging.digitalseem.org/api/people',
             dataType: 'json',
@@ -32,8 +34,9 @@ $(document).on('turbolinks:load', function() {
         placeholder: 'Search Courts and Canons Metadata People',
     });
 
-    $('#cncSearch').on('change', function (e) {
-        var data = $('#cncSearch').select2('data')[0]; // Get the first selected item
+    // When an item is selected, get the full JSON of the person from the remote API
+    cncSearch.on('change', function (e) {
+        var data = cncSearch.select2('data')[0]; // Get the first selected item
     
         // If there is data, get the id
         if(data && data.id){
@@ -53,6 +56,25 @@ $(document).on('turbolinks:load', function() {
             // There is no data; clear the hidden field too
             $('#author_cnc_metadata_jsonb').val('');
         }
+    });
+
+    // Make sure that the preselected CnC metadata person is shown in Select2 if they exist
+    let preselectedId = $('#cncSearch').attr('data-selected');
+    $.ajax({
+        type: 'GET',
+        url: `https://staging.digitalseem.org/api/people/${preselectedId}`
+    }).then(function (data) {
+        // create the option and append to Select2
+        var option = new Option(data.person.full_name, data.person.id, true, true);
+        cncSearch.append(option).trigger('change');
+
+        // manually trigger the `select2:select` event
+        cncSearch.trigger({
+            type: 'select2:select',
+            params: {
+                data: data
+            }
+        });
     });
     
 });
