@@ -25,7 +25,8 @@ class Admin::DocumentsController < AdminController
     # If current_user is allowed to set contributor, use value from them.
     #   Otherwise, set the contributor to the current_user
     document_params = permitted_params
-    document_params[:contributors] ||= [current_user]
+
+    document_params[:contributor_ids] ||= [current_user.id]
 
     # create new authors
     document_params[:author_ids] = create_new_attributes document_params[:author_ids], Author if document_params[:author_ids].present?
