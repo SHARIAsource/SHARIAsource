@@ -32,3 +32,5 @@ node_modules/
 /test-results/
 /playwright-report/
 /playwright/.cache/
+elasticsearch/portal-elasticsearch/
+elasticsearch/venv/

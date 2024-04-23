@@ -1,0 +1,4 @@
+elasticsearch>=8,<9
+psycopg
+sshtunnel
+python-dotenv
