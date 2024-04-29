@@ -6,6 +6,8 @@ from portal_classes import fetch_all_documents
 from dotenv import load_dotenv
 import os
 
+index_name = "portal-documents_dev"
+
 def create_es_client():
     # Setup Elasticsearch connection.
     load_dotenv()
@@ -64,7 +66,7 @@ def create_index(es_client):
     }
 
     # Create the index with the specified mappings
-    es_client.indices.create(index="portal_documents", mappings=mappings, ignore=400)
+    es_client.indices.create(index=index_name, mappings=mappings, ignore=400)
     print("Index created successfully.")
 
 
@@ -128,7 +130,7 @@ def main():
     create_index(es_client)
 
     # Ingest data into Elasticsearch
-    ingest_data(es_client, "portal_documents", documents)
+    ingest_data(es_client, index_name, documents)
 
     print("Data ingested successfully.")
 
