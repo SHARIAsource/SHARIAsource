@@ -21,13 +21,25 @@ def create_es_client():
 
 def create_index(es_client):
     # Define the mappings
-    mappings = {
+    body = {
+        "settings": {
+            "analysis": {
+                "analyzer": {
+                    "hierarchy_analyzer": {
+                        "type": "custom",
+                        "tokenizer": "path_hierarchy"
+                    }
+                }
+            }
+        },
         "mappings": {
             "properties": {
                 "title": {"type": "text"},
+                "url": {"type": "text"},
                 "document_type": {"type": "keyword"},
                 "summary": {"type": "text"},
-                "pdf": {"type": "text"},
+                "snippet": {"type": "alias", "path": "summary"}, # alias for summary
+                "pdf_url": {"type": "text"},
                 "source_name": {"type": "keyword"},
                 "source_url": {"type": "keyword"},
                 "publisher": {"type": "keyword"},
@@ -59,8 +71,78 @@ def create_index(es_client):
                 },
                 "topics": {"type": "keyword"},
                 "themes": {"type": "keyword"},
-                "regions": {"type": "keyword"},
-                "eras": {"type": "keyword"}
+                "regions": {
+                    "type": "nested",
+                    "properties": {
+                        "id": {"type": "integer"},
+                        "name": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {"type": "keyword"}
+                            }
+                        },
+                        "hierarchy": {
+                            "type": "text",
+                            "analyzer": "hierarchy_analyzer"
+                        }
+                    }
+                },
+                "eras": {
+                    "type": "nested",
+                    "properties": {
+                        "id": {"type": "integer"},
+                        "name": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {"type": "keyword"}
+                            }
+                        },
+                        "hierarchy": {
+                            "type": "text",
+                            "analyzer": "hierarchy_analyzer"
+                        }
+                    }
+                },
+                "authors": {
+                    "type": "nested",
+                    "properties": {
+                        "id": {"type": "integer"},
+                        "name": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {"type": "keyword"}
+                            }
+                        }
+                    }
+                },
+                "referenced_by_documents": {
+                    "type": "nested",
+                    "properties": {
+                        "id": {"type": "integer"},
+                        "title": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {"type": "keyword"}
+                            }
+                        },
+                        "url": {"type": "text"}
+                    }
+                },
+                "documents_referenced": {
+                    "type": "nested",
+                    "properties": {
+                        "id": {"type": "integer"},
+                        "title": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {"type": "keyword"}
+                            }
+                        },
+                        "url": {"type": "text"}
+                    }
+                },
+                "related_resources": {"type": "alias", "path": "referenced_by_documents" }, # alias for referenced_by_documents
+                "tags": {"type": "keyword"}
             }
         }
     }
@@ -77,6 +159,7 @@ def ingest_data(es_client, index_name, data):
             "_id": doc.id,  # Access attributes using dot notation
             "_source": {
                 "title": doc.title,
+                "url": doc.url,
                 "document_type": doc.document_type,
                 "summary": doc.summary,
                 "pdf": doc.pdf,
@@ -106,8 +189,46 @@ def ingest_data(es_client, index_name, data):
                 "user_full_name": doc.user_full_name,
                 "topics": doc.topics,
                 "themes": doc.themes,
-                "regions": doc.regions,
-                "eras": doc.eras
+                "regions": [
+                    {
+                        "id": region.id,
+                        "name": region.name,
+                        "hierarchy": region.hierarchy_path
+                    }
+                    for region in doc.regions
+                ],
+                "eras": [
+                    {
+                        "id": era.id,
+                        "name": era.name,
+                        "hierarchy": era.hierarchy_path
+                    }
+                    for era in doc.eras
+                ],
+                "authors": [
+                    {
+                        "id": author.id,
+                        "name": author.name
+                    }
+                    for author in doc.authors
+                ],
+                "tags": doc.tags,
+                "referenced_by_documents": [
+                    {
+                        "id": ref_doc['id'],
+                        "title": ref_doc['title'],
+                        "url": ref_doc['url']
+                    }
+                    for ref_doc in doc.referenced_by_documents
+                ],
+                "documents_referenced": [
+                    {
+                        "id": ref_doc['id'],
+                        "title": ref_doc['title'],
+                        "url": ref_doc['url']
+                    }
+                    for ref_doc in doc.documents_referenced
+                ]
             }
         }
         for doc in data
