@@ -39,6 +39,7 @@ def create_index(es_client):
                 "document_type": {"type": "keyword"},
                 "summary": {"type": "text"},
                 "snippet": {"type": "alias", "path": "summary"}, # alias for summary
+                "pdf": {"type": "text"},
                 "pdf_url": {"type": "text"},
                 "source_name": {"type": "keyword"},
                 "source_url": {"type": "keyword"},
@@ -148,7 +149,7 @@ def create_index(es_client):
     }
 
     # Create the index with the specified mappings
-    es_client.indices.create(index=index_name, mappings=mappings, ignore=400)
+    es_client.indices.create(index=index_name, body=body, ignore=400)
     print("Index created successfully.")
 
 
@@ -163,6 +164,7 @@ def ingest_data(es_client, index_name, data):
                 "document_type": doc.document_type,
                 "summary": doc.summary,
                 "pdf": doc.pdf,
+                "pdf_url": doc.pdf_url,
                 "source_name": doc.source_name,
                 "source_url": doc.source_url,
                 "publisher": doc.publisher,

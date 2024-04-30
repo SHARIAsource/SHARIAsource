@@ -32,43 +32,6 @@ class Region(HierarchicalItem):
 class Era(HierarchicalItem):
     pass
 
-# def fetch_hierarchical_items_for_document(cursor, document_id):
-#     # get all the related regions for the document
-#     region_ids = []
-#     regions = []
-#     cursor.execute(f""" SELECT id, region_id, document_id FROM documents_regions WHERE document_id = %s """, (document_id,))
-#     for row in cursor.fetchall():
-#         region_id = row[1]
-#         region_ids.append(region_id)
-
-#     for region_id in region_ids:
-#         cursor.execute(f""" SELECT id, name, parent_id FROM regions WHERE id = %s """, (region_id,))
-#         for row in cursor.fetchall():
-#             region_id = row[0]
-#             name = row[1]
-#             parents = []
-#             if row[2] is not None:
-#                 has_parents = True
-#                 parent_id = row[2]
-#             else:
-#                 has_parents = False
-#             while has_parents:
-#                 cursor.execute(f""" SELECT id, name, parent_id FROM regions WHERE id = %s """, (parent_id,))
-#                 parent_row = cursor.fetchone()
-#                 if parent_row:
-#                     parent = {
-#                         "id": parent_row[0],
-#                         "name": parent_row[1]
-#                     }
-#                     parents.insert(0, parent)
-#                     if parent_row[2]:
-#                         parent_id = parent_row[2]
-#                     else:
-#                         has_parents = False
-#             hierarchy_path = " > ".join([parent["name"] for parent in parents]) + " > " + name
-#             regions.append(Region(region_id, name, hierarchy_path))
-#     return regions
-
 def fetch_hierarchical_items_for_document(cursor, document_id, item_type):
     """
     Fetches hierarchical items (regions or eras) related to a document.
@@ -111,7 +74,11 @@ def fetch_hierarchical_items_for_document(cursor, document_id, item_type):
                     parent_id = parent_row[2]
                 else:
                     break
-            hierarchy_path = " > ".join([parent["name"] for parent in parents]) + " > " + name
+            # handle cases where the full hierarchy is just the name
+            if not parents:
+                hierarchy_path = name
+            else:
+                hierarchy_path = " > ".join([parent["name"] for parent in parents]) + " > " + name
             items.append(HierarchicalItem(item_id, name, hierarchy_path))
             
     return items
@@ -130,6 +97,7 @@ class PortalDocument:
         self.document_type = document_type
         self.summary = summary
         self.pdf = pdf
+        self.pdf_url = f"https://portal.shariasource.com/documents/{document_id}/download"
         self.source_name = source_name
         self.source_url = source_url
         self.publisher = publisher
@@ -182,13 +150,9 @@ class PortalDocument:
         self.themes = [row[0] for row in cursor.fetchall()]
 
     def fetch_regions(self, cursor):
-        # cursor.execute("SELECT name FROM regions JOIN documents_regions ON regions.id = documents_regions.region_id WHERE documents_regions.document_id = %s", (self.id,))
-        # self.regions = [row[0] for row in cursor.fetchall()]
         self.regions = fetch_hierarchical_items_for_document(cursor, document_id=self.id, item_type="regions")
 
     def fetch_eras(self, cursor):
-        # cursor.execute("SELECT e.name FROM eras e JOIN documents_eras de ON e.id = de.era_id WHERE de.document_id = %s", (self.id,))
-        # self.eras = [row[0] for row in cursor.fetchall()]
         self.eras = fetch_hierarchical_items_for_document(cursor, document_id=self.id, item_type="eras")
 
     def fetch_authors(self, cursor):
@@ -266,11 +230,6 @@ def main():
     try:
         db_connection = DatabaseConnection()
         cursor = db_connection.get_cursor()
-        # # document_id = 4614
-        # region_hierarchy = fetch_hierarchical_items_for_document(cursor, document_id=4614, item_type="regions")
-        # era_hierarchy = fetch_hierarchical_items_for_document(cursor, item_type="eras", document_id=4614)
-        # print(region_hierarchy)
-        # print(era_hierarchy)
 
         documents = fetch_all_documents(cursor, test=True)
         for doc in documents:
