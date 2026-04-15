@@ -145,9 +145,9 @@ class DocumentPresenter < BasePresenter
   def facebook_description
     if summary.present?
       summary
-    elsif pages.present?
+    elsif pages.present? && pages[0].body&.text.present?
       strip_tags(pages[0].body.text).slice(0, 200) + '…'
-    elsif body.present?
+    elsif body&.text.present?
       strip_tags(body.text).slice(0, 200) + '…'
     end
   end
