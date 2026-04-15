@@ -332,6 +332,7 @@ class Document < ActiveRecord::Base
       source_page.save!
       self.pages << source_page  # Add the source_page to the ActiveRecord association
       source_page = nil
+      GC.start  # release RMagick image handles before next iteration to avoid IM memory exhaustion
     end
     self.save!
 
