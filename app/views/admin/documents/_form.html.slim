@@ -90,7 +90,11 @@
         = f.input :pdf, as: :file, label: 'PDF', input_html: { accept: 'application/pdf' }
         = @document.pdf.file.try(:identifier)
 
-    - if @document.pages.present?
+    - if @document.processing_pdf
+      .clearfix
+        h3 Pages
+        .alert-box.info PDF is being processed. Pages will appear shortly — refresh this page in a few minutes.
+    - elsif @document.pages.present?
       .clearfix
         h3 Pages
         ul.tabs.vertical data-tab="true" data-options='deep_linking:true'

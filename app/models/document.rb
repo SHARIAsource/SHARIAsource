@@ -456,6 +456,7 @@ class Document < ActiveRecord::Base
   def generate_images
     changes = self.previous_changes
     if changes.include?(:pdf) && changes[:pdf].first != changes[:pdf].last
+      update_column(:processing_pdf, true)
       RegeneratePdfWorker.perform_async(id, false)
     end
   end

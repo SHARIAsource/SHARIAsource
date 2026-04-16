@@ -196,7 +196,11 @@
       a.meta-show-more href="#" Show More
       a.meta-show-less href="#" Show Less
 
-- if @document.document_style != "noscan" && @document.pages.present?
+- if @document.processing_pdf
+  - content_for :head do
+    meta http-equiv='refresh' content='30'
+  .alert-box.info PDF is being processed. Pages will appear shortly — this page will refresh automatically.
+- elsif @document.document_style != "noscan" && @document.pages.present?
   = render 'documents/scan_no_text'
 - elsif @document.body.present?
   = render 'documents/body_text', document: @document
