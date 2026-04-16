@@ -6,10 +6,7 @@
     = "Page "
     span.current 1
     = " of "
-    - if @document.pages.length == 1
-      span.total "of 1"
-    - else
-      span.total of #{@document.pages.count}
+    span.total #{@document.pages.count}
   - if @document.pages.length > 1
     a#next-link.next-link href='#' title='Next Page' Next
     a#last-link.last-link href='#' title='Last Page' Last
