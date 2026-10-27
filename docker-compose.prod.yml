@@ -1,0 +1,56 @@
+# Local stand-in for the ECS task: solr, redis and sidekiq share web's network
+# namespace so the app reaches them on localhost, as it will on Fargate.
+# cp .env.production.example .env.production first.
+services:
+  web:
+    build: .
+    image: shariasource-web
+    platform: linux/amd64
+    env_file: .env.production
+    ports:
+      - "8080:8080"
+      - "8983:8983"
+    volumes:
+      - ./public/uploads:/app/public/uploads
+    depends_on:
+      - db
+
+  sidekiq:
+    image: shariasource-web
+    platform: linux/amd64
+    command: bundle exec sidekiq
+    env_file: .env.production
+    network_mode: "service:web"
+    volumes:
+      - ./public/uploads:/app/public/uploads
+    depends_on:
+      - web
+      - redis
+
+  solr:
+    build: docker/solr
+    network_mode: "service:web"
+    volumes:
+      - solr_data:/var/solr
+    depends_on:
+      - web
+
+  redis:
+    image: redis:7-alpine
+    network_mode: "service:web"
+    depends_on:
+      - web
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: shariasource
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./database_dumps:/backups:ro
+
+volumes:
+  pg_data:
+  solr_data:

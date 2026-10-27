@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
+  get '/healthz', to: proc { [200, { 'Content-Type' => 'text/plain' }, ['ok']] }
+
   resource :search, only: [:show]
   resources :documents, only: [:index, :show] do
     resources :tag_suggestions, path: '/tag-suggestions', only: [:create]
