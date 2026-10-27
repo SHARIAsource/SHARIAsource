@@ -1,6 +1,8 @@
-worker_processes Integer(ENV['WEB_CONCURRENCY'] || 4)
+worker_processes Integer(ENV['WEB_CONCURRENCY'] || 2)
+listen '0.0.0.0:8080'
 timeout 30
 preload_app true
+logger Logger.new($stdout)
 
 before_fork do |server, worker|
   Signal.trap 'TERM' do
