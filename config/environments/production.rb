@@ -66,8 +66,8 @@ Rails.application.configure do
   config.log_tags = [ :request_id ] # Rails 5.2 and 6.0 app:update
   # config.log_tags = [ :subdomain, :uuid ] Rails 5.1
 
-  # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
+  # Shared with the Sidekiq worker, which writes counts and expires fragments.
+  config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'], namespace: 'cache' }
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
@@ -148,15 +148,14 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
-  # Set up SendGrid
-  ActionMailer::Base.smtp_settings = {
-    :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
-    :password => Rails.application.secrets.SENDGRID_API_KEY, # This is the secret sendgrid API key which was issued during API key creation
-    :domain => 'shariasource.com',
-    :address => 'smtp.sendgrid.net',
-    :port => 587,
-    :authentication => :plain,
-    :enable_starttls_auto => true
+  config.action_mailer.smtp_settings = {
+    address: ENV['SMTP_HOST'],
+    port: Integer(ENV.fetch('SMTP_PORT', 587)),
+    user_name: ENV['SMTP_USERNAME'],
+    password: ENV['SMTP_PASSWORD'],
+    domain: 'shariasource.com',
+    authentication: :plain,
+    enable_starttls_auto: true
   }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options ={:host => 'shariasource.com', :protocol => 'https'}
