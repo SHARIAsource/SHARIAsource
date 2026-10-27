@@ -158,8 +158,8 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options ={:host => 'shariasource.com', :protocol => 'https'}
+  config.action_mailer.default_url_options = { host: ENV.fetch('APP_HOST', 'shariasource.com'), protocol: 'https' }
   config.action_mailer.default_options = {
-    from: 'no-reply@shariasource.com'
+    from: ENV.fetch('MAIL_FROM', 'no-reply@shariasource.com')
   }
 end
