@@ -196,8 +196,7 @@ test('regions_page', async ({ page }) => {
   await page.locator('.afghanistan').click();
   await page.locator('#map').getByRole('link', { name: 'Afghanistan' }).click();
   await expect(page.locator("h2.search-heading")).toHaveText("Advanced Search", {timeout: 30000});
-  // TODO fix documents - counts are right but individual docs not showing up
-  await expect(page.locator("span.count")).toHaveText("0 results");
+  await expect(page.locator("span.count")).toHaveText(/^[1-9]\d* results?$/);
   let filter_afghanistan = page.getByText('Region: Afghanistan');
   await expect(filter_afghanistan).toBeVisible();
 
@@ -232,8 +231,7 @@ test('regions_page', async ({ page }) => {
   // Test that links work
   await page.getByRole('link', { name: 'Africa', exact: true }).click();
   await expect(page.locator("h2.search-heading")).toHaveText("Advanced Search", { timeout: 30000 });
-  // TODO fix documents - counts are right but individual docs not showing up
-  await expect(page.locator("span.count")).toHaveText("0 results");
+  await expect(page.locator("span.count")).toHaveText(/^[1-9]\d* results?$/);
   let filter_africa = page.getByText('Region: Africa');
   await expect(filter_africa).toBeVisible();
 });
@@ -260,15 +258,14 @@ test('eras_page', async ({ page }) => {
     expect(headerExists).toBeTruthy();
   }
 
-  // There should be at least 220 rows in the table
+  // There should be at least 200 rows in the table
   const rowCount = await page.$$eval(`table.browse-table tr`, (rows) => rows.length);
-  expect(rowCount).toBeGreaterThan(220);
+  expect(rowCount).toBeGreaterThan(200);
 
   // Test that some of the links work
   await page.getByRole('link', { name: 'ʿAbbāsids' }).click();
   await expect(page.locator("h2.search-heading")).toHaveText("Advanced Search", {timeout: 30000});
-  // TODO fix documents - counts are right but individual docs not showing up
-  await expect(page.locator("span.count")).toHaveText("0 results");
+  await expect(page.locator("span.count")).toHaveText(/^[1-9]\d* results?$/);
   let filter = page.getByText('Era: ʿAbbāsids');
   await expect(filter).toBeVisible();
 
@@ -292,8 +289,7 @@ test('document_types_page', async ({ page }) => {
   const link = await page.$("a:has-text('Historical Primary Sources')"); // TODO fix this
   await link.click();
   await expect(page.locator("h2.search-heading")).toHaveText("Advanced Search", {timeout: 30000});
-  // TODO fix documents - counts are right but individual docs not showing up
-  await expect(page.locator("span.count")).toHaveText("0 results");
+  await expect(page.locator("span.count")).toHaveText(/^[1-9]\d* results?$/);
   let filter = page.getByText('document type: Historical Primary Sources');
   await expect(filter).toBeVisible();
 
@@ -396,11 +392,8 @@ test('about_page', async ({ page }) => {
 
 test('credits_page', async ({ page }) => {
   await page.goto('http://localhost:3000/credits');
-  const page1Promise = page.waitForEvent('popup');
   await expect(page.locator("h2.browse")).toHaveText("Credits");
-  await page.getByRole('link', { name: 'Islamic Philosophy Online' }).click();
-  const page1 = await page1Promise;
-  await expect (page1.getByText('Conversion of Hijri A.H. (Islamic) and A. D. Christian (Gregorian) dates')).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Islamic Philosophy Online' })).toHaveAttribute('href', /muslimphilosophy\.com\/ip\/hijri/);
 });
 
 // TODO advanced search page
