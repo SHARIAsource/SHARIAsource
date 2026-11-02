@@ -1,6 +1,7 @@
 # Local stand-in for the ECS task: solr, redis and sidekiq share web's network
 # namespace so the app reaches them on localhost, as it will on Fargate.
-# cp .env.production.example .env.production first.
+# cp .env.production.example .env.production and mkdir -p public/uploads first,
+# or Docker creates the uploads directory as root and the app cannot write to it.
 services:
   web:
     build: .
@@ -9,7 +10,7 @@ services:
     env_file: .env.production
     ports:
       - "8080:8080"
-      - "8983:8983"
+      - "127.0.0.1:8983:8983"
     volumes:
       - ./public/uploads:/app/public/uploads
     depends_on:
@@ -38,6 +39,8 @@ services:
   redis:
     image: redis:7-alpine
     network_mode: "service:web"
+    volumes:
+      - redis_data:/data
     depends_on:
       - web
 
@@ -54,3 +57,4 @@ services:
 volumes:
   pg_data:
   solr_data:
+  redis_data:
