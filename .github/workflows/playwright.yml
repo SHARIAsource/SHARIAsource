@@ -3,23 +3,74 @@ on:
   push:
     branches: [ main, master ]
   pull_request:
-    branches: [ main, master ]
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    # Debian 11 ships the headers the old gems build against. Playwright dropped
+    # Debian 11 after 1.61, so it stays pinned until this image moves.
+    container: ruby:2.7.8-bullseye
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      BUNDLE_WITHOUT: test
+      DATABASE_URL: postgres://postgres:postgres@postgres/shariasource
+      LANG: C.UTF-8
+      PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
+    - uses: actions/checkout@v7
+    - uses: actions/setup-node@v7
       with:
-        node-version: 18
-    - name: Install dependencies
+        node-version: 22
+    # bullseye packages moved off deb.debian.org to archive.debian.org
+    - name: Install Java for Solr
+      run: |
+        sed -i 's|deb.debian.org/debian|archive.debian.org/debian|' /etc/apt/sources.list
+        sed -i '/security/d;/bullseye-updates/d' /etc/apt/sources.list
+        apt-get update
+        apt-get install -y --no-install-recommends default-jre-headless
+    - uses: actions/cache@v6
+      with:
+        path: /usr/local/bundle
+        key: gems-${{ hashFiles('Gemfile.lock') }}
+    - name: Install gems
+      run: |
+        gem install bundler:2.4.15
+        bundle install -j4
+    - name: Install JavaScript dependencies
       run: npm ci
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+      run: npx playwright install --with-deps chromium firefox
+    - name: Configure the app
+      run: |
+        cp config/database.example.yml config/database.yml
+        cp config/secrets.example.yml config/secrets.yml
+    # sunspot_solr's installer fails unless solr/ already exists
+    - name: Start Solr
+      run: |
+        mkdir -p solr/pids/development
+        bundle exec rake sunspot:solr:start
+        curl -fsS -o /dev/null --retry 30 --retry-connrefused --retry-delay 2 'http://localhost:8983/solr/development/select?q=*:*'
+    - name: Load the fake dataset
+      run: bundle exec rake db:create db:schema:load db:migrate db:seed
+    - name: Start the app
+      run: |
+        bundle exec rake assets:precompile
+        bundle exec rails server -d
+        curl -fsS -o /dev/null --retry 30 --retry-connrefused --retry-delay 2 http://localhost:3000/
     - name: Run Playwright tests
       run: npx playwright test
-    - uses: actions/upload-artifact@v3
+      env:
+        HOME: /root # Firefox refuses a home directory it does not own
+    - uses: actions/upload-artifact@v7
       if: always()
       with:
         name: playwright-report
