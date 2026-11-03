@@ -67,7 +67,7 @@ Rails.application.configure do
   # config.log_tags = [ :subdomain, :uuid ] Rails 5.1
 
   # Shared with the Sidekiq worker, which writes counts and expires fragments.
-  config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'], namespace: 'cache' }
+  config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'], password: ENV['REDIS_PASSWORD'], namespace: 'cache' }
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
