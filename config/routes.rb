@@ -7,6 +7,10 @@ Rails.application.routes.draw do
     path_names: { sign_in: 'login', sign_up: 'signup', sign_out: 'logout' }
 
   root 'home#index'
+  # CloudFront's default root object turns / into /index.html.
+  get '/index.html', to: 'home#index'
+
+  get '/healthz', to: proc { [200, { 'Content-Type' => 'text/plain' }, ['ok']] }
 
   resource :search, only: [:show]
   resources :documents, only: [:index, :show] do

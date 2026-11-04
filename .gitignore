@@ -4,7 +4,8 @@
 log/
 tmp/
 .env
-solr/
+.env.production
+/solr/
 config/database.yml
 config/secrets.yml
 public/uploads/
