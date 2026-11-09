@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   # CloudFront's default root object turns / into /index.html.
   get '/index.html', to: 'home#index'
 
-  get '/healthz', to: proc { [200, { 'Content-Type' => 'text/plain' }, ['ok']] }
+  # The ALB's health check. It touches the database, so a task that cannot
+  # reach Postgres is replaced.
+  get '/healthz', to: 'health#show'
 
   resource :search, only: [:show]
   resources :documents, only: [:index, :show] do
