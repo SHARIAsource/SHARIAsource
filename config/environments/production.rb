@@ -23,6 +23,10 @@ Rails.application.configure do
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  # CloudFront keeps anything that arrives without Cache-Control for a day.
+  # Uploads are replaced and taken down under the same path, so keep the edge
+  # and browser TTL short. Assets are fingerprinted and revalidate cheaply.
+  config.public_file_server.headers = { 'Cache-Control' => 'public, max-age=300' }
 
   # Compress with a preprocessor.
   # config.assets.js_compressor = :uglifier #try to comment this out to see if ES6 will work - https://github.com/browserify-rails/browserify-rails/issues/137
