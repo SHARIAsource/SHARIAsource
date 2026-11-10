@@ -1,5 +1,7 @@
 FROM --platform=linux/amd64 ruby:2.7.8-bullseye
 
+# bullseye packages moved off deb.debian.org to archive.debian.org
+RUN sed -i 's|deb.debian.org/debian|archive.debian.org/debian|' /etc/apt/sources.list
 RUN apt-get update --fix-missing
 # imagemagick and libmagickwand-dev are required for the rmagick gem
 # postgresql is required for pg_isready

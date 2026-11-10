@@ -7,6 +7,12 @@ Rails.application.routes.draw do
     path_names: { sign_in: 'login', sign_up: 'signup', sign_out: 'logout' }
 
   root 'home#index'
+  # CloudFront's default root object turns / into /index.html.
+  get '/index.html', to: 'home#index'
+
+  # The ALB's health check. It touches the database, so a task that cannot
+  # reach Postgres is replaced.
+  get '/healthz', to: 'health#show'
 
   resource :search, only: [:show]
   resources :documents, only: [:index, :show] do
