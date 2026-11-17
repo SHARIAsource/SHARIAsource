@@ -162,6 +162,9 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
   config.action_mailer.delivery_method = :smtp
+  # No SMTP host means no mail: staging runs without one so it cannot email
+  # real users from a copy of the data.
+  config.action_mailer.perform_deliveries = ENV['SMTP_HOST'].present?
   config.action_mailer.default_url_options = { host: ENV.fetch('APP_HOST', 'shariasource.com'), protocol: 'https' }
   config.action_mailer.default_options = {
     from: ENV.fetch('MAIL_FROM', 'no-reply@shariasource.com')
