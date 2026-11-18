@@ -47,6 +47,8 @@ gem 'smart_listing', '~> 1.1.2'
 gem 'font-awesome-sass', '~> 4.3.2.1'
 # gem 'font-awesome-sass'
 gem 'redis', '~> 5.0', '>= 5.0.7'
+# Reads the database password at connect time on AWS; see config/initializers/database_password.rb
+gem 'aws-sdk-secretsmanager', '~> 1'
 gem 'seed_dump'
 # gem 'nokogiri', '~> 1.6.8'
 gem 'nokogiri'

@@ -17,6 +17,7 @@ test:
 
 production:
   <<: *default
-  database: <%= ENV['DATABASE_NAME'] %>
-  username: <%= ENV['DATABASE_USER'] %>
-  password: <%= ENV['DATABASE_PASS'] %>
+  url: <%= ENV['DATABASE_URL'] %>
+  # Credentials in the URL win; these cover a URL without them.
+  username: <%= ENV['DATABASE_USERNAME'].to_json %>
+  password: <%= ENV['DATABASE_PASSWORD'].to_json %>

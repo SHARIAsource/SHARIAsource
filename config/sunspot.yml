@@ -1,7 +1,7 @@
 production:
   solr:
-    hostname: localhost
-    port: 8983
+    hostname: <%= ENV.fetch('SOLR_HOST', 'localhost') %>
+    port: <%= ENV.fetch('SOLR_PORT', 8983) %>
     log_level: WARNING
     path: /solr/default
     # read_timeout: 2
